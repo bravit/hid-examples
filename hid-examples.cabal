@@ -19,12 +19,10 @@ extra-source-files:    ChangeLog.md
                        LICENSE
                        README.md
                        stack.yaml
-                       data/quotes.csv
+
+data-files:            data/quotes.csv
                        texts/Dracula.srt
-                       texts/forsyte.txt
-                       texts/hamlet.txt
-                       texts/phrase.txt
-                       texts/rune-poem.txt
+                       texts/*.txt
 
 source-repository head
     type:     git
