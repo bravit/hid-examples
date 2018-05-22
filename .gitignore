@@ -1,0 +1,12 @@
+*~
+*.o
+*.hi
+dist
+dist-newstyle
+cabal-dev
+cabal.sandbox.config
+.cabal-sandbox
+.stack-work
+
+*.svg
+*.html

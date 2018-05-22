@@ -1,0 +1,59 @@
+Two different forms of the first six verses of the "Anglo Saxon Rune Poem"
+
+
+Firstly, Latin-based Anglo-Saxon orthography.
+
+  Feoh byþ frofur fira gehwylcum;
+  sceal ðeah manna gehwylc miclun hyt dælan
+  gif he wile for drihtne domes hleotan.
+
+  Ur byþ anmod ond oferhyrned,
+  felafrecne deor, feohteþ mid hornum
+  mære morstapa; þæt is modig wuht.
+
+  Ðorn byþ ðearle scearp; ðegna gehwylcum
+  anfeng ys yfyl, ungemetum reþe
+  manna gehwelcum, ðe him mid resteð.
+
+  Os byþ ordfruma ælere spræce,
+  wisdomes wraþu ond witena frofur
+  and eorla gehwam eadnys ond tohiht.
+
+  Rad byþ on recyde rinca gehwylcum
+  sefte ond swiþhwæt, ðamðe sitteþ on ufan
+  meare mægenheardum ofer milpaþas.
+
+  Cen byþ cwicera gehwam, cuþ on fyre
+  blac ond beorhtlic, byrneþ oftust
+  ðær hi æþelingas inne restaþ.
+
+Secondly, in Runic (Futhorc) Anglo-Saxon orthography
+
+  ᚠᛇᚻ᛫ᛒᛦᚦ᛫ᚠᚱᚩᚠᚢᚱ᛫ᚠᛁᚱᚪ᛫ᚷᛖᚻᚹᛦᛚᚳᚢᛗ
+  ᛋᚳᛖᚪᛚ᛫ᚦᛖᚪᚻ᛫ᛗᚪᚾᚾᚪ᛫ᚷᛖᚻᚹᛦᛚᚳ᛫ᛗᛁᚳᛚᚢᚾ᛫ᚻᛦᛏ᛫ᛞᚫᛚᚪᚾ
+  ᚷᛁᚠ᛫ᚻᛖ᛫ᚹᛁᛚᛖ᛫ᚠᚩᚱ᛫ᛞᚱᛁᚻᛏᚾᛖ᛫ᛞᚩᛗᛖᛋ᛫ᚻᛚᛇᛏᚪᚾ᛬
+
+  ᚢᚱ᛫ᛒᛦᚦ᛫ᚪᚾᛗᚩᛞ᛫ᚩᚾᛞ᛫ᚩᚠᛖᚱᚻᛦᚱᚾᛖᛞ
+  ᚠᛖᛚᚪᚠᚱᛖᚳᚾᛖ᛫ᛞᛇᚱ᛫ᚠᛇᚻᛏᛖᚦ᛫ᛗᛁᛞ᛫ᚻᚩᚱᚾᚢᛗ
+  ᛗᚫᚱᛖ᛫ᛗᚩᚱᛋᛏᚪᛈᚪ᛫ᚦᚫᛏ᛫ᛁᛋ᛫ᛗᚩᛞᛁᚷ᛫ᚹᚢᚻᛏ᛬
+
+  ᚦᚩᚱᚾ᛫ᛒᛦᚦ᛫ᚦᛖᚪᚱᛚᛖ᛫ᛋᚳᛖᚪᚱᛈ᛫ᚦᛖᚷᚾᚪ᛫ᚷᛖᚻᚹᛦᛚᚳᚢᛗ
+  ᚪᚾᚠᛖᛝ᛫ᛦᛋ᛫ᛦᚠᛦᛚ᛫ᚢᛝᛖᛗᛖᛏᚢᛗ᛫ᚱᛖᚦᛖ
+  ᛗᚪᚾᚾᚪ᛫ᚷᛖᚻᚹᛖᛚᚳᚢᛗ᛫ᚦᛖ᛫ᚻᛁᛗ᛫ᛗᛁᛞ᛫ᚱᛖᛋᛏᛖᚦ᛬
+
+  ᚩᛋ᛫ᛒᛦᚦ᛫ᚩᚱᛞᚠᚱᚢᛗᚪ᛫ᚫᛚᛖᚱᛖ᛫ᛋᛈᚱᚫᚳᛖ
+  ᚹᛁᛋᛞᚩᛗᛖᛋ᛫ᚹᚱᚪᚦᚢ᛫ᚩᚾᛞ᛫ᚹᛁᛏᛖᚾᚪ᛫ᚠᚱᚩᚠᚢᚱ
+  ᚪᚾᛞ᛫ᛇᚱᛚᚪ᛫ᚷᛖᚻᚹᚪᛗ᛫ᛖᚪᛞᚾᛦᛋ᛫ᚩᚾᛞ᛫ᛏᚩᚻᛁᚻᛏ᛬
+
+  ᚱᚪᛞ᛫ᛒᛦᚦ᛫ᚩᚾ᛫ᚱᛖᚳᛦᛞᛖ᛫ᚱᛁᚾᚳᚪ᛫ᚷᛖᚻᚹᛦᛚᚳᚢᛗ
+  ᛋᛖᚠᛏᛖ᛫ᚩᚾᛞ᛫ᛋᚹᛁᚦᚻᚹᚫᛏ᛫ᚦᚪᛗᚦᛖ᛫ᛋᛁᛏᛏᛖᚦ᛫ᚩᚾ᛫ᚢᚠᚪᚾ
+  ᛗᛖᚪᚱᛖ᛫ᛗᚫᚷᛖᚾᚻᛖᚪᚱᛞᚢᛗ᛫ᚩᚠᛖᚱ᛫ᛗᛁᛚᛈᚪᚦᚪᛋ᛬
+
+  ᚳᛖᚾ᛫ᛒᛦᚦ᛫ᚳᚹᛁᚳᛖᚱᚪ᛫ᚷᛖᚻᚹᚪᛗ᛫ᚳᚢᚦ᛫ᚩᚾ᛫ᚠᛦᚱᛖ
+  ᛒᛚᚪᚳ᛫ᚩᚾᛞ᛫ᛒᛇᚱᚻᛏᛚᛁᚳ᛫ᛒᛦᚱᚾᛖᚦ᛫ᚩᚠᛏᚢᛋᛏ
+  ᚦᚫᚱ᛫ᚻᛁ᛫ᚫᚦᛖᛚᛁᛝᚪᛋ᛫ᛁᚾᚾᛖ᛫ᚱᛖᛋᛏᚪᚦ᛬
+
+See <http://www.ragweedforge.com/poems.html> for more rune poems.
+
+
+1999-11-08  Robert Brady  <rwb197@ecs.soton.ac.uk>

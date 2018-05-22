@@ -1,0 +1,5 @@
+# Revision history for hid-examples
+
+## 0.1.0.0  -- 2018-05-22
+
+* Initial version. Examples for chapters 2 and 3.

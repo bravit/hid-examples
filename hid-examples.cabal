@@ -1,0 +1,81 @@
+name:                hid-examples
+version:             0.1.0.0
+synopsis:            Examples to accompany the book "Haskell in Depth"
+-- description:         
+license:             BSD3
+license-file:        LICENSE
+author:              Vitaly Bragilevsky
+maintainer:          Vitaly Bragilevsky <vit.bragilevsky@gmail.com>
+copyright:           (c) Vitaly Bragilevsky 2018
+category:            Sample Code
+build-type:          Simple
+extra-source-files:  ChangeLog.md
+cabal-version:       >=1.10
+
+-- bug-reports:         
+-- homepage:            
+
+extra-source-files:    ChangeLog.md
+                       LICENSE
+                       README.md
+                       data/quotes.csv
+                       texts/Dracula.srt
+                       texts/forsyte.txt
+                       texts/hamlet.txt
+                       texts/phrase.txt
+                       texts/rune-poem.txt
+
+-- -----------------------------------------------------------------------------
+-- Chapter 2
+
+executable locator
+  main-is:             locator.hs
+  build-depends:       base >=4.10 && <4.12
+  default-language:    Haskell2010
+
+executable vocab1
+  main-is:             vocab1.hs
+  build-depends:       base >=4.10 && <4.12
+                     , text >= 1.2 && < 1.3
+  default-language:    Haskell2010
+
+executable vocab2
+  main-is:             vocab2.hs
+  build-depends:       base >=4.10 && <4.12
+                     , text >= 1.2 && < 1.3
+  default-language:    Haskell2010
+
+executable vocab3
+  main-is:             vocab3.hs
+  build-depends:       base >=4.10 && <4.12
+                     , text >= 1.2 && < 1.3
+  default-language:    Haskell2010
+
+executable showexpr
+  main-is:             showexpr.hs
+  build-depends:       base >=4.10 && <4.12
+                     , hint >= 0.7 && < 0.9
+  default-language:    Haskell2010
+
+-- -----------------------------------------------------------------------------
+-- Chapter 3
+
+executable stockquotes
+  hs-source-dirs:      stockquotes
+  main-is:             Main.hs
+  other-modules:       BoundedEnum Charts HtmlReport Params QuoteData Statistics
+  other-extensions:    RecordWildCards OverloadedStrings FlexibleInstances
+                       DeriveGeneric DeriveAnyClass
+  build-depends:       base >=4.10 && <4.11
+                     , bytestring >=0.10 && <0.11
+                     , blaze-html >=0.9 && <0.10
+                     , optparse-applicative >=0.14 && <0.15
+                     , time >=1.8 && <1.9
+                     , text >=1.2 && <1.3
+                     , fmt >=0.5 && <0.7
+                     , data-default-class >=0.1 && <0.2
+                     , safe >=0.3 && <0.4
+                     , Chart >=1.8 && <1.9
+                     , Chart-diagrams >=1.8 && <1.9
+                     , cassava >=0.5 && <0.6
+  default-language:    Haskell2010
