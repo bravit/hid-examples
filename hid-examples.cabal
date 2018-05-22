@@ -12,18 +12,23 @@ build-type:          Simple
 extra-source-files:  ChangeLog.md
 cabal-version:       >=1.10
 
--- bug-reports:         
--- homepage:            
+bug-reports:         https://github.com/bravit/hid-examples/issues
+homepage:            https://github.com/bravit/hid-examples/
 
 extra-source-files:    ChangeLog.md
                        LICENSE
                        README.md
+                       stack.yaml
                        data/quotes.csv
                        texts/Dracula.srt
                        texts/forsyte.txt
                        texts/hamlet.txt
                        texts/phrase.txt
                        texts/rune-poem.txt
+
+source-repository head
+    type:     git
+    location: https://github.com/bravit/hid-examples.git
 
 -- -----------------------------------------------------------------------------
 -- Chapter 2

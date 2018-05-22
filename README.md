@@ -7,7 +7,6 @@ To work with the code on your system, you need either:
 * [The Haskell Platform](https://www.haskell.org/platform/)
 
 
-
 ## Using Stack
 
 ### Building
@@ -19,14 +18,8 @@ stack build
 ### Running
 
 ```
-stack exec <executable>
+stack exec <executable> [ -- <arguments>]
 ```
-
-Or with command line arguments:
-```
-stack exec <executable> -- <arguments>
-```
-
 For example:
 
 ```
@@ -39,7 +32,7 @@ stack exec stockquotes -- data/quotes.csv -p -v
 stack ghci <module file>
 ```
 
-e.g.:
+For example:
 
 ```
 stack ghci stockquotes/Statistics.hs
@@ -59,12 +52,7 @@ cabal build
 ### Running
 
 ```
-cabal run <executable>
-```
-
-Or with command line arguments:
-```
-cabal run <executable> -- <arguments>
+cabal run <executable> [ -- <arguments>]
 ```
 
 For example:
@@ -79,13 +67,13 @@ cabal run stockquotes -- data/quotes.csv -p -v
 cabal repl <executable>
 ```
 
-e.g.:
+For example:
 
 ```
 cabal repl stockquotes
 ```
 
-To work with particular module you have to load it in GHCi with `:load` then.
+To work with particular module you have to load it in GHCi with `:load`.
 
 
 ## Using Cabal new-*
