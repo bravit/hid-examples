@@ -10,16 +10,17 @@ import Data.Csv (decodeByName)
 
 import QuoteData
 import Statistics
+import StatReport
 import Charts
 import HtmlReport
 import Params
 
 generateReports :: Traversable t => Params -> t QuoteData -> IO ()
 generateReports Params {..} quotes = do
-  TIO.putStr $ statReport quotes
+  TIO.putStr $ statReport statInfo'
   when prices $ plotChart title quotes [Open, Close, High, Low] fname_prices
   when volumes $ plotChart title quotes [Volume] fname_volumes
-  when html $ BL.writeFile fname_html $ htmlReport title quotes images
+  when html $ BL.writeFile fname_html $ htmlReport title quotes statInfo' images
  where
    withCompany pref  = if company /= "" then pref ++ company else ""
    img_suffix = withCompany "_" ++ ".svg"
@@ -29,6 +30,7 @@ generateReports Params {..} quotes = do
                                        [prices, volumes]
    fname_html = "report" ++ withCompany "_" ++ ".html"
    title = "Historical Quotes" ++ withCompany " for "
+   statInfo' = statInfo quotes
 
 work :: Params -> IO ()
 work params = do 

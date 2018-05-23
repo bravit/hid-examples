@@ -1,17 +1,12 @@
-{-# LANGUAGE
-      FlexibleInstances,
-      OverloadedStrings,
-      DeriveAnyClass
-#-}
+{-# LANGUAGE DeriveAnyClass #-}
 
-module Statistics (statReport) where
+module Statistics (Statistic(..),
+                   StatEntry, StatQFieldData, StatInfo,
+                   statInfo, statEntryStat, statEntryValue) where
 
 import Data.Ord (comparing)
 import Data.Foldable
-import Data.Fixed
 import Data.Time
-import qualified Data.Text as T
-import Fmt
 
 import BoundedEnum
 import QuoteData
@@ -19,27 +14,12 @@ import QuoteData
 data Statistic = Mean | Min | Max | Days
   deriving (Show, Eq, Enum, Bounded, BoundedEnum)
 
-instance Buildable Statistic where
-  build Mean = "Mean"
-  build Min = "Minimum"
-  build Max = "Maximum"
-  build Days = "Days between Min/Max"
+type StatEntry = (Statistic, QField, Fixed4)
+type StatQFieldData = (QField, [StatEntry])
+type StatInfo = [StatQFieldData]
 
-type StatElement = (Statistic, QField, Fixed4)
-
-instance Buildable StatElement where
-  build (st, qf, val) = ""+|st|+": "+|value|+""
-    where
-      value = showFixed (removeTrailing st qf) val
-      removeTrailing Days _ = True
-      removeTrailing Min Volume = True
-      removeTrailing Max Volume = True
-      removeTrailing _ _ = False
-
-type StatQFieldData = (QField, [StatElement])
-
-instance Buildable StatQFieldData where
-  build (qf, stats) = nameF ("Statistics for " +||qf||+"") $ unlinesF stats
+statEntryStat (st, _, _) = st
+statEntryValue (_, _, v) = v
 
 daysBetween qf quotes = fromIntegral $ abs $ diffDays dMinQuote dMaxQuote
   where
@@ -58,7 +38,7 @@ computeStatistic Mean = funcByField mean
 computeStatistic Min = funcByField minimum
 computeStatistic Max = funcByField maximum
 
-statReport :: (Functor t, Foldable t) => t QuoteData -> T.Text
-statReport quotes = fmt $ unlinesF $ map stQFData range
+statInfo :: (Functor t, Foldable t) => t QuoteData -> StatInfo
+statInfo quotes = map stQFData range
   where 
     stQFData qf = (qf, [(st, qf, computeStatistic st qf quotes) | st <- range])
