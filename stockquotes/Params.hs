@@ -2,7 +2,6 @@ module Params (Params (..), cmdLineParser) where
 
 import Data.Semigroup ((<>))
 import Options.Applicative
-import QuoteData
 
 data Params = Params {
                 fname :: FilePath,

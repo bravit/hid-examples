@@ -11,7 +11,6 @@ import Text.Blaze.Html5.Attributes (src)
 import Text.Blaze.Html.Renderer.Utf8
 
 import QuoteData
-import Statistics
 import StatReport
 import Fmt
 

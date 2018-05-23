@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module StatReport (statReport, showStatEntryValue) where
+module StatReport (statReport, showStatEntryValue, module Statistics) where
 
 import Data.Fixed (showFixed)
 import Data.Text (Text)
