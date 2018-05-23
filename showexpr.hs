@@ -13,9 +13,9 @@ instance Show a => Show (Expr a) where
                               . showsPrec precAdd e2
     where precAdd = 5
   showsPrec p (Mult e1 e2) = showParen (p > precMult)
-                             $ showsPrec (precMult) e1
+                             $ showsPrec precMult e1
                                . showString "*"
-                               . showsPrec (precMult) e2
+                               . showsPrec precMult e2
     where precMult = 6
 
 myeval :: Num a => Expr a -> a
@@ -29,7 +29,7 @@ testexpr e = do
   putStr $ e_str ++ " = " ++ show e_val ++ " "
   r <- runInterpreter $ setImports ["Prelude"] >> eval e_str
   case r of
-    Right r' -> if (read r' == e_val)
+    Right r' -> if read r' == e_val
                    then putStrLn "ok"
                    else putStrLn "eval error"     
     _ -> putStrLn "interpreter error"

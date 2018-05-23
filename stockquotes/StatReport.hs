@@ -1,7 +1,5 @@
-{-# LANGUAGE
-      FlexibleInstances,
-      OverloadedStrings
-#-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module StatReport (statReport, showStatEntryValue) where
 

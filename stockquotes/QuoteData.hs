@@ -1,8 +1,5 @@
-{-# LANGUAGE
-      FlexibleInstances,
-      DeriveGeneric,
-      DeriveAnyClass
-#-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
 
 module QuoteData where
 

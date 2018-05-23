@@ -15,7 +15,7 @@ extractVocab t = map buildEntry $ group $ sort ws
   where
     ws = map T.toCaseFold $ filter (not . T.null) $ map cleanWord $ T.words t
     buildEntry ws@(w:_) = (w, length ws)
-    cleanWord w = T.dropAround (not . isLetter) w
+    cleanWord = T.dropAround (not . isLetter)
 
 allWordsReport :: Vocabulary -> T.Text
 allWordsReport vocab = T.append "\nAll words:\n"
@@ -29,7 +29,7 @@ wordsCountReport vocab = T.append "\nTotal number of words: "
                          $ T.pack $ show $ wordsCount vocab
 
 wordsByFrequency :: Vocabulary -> Vocabulary
-wordsByFrequency vocab = sortBy (comparing $ Down . snd) vocab
+wordsByFrequency = sortBy (comparing $ Down . snd)
 
 frequentWordsReport :: Vocabulary -> Int -> T.Text
 frequentWordsReport vocab n = T.append "\nFrequent words:\n" 

@@ -1,7 +1,5 @@
-{-# LANGUAGE
-  DeriveAnyClass,
-  StandaloneDeriving
-#-}
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE StandaloneDeriving #-}
 
 import Data.List (nub, sort)
 

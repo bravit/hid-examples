@@ -1,7 +1,5 @@
-{-# LANGUAGE
-     OverloadedStrings,
-     RecordWildCards
-#-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module HtmlReport (htmlReport) where
 

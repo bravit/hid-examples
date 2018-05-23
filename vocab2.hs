@@ -12,7 +12,7 @@ extractVocab t = map buildEntry $ group $ sort ws
   where
     ws = map T.toCaseFold $ filter (not . T.null) $ map cleanWord $ T.words t
     buildEntry ws@(w:_) = (w, length ws)
-    cleanWord w = T.dropAround (not . isLetter) w
+    cleanWord = T.dropAround (not . isLetter)
 
 printAllWords :: Vocabulary -> IO ()
 printAllWords vocab = do

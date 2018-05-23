@@ -3,7 +3,7 @@
 module Main where
 
 import Data.Bool
-import Control.Monad (when)
+import Control.Monad (when, unless)
 import qualified Data.Text.IO as TIO
 import qualified Data.ByteString.Lazy as BL
 import Data.Csv (decodeByName)
@@ -17,7 +17,7 @@ import Params
 
 generateReports :: Traversable t => Params -> t QuoteData -> IO ()
 generateReports Params {..} quotes = do
-  when (not $ no_text) $ TIO.putStr $ statReport statInfo'
+  unless no_text $ TIO.putStr $ statReport statInfo'
   when prices $ plotChart title quotes [Open, Close, High, Low] fname_prices
   when volumes $ plotChart title quotes [Volume] fname_volumes
   when html $ BL.writeFile fname_html $ htmlReport title quotes statInfo' images
