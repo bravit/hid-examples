@@ -11,7 +11,8 @@ import Text.Blaze.Html5.Attributes (src)
 import Text.Blaze.Html.Renderer.Utf8
 
 import QuoteData
-import StatReport
+import StatReport (showStatEntryValue)
+import Statistics
 import Fmt
 
 htmlReport :: (Functor t, Foldable t) =>
@@ -43,7 +44,7 @@ htmlReport title quotes si images = renderHtml $ docTypeHtml $ do
       table $ do
          thead $ traverse_ th
                $ "Quotes Field" : 
-                 [ text $ fmt $ build $ statEntryStat s | s <- ses]
+                 [ text $ fmt $ build $ stat s | s <- ses]
          tbody $ traverse_ statData2TR si
 
     quoteData2TR QuoteData {..} = tr $ do

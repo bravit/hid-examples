@@ -3,14 +3,15 @@
 
 module QuoteData where
 
-import Data.Fixed
-import Data.Time
-import Safe
-import GHC.Generics (Generic)
+import Data.Fixed (HasResolution (..), Fixed)
+import Data.Time (Day, parseTimeM, defaultTimeLocale)
+import Safe (readDef)
 import Data.ByteString.Char8 (unpack)
-import Data.Csv
+import GHC.Generics (Generic)
+import Data.Csv (FromNamedRecord, FromField (..))
 
 import BoundedEnum
+
 data E4
   
 instance HasResolution E4 where
@@ -26,13 +27,13 @@ data QuoteData = QuoteData {
                    high :: Fixed4,
                    low :: Fixed4
                  }
-  deriving (Generic, FromNamedRecord, DefaultOrdered)
+  deriving (Generic, FromNamedRecord)
 
 instance FromField Fixed4 where
-  parseField s = pure (readDef 0 $ unpack s)
+  parseField = pure . readDef 0 . unpack
 
 instance FromField Day where
-  parseField s = parseTimeM False defaultTimeLocale "%Y/%m/%d" (unpack s)
+  parseField = parseTimeM False defaultTimeLocale "%Y/%m/%d" . unpack
 
 data QField = Open | Close | High | Low | Volume
   deriving (Show, Enum, Bounded, BoundedEnum)

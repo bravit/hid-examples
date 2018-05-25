@@ -1,7 +1,8 @@
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module StatReport (statReport, showStatEntryValue, module Statistics) where
+module StatReport (statReport, showStatEntryValue) where
 
 import Data.Fixed (showFixed)
 import Data.Text (Text)
@@ -16,7 +17,8 @@ instance Buildable Statistic where
   build Max = "Maximum"
   build Days = "Days between Min/Max"
 
-showStatEntryValue (st, qf, val) = showFixed (removeTrailing st qf) val
+showStatEntryValue :: StatEntry -> String
+showStatEntryValue StatEntry {..} = showFixed (removeTrailing stat qfield) value
   where
     removeTrailing Days _ = True
     removeTrailing Min Volume = True
@@ -24,9 +26,7 @@ showStatEntryValue (st, qf, val) = showFixed (removeTrailing st qf) val
     removeTrailing _ _ = False
 
 instance Buildable StatEntry where
-  build se@(st, qf, val) = ""+|st|+": "+|value|+""
-    where
-      value = showStatEntryValue se
+  build se@StatEntry {..} = ""+|stat|+": "+|showStatEntryValue se|+""
 
 instance Buildable StatQFieldData where
   build (qf, stats) = nameF ("Statistics for " +||qf||+"") $ unlinesF stats
