@@ -1,7 +1,12 @@
 name:                hid-examples
 version:             0.1.0.0
 synopsis:            Examples to accompany the book "Haskell in Depth"
--- description:         
+description:
+        This package provides source code examples which accompany the book
+        "Haskell in Depth" by Vitaly Bragilevsky (Manning Publications 2019).
+        You may want to get this package via @cabal get hid-examples@
+        and explore its content.
+
 license:             BSD3
 license-file:        LICENSE
 author:              Vitaly Bragilevsky
@@ -39,25 +44,25 @@ executable locator
 executable vocab1
   main-is:             vocab1.hs
   build-depends:       base >=4.10 && <4.12
-                     , text >= 1.2 && < 1.3
+                     , text >=1.2 && <1.3
   default-language:    Haskell2010
 
 executable vocab2
   main-is:             vocab2.hs
   build-depends:       base >=4.10 && <4.12
-                     , text >= 1.2 && < 1.3
+                     , text >=1.2 && <1.3
   default-language:    Haskell2010
 
 executable vocab3
   main-is:             vocab3.hs
   build-depends:       base >=4.10 && <4.12
-                     , text >= 1.2 && < 1.3
+                     , text >=1.2 && <1.3
   default-language:    Haskell2010
 
 executable showexpr
   main-is:             showexpr.hs
   build-depends:       base >=4.10 && <4.12
-                     , hint >= 0.7 && < 0.9
+                     , hint >=0.7 && <0.9
   default-language:    Haskell2010
 
 -- -----------------------------------------------------------------------------

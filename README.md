@@ -1,4 +1,11 @@
-This is the sample code to accompany the book *Haskell in Depth* (Vitaly Bragilevsky, Manning Publications 2019).
+This is the sample code to accompany the book *Haskell in Depth* (Vitaly Bragilevsky, Manning Publications 2019). 
+
+To get the source code on your system, you may want to run:
+```
+cabal get hid-examples
+```
+Alternatively, you may clone [GitHub repository](https://github.com/bravit/hid-examples/) with the most current version.
+
 
 To work with the code on your system, you need either:
 
@@ -73,7 +80,7 @@ For example:
 cabal repl stockquotes
 ```
 
-To work with particular module you have to load it in GHCi with `:load`.
+To work with particular module, you have to load it in GHCi with `:load`.
 
 
 ## Using Cabal new-*
