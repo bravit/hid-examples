@@ -5,10 +5,10 @@ module HtmlReport (htmlReport) where
 
 import Data.Foldable (traverse_)
 import Data.Semigroup ((<>))
-import qualified Data.ByteString.Lazy as BL
+import Data.ByteString.Lazy (ByteString)
 import Text.Blaze.Html5 as H 
 import Text.Blaze.Html5.Attributes (src)
-import Text.Blaze.Html.Renderer.Utf8
+import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
 
 import QuoteData
 import StatReport (showStatEntryValue)
@@ -16,7 +16,7 @@ import Statistics
 import Fmt
 
 htmlReport :: (Functor t, Foldable t) =>
-              String -> t QuoteData -> StatInfo -> [FilePath] -> BL.ByteString
+              String -> t QuoteData -> StatInfo -> [FilePath] -> ByteString
 htmlReport title quotes si images = renderHtml $ docTypeHtml $ do
      H.head $ do
        H.title $ string title
@@ -34,25 +34,25 @@ htmlReport title quotes si images = renderHtml $ docTypeHtml $ do
       h1 "Diagrams"
       traverse_ ((img!).src.toValue) images
 
-    statData2TR (qf, entries) = tr $ do
-      td $ string $ show qf
-      traverse_ (td.string.showStatEntryValue) entries
-
     renderStatInfo [] = pure ()
     renderStatInfo si@((_, ses):_) = do
       h1 "Statistics Report"
       table $ do
-         thead $ traverse_ th
-               $ "Quotes Field" : 
-                 [ text $ fmt $ build $ stat s | s <- ses]
+         thead $ tr $ traverse_ th
+               $ "Quotes Field" : [text $ fmt $ build $ stat s | s <- ses]
          tbody $ traverse_ statData2TR si
 
-    quoteData2TR QuoteData {..} = tr $ do
-      td $ string $ show day
-      traverse_ (td.string.show) [close, volume, open, high, low] 
+    statData2TR (qf, entries) = tr $ do
+      td $ string $ show qf
+      traverse_ (td.string.showStatEntryValue) entries
 
     renderData quotes = do
       h1 "Stock Quotes Data"
       table $ do
-         thead $ traverse_ th ["Day", "Close", "Volume", "Open", "High", "Low"]
+         thead $ tr
+               $ traverse_ th ["Day", "Close", "Volume", "Open", "High", "Low"]
          tbody $ traverse_ quoteData2TR quotes
+
+    quoteData2TR QuoteData {..} = tr $ do
+      td $ string $ show day
+      traverse_ (td.string.show) [close, volume, open, high, low]
