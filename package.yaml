@@ -1,0 +1,56 @@
+name: hid-examples
+version: 0.1.0.0
+synopsis: Examples to accompany the book "Haskell in Depth"
+description:
+        This package provides source code examples which accompany the book
+        "Haskell in Depth" by Vitaly Bragilevsky (Manning Publications 2019).
+        You may want to get this package via @cabal get hid-examples@
+        and explore its content.
+
+license:             BSD3
+author: Vitaly Bragilevsky
+maintainer: Vitaly Bragilevsky <vit.bragilevsky@gmail.com>
+github: bravit/hid-examples
+extra-source-files:
+    - ChangeLog.md
+    - LICENSE
+    - README.md
+    - stack.yaml
+
+data-files:
+    - data/*.*
+    - texts/*.*
+
+dependencies: base >=4.10 && <4.12
+
+executables:
+    # Chapter 2
+    locator:
+        main: locator.hs
+    vocab1:
+        main: vocab1.hs
+        dependencies: text >=1.2 && <1.3
+    vocab2:
+        main: vocab2.hs
+        dependencies: text >=1.2 && <1.3
+    vocab3:
+        main: vocab3.hs
+        dependencies: text >=1.2 && <1.3
+    showexpr:
+        main: showexpr.hs
+        dependencies: hint >=0.7 && <0.9
+    # Chapter 3
+    stockquotes:
+        source-dirs: stockquotes
+        main: Main.hs
+        dependencies:
+          - bytestring >=0.10 && <0.11
+          - blaze-html >=0.9 && <0.10
+          - optparse-applicative >=0.14 && <0.15
+          - time >=1.8 && <1.9
+          - text >=1.2 && <1.3
+          - fmt >=0.5 && <0.7
+          - safe >=0.3 && <0.4
+          - Chart >=1.8 && <1.10
+          - Chart-diagrams >=1.8 && <1.10
+          - cassava >=0.5 && <0.6
