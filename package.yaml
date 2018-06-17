@@ -7,6 +7,7 @@ description:
         You may want to get this package via @cabal get hid-examples@
         and explore its content.
 
+category:            Sample Code
 license:             BSD3
 author: Vitaly Bragilevsky
 maintainer: Vitaly Bragilevsky <vit.bragilevsky@gmail.com>

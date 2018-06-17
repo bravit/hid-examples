@@ -7,6 +7,6 @@ cabal-dev
 cabal.sandbox.config
 .cabal-sandbox
 .stack-work
-
+.ghc.environment.*
 *.svg
 *.html
