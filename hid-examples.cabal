@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2c2b4e28de11cf6d1335f0d9826b0dbc3c1eb2dfdbe2fed4ba97a8e787815ec3
+-- hash: 3153a9f2222d8e4fb243e4407b2d5ef74ab08692c03c35a6074e4558544fbe50
 
 name:           hid-examples
 version:        0.1.0.0
@@ -64,6 +64,7 @@ executable stockquotes
       Paths_hid_examples
   hs-source-dirs:
       stockquotes
+  other-extensions: RecordWildCards OverloadedStrings FlexibleInstances DeriveGeneric DeriveAnyClass
   build-depends:
       Chart >=1.8 && <1.10
     , Chart-diagrams >=1.8 && <1.10
