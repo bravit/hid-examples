@@ -17,6 +17,9 @@ extra-source-files:
     - LICENSE
     - README.md
     - stack.yaml
+    - .travis.yml
+    - appveyor.yml
+    - package.yaml
 
 data-files:
     - data/*.*

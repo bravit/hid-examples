@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3153a9f2222d8e4fb243e4407b2d5ef74ab08692c03c35a6074e4558544fbe50
+-- hash: 6386da3eb8fa4da98e66d3a0e8545e11a78e8526afc001df3357f43bad5ecf98
 
 name:           hid-examples
 version:        0.1.0.0
@@ -18,8 +18,11 @@ license-file:   LICENSE
 build-type:     Simple
 cabal-version:  >= 1.10
 extra-source-files:
+    .travis.yml
+    appveyor.yml
     ChangeLog.md
     LICENSE
+    package.yaml
     README.md
     stack.yaml
 data-files:
