@@ -64,3 +64,48 @@ executables:
           - Chart >=1.8 && <1.10
           - Chart-diagrams >=1.8 && <1.10
           - cassava >=0.5 && <0.6
+    # Chapter 5
+    maybe:
+        main: maybe.hs
+        dependencies:
+          - safe >=0.3 && <0.4
+    reader:
+        main: reader.hs
+        other-extensions:
+          - NamedFieldPuns
+        dependencies:
+          - mtl >=2.0 && <2.3
+    genSQL:
+        main: genSQL.hs
+        other-extensions:
+          - OverloadedStrings
+          - ViewPatterns
+        dependencies:
+          - text >=1.2 && <1.3
+          - mtl >=2.0 && <2.3
+    gcd:
+        main: gcd.hs
+        dependencies:
+          - mtl >=2.0 && <2.3
+    weapons:
+        main: weapons.hs
+        dependencies:
+          - mtl >=2.0 && <2.3
+          - random >=1.0 && <1.2
+    shunting-yard:
+        main: shunting-yard.hs
+        dependencies:
+          - mtl >=2.0 && <2.3
+    dicegame:
+        main: dicegame.hs
+        dependencies:
+          - mtl >=2.0 && <2.3
+          - random >=1.0 && <1.2
+    ioref:
+        main: ioref.hs
+    filecount:
+        main: filecount.hs
+        dependencies:
+          - extra >=1.5 && <1.7
+    stref:
+        main: stref.hs
