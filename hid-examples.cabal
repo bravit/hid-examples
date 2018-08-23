@@ -4,7 +4,7 @@ cabal-version: >= 1.10
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d7b4a7dfb9f5a84b93de5838d9cf381bf0ebe57583ed2436c424ec4cf403235f
+-- hash: 7f9e8cb8e896dda582ac8e892d93e9a499c17b720674623fd86b91e530d73c0d
 
 name:           hid-examples
 version:        0.1.0.0
@@ -155,7 +155,7 @@ executable stockquotes
     , optparse-applicative >=0.14 && <0.15
     , safe >=0.3 && <0.4
     , text >=1.2 && <1.3
-    , time >=1.8 && <1.9
+    , time >=1.8 && <1.10
   default-language: Haskell2010
 
 executable stref
