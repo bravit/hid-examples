@@ -4,10 +4,10 @@ cabal-version: >= 1.10
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7f9e8cb8e896dda582ac8e892d93e9a499c17b720674623fd86b91e530d73c0d
+-- hash: 6d9bc7f35a54450595b8cfc3a4fe434408d4bb09fdf34222dfa11b29c8a6861b
 
 name:           hid-examples
-version:        0.1.0.0
+version:        0.2
 synopsis:       Examples to accompany the book "Haskell in Depth"
 description:    This package provides source code examples which accompany the book "Haskell in Depth" by Vitaly Bragilevsky (Manning Publications 2019). You may want to get this package via @cabal get hid-examples@ and explore its content.
 category:       Sample Code
