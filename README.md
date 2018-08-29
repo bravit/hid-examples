@@ -50,7 +50,7 @@ stack ghci stockquotes/Statistics.hs
 ### Building
 
 ```
-cabal sandox init
+cabal sandbox init
 cabal install --only-dependencies
 cabal configure
 cabal build
