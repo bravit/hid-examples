@@ -7,3 +7,8 @@
 ## 0.2  -- 2018-08-24
 
 * Examples for chapter 5.
+
+## 0.3  -- 2018-11-13
+
+* Examples for chapter 6. All examples of expressions processing
+  are moved to folder 'expr'.

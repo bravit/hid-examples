@@ -1,5 +1,5 @@
 name: hid-examples
-version: 0.2
+version: 0.3
 synopsis: Examples to accompany the book "Haskell in Depth"
 description:
         This package provides source code examples which accompany the book
@@ -41,7 +41,7 @@ executables:
         main: vocab3.hs
         dependencies: text >=1.2 && <1.3
     showexpr:
-        main: showexpr.hs
+        main: expr/showexpr.hs
         dependencies: hint >=0.7 && <0.9
     # Chapter 3
     stockquotes:
@@ -93,7 +93,7 @@ executables:
           - mtl >=2.0 && <2.3
           - random >=1.0 && <1.2
     shunting-yard:
-        main: shunting-yard.hs
+        main: expr/shunting-yard.hs
         dependencies:
           - mtl >=2.0 && <2.3
     dicegame:
@@ -109,3 +109,20 @@ executables:
           - extra >=1.5 && <1.7
     stref:
         main: stref.hs
+    # Chapter 6
+    du:
+        source-dirs: du
+        main: du.hs
+        dependencies:
+          - mtl >=2.0 && <2.3
+          - filepath >= 1.4.2 && < 1.5
+          - directory >= 1.3 && < 1.4
+          - unix-compat >= 0.5 && < 0.6
+          - optparse-applicative >= 0.14 && < 0.15
+    rpnexpr:
+        source-dirs: expr
+        main: rpnexpr.hs
+        dependencies:
+          - mtl >= 2.0 && < 2.3
+          - transformers >= 0.5 && < 0.6
+          - safe >=0.3 && <0.4

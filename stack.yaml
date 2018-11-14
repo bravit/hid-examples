@@ -2,3 +2,6 @@ resolver: lts-10.10
 
 packages:
 - .
+
+extra-deps:
+- filepath-1.4.2.1
