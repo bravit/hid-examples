@@ -8,7 +8,7 @@ import Options.Applicative as Opt
 
 import App
 import DiskUsage
-import FileCount
+import FileCounter
 
 mkConfig :: Opt.Parser AppConfig
 mkConfig = AppConfig

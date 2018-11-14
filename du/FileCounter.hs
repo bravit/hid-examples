@@ -1,6 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 
-module FileCount (fileCount) where
+module FileCounter (fileCount) where
 
 import Control.Monad.RWS
 import System.FilePath
