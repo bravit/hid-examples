@@ -1,10 +1,10 @@
-cabal-version: >= 1.10
+cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.29.7.
+-- This file has been generated from package.yaml by hpack version 0.31.1.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0f58996df6eed535c960e638a0ffb93f26158ce117960aa80ab9604183e74243
+-- hash: 96ade6f94fec37f7d62e63429298adf7676cbe57112c36869607af42fdc26bd2
 
 name:           hid-examples
 version:        0.3
@@ -19,15 +19,17 @@ license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
-    .travis.yml
-    appveyor.yml
     ChangeLog.md
     LICENSE
-    package.yaml
     README.md
     stack.yaml
+    .travis.yml
+    appveyor.yml
+    package.yaml
 data-files:
     data/quotes.csv
+    data/ssrequests.txt
+    data/suntimes.config.sample.dhall
     texts/Dracula.srt
     texts/forsyte.txt
     texts/hamlet.txt
@@ -63,7 +65,7 @@ executable du
   build-depends:
       base >=4.10 && <4.12
     , directory >=1.3 && <1.4
-    , filepath >=1.4.2 && <1.5
+    , filepath >=1.4.1 && <1.5
     , mtl >=2.0 && <2.3
     , optparse-applicative >=0.14 && <0.15
     , unix-compat >=0.5 && <0.6
@@ -139,6 +141,8 @@ executable rpnexpr
       EvalRPN
       EvalRPN_trans
       EvalRPN_trans2
+      EvalRPNExcept
+      EvalRPNExcept2
       MyMaybeT
       Paths_hid_examples
   hs-source-dirs:
@@ -203,6 +207,37 @@ executable stref
       Paths_hid_examples
   build-depends:
       base >=4.10 && <4.12
+  default-language: Haskell2010
+
+executable suntimes
+  main-is: Main.hs
+  other-modules:
+      GeoCoordsReq
+      ProcessRequest
+      STExcept
+      SunTimes
+      TimeZones
+      Types
+      Paths_hid_examples
+  hs-source-dirs:
+      suntimes
+  default-extensions: OverloadedStrings
+  other-extensions: RecordWildCards DeriveGeneric
+  build-depends:
+      aeson >=1.2 && <1.5
+    , base >=4.10 && <4.12
+    , bytestring >=0.10 && <0.11
+    , data-default >=0.5 && <0.8
+    , dhall >=1.8 && <1.20
+    , http-client >=0.4 && <0.6
+    , mtl >=2.0 && <2.3
+    , optparse-applicative >=0.14 && <0.15
+    , req >=1.0 && <1.3
+    , safe-exceptions >=0.1.5 && <0.2
+    , system-locale >=0.2 && <0.4
+    , text >=1.2 && <1.3
+    , time >=1.8 && <1.10
+    , transformers >=0.5 && <0.6
   default-language: Haskell2010
 
 executable vocab1

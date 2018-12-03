@@ -2,6 +2,10 @@ import qualified EvalRPN as E
 import qualified EvalRPN_trans as E1
 import qualified EvalRPN_trans2 as E2
 
+import qualified EvalRPNExcept as EE
+import qualified EvalRPNExcept2 as EE2
+
+
 import Control.Monad (mapM_, when)
 import Data.Maybe
 

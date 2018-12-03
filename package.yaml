@@ -115,7 +115,7 @@ executables:
         main: du.hs
         dependencies:
           - mtl >=2.0 && <2.3
-          - filepath >= 1.4.2 && < 1.5
+          - filepath >= 1.4.1 && < 1.5
           - directory >= 1.3 && < 1.4
           - unix-compat >= 0.5 && < 0.6
           - optparse-applicative >= 0.14 && < 0.15
@@ -136,3 +136,26 @@ executables:
           - UndecidableInstances
           - InstanceSigs
           - LambdaCase
+    # Chapter 7
+    suntimes:
+        source-dirs: suntimes
+        main: Main.hs
+        dependencies:
+          - mtl >= 2.0 && < 2.3
+          - transformers >= 0.5 && < 0.6
+          - time >=1.8 && <1.10
+          - text >=1.2 && <1.3
+          - safe-exceptions >= 0.1.5 && < 0.2
+          - aeson >= 1.2 && < 1.5  
+          - req >= 1.0 && < 1.3  
+          - http-client >= 0.4 && < 0.6  
+          - data-default >= 0.5 && < 0.8  
+          - system-locale >= 0.2 && < 0.4  
+          - optparse-applicative >=0.14 && <0.15
+          - bytestring >= 0.10 && < 0.11
+          - dhall >= 1.8 && < 1.20
+        default-extensions: 
+          - OverloadedStrings
+        other-extensions:
+          - RecordWildCards
+          - DeriveGeneric

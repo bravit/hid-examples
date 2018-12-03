@@ -3,7 +3,7 @@
 module DiskUsage (diskUsage) where
 
 import Control.Monad.RWS
-import System.FilePath (isExtensionOf)
+import System.FilePath (takeExtension)
 import System.Posix.Types (FileOffset)
 import System.PosixCompat.Files (FileStatus, getFileStatus,
                                  isDirectory, isRegularFile, fileSize)
@@ -32,7 +32,7 @@ recordEntry fp fs = do
 --    addToTS :: FileOffset -> DUApp ()
     addToTS ofs = modify (\st -> st {st_field = st_field st + ofs})
     needRec _ Nothing _ = True
-    needRec fp (Just ext) isFile = isFile && ext `isExtensionOf` fp
+    needRec fp (Just ext) isFile = isFile && (ext == takeExtension fp)
 
 logDiffTS :: FileOffset -> DUApp ()
 logDiffTS ts = do
