@@ -1,10 +1,11 @@
 import Options.Applicative as Opt
-import qualified Dhall
+import Data.Aeson
 import Control.Exception.Safe
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Control.Monad
 import Data.Semigroup ((<>)) -- required for GHC 8.2
+import qualified Data.ByteString as B
 import System.Exit
 import System.IO.Error (isDoesNotExistError, ioeGetFileName)
 
@@ -32,14 +33,16 @@ mkParams = Params <$>
              mkAppMode <*>
              strOption
                 (long "conf" <> short 'c' <>
-                 value "config.dhall" <>
+                 value "config.json" <>
                  showDefault <>
                  metavar "CONFIGNAME" <> help "Configuration file" )
 
 withConfig :: Params -> IO ()
 withConfig (Params appMode config) = do
-    wauth <- TIO.readFile config >>= Dhall.input Dhall.auto
-    run wauth appMode
+    wauth <- eitherDecodeStrict `fmap` B.readFile config
+    case wauth of
+      Right wauth' -> run wauth' appMode
+      Left err -> putStrLn $ "Error reading configuration file: " ++ err
   where
     run wauth (FileInput fname) = TIO.readFile fname >>= processMany wauth . T.lines
     run wauth Interactive = processInteractively wauth

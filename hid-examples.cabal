@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 96ade6f94fec37f7d62e63429298adf7676cbe57112c36869607af42fdc26bd2
+-- hash: 4fa50151768f0374c5b7da7d922af581b4bd0f759ad1cea66e955dd95ae07e31
 
 name:           hid-examples
 version:        0.3
@@ -29,7 +29,7 @@ extra-source-files:
 data-files:
     data/quotes.csv
     data/ssrequests.txt
-    data/suntimes.config.sample.dhall
+    data/suntimes.config.sample.json
     texts/Dracula.srt
     texts/forsyte.txt
     texts/hamlet.txt
@@ -228,7 +228,6 @@ executable suntimes
     , base >=4.10 && <4.12
     , bytestring >=0.10 && <0.11
     , data-default >=0.5 && <0.8
-    , dhall >=1.8 && <1.20
     , http-client >=0.4 && <0.6
     , mtl >=2.0 && <2.3
     , optparse-applicative >=0.14 && <0.15

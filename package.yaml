@@ -153,7 +153,6 @@ executables:
           - system-locale >= 0.2 && < 0.4  
           - optparse-applicative >=0.14 && <0.15
           - bytestring >= 0.10 && < 0.11
-          - dhall >= 1.8 && < 1.20
         default-extensions: 
           - OverloadedStrings
         other-extensions:

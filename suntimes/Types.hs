@@ -3,11 +3,9 @@
 module Types where
 
 import Data.Text
-import Data.ByteString
 import GHC.Generics
 import Data.Time
 import Data.Aeson
-import Dhall
 import Control.Exception.Safe
 
 
@@ -33,4 +31,4 @@ data WebAPIAuth = WebAPIAuth { timeZoneDBkey :: Text,
                                agent :: Text}
   deriving (Generic, Show)
 
-instance Interpret WebAPIAuth
+instance FromJSON WebAPIAuth

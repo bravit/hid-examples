@@ -10,4 +10,4 @@ cabal.sandbox.config
 .ghc.environment.*
 *.svg
 *.html
-config.dhall
+config.json
