@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 04aece923197b87f7ef8868458878726c0ab87e0bb5188484781f71513b19939
+-- hash: fedda8483eabe84dd9f462c69b662b4508e6d953d88c9b3742b51471e8c1ac60
 
 name:           hid-examples
 version:        0.3
@@ -17,7 +17,7 @@ author:         Vitaly Bragilevsky
 maintainer:     Vitaly Bragilevsky <vit.bragilevsky@gmail.com>
 license:        BSD3
 license-file:   LICENSE
-tested-with:    GHC == 8.2.2, GHC == 8.4.3, GHC == 8.6.1
+tested-with:    GHC == 8.2.2, GHC == 8.4.3, GHC == 8.6.2
 build-type:     Simple
 extra-source-files:
     ChangeLog.md
@@ -46,7 +46,7 @@ executable dicegame
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
   default-language: Haskell2010
@@ -64,7 +64,7 @@ executable du
       du
   other-extensions: GeneralizedNewtypeDeriving RecordWildCards FlexibleContexts
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , directory >=1.3 && <1.4
     , filepath >=1.4.1 && <1.5
     , mtl >=2.0 && <2.3
@@ -77,7 +77,7 @@ executable filecount
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , extra >=1.5 && <1.7
   default-language: Haskell2010
 
@@ -86,7 +86,7 @@ executable gcd
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
@@ -96,7 +96,7 @@ executable genSQL
       Paths_hid_examples
   other-extensions: OverloadedStrings ViewPatterns
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
     , text >=1.2 && <1.3
   default-language: Haskell2010
@@ -106,7 +106,7 @@ executable ioref
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
   default-language: Haskell2010
 
 executable locator
@@ -114,7 +114,7 @@ executable locator
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
   default-language: Haskell2010
 
 executable maybe
@@ -122,7 +122,7 @@ executable maybe
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , safe >=0.3 && <0.4
   default-language: Haskell2010
 
@@ -132,7 +132,7 @@ executable reader
       Paths_hid_examples
   other-extensions: NamedFieldPuns
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
@@ -150,7 +150,7 @@ executable rpnexpr
       expr
   other-extensions: FlexibleInstances MultiParamTypeClasses UndecidableInstances InstanceSigs LambdaCase
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
     , safe >=0.3 && <0.4
     , transformers >=0.5 && <0.6
@@ -161,7 +161,7 @@ executable showexpr
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , hint >=0.7 && <0.10
   default-language: Haskell2010
 
@@ -170,7 +170,7 @@ executable shunting-yard
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
@@ -191,7 +191,7 @@ executable stockquotes
   build-depends:
       Chart >=1.8 && <1.10
     , Chart-diagrams >=1.8 && <1.10
-    , base >=4.10 && <4.12
+    , base >=4.10 && <4.13
     , blaze-html >=0.9 && <0.10
     , bytestring >=0.10 && <0.11
     , cassava >=0.5 && <0.6
@@ -207,7 +207,7 @@ executable stref
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
   default-language: Haskell2010
 
 executable suntimes
@@ -226,7 +226,7 @@ executable suntimes
   other-extensions: RecordWildCards DeriveGeneric
   build-depends:
       aeson >=1.2 && <1.5
-    , base >=4.10 && <4.12
+    , base >=4.10 && <4.13
     , bytestring >=0.10 && <0.11
     , data-default >=0.5 && <0.8
     , http-client >=0.4 && <0.6
@@ -245,7 +245,7 @@ executable vocab1
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , text >=1.2 && <1.3
   default-language: Haskell2010
 
@@ -254,7 +254,7 @@ executable vocab2
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , text >=1.2 && <1.3
   default-language: Haskell2010
 
@@ -263,7 +263,7 @@ executable vocab3
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , text >=1.2 && <1.3
   default-language: Haskell2010
 
@@ -272,7 +272,7 @@ executable weapons
   other-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.12
+      base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
   default-language: Haskell2010
