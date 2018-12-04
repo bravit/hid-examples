@@ -25,7 +25,7 @@ data-files:
     - data/*.*
     - texts/*.*
 
-tested-with: ghc == 8.2.2, ghc == 8.4.3, ghc == 8.6.1
+tested-with: GHC == 8.2.2, GHC == 8.4.3, GHC == 8.6.1
 
 dependencies: base >=4.10 && <4.12
 
