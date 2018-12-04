@@ -25,6 +25,8 @@ data-files:
     - data/*.*
     - texts/*.*
 
+tested-with: ghc == 8.2.2, ghc == 8.4.3, ghc == 8.6.1
+
 dependencies: base >=4.10 && <4.12
 
 executables:

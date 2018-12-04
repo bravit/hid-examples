@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4fa50151768f0374c5b7da7d922af581b4bd0f759ad1cea66e955dd95ae07e31
+-- hash: 0c6d96430f9e06434254ffc4a8c0dd9feab9bd1f088c32f50463cf0f21b0a82e
 
 name:           hid-examples
 version:        0.3
@@ -17,6 +17,7 @@ author:         Vitaly Bragilevsky
 maintainer:     Vitaly Bragilevsky <vit.bragilevsky@gmail.com>
 license:        BSD3
 license-file:   LICENSE
+tested-with:    ghc == 8.2.2, ghc == 8.4.3, ghc == 8.6.1
 build-type:     Simple
 extra-source-files:
     ChangeLog.md
