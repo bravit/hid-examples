@@ -7,19 +7,19 @@ import qualified Network.HTTP.Client as NC
 
 import Types
 
-data RequestFormatError = EmptyRequest | IncorrectDayFormat T.Text
+data RequestError = EmptyRequest | WrongDay T.Text
   deriving Show
 
 data SunInfoException = UnknownLocation T.Text
                       | UnknownTime GeoCoords
-                      | FormatError RequestFormatError
+                      | FormatError RequestError
                       | ServiceAPIError String
                       | NetworkError SomeException
 
 instance Show SunInfoException where
   show (UnknownLocation loc) = "Failed while determining coordinates"
   show (UnknownTime loc) = "Failed while determining sunrise/sunset times"
-  show (FormatError er) = "Request format error: " ++ show er
+  show (FormatError er) = show er
   show (ServiceAPIError _) = "Error while communicating with external services"
   show (NetworkError _) = "Network communication error"
   

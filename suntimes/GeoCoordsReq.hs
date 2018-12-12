@@ -5,26 +5,28 @@ import Data.Default
 import Control.Exception.Safe
 import qualified Data.Text as T
 import Data.Text.Encoding (encodeUtf8)
+import Control.Monad.Reader
+import Control.Monad.IO.Class
 
+import App
 import Types
 import STExcept
 
-getCoords :: Address -> WebAPIAuth -> IO GeoCoords
-getCoords addr wauth = do
-    res <- runReq def request `catch` rethrowReqException
+getCoords :: Address -> MyApp GeoCoords
+getCoords addr = do
+    wauth <- ask
+    let
+      ep = https "nominatim.openstreetmap.org" /: "search"
+      reqParams =
+        mconcat [
+          "q" =: addr
+          , "format" =: ("json" :: T.Text)
+          , "limit" =: (1 :: Int)
+          , "email" =: email wauth
+          , header "User-Agent" (encodeUtf8 $ agent wauth)
+          ]
+      request = req GET ep NoReqBody jsonResponse reqParams
+    res <- liftIO $ responseBody <$> runReq def request `catch` rethrowReqException
     case res of
       [] -> throw (UnknownLocation addr)
       (coords:_) -> pure coords
-  where
-    request = responseBody <$>
-              req GET ep NoReqBody jsonResponse reqParams
-    ep = https "nominatim.openstreetmap.org" /:"search"
-    reqParams =
-      mconcat [
-        "q" =: addr
-      , "format" =: ("json" :: T.Text)
-      , "limit" =: (1 :: Int)
-      , "email" =: email wauth
-      , header "User-Agent"
-               (encodeUtf8 $ agent wauth)
-      ]

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: fedda8483eabe84dd9f462c69b662b4508e6d953d88c9b3742b51471e8c1ac60
+-- hash: b67acacf1719e9d014d85d89c02f192e54bf76bd140f8c9c47508339efbe1297
 
 name:           hid-examples
 version:        0.3
@@ -213,11 +213,11 @@ executable stref
 executable suntimes
   main-is: Main.hs
   other-modules:
+      App
       GeoCoordsReq
       ProcessRequest
       STExcept
       SunTimes
-      TimeZones
       Types
       Paths_hid_examples
   hs-source-dirs:

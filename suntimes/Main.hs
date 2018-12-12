@@ -1,25 +1,28 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving  #-}
+
 import Options.Applicative as Opt
 import Data.Aeson
 import Control.Exception.Safe
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Control.Monad
+import Control.Monad.IO.Class
 import Data.Semigroup ((<>)) -- required for GHC 8.2
 import qualified Data.ByteString as B
 import System.Exit
 import System.IO.Error (isDoesNotExistError, ioeGetFileName)
 
-import Types
-import GeoCoordsReq
-import SunTimes
+import App
 import ProcessRequest
 import STExcept
 
 data AppMode = FileInput FilePath | Interactive
-data Params = Params AppMode FilePath
+data Params = Params
+                AppMode -- mode 
+                FilePath -- config file
 
-mkAppMode :: Opt.Parser AppMode
-mkAppMode = fileInput <|> interactive
+mkParams :: Opt.Parser Params
+mkParams = Params <$> (fileInput <|> interactive) <*> config
   where
     fileInput = FileInput <$> strOption
                 (long "file" <> short 'f' <>
@@ -27,25 +30,20 @@ mkAppMode = fileInput <|> interactive
     interactive = flag Interactive Interactive
                   (long "interactive" <> short 'i' <>
                    help "Interactive mode")
-
-mkParams :: Opt.Parser Params
-mkParams = Params <$>
-             mkAppMode <*>
-             strOption
-                (long "conf" <> short 'c' <>
+    config = strOption (long "conf" <> short 'c' <>
                  value "config.json" <>
                  showDefault <>
                  metavar "CONFIGNAME" <> help "Configuration file" )
 
 withConfig :: Params -> IO ()
 withConfig (Params appMode config) = do
-    wauth <- eitherDecodeStrict `fmap` B.readFile config
+    wauth <- eitherDecodeStrict <$> B.readFile config
     case wauth of
-      Right wauth' -> run wauth' appMode
+      Right wauth' -> runMyApp (run appMode) wauth'
       Left err -> putStrLn $ "Error reading configuration file: " ++ err
   where
-    run wauth (FileInput fname) = TIO.readFile fname >>= processMany wauth . T.lines
-    run wauth Interactive = processInteractively wauth
+    run (FileInput fname) = liftIO (TIO.readFile fname) >>= processMany . T.lines
+    run Interactive = processInteractively
 
 main = do
   (execParser opts >>= withConfig)
@@ -57,7 +55,7 @@ main = do
     opts =
       info (mkParams <**> helper)
            (fullDesc <>
-            progDesc "Reporting sunrise/sunset times for specified location")
+            progDesc "Reports sunrise/sunset times for the specified location")
     parserExit :: ExitCode -> IO ()
     parserExit _ = pure ()
     printIOError :: IOException -> IO ()
