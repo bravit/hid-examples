@@ -40,16 +40,15 @@ withConfig (Params appMode config) = do
     wauth <- eitherDecodeStrict <$> B.readFile config
     case wauth of
       Right wauth' -> runMyApp (run appMode) wauth'
-      Left err -> putStrLn $ "Error reading configuration file: " ++ err
+      Left _ -> throwString $ "Error parsing configuration file"
   where
     run (FileInput fname) = liftIO (TIO.readFile fname) >>= processMany . T.lines
     run Interactive = processInteractively
 
-main = do
-  (execParser opts >>= withConfig)
+main = (execParser opts >>= withConfig)
        `catches` [Handler parserExit,
                   Handler printIOError,
-                  Handler printSunInfoError,
+                  Handler decodeConfigError,
                   Handler printOtherErrors]
   where
     opts =
@@ -64,7 +63,7 @@ main = do
            let mbfn = ioeGetFileName e
            putStrLn $ "File " ++ maybe "" id mbfn  ++ " not found"
       | otherwise = putStrLn $ "I/O error: " ++ show e
-    printSunInfoError :: SunInfoException -> IO ()
-    printSunInfoError = print
+    decodeConfigError :: StringException -> IO ()
+    decodeConfigError (StringException s _) = putStrLn s
     printOtherErrors :: SomeException -> IO ()
-    printOtherErrors _ = putStrLn "Unknown error. Please, try again later."
+    printOtherErrors = print

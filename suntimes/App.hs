@@ -15,4 +15,3 @@ newtype MyApp a = MyApp {
 
 runMyApp :: MyApp a -> WebAPIAuth -> IO a
 runMyApp app config = runReaderT (runApp app) config
-

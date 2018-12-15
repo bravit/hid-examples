@@ -13,7 +13,7 @@ import Types
 import STExcept
 
 getCoords :: Address -> MyApp GeoCoords
-getCoords addr = do
+getCoords addr = handle rethrowReqException $ do
     wauth <- ask
     let
       ep = https "nominatim.openstreetmap.org" /: "search"
@@ -26,7 +26,7 @@ getCoords addr = do
           , header "User-Agent" (encodeUtf8 $ agent wauth)
           ]
       request = req GET ep NoReqBody jsonResponse reqParams
-    res <- liftIO $ responseBody <$> runReq def request `catch` rethrowReqException
+    res <- liftIO $ responseBody <$> runReq def request
     case res of
       [] -> throw (UnknownLocation addr)
       (coords:_) -> pure coords

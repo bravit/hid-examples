@@ -2,7 +2,7 @@
 
 module ProcessRequest (processMany, processInteractively) where
 
-import System.Locale.Read
+import System.Locale.Read (TimeLocale, getCurrentLocale)
 import Control.Exception.Safe
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -19,16 +19,6 @@ import Types
 import GeoCoordsReq
 import SunTimes
 import STExcept
-
-processRequest :: T.Text -> MyApp T.Text
-processRequest t = processR (parseRequestLine (T.strip t))
-  where
-    processR (Left e) = throw (FormatError e)
-    processR (Right (addr, day)) = do
-      coords <- getCoords addr
-      st <- getSunTimes coords day 
-      loc <- liftIO getCurrentLocale `catchAny` (\_ -> pure defaultTimeLocale)
-      pure $ formatResult addr st loc
 
 parseRequestLine :: T.Text -> Either RequestError (T.Text, When)
 parseRequestLine t = parse (split t)
@@ -52,6 +42,17 @@ formatResult req SunTimes {..} loc = mconcat [day, " @ ", req,
     sr = T.pack $ formatTime loc "%X %Z" sunrise
     ss = T.pack $ formatTime loc "%X %Z" sunset
 
+processRequest :: T.Text -> MyApp T.Text
+processRequest t = processR (parseRequestLine (T.strip t))
+  where
+    processR (Left e) = throw (FormatError e)
+    processR (Right (addr, day)) = do
+      coords <- getCoords addr
+      st <- getSunTimes coords day 
+      loc <- liftIO getCurrentLocale
+             `catchAny` (const $ pure defaultTimeLocale)
+      pure $ formatResult addr st loc
+
 processMany :: [T.Text] -> MyApp ()
 processMany = mapM_ processRequestWrapper
   where
@@ -60,7 +61,7 @@ processMany = mapM_ processRequestWrapper
              ((processRequest r `catch` handler r >>= liftIO .TIO.putStrLn)
               `finally` delaySec 3)
     delaySec sec = liftIO $ threadDelay (sec * 1000000)
-    handler _ (NetworkError e) = throw (NetworkError e)
+    handler :: T.Text -> SunInfoException -> MyApp T.Text
     handler r e = pure $ "Error in request '" <> r <> "': "
                          <> T.pack (show e)
 
@@ -72,10 +73,13 @@ processInteractively = action `catch` handler
       req <- liftIO $ TIO.getLine
       res <- processRequest req
       liftIO $ TIO.putStrLn res
+
     handler :: SunInfoException -> MyApp ()
+    handler e@(ServiceAPIError _) = liftIO $ print e
+    handler e@(NetworkError _) = liftIO $ print e
     handler e = do
-      liftIO $ TIO.putStr "There was an error while processing your request: "
-      liftIO $ TIO.putStrLn $ T.pack $ show e
-      liftIO $ TIO.putStrLn "Do you want to try again (Y/N)?"
-      yes <- liftIO $ TIO.getLine
-      when (yes `elem` ["y", "Y", "yes"]) processInteractively
+      liftIO $ TIO.putStr
+             $ "There was an error while processing your request: "
+             <> T.pack (show e) <> "\nDo you want to try again (Y/N)?"
+      yesno <- liftIO $ TIO.getLine
+      when (yesno `elem` ["y", "Y", "yes"]) processInteractively

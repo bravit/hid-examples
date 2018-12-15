@@ -68,7 +68,7 @@ lookupTimeZone gc@GeoCoords {..} t = do
                           , "by" =: ("position" :: T.Text)
                           ]
     r <- liftIO $ runReq def $ req GET ep NoReqBody jsonResponse reqParams
-    pure $ timeZoneInfo2TimeZone $ responseBody r
+    pure (timeZoneInfo2TimeZone $ responseBody r)
   where
     secondsToTimeZone s = minutesToTimeZone (s `div` 60)
     timeZoneInfo2TimeZone TimeZoneInfo {..} =
