@@ -58,11 +58,11 @@ processMany = mapM_ processRequestWrapper
   where
     processRequestWrapper r =
       unless ("#" `T.isPrefixOf` r)
-             ((processRequest r `catch` handler r >>= liftIO .TIO.putStrLn)
-              `finally` delaySec 3)
+             $ (processRequest r >>= liftIO .TIO.putStrLn) `catch` handler r
+               `finally` delaySec 3
     delaySec sec = liftIO $ threadDelay (sec * 1000000)
-    handler :: T.Text -> SunInfoException -> MyApp T.Text
-    handler r e = pure $ "Error in request '" <> r <> "': "
+    handler :: T.Text -> SunInfoException -> MyApp ()
+    handler r e = liftIO $ TIO.putStrLn $ "Error in request '" <> r <> "': "
                          <> T.pack (show e)
 
 processInteractively :: MyApp ()

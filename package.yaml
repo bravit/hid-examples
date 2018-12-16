@@ -25,7 +25,7 @@ data-files:
     - data/*.*
     - texts/*.*
 
-tested-with: GHC == 8.2.2, GHC == 8.4.3, GHC == 8.6.2
+tested-with: GHC == 8.2.2, GHC == 8.4.3
 
 dependencies: base >=4.10 && <4.13
 
@@ -153,7 +153,7 @@ executables:
           - http-client >= 0.4 && < 0.6  
           - data-default >= 0.5 && < 0.8  
           - system-locale >= 0.2 && < 0.4  
-          - optparse-applicative >=0.14 && <0.15
+          - optparse-applicative >= 0.14 && < 0.15
           - bytestring >= 0.10 && < 0.11
         default-extensions: 
           - OverloadedStrings
