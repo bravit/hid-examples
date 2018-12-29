@@ -11,8 +11,7 @@
 # Use new container infrastructure to enable caching
 sudo: false
 
-# Do not choose a language; we provide our own build tools.
-language: generic
+language: c
 
 # Caching so the next build will be fast too.
 cache:
@@ -82,8 +81,7 @@ before_install:
   fi
   # Use the more reliable S3 mirror of Hackage
   mkdir -p $HOME/.cabal
-  echo 'remote-repo: hackage.haskell.org:http://hackage.fpcomplete.com/' > $HOME/.cabal/config
-  echo 'remote-repo-cache: $HOME/.cabal/packages' >> $HOME/.cabal/config
+  echo 'remote-repo-cache: $HOME/.cabal/packages' > $HOME/.cabal/config
 install:
 - echo "$(ghc --version) [$(ghc --print-project-git-commit-id 2> /dev/null || echo '?')]"
 - if [ -f configure.ac ]; then autoreconf -i; fi
@@ -119,7 +117,7 @@ script:
     cabal)
       cabal configure --enable-tests --enable-benchmarks --ghc-options -O0 
       cabal build $CABALARGS
-      cabal test --show-details=streaming --log=/dev/stdout
+      cabal test
       ;;
     cabal-new)
       cabal new-build --enable-tests --enable-benchmarks --ghc-options=-O0 $CABALARGS
