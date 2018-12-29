@@ -1,10 +1,10 @@
-cabal-version: 1.12
+cabal-version: 2.0
 
 -- This file has been generated from package.yaml by hpack version 0.31.1.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e7b263ead373547dc3e068d5fec3c459459c5ef38a70aa18dd94d35aecdb7b90
+-- hash: 21d3dba0969a600c181da61d8bd31ef318a880d36a60fe48a7308cde7e0c4acc
 
 name:           hid-examples
 version:        0.3
@@ -28,6 +28,7 @@ extra-source-files:
     appveyor.yml
     package.yaml
 data-files:
+    data/ipranges.txt
     data/quotes.csv
     data/ssrequests.txt
     data/suntimes.config.sample.json
@@ -40,6 +41,20 @@ data-files:
 source-repository head
   type: git
   location: https://github.com/bravit/hid-examples
+
+library iplookup-lib
+  exposed-modules:
+      Types
+      LookupIP
+      ParseIP
+  hs-source-dirs:
+      iplookup
+  build-depends:
+      base >=4.10 && <4.13
+    , safe >=0.3 && <0.4
+    , safe-exceptions >=0.1.5 && <0.2
+    , split >=0.2 && <0.3
+  default-language: Haskell2010
 
 executable dicegame
   main-is: dicegame.hs
@@ -107,6 +122,17 @@ executable ioref
       Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
+  default-language: Haskell2010
+
+executable iplookup
+  main-is: iplookup/Main.hs
+  other-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.13
+    , iplookup-lib
+    , optparse-applicative >=0.14 && <0.15
+    , safe-exceptions >=0.1.5 && <0.2
   default-language: Haskell2010
 
 executable locator
@@ -275,4 +301,20 @@ executable weapons
       base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
+  default-language: Haskell2010
+
+test-suite iplookup-test
+  type: exitcode-stdio-1.0
+  main-is: Test.hs
+  other-modules:
+      LookupIPSpec
+      ParseIPSpec
+      Paths_hid_examples
+  hs-source-dirs:
+      tests/iplookup
+  build-depends:
+      base >=4.10 && <4.13
+    , iplookup-lib
+    , tasty >=0.11 && <1.3
+    , tasty-hspec >=1.1 && <1.2
   default-language: Haskell2010
