@@ -81,7 +81,7 @@ before_install:
   fi
   # Use the more reliable S3 mirror of Hackage
   mkdir -p $HOME/.cabal
-  echo 'remote-repo: hackage.haskell.org:http://hackage.haskell.org/' > $HOME/.cabal/config
+  echo 'remote-repo: hackage.haskell.org:http://hackage.haskell.org/packages/archive' > $HOME/.cabal/config
   echo 'remote-repo-cache: $HOME/.cabal/packages' > $HOME/.cabal/config
 install:
 - echo "$(ghc --version) [$(ghc --print-project-git-commit-id 2> /dev/null || echo '?')]"
