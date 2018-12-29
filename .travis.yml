@@ -40,13 +40,10 @@ matrix:
   - env: BUILD=cabal GHCVER=8.4.3 CABALVER=2.2 HAPPYVER=1.19.5 ALEXVER=3.1.7
     compiler: ": #GHC 8.4.3"
     addons: {apt: {packages: [cabal-install-2.2,ghc-8.4.3,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
-  - env: BUILD=cabal GHCVER=8.6.2 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
+  - env: BUILD=cabal-new GHCVER=8.6.2 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
     compiler: ": #GHC 8.6.2"
     addons: {apt: {packages: [cabal-install-2.4,ghc-8.6.2,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
-
-  # Build with the newest GHC and cabal-install. This is an accepted failure,
-  # see below.
-  - env: BUILD=cabal GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
+  - env: BUILD=cabal-new GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
     compiler: ": #GHC HEAD"
     addons: {apt: {packages: [cabal-install-head,ghc-head,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
 
@@ -62,8 +59,8 @@ matrix:
     os: osx
 
   allow_failures:
-  - env: BUILD=cabal GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
-  - env: BUILD=cabal GHCVER=8.6.2 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
+  - env: BUILD=cabal-new GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
+  - env: BUILD=cabal-new GHCVER=8.6.2 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
 
 before_install:
 # Using compiler above sets CC to an invalid value, so unset it
@@ -108,7 +105,16 @@ install:
       # this will also implicitly run hpack as necessary to generate
       # the .cabal files needed by cabal-install.
       PACKAGES=$(stack --install-ghc query locals | grep '^ *path' | sed 's@^ *path:@@')
-      cabal install --only-dependencies --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
+      cabal build --only-dependencies --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
+      ;;
+    cabal-new)
+      cabal --version
+      travis_retry cabal new-update
+      # Get the list of packages from the stack.yaml file. Note that
+      # this will also implicitly run hpack as necessary to generate
+      # the .cabal files needed by cabal-install.
+      PACKAGES=$(stack --install-ghc query locals | grep '^ *path' | sed 's@^ *path:@@')
+      cabal new-build --only-dependencies --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
       ;;
   esac
   set +ex
@@ -120,7 +126,7 @@ script:
       stack --no-terminal $ARGS test --bench --no-run-benchmarks --haddock --no-haddock-deps
       ;;
     cabal)
-      cabal install --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
+      cabal build --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
       ORIGDIR=$(pwd)
       for dir in $PACKAGES
       do
@@ -138,6 +144,29 @@ script:
           cabal test
         else
           cabal test --show-details=streaming --log=/dev/stdout
+        fi
+        cd $ORIGDIR
+      done
+      ;;
+    cabal-new)
+      cabal new-build --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
+      ORIGDIR=$(pwd)
+      for dir in $PACKAGES
+      do
+        cd $dir
+        cabal check || [ "$CABALVER" == "1.16" ]
+        cabal sdist
+        PKGVER=$(cabal info . | awk '{print $2;exit}')
+        SRC_TGZ=$PKGVER.tar.gz
+        cd dist
+        tar zxfv "$SRC_TGZ"
+        cd "$PKGVER"
+        cabal configure --enable-tests --ghc-options -O0
+        cabal new-build
+        if [ "$CABALVER" = "1.16" ] || [ "$CABALVER" = "1.18" ]; then
+          cabal new-test
+        else
+          cabal new-test --show-details=streaming --log=/dev/stdout
         fi
         cd $ORIGDIR
       done
