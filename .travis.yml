@@ -101,20 +101,11 @@ install:
     cabal)
       cabal --version
       travis_retry cabal update
-      # Get the list of packages from the stack.yaml file. Note that
-      # this will also implicitly run hpack as necessary to generate
-      # the .cabal files needed by cabal-install.
-      PACKAGES=$(stack --install-ghc query locals | grep '^ *path' | sed 's@^ *path:@@')
-      cabal build --only-dependencies --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
+      cabal install --only-dependencies --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS
       ;;
     cabal-new)
       cabal --version
       travis_retry cabal new-update
-      # Get the list of packages from the stack.yaml file. Note that
-      # this will also implicitly run hpack as necessary to generate
-      # the .cabal files needed by cabal-install.
-      PACKAGES=$(stack --install-ghc query locals | grep '^ *path' | sed 's@^ *path:@@')
-      cabal new-build --only-dependencies --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
       ;;
   esac
   set +ex
@@ -126,50 +117,13 @@ script:
       stack --no-terminal $ARGS test --bench --no-run-benchmarks --haddock --no-haddock-deps
       ;;
     cabal)
-      cabal build --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
-      ORIGDIR=$(pwd)
-      for dir in $PACKAGES
-      do
-        cd $dir
-        cabal check || [ "$CABALVER" == "1.16" ]
-        cabal sdist
-        PKGVER=$(cabal info . | awk '{print $2;exit}')
-        SRC_TGZ=$PKGVER.tar.gz
-        cd dist
-        tar zxfv "$SRC_TGZ"
-        cd "$PKGVER"
-        cabal configure --enable-tests --ghc-options -O0
-        cabal build
-        if [ "$CABALVER" = "1.16" ] || [ "$CABALVER" = "1.18" ]; then
-          cabal test
-        else
-          cabal test --show-details=streaming --log=/dev/stdout
-        fi
-        cd $ORIGDIR
-      done
+      cabal configure --enable-tests --enable-benchmarks --ghc-options -O0 
+      cabal build $CABALARGS
+      cabal test --show-details=streaming --log=/dev/stdout
       ;;
     cabal-new)
-      cabal new-build --enable-tests --enable-benchmarks --force-reinstalls --ghc-options=-O0 --reorder-goals --max-backjumps=-1 $CABALARGS $PACKAGES
-      ORIGDIR=$(pwd)
-      for dir in $PACKAGES
-      do
-        cd $dir
-        cabal check || [ "$CABALVER" == "1.16" ]
-        cabal sdist
-        PKGVER=$(cabal info . | awk '{print $2;exit}')
-        SRC_TGZ=$PKGVER.tar.gz
-        cd dist
-        tar zxfv "$SRC_TGZ"
-        cd "$PKGVER"
-        cabal configure --enable-tests --ghc-options -O0
-        cabal new-build
-        if [ "$CABALVER" = "1.16" ] || [ "$CABALVER" = "1.18" ]; then
-          cabal new-test
-        else
-          cabal new-test --show-details=streaming --log=/dev/stdout
-        fi
-        cd $ORIGDIR
-      done
+      cabal new-build --enable-tests --enable-benchmarks --ghc-options=-O0 $CABALARGS
+      cabal new-test
       ;;
   esac
   set +ex
