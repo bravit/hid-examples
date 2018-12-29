@@ -8,8 +8,8 @@ import Safe
 
 import Types
 
-buildIP :: [Word32] -> IP
-buildIP = foldl1 (\s b -> s*256 + b)
+buildIP :: [Integer] -> IP
+buildIP = fromInteger . foldl1 (\s b -> s*256 + b)
 
 guarded :: Alternative f => (a -> Bool) -> a -> f a
 guarded f a = if f a then pure a else empty
