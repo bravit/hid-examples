@@ -33,6 +33,12 @@ For example:
 stack exec stockquotes -- data/quotes.csv -p -v
 ```
 
+### Testing
+
+```
+stack test
+```
+
 ### Exploring in GHCi
 
 ```
@@ -51,8 +57,8 @@ stack ghci stockquotes/Statistics.hs
 
 ```
 cabal sandbox init
-cabal install --only-dependencies
-cabal configure
+cabal install --only-dependencies --enable-tests
+cabal configure --enable-tests
 cabal build
 ```
 
@@ -67,6 +73,14 @@ For example:
 ```
 cabal run stockquotes -- data/quotes.csv -p -v
 ```
+
+### Testing
+
+```
+cabal test
+cabal test iplookup-test
+```
+
 
 ### Exploring in GHCi
 
@@ -89,5 +103,11 @@ To work with particular module, you have to load it in GHCi with `:load`.
 
 ```
 cabal new-build
+```
+
+### Testing
+
+```
+cabal new-test
 ```
 
