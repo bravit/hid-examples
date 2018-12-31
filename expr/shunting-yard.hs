@@ -17,9 +17,9 @@ push t = modify (\(s, es) -> (t : s, es))
 
 pop :: State MyState Token
 pop = do
-  (t : s, es) <- get -- let it crash on empty stack
-  put (s, es)
-  pure t
+  (s, es) <- get
+  put (tail s, es) -- let it crash on empty stack
+  pure (head s)
 
 pop_ :: State MyState ()  -- let it crash on empty stack
 pop_ = modify (\(s, es) -> (tail s, es))
