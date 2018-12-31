@@ -125,7 +125,7 @@ script:
       ;;
     cabal-new)
       cabal new-build --enable-tests --enable-benchmarks --ghc-options=-O0 $CABALARGS
-      cabal new-test
+      cabal new-test $CABALARGS
       ;;
   esac
   set +ex
