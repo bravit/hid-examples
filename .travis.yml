@@ -14,12 +14,12 @@ sudo: false
 language: generic
 
 # Caching so the next build will be fast too.
-cache:
-  directories:
-  - $HOME/.ghc
-  - $HOME/.cabal
-  - $HOME/.stack
-  - $TRAVIS_BUILD_DIR/.stack-work
+#cache:
+#  directories:
+#  - $HOME/.ghc
+#  - $HOME/.cabal
+#  - $HOME/.stack
+#  - $TRAVIS_BUILD_DIR/.stack-work
 
 # The different configurations we want to test. We have BUILD=cabal which uses
 # cabal-install, and BUILD=stack which uses Stack. More documentation on each
@@ -70,7 +70,6 @@ before_install:
 - if [ "x$GHCVER" = "xhead" ]; then CABALARGS=--allow-newer; fi
 
 # We want to allow newer versions of packages when building on GHC 8.6
-- CABALARGS=""
 - if [ "x$GHCVER" = "x8.6.3" ]; then CABALARGS="--allow-newer -v3"; fi
 
 # Download and unpack the stack executable
