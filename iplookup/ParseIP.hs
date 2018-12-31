@@ -1,6 +1,7 @@
 module ParseIP where
 
 import Data.Word
+import Data.Bits (shiftL)
 import Data.List.Split
 import Control.Applicative
 import Control.Monad
@@ -9,7 +10,15 @@ import Safe
 import Types
 
 buildIP :: [Word32] -> IP
-buildIP = foldl1 (\s b -> s*256 + b)
+buildIP = fst . foldr go (0, 1)
+  where
+    go b (s, k) = (s+b*k, k*256)
+
+buildIP' :: [Word32] -> IP
+buildIP' = foldl1 (\s b -> s*256 + b)
+
+buildIP'' :: [Word32] -> IP
+buildIP'' = foldl1 (\s b -> shiftL s 8 + b)
 
 guarded :: Alternative f => (a -> Bool) -> a -> f a
 guarded f a = if f a then pure a else empty
