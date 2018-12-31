@@ -69,9 +69,6 @@ before_install:
 - CABALARGS=""
 - if [ "x$GHCVER" = "xhead" ]; then CABALARGS=--allow-newer; fi
 
-# We want to allow newer versions of packages when building on GHC 8.6
-- if [ "x$GHCVER" = "x8.6.3" ]; then CABALARGS="--allow-newer"; fi
-
 # Download and unpack the stack executable
 - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$HOME/.local/bin:/opt/alex/$ALEXVER/bin:/opt/happy/$HAPPYVER/bin:$HOME/.cabal/bin:$PATH
 - mkdir -p ~/.local/bin
