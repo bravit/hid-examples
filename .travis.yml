@@ -11,7 +11,7 @@
 # Use new container infrastructure to enable caching
 sudo: false
 
-language: c
+language: generic
 
 # Caching so the next build will be fast too.
 cache:
@@ -39,9 +39,9 @@ matrix:
   - env: BUILD=cabal GHCVER=8.4.3 CABALVER=2.2 HAPPYVER=1.19.5 ALEXVER=3.1.7
     compiler: ": #GHC 8.4.3"
     addons: {apt: {packages: [cabal-install-2.2,ghc-8.4.3,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
-  - env: BUILD=cabal-new GHCVER=8.6.2 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
-    compiler: ": #GHC 8.6.2"
-    addons: {apt: {packages: [cabal-install-2.4,ghc-8.6.2,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
+  - env: BUILD=cabal-new GHCVER=8.6.3 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
+    compiler: ": #GHC 8.6.3"
+    addons: {apt: {packages: [cabal-install-2.4,ghc-8.6.3,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
   - env: BUILD=cabal-new GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
     compiler: ": #GHC HEAD"
     addons: {apt: {packages: [cabal-install-head,ghc-head,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
@@ -59,7 +59,7 @@ matrix:
 
   allow_failures:
   - env: BUILD=cabal-new GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
-  - env: BUILD=cabal-new GHCVER=8.6.2 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
+  - env: BUILD=cabal-new GHCVER=8.6.3 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
 
 before_install:
 # Using compiler above sets CC to an invalid value, so unset it
@@ -68,6 +68,10 @@ before_install:
 # We want to always allow newer versions of packages when building on GHC HEAD
 - CABALARGS=""
 - if [ "x$GHCVER" = "xhead" ]; then CABALARGS=--allow-newer; fi
+
+# We want to allow newer versions of packages when building on GHC 8.6
+- CABALARGS=""
+- if [ "x$GHCVER" = "x8.6.3" ]; then CABALARGS=--allow-newer; fi
 
 # Download and unpack the stack executable
 - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$HOME/.local/bin:/opt/alex/$ALEXVER/bin:/opt/happy/$HAPPYVER/bin:$HOME/.cabal/bin:$PATH
