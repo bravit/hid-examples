@@ -3,11 +3,14 @@ import Test.Tasty.Hspec
 
 import ParseIPSpec
 import LookupIPSpec
-
+import Props
 
 main = do
   specs <- concat <$> mapM testSpecs
              [ parseIPSpecs
              , lookupIPSpecs  
              ]
-  defaultMain (testGroup "Specs" specs)
+  defaultMain (testGroup "Tests" [
+                  testGroup "Specs" specs
+                , testGroup "Properties" props  
+                ])
