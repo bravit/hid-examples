@@ -8,8 +8,8 @@ import Safe
 
 import Types
 
-buildIP :: [Integer] -> IP
-buildIP = fromInteger . foldl1 (\s b -> s*256 + b)
+buildIP :: [Word32] -> IP
+buildIP = foldl1 (\s b -> s*256 + b)
 
 guarded :: Alternative f => (a -> Bool) -> a -> f a
 guarded f a = if f a then pure a else empty
@@ -19,7 +19,7 @@ isLengthOf n xs = length xs == n
 
 parseIP :: String -> Maybe IP
 parseIP = guarded (4 `isLengthOf`) . splitOn "."
-          >=> mapM (readMay >=> guarded fitsOctet)
+          >=> mapM (readMay >=> guarded fitsOctet >=> pure . fromInteger)
           >=> pure . buildIP
   where
     fitsOctet x = 0 <= x && x < 256
