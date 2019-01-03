@@ -10,7 +10,7 @@ main = do
              [ parseIPSpecs
              , lookupIPSpecs  
              ]
-  defaultMain (testGroup "Tests" [
+  defaultMain (testGroup "All Tests" [
                   testGroup "Specs" specs
                 , testGroup "Properties" props  
                 ])

@@ -39,7 +39,8 @@ parseIPRange = guarded (2 `isLengthOf`) . splitOn ","
                >=> mapM parseIP
                >=> listToIPRange
   where
-    listToIPRange [a,b] = pure (IPRange a b)
+    listToIPRange [a,b]
+      | a <= b = pure (IPRange a b)
     listToIPRange _ = empty
 
 parseIPRanges :: String -> Either ParseError IPRangeDB

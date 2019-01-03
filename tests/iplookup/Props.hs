@@ -14,26 +14,37 @@ import LookupIP
 
 prop_buildIPs :: Property
 prop_buildIPs = property $ do
-    ipcs <- forAll genIPComponents
-    let ip = buildIP ipcs
-    buildIP' ipcs === ip
-    buildIP'' ipcs === ip
+  ipcs <- forAll genIPComponents
+  let ip = buildIP ipcs
+  buildIP' ipcs === ip
+  buildIP'' ipcs === ip
 
 prop_parseIP :: Property
 prop_parseIP = property $ do
-    ip <- forAll genIP
-    parseIP (show ip) === Just ip
+  ip <- forAll genIP
+  parseIP (show ip) === Just ip
 
-prop_parseIPRange :: Property
-prop_parseIPRange = property $ do
-    ipr <- forAll genIPRange
-    parseIPRange (show ipr) === Just ipr
+prop_parseIP_show :: Property
+prop_parseIP_show = property $ do
+  ip <- forAll genIP
+  tripping ip show parseIP
 
-prop_parseIPRanges :: Property
-prop_parseIPRanges = property $ do
-    iprdb <- forAll genIPRangeDB
-    iprdb' <- evalEither (parseIPRanges $ show iprdb)
-    iprdb' === iprdb
+prop_parseIPRange_show :: Property
+prop_parseIPRange_show = property $ do
+  ipr <- forAll genIPRange
+  tripping ipr show parseIPRange
+
+prop_parseIPRanges_show :: Property
+prop_parseIPRanges_show = property $ do
+  iprdb <- forAll genIPRangeDB
+  tripping iprdb show parseIPRanges
+--    iprdb' <- evalEither (parseIPRanges $ show iprdb)
+--    iprdb' === iprdb
+
+prop_no_parseInvalidIPRange :: Property
+prop_no_parseInvalidIPRange = property $ do
+  inv_ip <- forAll genInvalidIPRange
+  parseIPRange (show inv_ip) === Nothing
 
 prop_lookupIP_empty :: Property
 prop_lookupIP_empty = property $ do
@@ -48,10 +59,12 @@ prop_lookupIP_bordersIncluded = property $ do
   assert (lookupIP iprdb ip2)
 
 props = [
-   testProperty "buildIP agrees with buildIP'" prop_buildIPs
+   testProperty "buildIP agrees with buildIP' and buildIP''" prop_buildIPs
  , testProperty "parseIP works as expected" prop_parseIP
- , testProperty "parseIPRange works as expected" prop_parseIPRange
- , testProperty "parseIPRanges works on generated lists" prop_parseIPRanges
+ , testProperty "parseIP agrees with show" prop_parseIP_show
+ , testProperty "parseIPRange agrees with show" prop_parseIPRange_show
+ , testProperty "parseIPRanges agrees with show" prop_parseIPRanges_show
+ , testProperty "no parse of invalid IP ranges" prop_no_parseInvalidIPRange
  , testProperty "no ip in empty list" prop_lookupIP_empty
  , testProperty "lookupIP includes borders" prop_lookupIP_bordersIncluded
  ]

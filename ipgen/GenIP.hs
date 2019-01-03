@@ -27,7 +27,7 @@ genIPRange = do
 
 genInvalidIPRange :: Gen IPRange
 genInvalidIPRange = do
-  (IP ip1) <- genIP
+  (IP ip1) <- Gen.filter (> (IP minBound)) genIP
   ip2 <- Gen.word32 (Range.linear minBound (ip1 - 1))
   pure $ IPRange (IP ip1) (IP ip2)
 
