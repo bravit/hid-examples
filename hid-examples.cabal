@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 70b8850e978ecd075cd71a95815cdae269270480af5bd4c077672dadeb8d28af
+-- hash: 576e28ccbfe115b67ea0ac1469800c887f0c98272209ab33dfd9a8a538a09a26
 
 name:           hid-examples
 version:        0.3
@@ -55,7 +55,7 @@ library ipgen-lib
 
 library iplookup-lib
   exposed-modules:
-      Types
+      IPTypes
       LookupIP
       ParseIP
   hs-source-dirs:

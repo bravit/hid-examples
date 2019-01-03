@@ -5,7 +5,7 @@ import Control.Exception.Safe
 import System.Exit
 import Data.Semigroup
 
-import Types
+import IPTypes
 import ParseIP
 import LookupIP
 

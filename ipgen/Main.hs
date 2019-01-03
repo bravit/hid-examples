@@ -18,7 +18,7 @@ mkParams = Params
 
 writeFileWithRanges :: Params -> IO ()
 writeFileWithRanges (Params n fp) = do
-  str <- Gen.sample (genIPRangesString n)
+  str <- show <$> Gen.sample (genIPRangeDBSized n n)
   writeFile fp str
 
 main = (execParser opts >>= writeFileWithRanges)

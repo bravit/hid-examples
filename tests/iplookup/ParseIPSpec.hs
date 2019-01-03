@@ -4,6 +4,7 @@ import Data.Maybe
 import Data.Word
 import Test.Tasty.Hspec
 
+import IPTypes
 import ParseIP
 
 parseIPSpecs :: Spec
@@ -17,24 +18,24 @@ spec_buildIP :: Spec
 spec_buildIP =
   describe "buildIP" $ do
     it "builds from zero" $
-      buildIP [0,0,0,0] `shouldBe` 0
+      buildIP [0,0,0,0] `shouldBe` (IP 0)
     it "builds from one" $
-      buildIP [0,0,0,1] `shouldBe` 1
+      buildIP [0,0,0,1] `shouldBe` (IP 1)
     it "builds from localhost" $
-      buildIP [127,0,0,1] `shouldBe` 1 + 127 * 256^3
+      buildIP [127,0,0,1] `shouldBe` (IP $ 1 + 127 * 256^3)
     it "builds from arbitrary address" $
       buildIP [192,168,3,15] `shouldBe`
-        15 + 3 * 256 + 168 * 256^2 + 192 * 256^3
+        (IP $ 15 + 3 * 256 + 168 * 256^2 + 192 * 256^3)
 
 spec_parseIP :: Spec
 spec_parseIP =
   describe "parseIP" $ do
     it "parses zero" $
-      parseIP "0.0.0.0" `shouldBe` Just 0
+      parseIP "0.0.0.0" `shouldBe` Just (IP 0)
     it "parses one" $
-      parseIP "0.0.0.1" `shouldBe` Just 1
+      parseIP "0.0.0.1" `shouldBe` Just (IP 1)
     it "parses the largest IP address" $
-      parseIP "255.255.255.255" `shouldBe` Just maxBound
+      parseIP "255.255.255.255" `shouldBe` Just (IP maxBound)
     it "parses some random IP address" $
       parseIP "192.168.3.15" `shouldBe`
         Just (buildIP [192,168,3,15])
@@ -60,7 +61,7 @@ spec_parseIPRange =
   describe "parseIPRange" $ do
     it "parses pair" $
       parseIPRange "192.168.0.1,192.168.3.100" `shouldBe`
-        (,) <$> parseIP "192.168.0.1" <*> parseIP "192.168.3.100"
+        IPRange <$> parseIP "192.168.0.1" <*> parseIP "192.168.3.100"
     it "fails to parse single ip" $
       parseIPRange "192.168.0.1" `shouldBe` Nothing
     it "fails to parse single ip with comma" $
@@ -74,11 +75,11 @@ spec_parseIPRanges =
     let sample_range = "192.168.0.1,192.168.3.100"
         sample_range2 = "0.0.0.0,0.0.0.1"
     it "parses empty list" $
-      parseIPRanges ""  `shouldBe` Right []
+      parseIPRanges ""  `shouldBe` Right (IPRangeDB [])
     it "parses single range" $
       parseIPRanges sample_range  `shouldBe`
-        Right [fromJust $ parseIPRange sample_range]
+        Right (IPRangeDB $ catMaybes [parseIPRange sample_range])
     it "parses two ranges" $
       parseIPRanges (sample_range ++ "\n" ++ sample_range2) `shouldBe`
-        Right [fromJust $ parseIPRange sample_range,
-               fromJust $ parseIPRange sample_range2]
+        Right (IPRangeDB $ catMaybes [parseIPRange sample_range,
+               parseIPRange sample_range2])

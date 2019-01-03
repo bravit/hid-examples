@@ -7,6 +7,7 @@ import qualified Hedgehog.Range as Range
 import Test.Tasty
 import Test.Tasty.Hedgehog
 
+import IPTypes
 import GenIP
 import ParseIP
 import LookupIP
@@ -20,29 +21,29 @@ prop_buildIPs = property $ do
 
 prop_parseIP :: Property
 prop_parseIP = property $ do
-    (ip, ips) <- forAll genIPWithString
-    parseIP ips === Just ip
+    ip <- forAll genIP
+    parseIP (show ip) === Just ip
 
 prop_parseIPRange :: Property
 prop_parseIPRange = property $ do
-    (ipr, iprs) <- forAll genIPRangeWithString
-    parseIPRange iprs === Just ipr
+    ipr <- forAll genIPRange
+    parseIPRange (show ipr) === Just ipr
 
 prop_parseIPRanges :: Property
 prop_parseIPRanges = property $ do
-    (iprdb, iprdbs) <- forAll genIPRangeDBWithString
-    iprdb' <- evalEither (parseIPRanges iprdbs)
+    iprdb <- forAll genIPRangeDB
+    iprdb' <- evalEither (parseIPRanges $ show iprdb)
     iprdb' === iprdb
 
 prop_lookupIP_empty :: Property
 prop_lookupIP_empty = property $ do
   ip <- forAll genIP
-  assert (not $ lookupIP [] ip)
+  assert (not $ lookupIP (IPRangeDB []) ip)
 
 prop_lookupIP_bordersIncluded :: Property
 prop_lookupIP_bordersIncluded = property $ do
-  iprdb <- forAll genIPRangeDB
-  (ip1, ip2) <- forAll $ Gen.element iprdb
+  iprdb@(IPRangeDB iprdbs) <- forAll genIPRangeDB
+  IPRange ip1 ip2 <- forAll $ Gen.element iprdbs
   assert (lookupIP iprdb ip1)
   assert (lookupIP iprdb ip2)
 

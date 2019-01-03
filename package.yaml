@@ -180,7 +180,7 @@ internal-libraries:
     iplookup-lib:
         source-dirs: iplookup
         exposed-modules:
-          - Types
+          - IPTypes
           - LookupIP
           - ParseIP
         other-modules: []
