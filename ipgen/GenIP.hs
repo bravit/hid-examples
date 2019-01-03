@@ -23,11 +23,11 @@ showIPRangeDB :: IPRangeDB -> String
 showIPRangeDB = unlines . map showIPRange
 
 genIP :: Gen IP
-genIP = Gen.integral Range.linearBounded
+genIP = Gen.word32 Range.linearBounded
 
 genIPComponents :: Gen [Word32]
-genIPComponents = Gen.list (Range.singleton 4)
-                      (Gen.word32 (Range.linearFrom 0 0 255))
+genIPComponents = Gen.list (Range.singleton 4) genOctet
+  where genOctet = Gen.word32 (Range.linear 0 255)
 
 genIPString :: Gen String
 genIPString = concat . intersperse "." . map show <$> genIPComponents 
@@ -40,7 +40,13 @@ genIPWithString = do
 genIPRange :: Gen IPRange
 genIPRange = do
   ip1 <- genIP
-  ip2 <- Gen.integral (Range.linearFrom 0 ip1 maxBound)
+  ip2 <- Gen.word32 (Range.linearFrom (ip1 + 1) ip1 maxBound)
+  pure (ip1, ip2)
+
+genInvalidIPRange :: Gen IPRange
+genInvalidIPRange = do
+  ip1 <- genIP
+  ip2 <- Gen.word32 (Range.linear minBound (ip1 - 1))
   pure (ip1, ip2)
 
 genIPRangeString :: Gen String
@@ -51,10 +57,13 @@ genIPRangeWithString = do
   ipr <- genIPRange
   pure (ipr, showIPRange ipr)
 
+genInvalidIPRangeWithString :: Gen (IPRange, String)
+genInvalidIPRangeWithString = do
+  ipr <- genInvalidIPRange
+  pure (ipr, showIPRange ipr)
+
 genIPRangeDB :: Gen IPRangeDB
-genIPRangeDB = do
-  n <- Gen.element [1..100]
-  Gen.list (Range.singleton n) genIPRange
+genIPRangeDB = Gen.list (Range.exponential 1 100) genIPRange
 
 genIPRangeDBWithString :: Gen (IPRangeDB, String)
 genIPRangeDBWithString = do
