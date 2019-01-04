@@ -52,3 +52,6 @@ parseIPRanges = fmap IPRangeDB . mapM parseLine . zip [1..] . lines
 
 parseValidIPRanges :: String -> IPRangeDB
 parseValidIPRanges = IPRangeDB . catMaybes . map parseIPRange . lines
+
+parseValidIPs :: String -> [IP]
+parseValidIPs = catMaybes . map parseIP . lines

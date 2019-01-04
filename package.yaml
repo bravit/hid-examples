@@ -23,6 +23,7 @@ extra-source-files:
 
 data-files:
     - data/*.*
+    - data/tests/iplookup/*.*
     - texts/*.*
 
 tested-with: GHC == 8.2.2, GHC == 8.4.3
@@ -183,6 +184,7 @@ internal-libraries:
           - IPTypes
           - LookupIP
           - ParseIP
+          - ReportIP
         other-modules: []
         dependencies:
           - safe >= 0.3 && < 0.4
@@ -209,3 +211,5 @@ tests:
           - tasty-hspec >= 1.1 && < 1.2
           - tasty-hedgehog >= 0.1 && < 0.3
           - hedgehog >= 0.5 && < 0.7
+          - tasty-golden >= 2.3 && < 2.4
+          - filepath >= 1.4.1 && < 1.5

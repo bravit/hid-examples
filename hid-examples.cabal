@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 576e28ccbfe115b67ea0ac1469800c887f0c98272209ab33dfd9a8a538a09a26
+-- hash: 10c0aeee0f494a2a3b862cd028ddf40162964cf2867d0991d7a6f3988219a34d
 
 name:           hid-examples
 version:        0.3
@@ -32,6 +32,14 @@ data-files:
     data/quotes.csv
     data/ssrequests.txt
     data/suntimes.config.sample.json
+    data/tests/iplookup/1.iprs
+    data/tests/iplookup/1.ips
+    data/tests/iplookup/1.out
+    data/tests/iplookup/1.out.golden
+    data/tests/iplookup/2.iprs
+    data/tests/iplookup/2.ips
+    data/tests/iplookup/2.out
+    data/tests/iplookup/2.out.golden
     texts/Dracula.srt
     texts/forsyte.txt
     texts/hamlet.txt
@@ -58,6 +66,7 @@ library iplookup-lib
       IPTypes
       LookupIP
       ParseIP
+      ReportIP
   hs-source-dirs:
       iplookup
   build-depends:
@@ -330,6 +339,7 @@ test-suite iplookup-test
   type: exitcode-stdio-1.0
   main-is: Test.hs
   other-modules:
+      GoldenTests
       LookupIPSpec
       ParseIPSpec
       Props
@@ -338,10 +348,12 @@ test-suite iplookup-test
       tests/iplookup
   build-depends:
       base >=4.10 && <4.13
+    , filepath >=1.4.1 && <1.5
     , hedgehog >=0.5 && <0.7
     , ipgen-lib
     , iplookup-lib
     , tasty >=0.11 && <1.3
+    , tasty-golden >=2.3 && <2.4
     , tasty-hedgehog >=0.1 && <0.3
     , tasty-hspec >=1.1 && <1.2
   default-language: Haskell2010
