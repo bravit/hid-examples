@@ -3,10 +3,9 @@ module GoldenTests where
 import Test.Tasty
 import Test.Tasty.Golden
 import System.FilePath (replaceExtension, takeBaseName)
-import Data.Foldable (fold)
 
 import ParseIP
-import ReportIP
+import LookupIP
 
 golden_tests :: IO [TestTree]
 golden_tests = sequence [golden_lookupIP]

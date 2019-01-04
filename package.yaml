@@ -184,7 +184,6 @@ internal-libraries:
           - IPTypes
           - LookupIP
           - ParseIP
-          - ReportIP
         other-modules: []
         dependencies:
           - safe >= 0.3 && < 0.4

@@ -24,12 +24,7 @@ run (Params fp ipstr) = do
   case (iprs, parseIP ipstr) of
     (_, Nothing) -> throw (InvalidIP ipstr)
     (Left pe, _) -> throw (LoadIPRangesError pe)
-    (Right iprdb, Just ip) -> processIP iprdb ip
-
-processIP :: IPRangeDB -> IP -> IO ()
-processIP iprdb ip
-  | lookupIP iprdb ip = putStrLn "YES"
-  | otherwise = putStrLn "NO"
+    (Right iprdb, Just ip) -> putStrLn $ reportIPs iprdb [ip]
 
 main = (execParser opts >>= run)
        `catches` [Handler parserExit]
