@@ -26,8 +26,28 @@ buildIP'' = IP . foldl (\s b -> shiftL s 8 + fromIntegral b) 0
 guarded :: Alternative f => (a -> Bool) -> a -> f a
 guarded f a = if f a then pure a else empty
 
+-- | Checks if the list has the given length
+--
+-- >>> 4 `isLengthOf` [1,2,3,4]
+-- True
+-- >>> 0 `isLengthOf` []
+-- True
+-- >>> 0 `isLengthOf` [1,2,3,4]
+-- False
+
 isLengthOf :: Int -> [a] -> Bool
 isLengthOf n xs = length xs == n
+
+-- | Parses IP address given as a 'String'
+--
+-- >>> parseIP "0.0.0.0"
+-- Just 0.0.0.0
+--
+-- >>> parseIP "192.168.3.15"
+-- Just 192.168.3.15
+--
+-- >>> parseIP "not an IP address"
+-- Nothing
 
 parseIP :: String -> Maybe IP
 parseIP = guarded (4 `isLengthOf`) . splitOn "."

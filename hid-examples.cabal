@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1601a0a23cfec0c174b50b94257277dcc0e39b31577fa5ebf0bdcad6c3db60bd
+-- hash: 43eddd6015332396537a80ce5730967fbe66f927ee31900ab4d7dba77fff3dda
 
 name:           hid-examples
 version:        0.3
@@ -332,6 +332,17 @@ executable weapons
       base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
+  default-language: Haskell2010
+
+test-suite iplookup-doctest
+  type: exitcode-stdio-1.0
+  main-is: tests/iplookup-doctest/Doctests.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -threaded
+  build-depends:
+      base >=4.10 && <4.13
+    , doctest >=0.12 && <0.17
   default-language: Haskell2010
 
 test-suite iplookup-test
