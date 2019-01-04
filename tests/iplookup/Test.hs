@@ -9,11 +9,11 @@ import GoldenTests
 main = do
   specs <- concat <$> mapM testSpecs
              [ parseIPSpecs
-             , lookupIPSpecs  
+             , lookupIPSpecs
              ]
-  gts <- golden_tests           
+  goldens <- golden_tests
   defaultMain (testGroup "All Tests" [
                   testGroup "Specs" specs
-                , testGroup "Properties" props  
-                , testGroup "Golden Tests" [gts]  
+                , testGroup "Properties" props
+                , testGroup "Golden Tests" goldens
                 ])
