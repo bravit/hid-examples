@@ -11,7 +11,7 @@ main = do
              [ parseIPSpecs
              , lookupIPSpecs
              ]
-  goldens <- golden_tests
+  goldens <- goldenTests
   defaultMain (testGroup "All Tests" [
                   testGroup "Specs" specs
                 , testGroup "Properties" props

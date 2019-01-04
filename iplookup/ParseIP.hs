@@ -26,7 +26,7 @@ buildIP'' = IP . foldl (\s b -> shiftL s 8 + fromIntegral b) 0
 guarded :: Alternative f => (a -> Bool) -> a -> f a
 guarded f a = if f a then pure a else empty
 
-isLengthOf :: Int -> [a] -> Bool 
+isLengthOf :: Int -> [a] -> Bool
 isLengthOf n xs = length xs == n
 
 parseIP :: String -> Maybe IP
@@ -50,8 +50,8 @@ parseIPRanges = fmap IPRangeDB . mapM parseLine . zip [1..] . lines
                            Nothing -> Left (ParseError ln)
                            Just ipr -> Right ipr
 
-parseValidIPRanges :: String -> IPRangeDB
-parseValidIPRanges = IPRangeDB . catMaybes . map parseIPRange . lines
-
 parseValidIPs :: String -> [IP]
 parseValidIPs = catMaybes . map parseIP . lines
+
+parseValidIPRanges :: String -> IPRangeDB
+parseValidIPRanges = IPRangeDB . catMaybes . map parseIPRange . lines
