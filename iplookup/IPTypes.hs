@@ -1,14 +1,14 @@
 module IPTypes where
 
 import Data.Word
-import Data.List (intersperse)
+import Data.List (intercalate)
 import Control.Exception.Safe
 
 newtype IP = IP {unIP :: Word32}
   deriving (Eq, Ord)
 
 instance Show IP where
-  show (IP ip) = concat $ intersperse "." $ map show [b4,b3,b2,b1]
+  show (IP ip) = intercalate "." $ map show [b4,b3,b2,b1]
     where
       (ip1, b1) = ip `divMod` 256
       (ip2, b2) = ip1 `divMod` 256

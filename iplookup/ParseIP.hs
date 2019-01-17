@@ -5,7 +5,7 @@ module ParseIP where
 import Data.Word
 import Data.Bits (shiftL, toIntegralSized)
 import Data.List.Split (splitOn)
-import Data.Maybe (catMaybes)
+import Data.Maybe (mapMaybe)
 import Control.Applicative
 import Control.Monad
 import Safe
@@ -71,7 +71,7 @@ parseIPRanges = fmap IPRangeDB . mapM parseLine . zip [1..] . lines
                            Just ipr -> Right ipr
 
 parseValidIPs :: String -> [IP]
-parseValidIPs = catMaybes . map parseIP . lines
+parseValidIPs = mapMaybe parseIP . lines
 
 parseValidIPRanges :: String -> IPRangeDB
-parseValidIPRanges = IPRangeDB . catMaybes . map parseIPRange . lines
+parseValidIPRanges = IPRangeDB . mapMaybe parseIPRange . lines

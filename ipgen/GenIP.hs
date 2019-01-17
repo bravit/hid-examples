@@ -17,7 +17,7 @@ genIPComponents = Gen.list (Range.singleton 4) genOctet
   where genOctet = Gen.word8 Range.linearBounded
 
 genIPString :: Gen String
-genIPString = concat . intersperse "." . map show <$> genIPComponents 
+genIPString = intercalate "." . map show <$> genIPComponents 
 
 genIPRange :: Gen IPRange
 genIPRange = do
@@ -27,7 +27,7 @@ genIPRange = do
 
 genInvalidIPRange :: Gen IPRange
 genInvalidIPRange = do
-  (IP ip1) <- Gen.filter (> (IP minBound)) genIP
+  (IP ip1) <- Gen.filter (> IP minBound) genIP
   ip2 <- Gen.word32 (Range.linear minBound (ip1 - 1))
   pure $ IPRange (IP ip1) (IP ip2)
 
