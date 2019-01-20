@@ -30,26 +30,35 @@ tested-with: GHC == 8.2.2, GHC == 8.4.3
 
 dependencies: base >=4.10 && <4.13
 
+_paths_workaround: &paths_workaround
+  generated-other-modules: Paths_hid_examples  
+
 executables:
     # Chapter 2
     locator:
         main: locator.hs
+        <<: *paths_workaround
     vocab1:
         main: vocab1.hs
+        <<: *paths_workaround
         dependencies: text >=1.2 && <1.3
     vocab2:
         main: vocab2.hs
+        <<: *paths_workaround
         dependencies: text >=1.2 && <1.3
     vocab3:
         main: vocab3.hs
+        <<: *paths_workaround
         dependencies: text >=1.2 && <1.3
     showexpr:
         main: expr/showexpr.hs
+        <<: *paths_workaround
         dependencies: hint >=0.7 && <0.10
     # Chapter 3
     stockquotes:
         source-dirs: stockquotes
         main: Main.hs
+        <<: *paths_workaround
         other-extensions:
           - RecordWildCards
           - OverloadedStrings
@@ -70,16 +79,19 @@ executables:
     # Chapter 5
     maybe:
         main: maybe.hs
+        <<: *paths_workaround
         dependencies:
           - safe >=0.3 && <0.4
     reader:
         main: reader.hs
+        <<: *paths_workaround
         other-extensions:
           - NamedFieldPuns
         dependencies:
           - mtl >=2.0 && <2.3
     genSQL:
         main: genSQL.hs
+        <<: *paths_workaround
         other-extensions:
           - OverloadedStrings
           - ViewPatterns
@@ -88,34 +100,42 @@ executables:
           - mtl >=2.0 && <2.3
     gcd:
         main: gcd.hs
+        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
     weapons:
         main: weapons.hs
+        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
           - random >=1.0 && <1.2
     shunting-yard:
         main: expr/shunting-yard.hs
+        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
     dicegame:
         main: dicegame.hs
+        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
           - random >=1.0 && <1.2
     ioref:
         main: ioref.hs
+        <<: *paths_workaround
     filecount:
         main: filecount.hs
+        <<: *paths_workaround
         dependencies:
           - extra >=1.5 && <1.7
     stref:
         main: stref.hs
+        <<: *paths_workaround
     # Chapter 6
     du:
         source-dirs: du
         main: du.hs
+        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
           - filepath >= 1.4.1 && < 1.5
@@ -129,6 +149,7 @@ executables:
     rpnexpr:
         source-dirs: expr
         main: rpnexpr.hs
+        <<: *paths_workaround
         dependencies:
           - mtl >= 2.0 && < 2.3
           - transformers >= 0.5 && < 0.6
@@ -143,6 +164,7 @@ executables:
     suntimes:
         source-dirs: suntimes
         main: Main.hs
+        <<: *paths_workaround
         dependencies:
           - mtl >= 2.0 && < 2.3
           - transformers >= 0.5 && < 0.6
@@ -164,12 +186,14 @@ executables:
     # Chapter 8
     iplookup:
         main: iplookup/Main.hs
+        <<: *paths_workaround
         dependencies:
           - safe-exceptions >= 0.1.5 && < 0.2
           - optparse-applicative >= 0.14 && < 0.15
           - iplookup-lib
     ipgen:
         main: ipgen/Main.hs
+        <<: *paths_workaround
         dependencies:
           - ipgen-lib
           - safe-exceptions >= 0.1.5 && < 0.2
@@ -204,6 +228,7 @@ tests:
     # Chapter 8
     iplookup-test:
         main: Test.hs
+        <<: *paths_workaround
         source-dirs: tests/iplookup
         dependencies:
           - iplookup-lib
@@ -216,6 +241,7 @@ tests:
           - filepath >= 1.4.1 && < 1.5
     iplookup-doctest:
         main: tests/iplookup-doctest/Doctests.hs
+        <<: *paths_workaround
         ghc-options: 
           - -threaded
         dependencies:

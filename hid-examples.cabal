@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cf770136b0fb54e08aff5a98afa76ed07f07e2dd504d6fa28b6dab36e8389803
+-- hash: ac5a8f195a31a03e887adbecdabc12899f40559e1a39a78701af7538f5ed14a8
 
 name:           hid-examples
 version:        0.4
@@ -80,6 +80,8 @@ executable dicegame
   main-is: dicegame.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
@@ -94,6 +96,8 @@ executable du
       DiskUsage
       FileCounter
       TraverseDir
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       du
@@ -111,6 +115,8 @@ executable filecount
   main-is: filecount.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
     , extra >=1.5 && <1.7
@@ -120,6 +126,8 @@ executable gcd
   main-is: gcd.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
     , mtl >=2.0 && <2.3
@@ -128,6 +136,8 @@ executable gcd
 executable genSQL
   main-is: genSQL.hs
   other-modules:
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   other-extensions: OverloadedStrings ViewPatterns
   build-depends:
@@ -140,6 +150,8 @@ executable ioref
   main-is: ioref.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
   default-language: Haskell2010
@@ -147,6 +159,8 @@ executable ioref
 executable ipgen
   main-is: ipgen/Main.hs
   other-modules:
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
@@ -160,6 +174,8 @@ executable iplookup
   main-is: iplookup/Main.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
     , iplookup-lib
@@ -171,6 +187,8 @@ executable locator
   main-is: locator.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
   default-language: Haskell2010
@@ -178,6 +196,8 @@ executable locator
 executable maybe
   main-is: maybe.hs
   other-modules:
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
@@ -187,6 +207,8 @@ executable maybe
 executable reader
   main-is: reader.hs
   other-modules:
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   other-extensions: NamedFieldPuns
   build-depends:
@@ -204,6 +226,8 @@ executable rpnexpr
       EvalRPNExcept2
       MyMaybeT
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   hs-source-dirs:
       expr
   other-extensions: FlexibleInstances MultiParamTypeClasses UndecidableInstances InstanceSigs LambdaCase
@@ -218,6 +242,8 @@ executable showexpr
   main-is: expr/showexpr.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
     , hint >=0.7 && <0.10
@@ -226,6 +252,8 @@ executable showexpr
 executable shunting-yard
   main-is: expr/shunting-yard.hs
   other-modules:
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
@@ -242,6 +270,8 @@ executable stockquotes
       QuoteData
       Statistics
       StatReport
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       stockquotes
@@ -264,6 +294,8 @@ executable stref
   main-is: stref.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
   default-language: Haskell2010
@@ -277,6 +309,8 @@ executable suntimes
       STExcept
       SunTimes
       Types
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       suntimes
@@ -302,6 +336,8 @@ executable vocab1
   main-is: vocab1.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
     , text >=1.2 && <1.3
@@ -310,6 +346,8 @@ executable vocab1
 executable vocab2
   main-is: vocab2.hs
   other-modules:
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
@@ -320,6 +358,8 @@ executable vocab3
   main-is: vocab3.hs
   other-modules:
       Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
     , text >=1.2 && <1.3
@@ -328,6 +368,8 @@ executable vocab3
 executable weapons
   main-is: weapons.hs
   other-modules:
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
@@ -339,6 +381,8 @@ test-suite iplookup-doctest
   type: exitcode-stdio-1.0
   main-is: tests/iplookup-doctest/Doctests.hs
   other-modules:
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   ghc-options: -threaded
   build-depends:
@@ -354,6 +398,8 @@ test-suite iplookup-test
       LookupIPSpec
       ParseIPSpec
       Props
+      Paths_hid_examples
+  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       tests/iplookup
