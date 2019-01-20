@@ -35,12 +35,11 @@ parseRequestLine t = parse (split t)
 
 formatResult :: T.Text -> SunTimes ZonedTime -> TimeLocale -> T.Text
 formatResult req SunTimes {..} loc = mconcat [day, " @ ", req,
-                                              "\n    ", sr,
-                                              "\n    ", ss]
+                                              "\n    ", fmt sunrise,
+                                              "\n    ", fmt sunset]
   where
     day = T.pack $ formatTime loc "%x" sunrise
-    sr = T.pack $ formatTime loc "%X %Z" sunrise
-    ss = T.pack $ formatTime loc "%X %Z" sunset
+    fmt t = T.pack $ formatTime loc "%X %Z" t
 
 processRequest :: T.Text -> MyApp T.Text
 processRequest t = processR (parseRequestLine (T.strip t))
