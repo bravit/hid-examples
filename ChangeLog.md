@@ -12,3 +12,7 @@
 
 * Examples for chapter 6. All examples of expressions processing
   are moved to folder 'expr'.
+
+## 0.4  -- 2019-01-20
+
+* Examples for chapters 7 and 8.

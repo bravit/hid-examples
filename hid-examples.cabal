@@ -4,10 +4,10 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 43eddd6015332396537a80ce5730967fbe66f927ee31900ab4d7dba77fff3dda
+-- hash: cf770136b0fb54e08aff5a98afa76ed07f07e2dd504d6fa28b6dab36e8389803
 
 name:           hid-examples
-version:        0.3
+version:        0.4
 synopsis:       Examples to accompany the book "Haskell in Depth"
 description:    This package provides source code examples which accompany the book "Haskell in Depth" by Vitaly Bragilevsky (Manning Publications 2019). You may want to get this package via @cabal get hid-examples@ and explore its content.
 category:       Sample Code
@@ -68,6 +68,7 @@ library iplookup-lib
       ParseIP
   hs-source-dirs:
       iplookup
+  other-extensions: TypeApplications
   build-depends:
       base >=4.10 && <4.13
     , safe >=0.3 && <0.4
