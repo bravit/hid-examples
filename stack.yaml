@@ -1,8 +1,7 @@
-resolver: lts-10.10
+resolver: nightly-2019-04-15
 
 packages:
 - .
 
 extra-deps:
-- filepath-1.4.2.1
 - system-locale-0.3.0.0
