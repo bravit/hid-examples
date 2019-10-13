@@ -11,3 +11,4 @@ cabal.sandbox.config
 *.svg
 *.html
 config.json
+.DS_Store
