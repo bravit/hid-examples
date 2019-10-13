@@ -2,7 +2,6 @@
 
 module ProcessRequest (processMany, processInteractively) where
 
-import System.Locale.Read (TimeLocale, getCurrentLocale)
 import Control.Exception.Safe
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -48,9 +47,7 @@ processRequest t = processR (parseRequestLine (T.strip t))
     processR (Right (addr, day)) = do
       coords <- getCoords addr
       st <- getSunTimes coords day 
-      loc <- liftIO getCurrentLocale
-             `catchAny` (const $ pure defaultTimeLocale)
-      pure $ formatResult addr st loc
+      pure $ formatResult addr st defaultTimeLocale
 
 processMany :: [T.Text] -> MyApp ()
 processMany = mapM_ processRequestWrapper
