@@ -247,7 +247,7 @@ tests:
           - doctest >= 0.12 && < 0.17
 
 benchmarks:
-    # Chapter 9
+    # Chapter 10
     iplookup-bench:
         main: Bench.hs
         <<: *paths_workaround
