@@ -40,8 +40,11 @@ matrix:
     compiler: ": #GHC 8.4.3"
     addons: {apt: {packages: [cabal-install-2.2,ghc-8.4.3,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
   - env: BUILD=cabal-new GHCVER=8.6.3 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
-    compiler: ": #GHC 8.6.3"
-    addons: {apt: {packages: [cabal-install-2.4,ghc-8.6.3,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
+    compiler: ": #GHC 8.6.5"
+    addons: {apt: {packages: [cabal-install-2.4,ghc-8.6.5,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
+  - env: BUILD=cabal-new GHCVER=8.8.1 CABALVER=3.0 HAPPYVER=1.19.5 ALEXVER=3.1.7
+    compiler: ": #GHC 8.8.1"
+    addons: {apt: {packages: [cabal-install-3.0,ghc-8.8.1,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
   - env: BUILD=cabal-new GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
     compiler: ": #GHC HEAD"
     addons: {apt: {packages: [cabal-install-head,ghc-head,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
@@ -59,7 +62,7 @@ matrix:
 
   allow_failures:
   - env: BUILD=cabal-new GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
-  - env: BUILD=cabal-new GHCVER=8.6.3 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
+  - env: BUILD=cabal-new GHCVER=8.8.1 CABALVER=3.0 HAPPYVER=1.19.5 ALEXVER=3.1.7
 
 before_install:
 # Using compiler above sets CC to an invalid value, so unset it
@@ -70,7 +73,7 @@ before_install:
 - if [ "x$GHCVER" = "xhead" ]; then CABALARGS=--allow-newer; fi
 
 # Workaround for GHC 8.6.3
-- if [ "x$GHCVER" = "x8.6.3" ]; then CABALARGS="--allow-newer=base,lens,containers --ghc-options=-XNoMonadFailDesugaring"; fi
+# - if [ "x$GHCVER" = "x8.6.3" ]; then CABALARGS="--allow-newer=base,lens,containers --ghc-options=-XNoMonadFailDesugaring"; fi
 
 # Download and unpack the stack executable
 - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$HOME/.local/bin:/opt/alex/$ALEXVER/bin:/opt/happy/$HAPPYVER/bin:$HOME/.cabal/bin:$PATH
