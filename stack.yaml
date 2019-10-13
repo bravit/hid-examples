@@ -1,8 +1,4 @@
-resolver: lts-10.10
+resolver: lts-14.8
 
 packages:
 - .
-
-extra-deps:
-- filepath-1.4.2.1
-- system-locale-0.3.0.0

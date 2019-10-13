@@ -4,7 +4,6 @@ module SunTimes (getSunTimes) where
 
 import Data.Aeson
 import Network.HTTP.Req
-import Data.Default
 import Control.Exception.Safe
 import Control.Monad.Reader
 import Control.Monad.IO.Class
@@ -22,7 +21,8 @@ newtype SunTimesWrapper dt = SunTimesWrapper {results :: SunTimes dt}
 instance FromJSON dt => FromJSON (SunTimesWrapper dt)
 
 getSunTimesUTC :: GeoCoords -> When -> MyApp (SunTimes UTCTime)
-getSunTimesUTC GeoCoords {..} w = handle rethrowReqException $ liftIO $ runReq def $ do
+getSunTimesUTC GeoCoords {..} w = handle rethrowReqException 
+                                  $ liftIO $ runReq defaultHttpConfig $ do
     r <- req GET ep NoReqBody jsonResponse reqParams
     pure (results $ responseBody r)
   where      
@@ -67,7 +67,8 @@ lookupTimeZone gc@GeoCoords {..} t = do
                           , "fields" =: ("gmtOffset,abbreviation,dst" :: T.Text)
                           , "by" =: ("position" :: T.Text)
                           ]
-    r <- liftIO $ runReq def $ req GET ep NoReqBody jsonResponse reqParams
+    r <- liftIO $ runReq defaultHttpConfig
+                $ req GET ep NoReqBody jsonResponse reqParams
     pure (timeZoneInfo2TimeZone $ responseBody r)
   where
     secondsToTimeZone s = minutesToTimeZone (s `div` 60)
