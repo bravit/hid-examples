@@ -1,7 +1,5 @@
-resolver: nightly-2019-04-15
+resolver: lts-14.8
 
 packages:
 - .
 
-extra-deps:
-- system-locale-0.3.0.0
