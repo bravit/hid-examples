@@ -2,6 +2,7 @@
 
 module ParseIP where
 
+import Data.Char
 import Data.Word
 import Data.Bits (shiftL, toIntegralSized)
 import Data.List.Split (splitOn)
@@ -53,6 +54,35 @@ parseIP :: String -> Maybe IP
 parseIP = guarded (4 `isLengthOf`) . splitOn "."
           >=> mapM (readMay @Integer >=> toIntegralSized)
           >=> pure . buildIP
+
+parseIP' :: String -> Maybe IP
+parseIP' cs
+  | null strIPComponents ||
+    i1<0 || i2<0 || i3<0 || i4<0 = Nothing
+  | otherwise = Just $ IP $ fromIntegral $
+                i4 + shiftL8 (i3 + shiftL8 (i2 + shiftL8 i1))
+  where
+    shiftL8 a = shiftL a 8
+    [i1, i2, i3, i4] = map ipComponentToInt strIPComponents
+    ipComponentToInt cs =
+      case map digitToInt cs of
+        [n] -> n
+        [n1, n2] -> n1 * 10 + n2
+        [n1, n2, n3] -> let n = n1 * 100 + n2 * 10 + n3
+                        in if n <=255 then n
+                                      else -1
+        _ -> -1
+    strIPComponents =
+      case span isDigit cs of
+        (p1, '.':rest) ->
+          case span isDigit rest of
+            (p2, '.':rest) ->
+              case span isDigit rest of
+                (p3, '.':p4) ->
+                  if all isDigit p4 then [p1,p2,p3,p4] else []
+                _ -> []
+            _ -> []
+        _ -> []
 
 parseIPRange :: String -> Maybe IPRange
 parseIPRange = guarded (2 `isLengthOf`) . splitOn ","
