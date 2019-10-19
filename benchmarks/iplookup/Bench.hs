@@ -37,15 +37,27 @@ iptexts = [ "0.0.0.1"
 
 ips = map (\s -> (s, fromJust $ parseIP s)) iptexts
 
+ipcomps = [ [0,0,0,1]
+          , [192,168,1,1]
+          , [255,255,252,41]
+          , [255,255,252,41]
+          , [17,0,32,2]
+          ]
+
 main = defaultMain [
-  bgroup "parseIP" $ map (\ip -> bench ip $ nf parseIP ip) iptexts
+    bench "parseIP" $ nf (map parseIP) iptexts
+  , bench "buildIP" $ nf (map buildIP) ipcomps
+  , bench "buildIP'" $ nf (map buildIP') ipcomps
+  , bench "buildIP''" $ nf (map buildIP'') ipcomps
   , env envIPRDBFileSmall $ \ iprdbf ->
-      bgroup "small ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
+      bgroup "parse small ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
   , env envIPRDBFileMiddle $ \ iprdbf ->
-      bgroup "middle-sized ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
+      bgroup "parse middle-sized ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
   , env envIPRDBFileLarge $ \ iprdbf ->
-      bgroup "large ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
+      bgroup "parse large ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
   , env envIPRDB $ \ iprdb ->
       bgroup "with IPRDB" $
         map (\ (textip, ip) -> bench textip $ whnf (lookupIP iprdb) ip) ips
+  , env envIPRDB $ \iprdb ->
+      bench "map lookupIP" $ nf (map (lookupIP iprdb)) $ map snd $ ips
   ]
