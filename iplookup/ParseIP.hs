@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE BangPatterns #-}
 
 module ParseIP where
 
@@ -50,13 +51,28 @@ isLengthOf n xs = length xs == n
 -- >>> parseIP "not an IP address"
 -- Nothing
 
-parseIP :: String -> Maybe IP
-parseIP = guarded (4 `isLengthOf`) . splitOn "."
+parseIP' :: String -> Maybe IP
+parseIP' = guarded (4 `isLengthOf`) . splitOn "."
           >=> mapM (readMay @Integer >=> toIntegralSized)
           >=> pure . buildIP
 
-parseIP' :: String -> Maybe IP
-parseIP' cs
+parseIP :: String -> Maybe IP
+parseIP cs = go cs 0 0 1 True
+  where
+    addComp !ip !ipcomp = shiftL ip 8 + ipcomp
+    -- str ip ipcomp no noDot
+    go [] !ip !ipcomp 4 False
+      | ipcomp <= 255 = Just $ IP $ fromIntegral $ addComp ip ipcomp
+    go ('.':cs) !ip !ipcomp !n False
+      | n <= 3 && ipcomp <= 255 = go cs (addComp ip ipcomp) 0 (n+1) True
+    go (c:cs) !ip !ipcomp !n _
+      | isDigit c = go cs ip (ipcomp * 10 + digitToInt c) n False
+    go _ _ _ _ _ = Nothing
+
+    
+
+parseIP'' :: String -> Maybe IP
+parseIP'' cs
   | null strIPComponents ||
     i1<0 || i2<0 || i3<0 || i4<0 = Nothing
   | otherwise = Just $ IP $ fromIntegral $
