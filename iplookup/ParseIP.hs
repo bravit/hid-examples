@@ -60,15 +60,14 @@ parseIP :: String -> Maybe IP
 parseIP cs = go cs 0 0 1 0
   where
     go :: String -> Int -> Int -> Int -> Int -> Maybe IP
-    go [] !ip !ipcomp !ncomp !ndigit
-      | ncomp == 4 && goodComp ndigit ipcomp
-        = Just $ IP $ fromIntegral $ addComp ip ipcomp
-    go ('.':cs) !ip !ipcomp !ncomp !ndigit
-      | ncomp < 4 && goodComp ndigit ipcomp
-        = go cs (addComp ip ipcomp) 0 (ncomp + 1) 0
     go (c:cs) !ip !ipcomp !ncomp !ndigit
       | isDigit c && ndigit < 3
         = go cs ip (addDigit ipcomp c) ncomp (ndigit + 1)
+      | c == '.'  && ncomp < 4 && goodComp ndigit ipcomp
+        = go cs (addComp ip ipcomp) 0 (ncomp + 1) 0
+    go [] !ip !ipcomp !ncomp !ndigit
+      | ncomp == 4 && goodComp ndigit ipcomp
+        = Just $ IP $ fromIntegral $ addComp ip ipcomp
     go _ _ _ _ _ = Nothing
 
     goodComp 1 _ = True
@@ -78,7 +77,6 @@ parseIP cs = go cs 0 0 1 0
 
     addComp !ip !ipcomp = shiftL ip 8 + ipcomp
     addDigit !ipcomp c = ipcomp * 10 + digitToInt c
-
 
 parseIP'' :: String -> Maybe IP
 parseIP'' cs
