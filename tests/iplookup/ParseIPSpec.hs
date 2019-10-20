@@ -45,12 +45,18 @@ spec_parseIP =
       parseIP "192.168.1.1x" `shouldBe` Nothing
     it "fails to parse empty component" $ 
       parseIP "192.168..1" `shouldBe` Nothing
+    it "fails to parse empty component in the end" $ 
+      parseIP "192.168.0." `shouldBe` Nothing
+    it "fails to parse empty component in the beginning" $ 
+      parseIP ".192.168.0" `shouldBe` Nothing
     it "fails to parse 5 components" $
       parseIP "192.168.1.0.1" `shouldBe` Nothing
     it "fails to parse large components" $
       parseIP "256.168.1.0" `shouldBe` Nothing
     it "fails to parse extremely large components" $
       parseIP "0.0.0.4294967338" `shouldBe` Nothing
+    it "fails to parse even larger components (2^65)" $
+      parseIP "0.0.0.36893488147419103232" `shouldBe` Nothing
     it "fails to parse negative components" $
       parseIP "256.168.-1.0" `shouldBe` Nothing
     it "fails to parse non-numeric components" $

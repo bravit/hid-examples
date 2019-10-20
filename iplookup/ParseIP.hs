@@ -57,19 +57,28 @@ parseIP' = guarded (4 `isLengthOf`) . splitOn "."
           >=> pure . buildIP
 
 parseIP :: String -> Maybe IP
-parseIP cs = go cs 0 0 1 True
+parseIP cs = go cs 0 0 1 0
   where
-    addComp !ip !ipcomp = shiftL ip 8 + ipcomp
-    -- str ip ipcomp no noDot
-    go [] !ip !ipcomp 4 False
-      | ipcomp <= 255 = Just $ IP $ fromIntegral $ addComp ip ipcomp
-    go ('.':cs) !ip !ipcomp !n False
-      | n <= 3 && ipcomp <= 255 = go cs (addComp ip ipcomp) 0 (n+1) True
-    go (c:cs) !ip !ipcomp !n _
-      | isDigit c = go cs ip (ipcomp * 10 + digitToInt c) n False
+    go :: String -> Int -> Int -> Int -> Int -> Maybe IP
+    go [] !ip !ipcomp !ncomp !ndigit
+      | ncomp == 4 && goodComp ndigit ipcomp
+        = Just $ IP $ fromIntegral $ addComp ip ipcomp
+    go ('.':cs) !ip !ipcomp !ncomp !ndigit
+      | ncomp < 4 && goodComp ndigit ipcomp
+        = go cs (addComp ip ipcomp) 0 (ncomp + 1) 0
+    go (c:cs) !ip !ipcomp !ncomp !ndigit
+      | isDigit c && ndigit < 3
+        = go cs ip (addDigit ipcomp c) ncomp (ndigit + 1)
     go _ _ _ _ _ = Nothing
 
-    
+    goodComp 1 _ = True
+    goodComp 2 _ = True
+    goodComp 3 !ipcomp = ipcomp <= 255
+    goodComp _ _ = False
+
+    addComp !ip !ipcomp = shiftL ip 8 + ipcomp
+    addDigit !ipcomp c = ipcomp * 10 + digitToInt c
+
 
 parseIP'' :: String -> Maybe IP
 parseIP'' cs
