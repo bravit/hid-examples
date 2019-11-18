@@ -1,7 +1,7 @@
 {-# LANGUAGE StandaloneDeriving, DeriveGeneric, DeriveAnyClass #-}
-import Criterion.Main
+import Criterion.Main (bench, nf, defaultMain)
 
-import Control.DeepSeq
+import Control.DeepSeq (NFData)
 import GHC.Generics (Generic)
 import Data.Either (fromRight)
 import Data.Maybe (fromJust)
@@ -37,6 +37,8 @@ iptexts = [ "0.0.0.1"
 
 ips = map (\s -> (s, fromJust $ parseIP s)) iptexts
 
+theip = [17,0,32,2]
+
 ipcomps = [ [0,0,0,1]
           , [192,168,1,1]
           , [255,255,252,41]
@@ -45,11 +47,15 @@ ipcomps = [ [0,0,0,1]
           ]
 
 main = defaultMain [
-    bench "parseIP" $ nf (map parseIP) iptexts
-  , bench "buildIP" $ nf (map buildIP) ipcomps
+--    bench "parseIP" $ nf (map parseIP) iptexts
+--  ,
+--  bench "buildIP1" $ nf buildIP theip
+--  , bench "buildIP'1" $ nf buildIP' theip
+--  , bench "buildIP''1" $ nf buildIP'' theip
+  bench "buildIP" $ nf (map buildIP) ipcomps
   , bench "buildIP'" $ nf (map buildIP') ipcomps
   , bench "buildIP''" $ nf (map buildIP'') ipcomps
-  , env envIPRDBFileSmall $ \ iprdbf ->
+{-  , env envIPRDBFileSmall $ \ iprdbf ->
       bgroup "parse small ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
   , env envIPRDBFileMiddle $ \ iprdbf ->
       bgroup "parse middle-sized ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
@@ -60,4 +66,4 @@ main = defaultMain [
         map (\ (textip, ip) -> bench textip $ whnf (lookupIP iprdb) ip) ips
   , env envIPRDB $ \iprdb ->
       bench "map lookupIP" $ nf (map (lookupIP iprdb)) $ map snd $ ips
-  ]
+-}  ]

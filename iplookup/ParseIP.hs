@@ -14,13 +14,13 @@ import Safe
 
 import IPTypes
 
-buildIP :: [Word8] -> IP
-buildIP = IP . fst . foldr go (0, 1)
+buildIP' :: [Word8] -> IP
+buildIP' = IP . fst . foldr go (0, 1)
   where
     go b (s, k) = (s + fromIntegral b * k, k*256)
 
-buildIP' :: [Word8] -> IP
-buildIP' = IP . foldl (\s b -> s*256 + fromIntegral b) 0
+buildIP :: [Word8] -> IP
+buildIP = IP . foldl (\s b -> s*256 + fromIntegral b) 0
 
 buildIP'' :: [Word8] -> IP
 buildIP'' = IP . foldl (\s b -> shiftL s 8 + fromIntegral b) 0
