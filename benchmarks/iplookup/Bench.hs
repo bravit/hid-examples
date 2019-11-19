@@ -47,7 +47,8 @@ main = defaultMain [
       , bench "foldl-shl" $ nf (map buildIP'') ipcomps
       ]
     ]
-
+    
+  , bench "parseIP" $ nf (map parseIP) iptexts
   , bgroup "parseIP" [
       bench "monadic" $ nf (map parseIPMonadic) iptexts
     , bench "iterative" $ nf (map parseIPIter) iptexts
