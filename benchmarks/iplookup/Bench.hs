@@ -1,9 +1,8 @@
 {-# LANGUAGE StandaloneDeriving, DeriveGeneric, DeriveAnyClass #-}
-import Criterion.Main (bench, nf, defaultMain)
+import Criterion.Main
 
 import Control.DeepSeq (NFData)
 import GHC.Generics (Generic)
-import Data.Either (fromRight)
 import Data.Maybe (fromJust)
 
 import ParseIP
@@ -19,51 +18,63 @@ deriving instance NFData IP
 deriving instance NFData IPRange
 deriving instance NFData IPRangeDB
 
-envIPRDBFileSmall = getDataFileName "data/benchmarks/iplookup/1.iprs"
-               >>= readFile
-envIPRDBFileMiddle = getDataFileName "data/benchmarks/iplookup/2.iprs"
-               >>= readFile
-envIPRDBFileLarge = getDataFileName "data/benchmarks/iplookup/3.iprs"
-               >>= readFile
+readIPRDBFile fname = getDataFileName (ipBenchDir ++ fname)
+                      >>= readFile
+  where
+    ipBenchDir = "data/benchmarks/iplookup/"
 
-envIPRDB = parseValidIPRanges <$> envIPRDBFileLarge
-
-iptexts = [ "0.0.0.1"
-          , "192.168.1.1"
-          , "255.255.252.41"
-          , "255.255.252.42"
-          , "17.0.32.2"
-          ]
+iptexts = ["0.0.0.1", "192.168.1.1", "17.0.32.2",
+           "255.255.252.41", "255.255.252.42"]
 
 ips = map (\s -> (s, fromJust $ parseIP s)) iptexts
 
-theip = [17,0,32,2]
-
-ipcomps = [ [0,0,0,1]
-          , [192,168,1,1]
-          , [255,255,252,41]
-          , [255,255,252,41]
-          , [17,0,32,2]
-          ]
+iprdb = parseValidIPRanges <$> readIPRDBFile "3.iprs"
 
 main = defaultMain [
---    bench "parseIP" $ nf (map parseIP) iptexts
---  ,
---  bench "buildIP1" $ nf buildIP theip
---  , bench "buildIP'1" $ nf buildIP' theip
---  , bench "buildIP''1" $ nf buildIP'' theip
-  bench "buildIP" $ nf (map buildIP) ipcomps
-  , bench "buildIP'" $ nf (map buildIP') ipcomps
-  , bench "buildIP''" $ nf (map buildIP'') ipcomps
-{-  , env envIPRDBFileSmall $ \ iprdbf ->
-      bgroup "parse small ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
-  , env envIPRDBFileMiddle $ \ iprdbf ->
-      bgroup "parse middle-sized ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
-  , env envIPRDBFileLarge $ \ iprdbf ->
-      bgroup "parse large ranges file" [ bench "parseIPRanges" $ nf parseIPRange iprdbf ]
-  , env envIPRDB $ \ iprdb ->
-      bgroup "with IPRDB" $
-        map (\ (textip, ip) -> bench textip $ whnf (lookupIP iprdb) ip) ips
-  , env envIPRDB $ \iprdb ->
-      bench "map lookupIP" $ nf (map (lookupIP iprdb)) $ map snd $ ips
--}  ]
+    bgroup "buildIP" [
+      let theip = [17,0,32,2] in
+      bgroup "single" [
+        bench "foldr" $ nf buildIP theip
+      , bench "foldl" $ nf buildIP' theip
+      , bench "foldl-shl" $ nf buildIP'' theip
+      ]
+
+    , let ipcomps = [[0,0,0,1], [192,168,1,1], [17,0,32,2],
+                     [255,255,252,41], [255,255,252,41]] in
+      bgroup "several" [
+       bench "foldr" $ nf (map buildIP) ipcomps
+      , bench "foldl" $ nf (map buildIP') ipcomps
+      , bench "foldl-shl" $ nf (map buildIP'') ipcomps
+      ]
+    ]
+
+  , bgroup "parseIP" [
+      bench "monadic" $ nf (map parseIPMonadic) iptexts
+    , bench "iterative" $ nf (map parseIPIter) iptexts
+    , bench "iterative-strict" $ nf (map parseIPIterStrict) iptexts
+    ]
+
+  , let rangeFiles = [("small", "1.iprs"),
+                      ("middle-sized", "2.iprs"),
+                      ("large", "3.iprs")] in
+    bgroup "ranges" [
+      bgroup "read" $
+        map (\(desc, fname) ->
+              bench desc $ nfIO (readIPRDBFile fname))
+            rangeFiles
+    , bgroup "parse" $
+        map (\(desc, fname) ->
+              env (readIPRDBFile fname) $
+                \iprdbf -> bench desc $ nf parseIPRange iprdbf)
+            rangeFiles
+    ]
+
+  , env iprdb $ \ iprdb ->
+      bgroup "lookupIP" [
+        bgroup "single" $
+          map (\ (textip, ip) ->
+                 bench textip $
+                   whnf (lookupIP iprdb) ip) ips
+      , bench "several" $ nf (map (lookupIP iprdb)) $ map snd $ ips
+      ]
+  ]

@@ -248,6 +248,11 @@ tests:
 
 benchmarks:
     # Chapter 10
+    primcheck:
+        main: Bench.hs
+        source-dirs: benchmarks/primcheck
+        dependencies:
+          - criterion >= 1.4 && < 1.6
     iplookup-bench:
         main: Bench.hs
         <<: *paths_workaround
