@@ -16,8 +16,9 @@ prop_buildIPs :: Property
 prop_buildIPs = property $ do
   ipcs <- forAll genIPComponents
   let ip = buildIP ipcs
-  buildIP' ipcs === ip
-  buildIP'' ipcs === ip
+  buildIP_foldr ipcs === ip
+  buildIP_foldl ipcs === ip
+  buildIP_foldl_shl ipcs === ip
 
 prop_parseIP :: Property
 prop_parseIP = property $ do
@@ -59,7 +60,7 @@ prop_lookupIP_bordersIncluded = property $ do
   assert (lookupIP iprdb ip2)
 
 props = [
-   testProperty "buildIP agrees with buildIP' and buildIP''" prop_buildIPs
+   testProperty "buildIP implementations agrees with each other" prop_buildIPs
  , testProperty "parseIP works as expected" prop_parseIP
  , testProperty "parseIP agrees with show" prop_parseIP_show
  , testProperty "parseIPRange agrees with show" prop_parseIPRange_show
