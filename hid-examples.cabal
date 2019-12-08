@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0a89709184466484027e1ba0326ae7ef2f51628503ba3eb9618befdb309d304a
+-- hash: 0f7cb5b2add9b5322df2c2f1536dd2e7f333017014ae978229596a45b20e0ade
 
 name:           hid-examples
 version:        0.4
@@ -195,10 +195,8 @@ executable iplookup-simulation
       Paths_hid_examples
   build-depends:
       base >=4.10 && <4.13
-    , ipgen-lib
     , iplookup-lib
-    , optparse-applicative >=0.14 && <0.15
-    , safe-exceptions >=0.1.5 && <0.2
+    , random >=1.0 && <1.2
   default-language: Haskell2010
 
 executable locator
