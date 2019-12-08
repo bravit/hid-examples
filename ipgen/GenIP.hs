@@ -22,8 +22,11 @@ genIPString = intercalate "." . map show <$> genIPComponents
 genIPRange :: Gen IPRange
 genIPRange = do
   (IP ip1) <- genIP
-  ip2 <- Gen.word32 (Range.linearFrom (ip1 + 1) ip1 maxBound)
+  ip2 <- Gen.word32 (Range.linearFrom (ip1 + 1) ip1 (ip1 + mb ip1))
   pure $ IPRange (IP ip1) (IP ip2)
+  where
+    maxRangeSize = 1000000
+    mb from = min (maxBound - from) maxRangeSize
 
 genInvalidIPRange :: Gen IPRange
 genInvalidIPRange = do
