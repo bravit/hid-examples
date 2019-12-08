@@ -4,20 +4,21 @@ import IPTypes
 import ParseIP
 import LookupIP
 import System.Random
+import Data.Word
 
 ipdb = "data/ipdb.txt"
 nReqs = 500000
+
+genIPList :: Int -> [IP]
+genIPList n = map IP $ take n $ iterate (+step) 0
+  where
+    step = maxBound `div` fromIntegral n
 
 simulate :: IPRangeDB -> [IP] -> (Int, Int)
 simulate iprdb ips = (yes, no)
   where
     yes = {-# SCC yes #-} length $ filter id $ map (lookupIP iprdb) ips
-    no = {-# SCC no #-} length ips - yes
-
-genIPList :: Int -> [IP]
-genIPList n = map IP $ take n $ iterate (+step) 0
-  where
-    step = fromIntegral $ 2^32 `div` n
+    no = {-# SCC no #-} nReqs {- length ips -} -- yes
 
 report :: (Int, Int) -> IO ()
 report info = putStrLn $ "(yes, no) = " ++ show info
