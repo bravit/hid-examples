@@ -15,16 +15,19 @@ import Safe
 import IPTypes
 
 buildIP :: [Word8] -> IP
-buildIP = buildIP_foldr
+buildIP = buildIP_foldl
 
+{-# INLINE buildIP_foldr #-}
 buildIP_foldr :: [Word8] -> IP
 buildIP_foldr = IP . fst . foldr go (0, 1)
   where
     go b (s, k) = (s + fromIntegral b * k, k*256)
 
+{-# INLINE buildIP_foldl #-}
 buildIP_foldl :: [Word8] -> IP
 buildIP_foldl = IP . foldl (\s b -> s*256 + fromIntegral b) 0
 
+{-# INLINE buildIP_foldl_shl #-}
 buildIP_foldl_shl :: [Word8] -> IP
 buildIP_foldl_shl = IP . foldl (\s b -> shiftL s 8 + fromIntegral b) 0
 
@@ -58,11 +61,13 @@ isLengthOf n xs = length xs == n
 parseIP :: String -> Maybe IP
 parseIP = parseIPMonadic
 
+{-# INLINE parseIPMonadic #-}
 parseIPMonadic :: String -> Maybe IP
 parseIPMonadic = guarded (4 `isLengthOf`) . splitOn "."
           >=> mapM (readMay @Integer >=> toIntegralSized)
           >=> pure . buildIP
 
+{-# INLINE parseIPIter #-}
 parseIPIter :: String -> Maybe IP
 parseIPIter cs = go cs 0 0 1 0
   where
@@ -85,6 +90,7 @@ parseIPIter cs = go cs 0 0 1 0
     addComp ip ipcomp = shiftL ip 8 + ipcomp
     addDigit ipcomp c = ipcomp * 10 + digitToInt c
 
+{-# INLINE parseIPIterStrict #-}
 parseIPIterStrict :: String -> Maybe IP
 parseIPIterStrict cs = go cs 0 0 1 0
   where
