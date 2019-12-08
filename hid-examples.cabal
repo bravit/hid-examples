@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0f7cb5b2add9b5322df2c2f1536dd2e7f333017014ae978229596a45b20e0ade
+-- hash: b38455c198f7750a5c92171b37f17b0fe98db82378d20273a93fe74ce52a1880
 
 name:           hid-examples
 version:        0.4
@@ -70,11 +70,13 @@ library iplookup-lib
       IPTypes
       LookupIP
       ParseIP
+      FastLookup
   hs-source-dirs:
       iplookup
   other-extensions: TypeApplications
   build-depends:
       base >=4.10 && <4.13
+    , fingertree >=0.1 && <0.2
     , safe >=0.3 && <0.4
     , safe-exceptions >=0.1.5 && <0.2
     , split >=0.2 && <0.3
