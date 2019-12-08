@@ -198,6 +198,15 @@ executables:
           - safe-exceptions >= 0.1.5 && < 0.2
           - optparse-applicative >= 0.14 && < 0.15
           - hedgehog >= 0.5 && < 1.1
+    # Chapter 10
+    iplookup-simulation:
+        main: iplookup-simulation/Main.hs
+        <<: *paths_workaround
+        dependencies:
+          - safe-exceptions >= 0.1.5 && < 0.2
+          - optparse-applicative >= 0.14 && < 0.15
+          - iplookup-lib
+          - ipgen-lib
 
 internal-libraries:
     # Chapter 8

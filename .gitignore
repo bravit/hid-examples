@@ -12,3 +12,7 @@ cabal.sandbox.config
 *.html
 config.json
 .DS_Store
+.idea
+cabal.project.local
+hid-examples.iml
+stack.yaml.lock

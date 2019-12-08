@@ -39,3 +39,6 @@ genIPRangeDB = do
   n1 <- Gen.integral (Range.constant 1 100)
   n2 <- Gen.integral (Range.constant n1 100)
   genIPRangeDBSized n1 n2
+
+genIPList :: Int -> IO [IP]
+genIPList n = Gen.sample $ Gen.list (Range.constant n n) genIP

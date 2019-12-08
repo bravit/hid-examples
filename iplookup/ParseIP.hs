@@ -56,7 +56,7 @@ isLengthOf n xs = length xs == n
 
 
 parseIP :: String -> Maybe IP
-parseIP = parseIPIterStrict
+parseIP = parseIPMonadic
 
 parseIPMonadic :: String -> Maybe IP
 parseIPMonadic = guarded (4 `isLengthOf`) . splitOn "."
