@@ -3,6 +3,7 @@ module Main where
 import IPTypes
 import ParseIP
 import LookupIP
+import FastLookup
 import System.Random
 import Data.Word
 
@@ -17,8 +18,13 @@ genIPList n = map IP $ take n $ iterate (+step) 0
 simulate :: IPRangeDB -> [IP] -> (Int, Int)
 simulate iprdb ips = (yes, no)
   where
+    imap = ipRangeDB2IntervalMap iprdb
+    yes = length $ filter id $ map (fastLookupIP imap) ips
+    no = nReqs - yes
+{-  
     yes = {-# SCC yes #-} length $ filter id $ map (lookupIP iprdb) ips
     no = {-# SCC no #-} nReqs {- length ips -} -- yes
+-}
 
 report :: (Int, Int) -> IO ()
 report info = putStrLn $ "(yes, no) = " ++ show info
