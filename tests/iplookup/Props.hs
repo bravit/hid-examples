@@ -11,6 +11,7 @@ import IPTypes
 import GenIP
 import ParseIP
 import LookupIP
+import qualified FastLookup as FL
 
 prop_buildIPs :: Property
 prop_buildIPs = property $ do
@@ -59,6 +60,13 @@ prop_lookupIP_bordersIncluded = property $ do
   assert (lookupIP iprdb ip1)
   assert (lookupIP iprdb ip2)
 
+prop_lookupIPs_agree :: Property
+prop_lookupIPs_agree = property $ do
+  iprdb@(IPRangeDB iprdbs) <- forAll genIPRangeDB
+  let fiprdb = FL.fromIPRangeDB iprdb
+  ip <- forAll genIP
+  assert (lookupIP iprdb ip == FL.lookupIP fiprdb ip)  
+
 props = [
    testProperty "buildIP implementations agrees with each other" prop_buildIPs
  , testProperty "parseIP works as expected" prop_parseIP
@@ -68,4 +76,5 @@ props = [
  , testProperty "no parse of invalid IP ranges" prop_no_parseInvalidIPRange
  , testProperty "no ip in empty list" prop_lookupIP_empty
  , testProperty "lookupIP includes borders" prop_lookupIP_bordersIncluded
+ , testProperty "lookupIP agrees with fast lookupIP" prop_lookupIPs_agree
  ]
