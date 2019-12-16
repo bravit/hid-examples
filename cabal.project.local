@@ -1,0 +1,1 @@
+write-ghc-environment-files: ghc8.4.4+
