@@ -59,7 +59,7 @@ isLengthOf n xs = length xs == n
 
 
 parseIP :: String -> Maybe IP
-parseIP = parseIPMonadic
+parseIP = parseIPIterStrict
 
 {-# INLINE parseIPMonadic #-}
 parseIPMonadic :: String -> Maybe IP
