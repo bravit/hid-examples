@@ -27,9 +27,9 @@ data-files:
     - data/benchmarks/iplookup/*.*
     - texts/*.*
 
-tested-with: GHC == 8.2.2, GHC == 8.4.3
+tested-with: GHC == 8.6.5, GHC == 8.8.3
 
-dependencies: base >=4.10 && <4.15
+dependencies: base >=4.12 && <4.15
 
 _paths_workaround: &paths_workaround
   generated-other-modules: Paths_hid_examples  
