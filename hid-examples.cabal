@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b38455c198f7750a5c92171b37f17b0fe98db82378d20273a93fe74ce52a1880
+-- hash: c801333e709b06b00b9849e5f232fa3cf427d96fe7edb5f5db19aa14961590ac
 
 name:           hid-examples
 version:        0.4
@@ -60,7 +60,7 @@ library ipgen-lib
   hs-source-dirs:
       ipgen
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , hedgehog >=0.5 && <1.1
     , iplookup-lib
   default-language: Haskell2010
@@ -75,11 +75,71 @@ library iplookup-lib
       iplookup
   other-extensions: TypeApplications
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , fingertree >=0.1 && <0.2
     , safe >=0.3 && <0.4
     , safe-exceptions >=0.1.5 && <0.2
     , split >=0.2 && <0.3
+  default-language: Haskell2010
+
+executable api-stage0
+  main-is: ch11/api/Api0.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable api-stage1
+  main-is: ch11/api/Api1.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable api-stage2
+  main-is: ch11/api/Api2.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable api-stage3
+  main-is: ch11/api/Api3.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable describe-proxies
+  main-is: ch11/describe-proxies/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable describe-type-apps
+  main-is: ch11/describe-type-apps/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 executable dicegame
@@ -89,9 +149,29 @@ executable dicegame
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
+  default-language: Haskell2010
+
+executable doors-singletons
+  main-is: ch11/doors/Sing.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable doors-type-equality
+  main-is: ch11/doors/TypeEq.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 executable du
@@ -109,12 +189,32 @@ executable du
       du
   other-extensions: GeneralizedNewtypeDeriving RecordWildCards FlexibleContexts
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , directory >=1.3 && <1.4
     , filepath >=1.4.1 && <1.5
     , mtl >=2.0 && <2.3
-    , optparse-applicative >=0.14 && <0.15
+    , optparse-applicative >=0.14 && <0.16
     , unix-compat >=0.5 && <0.6
+  default-language: Haskell2010
+
+executable dynvalues-gadt
+  main-is: ch11/dynvalues-gadt/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable expr-gadt
+  main-is: ch11/expr-gadt/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 executable filecount
@@ -124,7 +224,7 @@ executable filecount
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , extra >=1.5 && <1.7
   default-language: Haskell2010
 
@@ -135,7 +235,7 @@ executable gcd
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
@@ -147,9 +247,22 @@ executable genSQL
       Paths_hid_examples
   other-extensions: OverloadedStrings ViewPatterns
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , mtl >=2.0 && <2.3
     , text >=1.2 && <1.3
+  default-language: Haskell2010
+
+executable graph-assoc-tf
+  main-is: Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch11/graph-assoc-tf/
+  build-depends:
+      base >=4.10 && <4.15
+    , containers >=0.5 && <0.7
   default-language: Haskell2010
 
 executable ioref
@@ -159,7 +272,7 @@ executable ioref
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 executable ipgen
@@ -169,10 +282,10 @@ executable ipgen
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , hedgehog >=0.5 && <1.1
     , ipgen-lib
-    , optparse-applicative >=0.14 && <0.15
+    , optparse-applicative >=0.14 && <0.16
     , safe-exceptions >=0.1.5 && <0.2
   default-language: Haskell2010
 
@@ -183,9 +296,9 @@ executable iplookup
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , iplookup-lib
-    , optparse-applicative >=0.14 && <0.15
+    , optparse-applicative >=0.14 && <0.16
     , safe-exceptions >=0.1.5 && <0.2
   default-language: Haskell2010
 
@@ -196,7 +309,7 @@ executable iplookup-simulation
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , iplookup-lib
     , random >=1.0 && <1.2
   default-language: Haskell2010
@@ -208,7 +321,7 @@ executable locator
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 executable maybe
@@ -218,8 +331,21 @@ executable maybe
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , safe >=0.3 && <0.4
+  default-language: Haskell2010
+
+executable nummod-rank-n
+  main-is: Main.hs
+  other-modules:
+      NumUtils
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch11/nummod-rank-n/
+  build-depends:
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 executable reader
@@ -230,7 +356,7 @@ executable reader
       Paths_hid_examples
   other-extensions: NamedFieldPuns
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
@@ -250,7 +376,7 @@ executable rpnexpr
       expr
   other-extensions: FlexibleInstances MultiParamTypeClasses UndecidableInstances InstanceSigs LambdaCase
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , mtl >=2.0 && <2.3
     , safe >=0.3 && <0.4
     , transformers >=0.5 && <0.6
@@ -263,7 +389,7 @@ executable showexpr
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , hint >=0.7 && <0.10
   default-language: Haskell2010
 
@@ -274,7 +400,7 @@ executable shunting-yard
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
@@ -297,12 +423,12 @@ executable stockquotes
   build-depends:
       Chart >=1.8 && <1.10
     , Chart-diagrams >=1.8 && <1.10
-    , base >=4.10 && <4.13
+    , base >=4.10 && <4.15
     , blaze-html >=0.9 && <0.10
     , bytestring >=0.10 && <0.11
     , cassava >=0.5 && <0.6
     , fmt >=0.5 && <0.7
-    , optparse-applicative >=0.14 && <0.15
+    , optparse-applicative >=0.14 && <0.16
     , safe >=0.3 && <0.4
     , text >=1.2 && <1.3
     , time >=1.8 && <1.10
@@ -315,7 +441,7 @@ executable stref
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 executable suntimes
@@ -336,16 +462,46 @@ executable suntimes
   other-extensions: RecordWildCards DeriveGeneric
   build-depends:
       aeson >=1.2 && <1.5
-    , base >=4.10 && <4.13
+    , base >=4.10 && <4.15
     , bytestring >=0.10 && <0.11
     , http-client >=0.4 && <0.7
     , mtl >=2.0 && <2.3
-    , optparse-applicative >=0.14 && <0.15
+    , optparse-applicative >=0.14 && <0.16
     , req >=2.0 && <2.2
     , safe-exceptions >=0.1.5 && <0.2
     , text >=1.2 && <1.3
     , time >=1.8 && <1.10
     , transformers >=0.5 && <0.6
+  default-language: Haskell2010
+
+executable type-families
+  main-is: ch11/type-families/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable type-lits
+  main-is: ch11/type-lits/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable type-operators
+  main-is: ch11/type-operators/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 executable vocab1
@@ -355,7 +511,7 @@ executable vocab1
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , text >=1.2 && <1.3
   default-language: Haskell2010
 
@@ -366,7 +522,7 @@ executable vocab2
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , text >=1.2 && <1.3
   default-language: Haskell2010
 
@@ -377,7 +533,7 @@ executable vocab3
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , text >=1.2 && <1.3
   default-language: Haskell2010
 
@@ -388,9 +544,41 @@ executable weapons
   autogen-modules:
       Paths_hid_examples
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
+  default-language: Haskell2010
+
+executable weights-kinds
+  main-is: ch11/weights-kinds/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable weights-phantom
+  main-is: ch11/weights-phantom/Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.10 && <4.15
+  default-language: Haskell2010
+
+executable xlist-data-families
+  main-is: Main.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch11/data-families/
+  build-depends:
+      base >=4.10 && <4.15
   default-language: Haskell2010
 
 test-suite iplookup-doctest
@@ -402,7 +590,7 @@ test-suite iplookup-doctest
       Paths_hid_examples
   ghc-options: -threaded
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , doctest >=0.12 && <0.17
   default-language: Haskell2010
 
@@ -420,7 +608,7 @@ test-suite iplookup-test
   hs-source-dirs:
       tests/iplookup
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , filepath >=1.4.1 && <1.5
     , hedgehog >=0.5 && <1.1
     , ipgen-lib
@@ -441,7 +629,7 @@ benchmark iplookup-bench
   hs-source-dirs:
       benchmarks/iplookup
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , criterion >=1.4 && <1.6
     , deepseq >=1.3 && <1.5
     , iplookup-lib
@@ -455,6 +643,6 @@ benchmark primcheck
   hs-source-dirs:
       benchmarks/primcheck
   build-depends:
-      base >=4.10 && <4.13
+      base >=4.10 && <4.15
     , criterion >=1.4 && <1.6
   default-language: Haskell2010
