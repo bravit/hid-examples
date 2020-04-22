@@ -1,9 +1,9 @@
 name: hid-examples
-version: 0.4
+version: 0.5
 synopsis: Examples to accompany the book "Haskell in Depth"
 description:
         This package provides source code examples which accompany the book
-        "Haskell in Depth" by Vitaly Bragilevsky (Manning Publications 2019).
+        "Haskell in Depth" by Vitaly Bragilevsky (Manning Publications 2020).
         You may want to get this package via @cabal get hid-examples@
         and explore its content.
 
@@ -209,27 +209,52 @@ executables:
     # 11.1
     weights-phantom:
         main: ch11/weights-phantom/Main.hs
+        other-extensions:
+          - GeneralizedNewtypeDeriving
         <<: *paths_workaround
     describe-proxies:
         main: ch11/describe-proxies/Main.hs
+        other-extensions:
+          - PolyKinds
+          - InstanceSigs
         <<: *paths_workaround
     describe-type-apps:
         main: ch11/describe-type-apps/Main.hs
+        other-extensions:
+          - PolyKinds
+          - AllowAmbiguousTypes
+          - TypeApplications
         <<: *paths_workaround
     type-operators:
         main: ch11/type-operators/Main.hs
+        other-extensions:
+          - TypeOperators
+          - NoStarIsType
         <<: *paths_workaround
     weights-kinds:
         main: ch11/weights-kinds/Main.hs
+        other-extensions:
+          - DataKinds
+          - KindSignatures
+          - GeneralizedNewtypeDeriving
         <<: *paths_workaround
     type-lits:
         main: ch11/type-lits/Main.hs
+        other-extensions:
+          - DataKinds
+          - KindSignatures
+          - ScopedTypeVariables
         <<: *paths_workaround
     type-families:
         main: ch11/type-families/Main.hs
+        other-extensions:
+          - TypeFamilies
+          - FlexibleInstances
         <<: *paths_workaround
     dynvalues-gadt:
         main: ch11/dynvalues-gadt/Main.hs
+        other-extensions:
+          - GADTs
         <<: *paths_workaround
     # 11.2
     api-stage0:
@@ -240,34 +265,72 @@ executables:
         <<: *paths_workaround
     api-stage2:
         main: ch11/api/Api2.hs
+        other-extensions:
+          - KindSignatures
+          - TypeOperators
+          - PolyKinds
+          - DataKinds
+          - TypeFamilies
         <<: *paths_workaround
     api-stage3:
         main: ch11/api/Api3.hs
+        other-extensions:
+          - KindSignatures
+          - TypeOperators
+          - PolyKinds
+          - DataKinds
+          - TypeFamilies
+          - FlexibleInstances
+          - InstanceSigs
+          - ScopedTypeVariables
         <<: *paths_workaround
     # 11.3
     expr-gadt:
         main: ch11/expr-gadt/Main.hs
+        other-extensions:
+          - GADTSyntax
+          - GADTs
         <<: *paths_workaround
     doors-type-equality:
         main: ch11/doors/TypeEq.hs
+        other-extensions:
+          - DataKinds
+          - GADTs
+          - KindSignatures
+          - ExplicitForAll
+          - TypeOperators
+          - StandaloneDeriving
         <<: *paths_workaround
     doors-singletons:
         main: ch11/doors/Sing.hs
+        other-extensions:
+          - DataKinds
+          - GADTs
+          - TypeOperators
+          - KindSignatures
+          - StandaloneDeriving
         <<: *paths_workaround
     # 11.4
     nummod-rank-n:
         source-dirs: ch11/nummod-rank-n/
         main: Main.hs
+        other-extensions:
+          - RankNTypes
         <<: *paths_workaround
     xlist-data-families:
         source-dirs: ch11/data-families/
         main: Main.hs
+        other-extensions:
+          - TypeFamilies
         <<: *paths_workaround
     graph-assoc-tf:
         source-dirs: ch11/graph-assoc-tf/
         main: Main.hs
         dependencies:
           - containers >= 0.5 && < 0.7
+        other-extensions:
+          - TypeFamilies
+          - FlexibleContexts
         <<: *paths_workaround
     
 

@@ -4,12 +4,12 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 037b49bcd033549fdbb13884ddd4f7fb43556d086f7fcfb4ce509b446309c658
+-- hash: 0fd781dbbee26ec352443238922dce5fbe4ced5692c5c1c2ee549c2670e85e24
 
 name:           hid-examples
-version:        0.4
+version:        0.5
 synopsis:       Examples to accompany the book "Haskell in Depth"
-description:    This package provides source code examples which accompany the book "Haskell in Depth" by Vitaly Bragilevsky (Manning Publications 2019). You may want to get this package via @cabal get hid-examples@ and explore its content.
+description:    This package provides source code examples which accompany the book "Haskell in Depth" by Vitaly Bragilevsky (Manning Publications 2020). You may want to get this package via @cabal get hid-examples@ and explore its content.
 category:       Sample Code
 homepage:       https://github.com/bravit/hid-examples#readme
 bug-reports:    https://github.com/bravit/hid-examples/issues
@@ -108,6 +108,7 @@ executable api-stage2
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: KindSignatures TypeOperators PolyKinds DataKinds TypeFamilies
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -118,6 +119,7 @@ executable api-stage3
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: KindSignatures TypeOperators PolyKinds DataKinds TypeFamilies FlexibleInstances InstanceSigs ScopedTypeVariables
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -128,6 +130,7 @@ executable describe-proxies
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: PolyKinds InstanceSigs
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -138,6 +141,7 @@ executable describe-type-apps
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: PolyKinds AllowAmbiguousTypes TypeApplications
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -160,6 +164,7 @@ executable doors-singletons
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: DataKinds GADTs TypeOperators KindSignatures StandaloneDeriving
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -170,6 +175,7 @@ executable doors-type-equality
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: DataKinds GADTs KindSignatures ExplicitForAll TypeOperators StandaloneDeriving
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -203,6 +209,7 @@ executable dynvalues-gadt
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: GADTs
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -213,6 +220,7 @@ executable expr-gadt
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: GADTSyntax GADTs
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -260,6 +268,7 @@ executable graph-assoc-tf
       Paths_hid_examples
   hs-source-dirs:
       ch11/graph-assoc-tf/
+  other-extensions: TypeFamilies FlexibleContexts
   build-depends:
       base >=4.12 && <4.15
     , containers >=0.5 && <0.7
@@ -344,6 +353,7 @@ executable nummod-rank-n
       Paths_hid_examples
   hs-source-dirs:
       ch11/nummod-rank-n/
+  other-extensions: RankNTypes
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -480,6 +490,7 @@ executable type-families
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: TypeFamilies FlexibleInstances
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -490,6 +501,7 @@ executable type-lits
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: DataKinds KindSignatures ScopedTypeVariables
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -500,6 +512,7 @@ executable type-operators
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: TypeOperators NoStarIsType
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -555,6 +568,7 @@ executable weights-kinds
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: DataKinds KindSignatures GeneralizedNewtypeDeriving
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -565,6 +579,7 @@ executable weights-phantom
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  other-extensions: GeneralizedNewtypeDeriving
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -577,6 +592,7 @@ executable xlist-data-families
       Paths_hid_examples
   hs-source-dirs:
       ch11/data-families/
+  other-extensions: TypeFamilies
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
