@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 02c92a7d534112528573145dba3cb06c44f47f16b0154c1fad35359b315004f6
+-- hash: 037b49bcd033549fdbb13884ddd4f7fb43556d086f7fcfb4ce509b446309c658
 
 name:           hid-examples
 version:        0.4
@@ -225,7 +225,7 @@ executable filecount
       Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
-    , extra >=1.5 && <1.7
+    , extra >=1.5 && <1.8
   default-language: Haskell2010
 
 executable gcd
@@ -431,7 +431,7 @@ executable stockquotes
     , optparse-applicative >=0.14 && <0.16
     , safe >=0.3 && <0.4
     , text >=1.2 && <1.3
-    , time >=1.8 && <1.10
+    , time >=1.8 && <1.11
   default-language: Haskell2010
 
 executable stref
@@ -467,10 +467,10 @@ executable suntimes
     , http-client >=0.4 && <0.7
     , mtl >=2.0 && <2.3
     , optparse-applicative >=0.14 && <0.16
-    , req >=2.0 && <2.2
+    , req >=2.0 && <3.2
     , safe-exceptions >=0.1.5 && <0.2
     , text >=1.2 && <1.3
-    , time >=1.8 && <1.10
+    , time >=1.8 && <1.11
     , transformers >=0.5 && <0.6
   default-language: Haskell2010
 
