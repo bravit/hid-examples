@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0fd781dbbee26ec352443238922dce5fbe4ced5692c5c1c2ee549c2670e85e24
+-- hash: dbc06050124002c5fdd2733946c81cf0705ccbcab00be32a58c8750a6893e28e
 
 name:           hid-examples
 version:        0.5
@@ -33,6 +33,11 @@ data-files:
     data/quotes.csv
     data/ssrequests.txt
     data/suntimes.config.sample.json
+    data/texts/Dracula.srt
+    data/texts/forsyte.txt
+    data/texts/hamlet.txt
+    data/texts/phrase.txt
+    data/texts/rune-poem.txt
     data/tests/iplookup/1.iprs
     data/tests/iplookup/1.ips
     data/tests/iplookup/1.out
@@ -44,11 +49,6 @@ data-files:
     data/benchmarks/iplookup/1.iprs
     data/benchmarks/iplookup/2.iprs
     data/benchmarks/iplookup/3.iprs
-    texts/Dracula.srt
-    texts/forsyte.txt
-    texts/hamlet.txt
-    texts/phrase.txt
-    texts/rune-poem.txt
 
 source-repository head
   type: git
@@ -274,6 +274,16 @@ executable graph-assoc-tf
     , containers >=0.5 && <0.7
   default-language: Haskell2010
 
+executable hello
+  main-is: ch01/hello.hs
+  other-modules:
+      Paths_hid_examples
+  autogen-modules:
+      Paths_hid_examples
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
 executable ioref
   main-is: ioref.hs
   other-modules:
@@ -329,6 +339,8 @@ executable locator
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch02
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -523,6 +535,8 @@ executable vocab1
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch02
   build-depends:
       base >=4.12 && <4.15
     , text >=1.2 && <1.3
@@ -534,6 +548,8 @@ executable vocab2
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch02
   build-depends:
       base >=4.12 && <4.15
     , text >=1.2 && <1.3
@@ -545,6 +561,8 @@ executable vocab3
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch02
   build-depends:
       base >=4.12 && <4.15
     , text >=1.2 && <1.3
