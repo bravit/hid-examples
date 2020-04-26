@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: dbc06050124002c5fdd2733946c81cf0705ccbcab00be32a58c8750a6893e28e
+-- hash: 3ddc4142479a3024a71df9a311a872a6de7443f575db795acd794e883ec03ff6
 
 name:           hid-examples
 version:        0.5
@@ -54,6 +54,25 @@ source-repository head
   type: git
   location: https://github.com/bravit/hid-examples
 
+library contexts
+  exposed-modules:
+      Contexts
+  hs-source-dirs:
+      ch02
+  build-depends:
+      base >=4.12 && <4.15
+    , mtl >=2.0 && <2.3
+  default-language: Haskell2010
+
+library expr-simple
+  exposed-modules:
+      Expr
+  hs-source-dirs:
+      expr
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
 library ipgen-lib
   exposed-modules:
       GenIP
@@ -80,6 +99,15 @@ library iplookup-lib
     , safe >=0.3 && <0.4
     , safe-exceptions >=0.1.5 && <0.2
     , split >=0.2 && <0.3
+  default-language: Haskell2010
+
+library locator
+  exposed-modules:
+      Locator
+  hs-source-dirs:
+      ch02
+  build-depends:
+      base >=4.12 && <4.15
   default-language: Haskell2010
 
 executable api-stage0
@@ -278,8 +306,6 @@ executable hello
   main-is: ch01/hello.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -333,18 +359,6 @@ executable iplookup-simulation
     , random >=1.0 && <1.2
   default-language: Haskell2010
 
-executable locator
-  main-is: locator.hs
-  other-modules:
-      Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
-  hs-source-dirs:
-      ch02
-  build-depends:
-      base >=4.12 && <4.15
-  default-language: Haskell2010
-
 executable maybe
   main-is: maybe.hs
   other-modules:
@@ -370,6 +384,26 @@ executable nummod-rank-n
       base >=4.12 && <4.15
   default-language: Haskell2010
 
+executable person-defined-show
+  main-is: person-defined-show.hs
+  other-modules:
+      Person
+  hs-source-dirs:
+      ch02
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable person-derived-instances
+  main-is: person-derived-instances.hs
+  other-modules:
+      Person
+  hs-source-dirs:
+      ch02
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
 executable reader
   main-is: reader.hs
   other-modules:
@@ -390,6 +424,7 @@ executable rpnexpr
       EvalRPN_trans2
       EvalRPNExcept
       EvalRPNExcept2
+      Expr
       MyMaybeT
       Paths_hid_examples
   autogen-modules:
@@ -402,17 +437,6 @@ executable rpnexpr
     , mtl >=2.0 && <2.3
     , safe >=0.3 && <0.4
     , transformers >=0.5 && <0.6
-  default-language: Haskell2010
-
-executable showexpr
-  main-is: expr/showexpr.hs
-  other-modules:
-      Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
-  build-depends:
-      base >=4.12 && <4.15
-    , hint >=0.7 && <0.10
   default-language: Haskell2010
 
 executable shunting-yard
@@ -531,10 +555,6 @@ executable type-operators
 
 executable vocab1
   main-is: vocab1.hs
-  other-modules:
-      Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   hs-source-dirs:
       ch02
   build-depends:
@@ -544,10 +564,6 @@ executable vocab1
 
 executable vocab2
   main-is: vocab2.hs
-  other-modules:
-      Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   hs-source-dirs:
       ch02
   build-depends:
@@ -557,10 +573,6 @@ executable vocab2
 
 executable vocab3
   main-is: vocab3.hs
-  other-modules:
-      Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   hs-source-dirs:
       ch02
   build-depends:
@@ -615,6 +627,19 @@ executable xlist-data-families
       base >=4.12 && <4.15
   default-language: Haskell2010
 
+test-suite expr-simple-test
+  type: exitcode-stdio-1.0
+  main-is: Test1.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      tests/expr
+  build-depends:
+      base >=4.12 && <4.15
+    , expr-simple
+    , hint >=0.7 && <0.10
+  default-language: Haskell2010
+
 test-suite iplookup-doctest
   type: exitcode-stdio-1.0
   main-is: tests/iplookup-doctest/Doctests.hs
@@ -651,6 +676,18 @@ test-suite iplookup-test
     , tasty-golden >=2.3 && <2.4
     , tasty-hedgehog >=0.1 && <1.1
     , tasty-hspec >=1.1 && <1.2
+  default-language: Haskell2010
+
+test-suite locator-test
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      tests/locator
+  build-depends:
+      base >=4.12 && <4.15
+    , locator
   default-language: Haskell2010
 
 benchmark iplookup-bench

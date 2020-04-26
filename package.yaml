@@ -38,33 +38,32 @@ executables:
     # Chapter 1
     hello:
         main: ch01/hello.hs
-        <<: *paths_workaround
     # Chapter 2
     # 2.1
     vocab1:
         source-dirs: ch02
         main: vocab1.hs
-        <<: *paths_workaround
+        other-modules: []
         dependencies: text >=1.2 && <1.3
     vocab2:
         source-dirs: ch02
         main: vocab2.hs
-        <<: *paths_workaround
+        other-modules: []
         dependencies: text >=1.2 && <1.3
     vocab3:
         source-dirs: ch02
         main: vocab3.hs
-        <<: *paths_workaround
+        other-modules: []
         dependencies: text >=1.2 && <1.3
     # 2.2
-    locator:
+    person-derived-instances:
         source-dirs: ch02
-        main: locator.hs
-        <<: *paths_workaround
-    showexpr:
-        main: expr/showexpr.hs
-        <<: *paths_workaround
-        dependencies: hint >=0.7 && <0.10
+        main: person-derived-instances.hs
+        other-modules: Person
+    person-defined-show:
+        source-dirs: ch02
+        main: person-defined-show.hs
+        other-modules: Person
     # Chapter 3
     stockquotes:
         source-dirs: stockquotes
@@ -345,6 +344,21 @@ executables:
     
 
 internal-libraries:
+    # Chapter 2
+    locator:
+        source-dirs: ch02
+        exposed-modules: Locator
+        other-modules: []
+    expr-simple:
+        source-dirs: expr
+        exposed-modules: Expr
+        other-modules: []
+    contexts:
+        source-dirs: ch02
+        exposed-modules: Contexts
+        other-modules: []
+        dependencies:
+          - mtl >=2.0 && <2.3
     # Chapter 8
     iplookup-lib:
         source-dirs: iplookup
@@ -371,6 +385,17 @@ internal-libraries:
           - hedgehog >= 0.5 && < 1.1
 
 tests:
+    # Chapter 2
+    locator-test:
+        source-dirs: tests/locator
+        main: Main.hs
+        dependencies: locator
+    expr-simple-test:
+        source-dirs: tests/expr
+        main: Test1.hs
+        dependencies:
+          - expr-simple
+          - hint >=0.7 && <0.10
     # Chapter 8
     iplookup-test:
         main: Test.hs

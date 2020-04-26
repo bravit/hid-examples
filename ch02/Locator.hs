@@ -1,6 +1,8 @@
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE StandaloneDeriving #-}
 
+module Locator where
+
 import Data.List (nub, sort)
 
 class (Enum a, Bounded a) => BoundedEnum a where
@@ -24,7 +26,7 @@ data Direction = North | East | South | West
 --instance CyclicEnum Direction
 
 data Turn = TNone | TLeft | TRight | TAround
-  deriving (Eq, Enum, Bounded, BoundedEnum)
+  deriving (Eq, Enum, Bounded, BoundedEnum, Show)
            
 orient :: Turn -> Direction -> Direction
 orient TNone = id
@@ -41,7 +43,3 @@ deriving instance Ord Turn
 
 test :: Bool
 test = sort (nub [ findTurn d1 d2 | d1 <- range, d2 <- range ]) == range
-
-main = do
-  putStr "Locator test: "
-  print test
