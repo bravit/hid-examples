@@ -1,11 +1,9 @@
-This is the sample code to accompany the book *Haskell in Depth* (Vitaly Bragilevsky, Manning Publications 2019). 
+This is the sample code to accompany the book *Haskell in Depth* (Vitaly Bragilevsky, Manning Publications 2020). 
 
-To get the source code on your system, you may want to run:
+To get the source code on your system, you may want to clone this repository:
 ```
-cabal get hid-examples
+$ git clone https://github.com/bravit/hid-examples.git
 ```
-Alternatively, you may clone [GitHub repository](https://github.com/bravit/hid-examples/) with the most current version.
-
 
 To work with the code on your system, you need either:
 
@@ -14,15 +12,56 @@ To work with the code on your system, you need either:
 * [The Haskell Platform](https://www.haskell.org/platform/)
 
 
+## Using `cabal` (3.0+)
+
+To build the whole package, issue the following command:
+```
+$ cabal build
+```
+
+To build only one project component:
+```
+$ cabal build hello
+```
+
+To run a component:
+```
+$ cabal run hello
+Up to date
+Hello, world
+$ cabal -v0 run hello
+Hello, world
+$ cabal run stockquotes -- data/quotes.csv -p -v
+...
+```
+
+To explore a component in GHCi:
+```
+$ cabal repl hello
+...
+$ cabal repl stockquotes
+ghci> :load Statistics
+```
+
+To test the whole package:
+```
+$ cabal test
+```
+
+To run one test-suite:
+```
+$ cabal test locator-test
+```
+
+
 ## Using Stack
 
-### Building
-
+To build:
 ```
 stack build
 ```
 
-### Running
+To run:
 
 ```
 stack exec <executable> [ -- <arguments>]
@@ -33,81 +72,15 @@ For example:
 stack exec stockquotes -- data/quotes.csv -p -v
 ```
 
-### Testing
+To test:
 
 ```
 stack test
 ```
 
-### Exploring in GHCi
+
+Unfortunately, exploring code in GHCi doesn't work due to [bug in stack](https://github.com/commercialhaskell/stack/issues/4564):
 
 ```
 stack ghci <module file>
 ```
-
-For example:
-
-```
-stack ghci stockquotes/Statistics.hs
-```
-
-## Using Cabal sandbox
-
-### Building
-
-```
-cabal sandbox init
-cabal install --only-dependencies --enable-tests
-cabal configure --enable-tests
-cabal build
-```
-
-### Running
-
-```
-cabal run <executable> [ -- <arguments>]
-```
-
-For example:
-
-```
-cabal run stockquotes -- data/quotes.csv -p -v
-```
-
-### Testing
-
-```
-cabal test
-cabal test iplookup-test
-```
-
-
-### Exploring in GHCi
-
-```
-cabal repl <executable>
-```
-
-For example:
-
-```
-cabal repl stockquotes
-```
-
-To work with particular module, you have to load it in GHCi with `:load`.
-
-
-## Using Cabal new-*
-
-### Building
-
-```
-cabal new-build
-```
-
-### Testing
-
-```
-cabal new-test
-```
-
