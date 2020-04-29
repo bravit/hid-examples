@@ -35,26 +35,31 @@ _paths_workaround: &paths_workaround
   generated-other-modules: Paths_hid_examples  
 
 executables:
-    # Chapter 1
+    # Preface
     hello:
-        main: ch01/hello.hs
-    # Chapter 2
-    # 2.1
+        main: intro/hello.hs
+    # Chapter 1
     vocab1:
-        source-dirs: ch02
+        source-dirs: ch01
         main: vocab1.hs
         other-modules: []
         dependencies: text >=1.2 && <1.3
     vocab2:
-        source-dirs: ch02
+        source-dirs: ch01
         main: vocab2.hs
         other-modules: []
         dependencies: text >=1.2 && <1.3
     vocab3:
-        source-dirs: ch02
+        source-dirs: ch01
         main: vocab3.hs
         other-modules: []
-        dependencies: text >=1.2 && <1.3
+        other-extensions:
+          - OverloadedStrings
+        dependencies:
+          - text >=1.2 && <1.3
+          - fmt >=0.5 && <0.7
+    # Chapter 2
+    # 2.1
     # 2.2
     person-derived-instances:
         source-dirs: ch02

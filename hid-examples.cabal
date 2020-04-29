@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3ddc4142479a3024a71df9a311a872a6de7443f575db795acd794e883ec03ff6
+-- hash: cc762f05f84509c5d753879e35ed6a91e61e2e4964c6af05462712e4d950f212
 
 name:           hid-examples
 version:        0.5
@@ -303,7 +303,7 @@ executable graph-assoc-tf
   default-language: Haskell2010
 
 executable hello
-  main-is: ch01/hello.hs
+  main-is: intro/hello.hs
   other-modules:
       Paths_hid_examples
   build-depends:
@@ -556,7 +556,7 @@ executable type-operators
 executable vocab1
   main-is: vocab1.hs
   hs-source-dirs:
-      ch02
+      ch01
   build-depends:
       base >=4.12 && <4.15
     , text >=1.2 && <1.3
@@ -565,7 +565,7 @@ executable vocab1
 executable vocab2
   main-is: vocab2.hs
   hs-source-dirs:
-      ch02
+      ch01
   build-depends:
       base >=4.12 && <4.15
     , text >=1.2 && <1.3
@@ -574,9 +574,11 @@ executable vocab2
 executable vocab3
   main-is: vocab3.hs
   hs-source-dirs:
-      ch02
+      ch01
+  other-extensions: OverloadedStrings
   build-depends:
       base >=4.12 && <4.15
+    , fmt >=0.5 && <0.7
     , text >=1.2 && <1.3
   default-language: Haskell2010
 
