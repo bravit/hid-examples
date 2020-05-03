@@ -32,7 +32,7 @@ tested-with: GHC == 8.6.5, GHC == 8.8.3
 dependencies: base >=4.12 && <4.15
 
 _paths_workaround: &paths_workaround
-  generated-other-modules: Paths_hid_examples  
+  generated-other-modules: Paths_hid_examples
 
 executables:
     # Preface
@@ -60,6 +60,12 @@ executables:
           - fmt >=0.5 && <0.7
     # Chapter 2
     # 2.1
+    radar:
+        source-dirs: ch02/radar
+        main: Main.hs
+        other-modules: Radar
+        dependencies:
+          - fmt >=0.5 && <0.7
     # 2.2
     person-derived-instances:
         source-dirs: ch02
@@ -126,8 +132,9 @@ executables:
           - random >=1.0 && <1.2
     shunting-yard:
         main: expr/shunting-yard.hs
-        <<: *paths_workaround
+        other-modules: []
         dependencies:
+          - text-show >=3.0 && <4
           - mtl >=2.0 && <2.3
     dicegame:
         main: dicegame.hs
@@ -169,6 +176,7 @@ executables:
           - mtl >= 2.0 && < 2.3
           - transformers >= 0.5 && < 0.6
           - safe >=0.3 && <0.4
+          - text-show >=3.0 && <4
         other-extensions:
           - FlexibleInstances
           - MultiParamTypeClasses
@@ -186,7 +194,7 @@ executables:
           - time >=1.8 && <1.11
           - text >=1.2 && <1.3
           - safe-exceptions >= 0.1.5 && < 0.2
-          - aeson >= 1.2 && < 1.5  
+          - aeson >= 1.2 && < 1.5
           - req >= 2.0 && < 3.2
           - http-client >= 0.4 && < 0.7
           - optparse-applicative >= 0.14 && < 0.16
@@ -346,18 +354,19 @@ executables:
           - TypeFamilies
           - FlexibleContexts
         <<: *paths_workaround
-    
 
 internal-libraries:
     # Chapter 2
-    locator:
-        source-dirs: ch02
-        exposed-modules: Locator
+    radar-lib:
+        source-dirs: ch02/radar
+        exposed-modules: Radar
         other-modules: []
     expr-simple:
         source-dirs: expr
         exposed-modules: Expr
         other-modules: []
+        dependencies:
+          - text-show >=3.0 && <4
     contexts:
         source-dirs: ch02
         exposed-modules: Contexts
@@ -391,10 +400,13 @@ internal-libraries:
 
 tests:
     # Chapter 2
-    locator-test:
-        source-dirs: tests/locator
-        main: Main.hs
-        dependencies: locator
+    radar-test:
+        source-dirs: tests/radar
+        main: Test.hs
+        other-modules: []
+        dependencies:
+          - radar-lib
+          - random >=1.0 && <1.2
     expr-simple-test:
         source-dirs: tests/expr
         main: Test1.hs

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cc762f05f84509c5d753879e35ed6a91e61e2e4964c6af05462712e4d950f212
+-- hash: 0f633a92da2016305ed65994a0846178993e3a23b182544812a3d9b603fa47ba
 
 name:           hid-examples
 version:        0.5
@@ -28,11 +28,13 @@ extra-source-files:
     appveyor.yml
     package.yaml
 data-files:
+    data/dirs.txt
     data/ipdb.txt
     data/ipranges.txt
     data/quotes.csv
     data/ssrequests.txt
     data/suntimes.config.sample.json
+    data/turns.txt
     data/texts/Dracula.srt
     data/texts/forsyte.txt
     data/texts/hamlet.txt
@@ -71,6 +73,7 @@ library expr-simple
       expr
   build-depends:
       base >=4.12 && <4.15
+    , text-show >=3.0 && <4
   default-language: Haskell2010
 
 library ipgen-lib
@@ -101,11 +104,11 @@ library iplookup-lib
     , split >=0.2 && <0.3
   default-language: Haskell2010
 
-library locator
+library radar-lib
   exposed-modules:
-      Locator
+      Radar
   hs-source-dirs:
-      ch02
+      ch02/radar
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -404,6 +407,17 @@ executable person-derived-instances
       base >=4.12 && <4.15
   default-language: Haskell2010
 
+executable radar
+  main-is: Main.hs
+  other-modules:
+      Radar
+  hs-source-dirs:
+      ch02/radar
+  build-depends:
+      base >=4.12 && <4.15
+    , fmt >=0.5 && <0.7
+  default-language: Haskell2010
+
 executable reader
   main-is: reader.hs
   other-modules:
@@ -436,18 +450,16 @@ executable rpnexpr
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
     , safe >=0.3 && <0.4
+    , text-show >=3.0 && <4
     , transformers >=0.5 && <0.6
   default-language: Haskell2010
 
 executable shunting-yard
   main-is: expr/shunting-yard.hs
-  other-modules:
-      Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
+    , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable stockquotes
@@ -680,16 +692,15 @@ test-suite iplookup-test
     , tasty-hspec >=1.1 && <1.2
   default-language: Haskell2010
 
-test-suite locator-test
+test-suite radar-test
   type: exitcode-stdio-1.0
-  main-is: Main.hs
-  other-modules:
-      Paths_hid_examples
+  main-is: Test.hs
   hs-source-dirs:
-      tests/locator
+      tests/radar
   build-depends:
       base >=4.12 && <4.15
-    , locator
+    , radar-lib
+    , random >=1.0 && <1.2
   default-language: Haskell2010
 
 benchmark iplookup-bench

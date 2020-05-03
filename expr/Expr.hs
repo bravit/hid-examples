@@ -1,4 +1,8 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Expr where
+
+import TextShow
 
 data Expr a = Lit a
             | Add (Expr a) (Expr a)
@@ -13,7 +17,7 @@ instance Show a => Show (Expr a) where
   showsPrec _ (Lit a)  = shows a
   showsPrec p (Add e1 e2) = showParen (p > precAdd)
                             $ showsPrec precAdd e1
-                              . showString "+" 
+                              . showString "+"
                               . showsPrec precAdd e2
     where precAdd = 5
   showsPrec p (Mult e1 e2) = showParen (p > precMult)
@@ -21,6 +25,17 @@ instance Show a => Show (Expr a) where
                                . showString "*"
                                . showsPrec precMult e2
     where precMult = 6
+
+instance TextShow a => TextShow (Expr a) where
+  showbPrec p e =
+    case e of
+      Lit a -> showb a
+      Add e1 e2 -> showbHelper p 5 "+" e1 e2
+      Mult e1 e2 -> showbHelper p 6 "*" e1 e2
+    where
+      showbHelper outerPrec thisPrec op e1 e2 =
+        showbParen (outerPrec > thisPrec)
+        $ showbPrec thisPrec e1 <> op <> showbPrec thisPrec e2
 
 expr = Mult (Add (Lit 2) (Mult (Lit 3) (Lit 3))) (Lit 5)
 

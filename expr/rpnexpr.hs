@@ -18,14 +18,14 @@ rpns = ["42",
         "10 1 2 + 2 2 1 2 * + * * * 1 3 2 + + +"]
 
 showEvalRes :: String -> String
-showEvalRes e = e ++ " = " ++ maybe "ERROR" show (E1.evalRPN e) 
+showEvalRes e = e ++ " = " ++ maybe "ERROR" show (E1.evalRPN e)
 
 main = do
   print $ E.evalRPN "2 3 +"
   print $ E1.evalRPN "2 x +"
   print $ E2.evalRPN "x 3 +"
   let res1 = map E1.evalRPN rpns
-  mapM_ (putStrLn . showEvalRes) rpns    
+  mapM_ (putStrLn . showEvalRes) rpns
   let    res2 = map E2.evalRPN rpns
   when (res1 == res2) $ putStrLn "E2 OK"
 
