@@ -39,13 +39,13 @@ rotate TRight = csucc
 rotate TAround = cpred . cpred
 
 rotateMany :: Direction -> [Turn] -> Direction
-rotateMany d ts = foldl (flip rotate) d ts
+rotateMany = foldl (flip rotate)
 
 rotateMany' :: Direction -> [Turn] -> Direction
-rotateMany' d ts = rotate (mconcat ts) d
+rotateMany' dir ts = rotate (mconcat ts) dir
 
 rotateManySteps :: Direction -> [Turn] -> [Direction]
-rotateManySteps d ts = scanl (flip rotate) d ts
+rotateManySteps= scanl (flip rotate)
 
 every :: (Enum a, Bounded a) => [a]
 every = enumFrom minBound

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0f633a92da2016305ed65994a0846178993e3a23b182544812a3d9b603fa47ba
+-- hash: 4c9dee4d7afd9b880bc3418fc3c9cdabf5059a9542106141ad50881d7fd9b35f
 
 name:           hid-examples
 version:        0.5
@@ -413,6 +413,7 @@ executable radar
       Radar
   hs-source-dirs:
       ch02/radar
+  other-extensions: DeriveAnyClass
   build-depends:
       base >=4.12 && <4.15
     , fmt >=0.5 && <0.7

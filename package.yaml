@@ -64,6 +64,8 @@ executables:
         source-dirs: ch02/radar
         main: Main.hs
         other-modules: Radar
+        other-extensions:
+          - DeriveAnyClass
         dependencies:
           - fmt >=0.5 && <0.7
     # 2.2
