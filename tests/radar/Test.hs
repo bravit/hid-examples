@@ -18,14 +18,14 @@ instance Random Direction where
     where (i, g') = randomR (fromEnum lo, fromEnum hi) g
   random = randomR (minBound, maxBound)
 
-nRandomsIO :: Random a => Int -> IO [a]
-nRandomsIO n = replicateM n $ getStdRandom random
+randomsIO :: Random a => Int -> IO [a]
+randomsIO n = replicateM n randomIO
 
 randomTurns :: Int -> IO [Turn]
-randomTurns = nRandomsIO
+randomTurns = randomsIO
 
 randomDirections :: Int -> IO [Direction]
-randomDirections = nRandomsIO
+randomDirections = randomsIO
 
 writeRandomFile :: (Random a, Show a) =>
                    Int -> (Int -> IO [a]) -> FilePath -> IO ()
@@ -41,10 +41,10 @@ test_allTurnsInUse = sort (nub [ orient d1 d2 | d1 <- every, d2 <- every ])
 
 test_rotationsMonoidAgree :: [Turn] -> Bool
 test_rotationsMonoidAgree ts =
-  let t = mconcat ts
-  in and [ rotateMany d ts == rotate t d | d <- every]
+   and [ rotateMany d ts == rotateMany' d ts | d <- every ]
 
 test_orientRotateAgree :: [Direction] -> Bool
+test_orientRotateAgree [] = True
 test_orientRotateAgree ds@(d:_) = ds == rotateManySteps d (orientMany ds)
 
 main :: IO ()

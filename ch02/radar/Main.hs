@@ -25,7 +25,7 @@ rotateFromFile :: Direction -> FilePath -> IO ()
 rotateFromFile dir fname = do
   f <- readFile fname
   let turns = map read $ lines f
-      finalDir = rotate (mconcat turns) dir
+      finalDir = rotateMany dir turns
       dirs = rotateManySteps dir turns
   fmtLn $ "Final direction: "+||finalDir||+""
   fmt $ nameF "Intermediate directions" (unwordsF dirs)

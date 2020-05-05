@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4c9dee4d7afd9b880bc3418fc3c9cdabf5059a9542106141ad50881d7fd9b35f
+-- hash: 2312b6a488542cf1c676555e1d42ad8f1837b64cd6b383d72bac41a518da7e59
 
 name:           hid-examples
 version:        0.5
@@ -387,24 +387,35 @@ executable nummod-rank-n
       base >=4.12 && <4.15
   default-language: Haskell2010
 
-executable person-defined-show
-  main-is: person-defined-show.hs
+executable person-derived
+  main-is: derived-show.hs
   other-modules:
       Person
   hs-source-dirs:
-      ch02
+      ch02/person
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
 
-executable person-derived-instances
-  main-is: person-derived-instances.hs
+executable person-implemented
+  main-is: implemented-show.hs
   other-modules:
       Person
   hs-source-dirs:
-      ch02
+      ch02/person
   build-depends:
       base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable person-text
+  main-is: text-show.hs
+  other-modules:
+      Person
+  hs-source-dirs:
+      ch02/person
+  build-depends:
+      base >=4.12 && <4.15
+    , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable radar
