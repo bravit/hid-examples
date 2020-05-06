@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2312b6a488542cf1c676555e1d42ad8f1837b64cd6b383d72bac41a518da7e59
+-- hash: cc99a6b120eea062cc62e046fb35a0b00af483357a4d4feaef817c392cf0102c
 
 name:           hid-examples
 version:        0.5
@@ -664,6 +664,7 @@ test-suite expr-simple-test
       base >=4.12 && <4.15
     , expr-simple
     , hint >=0.7 && <0.10
+    , text-show >=3.0 && <4
   default-language: Haskell2010
 
 test-suite iplookup-doctest

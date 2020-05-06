@@ -3,26 +3,35 @@ import Data.Foldable (traverse_)
 
 import Language.Haskell.Interpreter
 
+import TextShow
 import Expr
 
-testexpr :: (Eq a, Read a, Show a, Num a) => Expr a -> IO ()
-testexpr e = do
-  let e_str = show e
-      e_val = myeval e
-  putStr $ e_str ++ " = " ++ show e_val ++ " "
-  r <- runInterpreter $ setImports ["Prelude"] >> eval e_str
+testexpr :: TextShow a => Expr a -> a -> IO ()
+testexpr e r = do
+  let e_str = toString $ showb e
+      r_str = toString $ showb r
+  putStr $ e_str ++ " = " ++ r_str ++ " "
+  res <- expectInterpResult e_str r_str
+  case res of
+    Right () -> putStrLn "ok"
+    Left err -> failedTest err
+
+expectInterpResult :: String -> String -> IO (Either String ())
+expectInterpResult expr expected = do
+  r <- runInterpreter $ setImports ["Prelude"] >> eval expr
   case r of
-    Right r' -> if read r' == e_val
-                   then putStrLn "ok"
-                   else failedTest "eval error"
-    _ -> failedTest "interpreter error"
+    Right res -> if res == expected
+                   then pure $ Right ()
+                   else pure $ Left "eval error"
+    Left err -> pure $ Left "interpreter error"
 
 failedTest msg = do
   putStrLn msg
   exitFailure
 
-main = traverse_ testexpr exprs
+main = traverse_ (\e -> testexpr e (myeval e)) exprs
 
+exprs :: [Expr Int]
 exprs = [
   Mult (Add (Lit 2) (Mult (Lit 3) (Lit 3))) (Lit 5),
   Add (Add (Lit 1) (Mult (Add (Lit 1) (Lit 2))

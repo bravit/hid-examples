@@ -421,6 +421,7 @@ tests:
         dependencies:
           - expr-simple
           - hint >=0.7 && <0.10
+          - text-show >=3.0 && <4
     # Chapter 8
     iplookup-test:
         main: Test.hs

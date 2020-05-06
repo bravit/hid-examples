@@ -1,6 +1,7 @@
 module Contexts where
 
 import Control.Monad.Writer
+import Text.Read (readMaybe)
 
 readNumber :: IO Int
 readNumber = do
@@ -21,4 +22,4 @@ cartesianProduct xs ys = do
   pure (x, y)
 
 addNumber :: Int -> IO String
-addNumber n = pure (++) <*> pure (show n ++ " ")  <*> getLine 
+addNumber n = pure (++) <*> pure (show n ++ " ")  <*> getLine
