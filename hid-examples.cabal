@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cc99a6b120eea062cc62e046fb35a0b00af483357a4d4feaef817c392cf0102c
+-- hash: 66654718f2b41be75c3dac602c8c5c133febe5dc80855f5970772241140fbae3
 
 name:           hid-examples
 version:        0.5
@@ -477,7 +477,6 @@ executable shunting-yard
 executable stockquotes
   main-is: Main.hs
   other-modules:
-      BoundedEnum
       Charts
       HtmlReport
       Params

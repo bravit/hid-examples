@@ -6,7 +6,7 @@ module HtmlReport (htmlReport) where
 import Data.Foldable (traverse_)
 import Data.Semigroup ((<>))
 import Data.ByteString.Lazy (ByteString)
-import Text.Blaze.Html5 as H 
+import Text.Blaze.Html5 as H
 import Text.Blaze.Html5.Attributes (src)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
 

@@ -1,5 +1,3 @@
-{-# LANGUAGE DeriveAnyClass #-}
-
 module Statistics (Statistic(..), StatEntry (..),
                    StatQFieldData, StatInfo, statInfo) where
 
@@ -7,11 +5,10 @@ import Data.Ord (comparing)
 import Data.Foldable (minimumBy, maximumBy)
 import Data.Time (diffDays)
 
-import BoundedEnum
 import QuoteData
 
 data Statistic = Mean | Min | Max | Days
-  deriving (Show, Eq, Enum, Bounded, BoundedEnum)
+  deriving (Show, Eq, Enum, Bounded)
 
 data StatEntry = StatEntry {
     stat :: Statistic,
@@ -38,7 +35,8 @@ computeStatistic Max = funcByField maximum
 computeStatistic Days = daysBetween
 
 statInfo :: (Functor t, Foldable t) => t QuoteData -> StatInfo
-statInfo quotes = map stQFData range
-  where 
-    stQFData qf = (qf, [ StatEntry st qf v | st <- range,
-                         let v = computeStatistic st qf quotes ])
+statInfo quotes = map stQFData [minBound .. maxBound]
+  where
+    stQFData qf = (qf, [ StatEntry st qf v |
+                           st <- [minBound .. maxBound],
+                           let v = computeStatistic st qf quotes ])

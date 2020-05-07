@@ -18,7 +18,8 @@ instance Buildable Statistic where
   build Days = "Days between Min/Max"
 
 showStatEntryValue :: StatEntry -> String
-showStatEntryValue StatEntry {..} = showFixed (removeTrailing stat qfield) value
+showStatEntryValue StatEntry {..} =
+    showFixed (removeTrailing stat qfield) value
   where
     removeTrailing Days _ = True
     removeTrailing Min Volume = True

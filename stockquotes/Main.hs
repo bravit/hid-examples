@@ -33,7 +33,7 @@ generateReports Params {..} quotes = do
    title = "Historical Quotes" ++ withCompany " for "
 
 work :: Params -> IO ()
-work params = do 
+work params = do
   csvData <- BL.readFile (fname params)
   case decodeByName csvData of
     Left err -> putStrLn err
