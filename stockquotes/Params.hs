@@ -6,8 +6,7 @@ import Options.Applicative
 data Params = Params {
                 fname :: FilePath
               , company :: String
-              , prices :: Bool
-              , volumes :: Bool
+              , chart :: Bool
               , html :: Bool
               , no_text :: Bool
               }
@@ -18,14 +17,11 @@ mkParams =
              strArgument
              (metavar "FILE" <> help "CSV file name")
          <*> strOption
-             (long "company" <> short 'c'
-              <> help "stock company's name" <> value "")
+             (long "ticker" <> short 't'
+              <> help "stock company's ticker" <> value "")
          <*> switch
-             (long "prices" <> short 'p' <>
+             (long "chart" <> short 'c' <>
               help "create file with prices chart")
-         <*> switch
-             (long "volumes" <> short 'v' <>
-              help "create file with volumes chart")
          <*> switch
              (long "html" <>
               help "create file with HTML report")

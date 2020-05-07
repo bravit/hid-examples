@@ -2,14 +2,15 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module StatReport (statReport, showStatEntryValue) where
+module StatReport (showStatEntryValue, showPrice) where
 
-import Data.Fixed (showFixed)
-import Data.Text (Text)
 import Fmt
+import Data.Text (Text)
 
 import QuoteData
 import Statistics
+
+pricePlaces = 4
 
 instance Buildable Statistic where
   build Mean = "Mean"
@@ -17,20 +18,26 @@ instance Buildable Statistic where
   build Max = "Maximum"
   build Days = "Days between Min/Max"
 
-showStatEntryValue :: StatEntry -> String
-showStatEntryValue StatEntry {..} =
-    showFixed (removeTrailing stat qfield) value
+statEntryValueBuilder :: StatEntry -> Builder
+statEntryValueBuilder StatEntry {..} =
+    fixedF (decimalPlaces stat qfield) value
   where
-    removeTrailing Days _ = True
-    removeTrailing Min Volume = True
-    removeTrailing Max Volume = True
-    removeTrailing _ _ = False
+    decimalPlaces Days _ = 0
+    decimalPlaces Min Volume = 0
+    decimalPlaces Max Volume = 0
+    decimalPlaces _ _ = pricePlaces
+
+showStatEntryValue :: StatEntry -> Text
+showStatEntryValue = fmt . statEntryValueBuilder
+
+showPrice :: Double -> Text
+showPrice = fmt . fixedF pricePlaces
 
 instance Buildable StatEntry where
-  build se@StatEntry {..} = ""+|stat|+": "+|showStatEntryValue se|+""
+  build se@StatEntry {..} = build stat <> ": " <> statEntryValueBuilder se
 
 instance Buildable StatQFieldData where
   build (qf, stats) = nameF ("Statistics for " +||qf||+"") $ unlinesF stats
 
-statReport :: StatInfo -> Text
-statReport = fmt . unlinesF
+instance Buildable StatInfo where
+  build = unlinesF

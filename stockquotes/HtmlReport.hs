@@ -11,9 +11,9 @@ import Text.Blaze.Html5.Attributes (src)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
 
 import QuoteData
-import StatReport (showStatEntryValue)
+import StatReport (showStatEntryValue, showPrice)
 import Statistics
-import Fmt
+import Fmt (pretty)
 
 htmlReport :: (Functor t, Foldable t) =>
               String -> t QuoteData -> StatInfo -> [FilePath] -> ByteString
@@ -22,16 +22,16 @@ htmlReport title quotes si images = renderHtml $ docTypeHtml $ do
        H.title $ string title
        H.style style
      body $ do
-       renderDiagrams images
+       renderCharts images
        renderStatInfo si
        renderData quotes
   where
     style = "table {border-collapse: collapse}" <>
             "td, th {border: 1px solid black; padding: 3px}"
 
-    renderDiagrams [] = pure ()
-    renderDiagrams images = do
-      h1 "Diagrams"
+    renderCharts [] = pure ()
+    renderCharts images = do
+      h1 "Charts"
       traverse_ ((img!).src.toValue) images
 
     renderStatInfo [] = pure ()
@@ -39,20 +39,21 @@ htmlReport title quotes si images = renderHtml $ docTypeHtml $ do
       h1 "Statistics Report"
       table $ do
          thead $ tr $ traverse_ th
-               $ "Quotes Field" : [text $ fmt $ build $ stat s | s <- ses]
+               $ "Quotes Field" : [text $ pretty $ stat s | s <- ses]
          tbody $ traverse_ statData2TR si
 
     statData2TR (qf, entries) = tr $ do
       td $ string $ show qf
-      traverse_ (td.string.showStatEntryValue) entries
+      traverse_ (td.text.showStatEntryValue) entries
 
     renderData quotes = do
       h1 "Stock Quotes Data"
       table $ do
          thead $ tr
-               $ traverse_ th ["Day", "Close", "Volume", "Open", "High", "Low"]
+               $ traverse_ th ["Day", "Volume", "Close", "Open", "High", "Low"]
          tbody $ traverse_ quoteData2TR quotes
 
-    quoteData2TR QuoteData {..} = tr $ do
+    quoteData2TR (QuoteData {..}) = tr $ do
       td $ string $ show day
-      traverse_ (td.string.show) [close, volume, open, high, low]
+      td $ string $ show volume
+      traverse_ (td.text.showPrice) [close, open, high, low]

@@ -1,4 +1,4 @@
-module Statistics (Statistic(..), StatEntry (..),
+module Statistics (Statistic (..), StatEntry (..),
                    StatQFieldData, StatInfo, statInfo) where
 
 import Data.Ord (comparing)
@@ -13,7 +13,7 @@ data Statistic = Mean | Min | Max | Days
 data StatEntry = StatEntry {
     stat :: Statistic,
     qfield :: QField,
-    value :: Fixed4
+    value :: Double
   }
 
 type StatQFieldData = (QField, [StatEntry])

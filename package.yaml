@@ -87,7 +87,6 @@ executables:
     stockquotes:
         source-dirs: stockquotes
         main: Main.hs
-        <<: *paths_workaround
         other-extensions:
           - RecordWildCards
           - OverloadedStrings
@@ -101,7 +100,6 @@ executables:
           - time >=1.8 && <1.11
           - text >=1.2 && <1.3
           - fmt >=0.5 && <0.7
-          - safe >=0.3 && <0.4
           - Chart >=1.8 && <1.10
           - Chart-diagrams >=1.8 && <1.10
           - cassava >=0.5 && <0.6
