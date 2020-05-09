@@ -1,43 +1,72 @@
 {-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE OverloadedStrings #-}
 
-module StatReport (showStatEntryValue, showPrice) where
+module StatReport where
 
+import Data.Ord (comparing)
+import Data.Foldable (minimumBy, maximumBy)
+import Data.Time (diffDays)
 import Fmt
-import Data.Text (Text)
+import Colonnade
 
 import QuoteData
-import Statistics
 
-pricePlaces = 4
+decimalPlacesFloating = 2
 
-instance Buildable Statistic where
-  build Mean = "Mean"
-  build Min = "Minimum"
-  build Max = "Maximum"
-  build Days = "Days between Min/Max"
+data StatValue = StatValue {
+    decimalPlaces :: Int,
+    value :: Double
+  }
 
-statEntryValueBuilder :: StatEntry -> Builder
-statEntryValueBuilder StatEntry {..} =
-    fixedF (decimalPlaces stat qfield) value
+instance Buildable StatValue where
+  build sv = fixedF (decimalPlaces sv) (value sv)
+
+data StatEntry = StatEntry {
+    qfield :: QField,
+    meanVal :: StatValue,
+    minVal :: StatValue,
+    maxVal :: StatValue,
+    daysBetweenMinMax :: Int
+  }
+
+mean :: (Fractional a, Foldable t) => t a -> a
+mean xs = sum xs / fromIntegral (length xs)
+
+computeMinMaxDays :: (Ord a, Foldable t, Num c) =>
+                     (QuoteData -> a) -> t QuoteData -> (a, a, c)
+computeMinMaxDays get quotes = (get minQ, get maxQ, days)
   where
-    decimalPlaces Days _ = 0
-    decimalPlaces Min Volume = 0
-    decimalPlaces Max Volume = 0
-    decimalPlaces _ _ = pricePlaces
+    cmp = comparing get
+    minQ = minimumBy cmp quotes
+    maxQ = maximumBy cmp quotes
+    days = fromIntegral $ abs $ diffDays (day minQ) (day maxQ)
 
-showStatEntryValue :: StatEntry -> Text
-showStatEntryValue = fmt . statEntryValueBuilder
+statInfo :: (Functor t, Foldable t) => t QuoteData -> [StatEntry]
+statInfo quotes = fmap qFieldStatInfo [minBound .. maxBound]
+  where
+    decimalPlacesByQField Volume = 0
+    decimalPlacesByQField _ = decimalPlacesFloating
 
-showPrice :: Double -> Text
-showPrice = fmt . fixedF pricePlaces
+    qFieldStatInfo qfield =
+      let
+        (mn, mx, daysBetweenMinMax) =
+              computeMinMaxDays (field2fun qfield) quotes
+        decPlaces = decimalPlacesByQField qfield
+        meanVal = StatValue decimalPlacesFloating
+                            (mean $ fmap (field2fun qfield) quotes)
+        minVal = StatValue decPlaces mn
+        maxVal = StatValue decPlaces mx
+      in StatEntry {..}
 
-instance Buildable StatEntry where
-  build se@StatEntry {..} = build stat <> ": " <> statEntryValueBuilder se
+asciiReport :: [StatEntry] -> String
+asciiReport = ascii colStats
+  where
+    colStats = mconcat
+      [ headed "Quote Field" (show . qfield)
+      , headed "Mean" (pretty . meanVal)
+      , headed "Min" (pretty . minVal)
+      , headed "Max" (pretty . maxVal)
+      , headed "Days between Min/Max" (pretty . daysBetweenMinMax)
+      ]
 
-instance Buildable StatQFieldData where
-  build (qf, stats) = nameF ("Statistics for " +||qf||+"") $ unlinesF stats
-
-instance Buildable StatInfo where
-  build = unlinesF
+showPrice :: Double -> Builder
+showPrice = fixedF decimalPlacesFloating

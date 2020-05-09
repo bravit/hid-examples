@@ -7,27 +7,27 @@ data Params = Params {
                 fname :: FilePath
               , company :: String
               , chart :: Bool
-              , html :: Bool
-              , no_text :: Bool
+              , html :: Maybe FilePath
+              , silent :: Bool
               }
 
 mkParams :: Parser Params
 mkParams =
   Params <$>
              strArgument
-             (metavar "FILE" <> help "CSV file name")
+               (metavar "FILE" <> help "CSV file name")
          <*> strOption
-             (long "ticker" <> short 't'
-              <> help "stock company's ticker" <> value "")
+               (long "name" <> short 'n' <>
+                help "company name " <> value "")
          <*> switch
-             (long "chart" <> short 'c' <>
-              help "create file with prices chart")
+               (long "chart" <> short 'c' <>
+                help "generate chart")
+         <*> optional (strOption $
+               long "html" <> metavar "HTMLFILE" <>
+               help "generate HTML report")
          <*> switch
-             (long "html" <>
-              help "create file with HTML report")
-         <*> switch
-             (long "no-text" <> short 'n' <>
-              help "don't print statistics report")
+               (long "silent" <> short 's' <>
+                help "don't print statistics")
 
 cmdLineParser :: IO Params
 cmdLineParser = execParser opts

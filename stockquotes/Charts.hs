@@ -1,4 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
+
 module Charts (plotChart) where
 
 import Data.Foldable (toList)
@@ -12,12 +13,13 @@ plotChart title quotes fname = do
     renderableToFile fileOptions fname chart
     pure ()
   where
+    fileOptions = FileOptions (800, 600) SVG loadSansSerifFonts
+
     chart = toRenderable $
       slayouts_layouts .~
-        [ StackedLayout $ candlesL,
-          StackedLayout $ volumesL
+        [ StackedLayout $ candlesLayout title candles closings,
+          StackedLayout $ volumesLayout volumes
         ]
-      $ slayouts_compress_legend .~ True
       $ def
 
     (candles, closings, volumes) = unzip3 $
@@ -25,26 +27,21 @@ plotChart title quotes fname = do
         (day, close),
         (day, [volume])) | QuoteData {..} <- toList quotes ]
 
-    fileOptions = FileOptions (1200, 700) SVG loadSansSerifFonts
-
-    candlesL = candlesLayout title candles closings
-    volumesL = volumesLayout volumes
-
     candlesLayout title candles closings =
        layout_title .~ title
-     $ layout_plots .~ [ toPlot $ qline "Close" closings gray,
-                         toPlot $ candle "Candle" candles gray ]
+     $ layout_plots .~ [ toPlot $ qline "Close" closings green,
+                         toPlot $ candle "Candle" candles cyan ]
      $ def
 
     volumesLayout volumes =
-       layout_plots .~ [ plotBars $ bars "Volumes" volumes gray ]
+       layout_plots .~ [ plotBars $ bars "Volume" volumes gray ]
      $ def
 
     candle label values color =
        plot_candle_line_style  .~ lineStyle 1 gray
      $ plot_candle_fill .~ True
-     $ plot_candle_rise_fill_style .~ solidFillStyle (opaque white)
-     $ plot_candle_fall_fill_style .~ solidFillStyle (opaque color)
+     $ plot_candle_rise_fill_style .~ fillStyle white
+     $ plot_candle_fall_fill_style .~ fillStyle color
      $ plot_candle_tick_length .~ 0
      $ plot_candle_width .~ 3
      $ plot_candle_values .~ values
@@ -60,10 +57,10 @@ plotChart title quotes fname = do
     bars label values color =
        plot_bars_titles .~ [label]
      $ plot_bars_values .~ values
-     $ plot_bars_spacing .~ BarsFixGap 30 5
-     $ plot_bars_item_styles .~
-         [ (solidFillStyle (opaque color), Nothing) ]
+     $ plot_bars_item_styles .~ [(fillStyle color, Nothing)]
      $ def
+
+    fillStyle color = solidFillStyle (opaque color)
 
     lineStyle n color =
        line_width .~ n

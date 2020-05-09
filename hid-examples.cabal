@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ffdbdb15beed0d534f128c0ebc4b6627c6e7fb851ceed43e4e0ae0be5748ae8b
+-- hash: 061a90d806201f4202a66f177962f738351b4813a8c9aebf5367672acb8de178
 
 name:           hid-examples
 version:        0.5
@@ -481,7 +481,6 @@ executable stockquotes
       HtmlReport
       Params
       QuoteData
-      Statistics
       StatReport
       Paths_hid_examples
   hs-source-dirs:
@@ -491,9 +490,11 @@ executable stockquotes
       Chart >=1.8 && <1.10
     , Chart-diagrams >=1.8 && <1.10
     , base >=4.12 && <4.15
+    , blaze-colonnade >=1.1 && <1.3
     , blaze-html >=0.9 && <0.10
     , bytestring >=0.10 && <0.11
     , cassava >=0.5 && <0.6
+    , colonnade >=1.1 && <1.3
     , fmt >=0.5 && <0.7
     , optparse-applicative >=0.14 && <0.16
     , text >=1.2 && <1.3

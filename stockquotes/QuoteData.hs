@@ -1,4 +1,3 @@
-{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveAnyClass #-}
 
@@ -14,8 +13,8 @@ data E4
 data QuoteData = QuoteData {
                    day :: Day,
                    volume :: Int,
-                   close :: Double,
                    open :: Double,
+                   close :: Double,
                    high :: Double,
                    low :: Double
                  }
@@ -25,7 +24,7 @@ instance FromField Day where
   parseField = parseTimeM False defaultTimeLocale "%Y-%m-%d" . unpack
 
 data QField = Open | Close | High | Low | Volume
-  deriving (Show, Enum, Bounded)
+  deriving (Eq, Ord, Show, Enum, Bounded)
 
 field2fun :: QField -> QuoteData -> Double
 field2fun Open = open
