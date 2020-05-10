@@ -15,23 +15,23 @@ import Params
 generateReports :: (Functor t, Foldable t) =>
                    Params -> t QuoteData -> IO ()
 generateReports Params {..} quotes = do
-  unless silent $ putStr $ asciiReport statInfo'
-  when chart $ plotChart title quotes fname_chart
-  genHTMLReport html
+  unless silent $ putStr textRpt
+  when chart $ plotChart title quotes chartFname
+  saveHtml htmlFile htmlRpt
  where
    statInfo' = statInfo quotes
+   textRpt = textReport statInfo'
+   htmlRpt = htmlReport title quotes statInfo' [chartFname | chart]
 
-   withCompany "" pref = ""
-   withCompany company pref = pref ++ company
+   withCompany prefix = if company /= ""
+                        then prefix ++ company
+                        else ""
 
-   img_suffix = withCompany company "_" ++ ".svg"
-   fname_chart = "chart" ++ img_suffix
-   title = "Historical Quotes" ++ withCompany company " for "
+   chartFname = "chart" ++ withCompany "_" ++ ".svg"
+   title = "Historical Quotes" ++ withCompany " for "
 
-   genHTMLReport Nothing = pure ()
-   genHTMLReport (Just fname_html) =
-     BL.writeFile fname_html
-     $ htmlReport title quotes statInfo' [fname_chart | chart]
+   saveHtml Nothing _ = pure ()
+   saveHtml (Just fname) html = BL.writeFile fname html
 
 work :: Params -> IO ()
 work params = do

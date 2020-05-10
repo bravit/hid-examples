@@ -90,7 +90,6 @@ executables:
         other-extensions:
           - RecordWildCards
           - OverloadedStrings
-          - FlexibleInstances
           - DeriveGeneric
           - DeriveAnyClass
         dependencies:

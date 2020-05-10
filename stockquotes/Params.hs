@@ -7,7 +7,7 @@ data Params = Params {
                 fname :: FilePath
               , company :: String
               , chart :: Bool
-              , html :: Maybe FilePath
+              , htmlFile :: Maybe FilePath
               , silent :: Bool
               }
 
@@ -23,7 +23,7 @@ mkParams =
                (long "chart" <> short 'c' <>
                 help "generate chart")
          <*> optional (strOption $
-               long "html" <> metavar "HTMLFILE" <>
+               long "html" <> metavar "FILE" <>
                help "generate HTML report")
          <*> switch
                (long "silent" <> short 's' <>

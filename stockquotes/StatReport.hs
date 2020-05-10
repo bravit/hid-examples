@@ -57,8 +57,8 @@ statInfo quotes = fmap qFieldStatInfo [minBound .. maxBound]
         maxVal = StatValue decPlaces mx
       in StatEntry {..}
 
-asciiReport :: [StatEntry] -> String
-asciiReport = ascii colStats
+textReport :: [StatEntry] -> String
+textReport = ascii colStats
   where
     colStats = mconcat
       [ headed "Quote Field" (show . qfield)
