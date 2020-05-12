@@ -1,4 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module StatReport where
 
@@ -17,9 +18,6 @@ data StatValue = StatValue {
     value :: Double
   }
 
-instance Buildable StatValue where
-  build sv = fixedF (decimalPlaces sv) (value sv)
-
 data StatEntry = StatEntry {
     qfield :: QField,
     meanVal :: StatValue,
@@ -31,8 +29,8 @@ data StatEntry = StatEntry {
 mean :: (Fractional a, Foldable t) => t a -> a
 mean xs = sum xs / fromIntegral (length xs)
 
-computeMinMaxDays :: (Ord a, Foldable t, Num c) =>
-                     (QuoteData -> a) -> t QuoteData -> (a, a, c)
+computeMinMaxDays :: (Ord a, Foldable t) =>
+                     (QuoteData -> a) -> t QuoteData -> (a, a, Int)
 computeMinMaxDays get quotes = (get minQ, get maxQ, days)
   where
     cmp = comparing get
@@ -48,14 +46,26 @@ statInfo quotes = fmap qFieldStatInfo [minBound .. maxBound]
 
     qFieldStatInfo qfield =
       let
+        get = field2fun qfield
         (mn, mx, daysBetweenMinMax) =
-              computeMinMaxDays (field2fun qfield) quotes
+              computeMinMaxDays get quotes
         decPlaces = decimalPlacesByQField qfield
         meanVal = StatValue decimalPlacesFloating
-                            (mean $ fmap (field2fun qfield) quotes)
+                            (mean $ fmap get quotes)
         minVal = StatValue decPlaces mn
         maxVal = StatValue decPlaces mx
       in StatEntry {..}
+
+instance Buildable StatValue where
+  build sv = fixedF (decimalPlaces sv) (value sv)
+
+instance Buildable StatEntry where
+  build StatEntry {..} =
+           ""+||qfield||+": "
+             +|meanVal|+" (mean), "
+             +|minVal|+" (min), "
+             +|maxVal|+" (max), "
+             +|daysBetweenMinMax|+" (days)"
 
 textReport :: [StatEntry] -> String
 textReport = ascii colStats

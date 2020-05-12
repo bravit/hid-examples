@@ -8,8 +8,6 @@ import Data.ByteString.Char8 (unpack)
 import GHC.Generics (Generic)
 import Data.Csv (FromNamedRecord, FromField (..))
 
-data E4
-
 data QuoteData = QuoteData {
                    day :: Day,
                    volume :: Int,

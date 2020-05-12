@@ -5,6 +5,7 @@ module Main where
 import Control.Monad (when, unless)
 import qualified Data.ByteString.Lazy as BL (readFile, writeFile)
 import Data.Csv (decodeByName)
+import Data.Foldable (toList)
 
 import QuoteData
 import Charts
@@ -42,3 +43,9 @@ work params = do
 
 main :: IO ()
 main = cmdLineParser >>= work
+
+readQuotes fpath = do
+  csvData <- BL.readFile fpath
+  case decodeByName @QuoteData csvData of
+    Left err -> error err
+    Right (_, quotes) -> pure (toList quotes)

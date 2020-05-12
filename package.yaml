@@ -87,6 +87,7 @@ executables:
     stockquotes:
         source-dirs: stockquotes
         main: Main.hs
+        default-extensions: TypeApplications
         other-extensions:
           - RecordWildCards
           - OverloadedStrings
