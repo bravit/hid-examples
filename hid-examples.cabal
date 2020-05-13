@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1695088e4f50b8b1c9886d9010794e9f0fa1ce5275ad281790c4403eb4b96e65
+-- hash: eebcf18f420a829bee4ee9981f24f544c216eabe824513459e90ec948d5b07eb
 
 name:           hid-examples
 version:        0.5
@@ -485,7 +485,6 @@ executable stockquotes
       Paths_hid_examples
   hs-source-dirs:
       stockquotes
-  default-extensions: TypeApplications
   other-extensions: RecordWildCards OverloadedStrings DeriveGeneric DeriveAnyClass
   build-depends:
       Chart >=1.8 && <1.10

@@ -44,8 +44,9 @@ work params = do
 main :: IO ()
 main = cmdLineParser >>= work
 
+readQuotes :: FilePath -> IO [QuoteData]
 readQuotes fpath = do
   csvData <- BL.readFile fpath
-  case decodeByName @QuoteData csvData of
+  case decodeByName csvData of
     Left err -> error err
     Right (_, quotes) -> pure (toList quotes)

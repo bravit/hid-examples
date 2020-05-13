@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module HtmlReport (htmlReport) where
+module HtmlReport where
 
 import Data.Foldable (traverse_)
 import Control.Monad (unless)
@@ -39,7 +39,7 @@ colData = mconcat
 
 htmlReport :: (Functor t, Foldable t) =>
               String -> t QuoteData -> [StatEntry] -> [FilePath] -> ByteString
-htmlReport title quotes sEntries images = renderHtml $ docTypeHtml $ do
+htmlReport title quotes statEntries images = renderHtml $ docTypeHtml $ do
      H.head $ do
        H.title $ string title
        H.style style
@@ -49,7 +49,7 @@ htmlReport title quotes sEntries images = renderHtml $ docTypeHtml $ do
          traverse_ ((img!).src.toValue) images
 
        h1 "Statistics Report"
-       encodeHtmlTable mempty colStats sEntries
+       encodeHtmlTable mempty colStats statEntries
 
        h1 "Stock Quotes Data"
        encodeHtmlTable mempty colData quotes
