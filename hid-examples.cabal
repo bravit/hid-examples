@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: eebcf18f420a829bee4ee9981f24f544c216eabe824513459e90ec948d5b07eb
+-- hash: 7960128df6248ef5fa868b36cf2a077879e8a2fc19fcb2acd03b2c97f672a8ba
 
 name:           hid-examples
 version:        0.5
@@ -117,8 +117,6 @@ executable api-stage0
   main-is: ch11/api/Api0.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -127,8 +125,6 @@ executable api-stage1
   main-is: ch11/api/Api1.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -136,8 +132,6 @@ executable api-stage1
 executable api-stage2
   main-is: ch11/api/Api2.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   other-extensions: KindSignatures TypeOperators PolyKinds DataKinds TypeFamilies
   build-depends:
@@ -148,8 +142,6 @@ executable api-stage3
   main-is: ch11/api/Api3.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: KindSignatures TypeOperators PolyKinds DataKinds TypeFamilies FlexibleInstances InstanceSigs ScopedTypeVariables
   build-depends:
       base >=4.12 && <4.15
@@ -158,8 +150,6 @@ executable api-stage3
 executable describe-proxies
   main-is: ch11/describe-proxies/Main.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   other-extensions: PolyKinds InstanceSigs
   build-depends:
@@ -170,8 +160,6 @@ executable describe-type-apps
   main-is: ch11/describe-type-apps/Main.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: PolyKinds AllowAmbiguousTypes TypeApplications
   build-depends:
       base >=4.12 && <4.15
@@ -180,8 +168,6 @@ executable describe-type-apps
 executable dicegame
   main-is: dicegame.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
@@ -193,8 +179,6 @@ executable doors-singletons
   main-is: ch11/doors/Sing.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: DataKinds GADTs TypeOperators KindSignatures StandaloneDeriving
   build-depends:
       base >=4.12 && <4.15
@@ -203,8 +187,6 @@ executable doors-singletons
 executable doors-type-equality
   main-is: ch11/doors/TypeEq.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   other-extensions: DataKinds GADTs KindSignatures ExplicitForAll TypeOperators StandaloneDeriving
   build-depends:
@@ -219,8 +201,6 @@ executable du
       DiskUsage
       FileCounter
       TraverseDir
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       du
@@ -238,8 +218,6 @@ executable dynvalues-gadt
   main-is: ch11/dynvalues-gadt/Main.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: GADTs
   build-depends:
       base >=4.12 && <4.15
@@ -248,8 +226,6 @@ executable dynvalues-gadt
 executable expr-gadt
   main-is: ch11/expr-gadt/Main.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   other-extensions: GADTSyntax GADTs
   build-depends:
@@ -260,8 +236,6 @@ executable filecount
   main-is: filecount.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
     , extra >=1.5 && <1.8
@@ -271,8 +245,6 @@ executable gcd
   main-is: gcd.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
@@ -281,8 +253,6 @@ executable gcd
 executable genSQL
   main-is: genSQL.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   other-extensions: OverloadedStrings ViewPatterns
   build-depends:
@@ -294,8 +264,6 @@ executable genSQL
 executable graph-assoc-tf
   main-is: Main.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       ch11/graph-assoc-tf/
@@ -317,8 +285,6 @@ executable ioref
   main-is: ioref.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -326,8 +292,6 @@ executable ioref
 executable ipgen
   main-is: ipgen/Main.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
@@ -341,8 +305,6 @@ executable iplookup
   main-is: iplookup/Main.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
     , iplookup-lib
@@ -354,8 +316,6 @@ executable iplookup-simulation
   main-is: iplookup-simulation/Main.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
     , iplookup-lib
@@ -366,8 +326,6 @@ executable maybe
   main-is: maybe.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
     , safe >=0.3 && <0.4
@@ -377,8 +335,6 @@ executable nummod-rank-n
   main-is: Main.hs
   other-modules:
       NumUtils
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       ch11/nummod-rank-n/
@@ -434,8 +390,6 @@ executable reader
   main-is: reader.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: NamedFieldPuns
   build-depends:
       base >=4.12 && <4.15
@@ -452,8 +406,6 @@ executable rpnexpr
       EvalRPNExcept2
       Expr
       MyMaybeT
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       expr
@@ -505,8 +457,6 @@ executable stref
   main-is: stref.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -520,8 +470,6 @@ executable suntimes
       STExcept
       SunTimes
       Types
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       suntimes
@@ -545,8 +493,6 @@ executable type-families
   main-is: ch11/type-families/Main.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: TypeFamilies FlexibleInstances
   build-depends:
       base >=4.12 && <4.15
@@ -556,8 +502,6 @@ executable type-lits
   main-is: ch11/type-lits/Main.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: DataKinds KindSignatures ScopedTypeVariables
   build-depends:
       base >=4.12 && <4.15
@@ -566,8 +510,6 @@ executable type-lits
 executable type-operators
   main-is: ch11/type-operators/Main.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   other-extensions: TypeOperators NoStarIsType
   build-depends:
@@ -607,8 +549,6 @@ executable weapons
   main-is: weapons.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
@@ -619,8 +559,6 @@ executable weights-kinds
   main-is: ch11/weights-kinds/Main.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: DataKinds KindSignatures GeneralizedNewtypeDeriving
   build-depends:
       base >=4.12 && <4.15
@@ -630,8 +568,6 @@ executable weights-phantom
   main-is: ch11/weights-phantom/Main.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   other-extensions: GeneralizedNewtypeDeriving
   build-depends:
       base >=4.12 && <4.15
@@ -640,8 +576,6 @@ executable weights-phantom
 executable xlist-data-families
   main-is: Main.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
       Paths_hid_examples
   hs-source-dirs:
       ch11/data-families/
@@ -669,8 +603,6 @@ test-suite iplookup-doctest
   main-is: tests/iplookup-doctest/Doctests.hs
   other-modules:
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   ghc-options: -threaded
   build-depends:
       base >=4.12 && <4.15
@@ -686,8 +618,6 @@ test-suite iplookup-test
       ParseIPSpec
       Props
       Paths_hid_examples
-  autogen-modules:
-      Paths_hid_examples
   hs-source-dirs:
       tests/iplookup
   build-depends:
@@ -696,7 +626,7 @@ test-suite iplookup-test
     , hedgehog >=0.5 && <1.1
     , ipgen-lib
     , iplookup-lib
-    , tasty >=0.11 && <1.3
+    , tasty >=0.11 && <1.4
     , tasty-golden >=2.3 && <2.4
     , tasty-hedgehog >=0.1 && <1.1
     , tasty-hspec >=1.1 && <1.2

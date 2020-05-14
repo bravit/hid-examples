@@ -31,9 +31,6 @@ tested-with: GHC == 8.6.5, GHC == 8.8.3
 
 dependencies: base >=4.12 && <4.15
 
-_paths_workaround: &paths_workaround
-  generated-other-modules: Paths_hid_examples
-
 executables:
     # Preface
     hello:
@@ -107,19 +104,16 @@ executables:
     # Chapter 5
     maybe:
         main: maybe.hs
-        <<: *paths_workaround
         dependencies:
           - safe >=0.3 && <0.4
     reader:
         main: reader.hs
-        <<: *paths_workaround
         other-extensions:
           - NamedFieldPuns
         dependencies:
           - mtl >=2.0 && <2.3
     genSQL:
         main: genSQL.hs
-        <<: *paths_workaround
         other-extensions:
           - OverloadedStrings
           - ViewPatterns
@@ -128,12 +122,10 @@ executables:
           - mtl >=2.0 && <2.3
     gcd:
         main: gcd.hs
-        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
     weapons:
         main: weapons.hs
-        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
           - random >=1.0 && <1.2
@@ -145,26 +137,21 @@ executables:
           - mtl >=2.0 && <2.3
     dicegame:
         main: dicegame.hs
-        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
           - random >=1.0 && <1.2
     ioref:
         main: ioref.hs
-        <<: *paths_workaround
     filecount:
         main: filecount.hs
-        <<: *paths_workaround
         dependencies:
           - extra >=1.5 && <1.8
     stref:
         main: stref.hs
-        <<: *paths_workaround
     # Chapter 6
     du:
         source-dirs: du
         main: du.hs
-        <<: *paths_workaround
         dependencies:
           - mtl >=2.0 && <2.3
           - filepath >= 1.4.1 && < 1.5
@@ -178,7 +165,6 @@ executables:
     rpnexpr:
         source-dirs: expr
         main: rpnexpr.hs
-        <<: *paths_workaround
         dependencies:
           - mtl >= 2.0 && < 2.3
           - transformers >= 0.5 && < 0.6
@@ -194,7 +180,6 @@ executables:
     suntimes:
         source-dirs: suntimes
         main: Main.hs
-        <<: *paths_workaround
         dependencies:
           - mtl >= 2.0 && < 2.3
           - transformers >= 0.5 && < 0.6
@@ -214,14 +199,12 @@ executables:
     # Chapter 8
     iplookup:
         main: iplookup/Main.hs
-        <<: *paths_workaround
         dependencies:
           - safe-exceptions >= 0.1.5 && < 0.2
           - optparse-applicative >= 0.14 && < 0.16
           - iplookup-lib
     ipgen:
         main: ipgen/Main.hs
-        <<: *paths_workaround
         dependencies:
           - ipgen-lib
           - safe-exceptions >= 0.1.5 && < 0.2
@@ -230,7 +213,6 @@ executables:
     # Chapter 10
     iplookup-simulation:
         main: iplookup-simulation/Main.hs
-        <<: *paths_workaround
         dependencies:
           - random >=1.0 && <1.2
           - iplookup-lib
@@ -240,58 +222,48 @@ executables:
         main: ch11/weights-phantom/Main.hs
         other-extensions:
           - GeneralizedNewtypeDeriving
-        <<: *paths_workaround
     describe-proxies:
         main: ch11/describe-proxies/Main.hs
         other-extensions:
           - PolyKinds
           - InstanceSigs
-        <<: *paths_workaround
     describe-type-apps:
         main: ch11/describe-type-apps/Main.hs
         other-extensions:
           - PolyKinds
           - AllowAmbiguousTypes
           - TypeApplications
-        <<: *paths_workaround
     type-operators:
         main: ch11/type-operators/Main.hs
         other-extensions:
           - TypeOperators
           - NoStarIsType
-        <<: *paths_workaround
     weights-kinds:
         main: ch11/weights-kinds/Main.hs
         other-extensions:
           - DataKinds
           - KindSignatures
           - GeneralizedNewtypeDeriving
-        <<: *paths_workaround
     type-lits:
         main: ch11/type-lits/Main.hs
         other-extensions:
           - DataKinds
           - KindSignatures
           - ScopedTypeVariables
-        <<: *paths_workaround
     type-families:
         main: ch11/type-families/Main.hs
         other-extensions:
           - TypeFamilies
           - FlexibleInstances
-        <<: *paths_workaround
     dynvalues-gadt:
         main: ch11/dynvalues-gadt/Main.hs
         other-extensions:
           - GADTs
-        <<: *paths_workaround
     # 11.2
     api-stage0:
         main: ch11/api/Api0.hs
-        <<: *paths_workaround
     api-stage1:
         main: ch11/api/Api1.hs
-        <<: *paths_workaround
     api-stage2:
         main: ch11/api/Api2.hs
         other-extensions:
@@ -300,7 +272,6 @@ executables:
           - PolyKinds
           - DataKinds
           - TypeFamilies
-        <<: *paths_workaround
     api-stage3:
         main: ch11/api/Api3.hs
         other-extensions:
@@ -312,14 +283,12 @@ executables:
           - FlexibleInstances
           - InstanceSigs
           - ScopedTypeVariables
-        <<: *paths_workaround
     # 11.3
     expr-gadt:
         main: ch11/expr-gadt/Main.hs
         other-extensions:
           - GADTSyntax
           - GADTs
-        <<: *paths_workaround
     doors-type-equality:
         main: ch11/doors/TypeEq.hs
         other-extensions:
@@ -329,7 +298,6 @@ executables:
           - ExplicitForAll
           - TypeOperators
           - StandaloneDeriving
-        <<: *paths_workaround
     doors-singletons:
         main: ch11/doors/Sing.hs
         other-extensions:
@@ -338,20 +306,17 @@ executables:
           - TypeOperators
           - KindSignatures
           - StandaloneDeriving
-        <<: *paths_workaround
     # 11.4
     nummod-rank-n:
         source-dirs: ch11/nummod-rank-n/
         main: Main.hs
         other-extensions:
           - RankNTypes
-        <<: *paths_workaround
     xlist-data-families:
         source-dirs: ch11/data-families/
         main: Main.hs
         other-extensions:
           - TypeFamilies
-        <<: *paths_workaround
     graph-assoc-tf:
         source-dirs: ch11/graph-assoc-tf/
         main: Main.hs
@@ -360,7 +325,6 @@ executables:
         other-extensions:
           - TypeFamilies
           - FlexibleContexts
-        <<: *paths_workaround
 
 internal-libraries:
     # Chapter 2
@@ -424,12 +388,11 @@ tests:
     # Chapter 8
     iplookup-test:
         main: Test.hs
-        <<: *paths_workaround
         source-dirs: tests/iplookup
         dependencies:
           - iplookup-lib
           - ipgen-lib
-          - tasty >= 0.11 && < 1.3
+          - tasty >= 0.11 && < 1.4
           - tasty-hspec >= 1.1 && < 1.2
           - tasty-hedgehog >= 0.1 && < 1.1
           - hedgehog >= 0.5 && < 1.1
@@ -437,8 +400,7 @@ tests:
           - filepath >= 1.4.1 && < 1.5
     iplookup-doctest:
         main: tests/iplookup-doctest/Doctests.hs
-        <<: *paths_workaround
-        ghc-options: 
+        ghc-options:
           - -threaded
         dependencies:
           - doctest >= 0.12 && < 0.17
@@ -452,7 +414,7 @@ benchmarks:
           - criterion >= 1.4 && < 1.6
     iplookup-bench:
         main: Bench.hs
-        <<: *paths_workaround
+        generated-other-modules: Paths_hid_examples
         source-dirs: benchmarks/iplookup
         dependencies:
           - iplookup-lib
