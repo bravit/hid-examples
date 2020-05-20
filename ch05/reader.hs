@@ -1,38 +1,49 @@
 {-# LANGUAGE NamedFieldPuns #-}
+
 import Control.Monad.Reader
+import Control.Monad (when)
 
 data Config = Config {
-    flag1 :: Bool,
-    flag2 :: Bool
-    -- ...
+    verbose :: Bool
+    {- other parameters -}
   }
 
 type ConfigM = Reader Config
 
-main = do 
-  let c = Config True False
-  pure $ runReader work c
-  print "OK"
+getConfiguration :: IO Config
+getConfiguration = pure Config { verbose = True {- ... -} }
+
+main :: IO ()
+main = do
+  config <- getConfiguration
+  let result = runReader work config
+  print result
 
 work :: ConfigM ()
 work = do
   -- ...
-  f1
+  doSomething
   -- ...
 
-f1 :: ConfigM ()
-f1 = do
+doSomething :: ConfigM ()
+doSomething = do
   -- ...
-  f11
+  doSomethingSpecial
   -- ...
 
-f11 :: ConfigM ()
-f11 = do
+doSomethingSpecial :: ConfigM ()
+doSomethingSpecial = do
   -- ...
-  c <- ask
+  -- Config {verbose} <- ask
+  vrb <- asks verbose
+  when vrb beVerbose
   -- ...
-  pure ()
 
-nc = \c @ Config {flag1} -> c {flag1 = not flag1}
+beVerbose :: ConfigM ()
+beVerbose = pure ()
 
-nc2 = \c -> c {flag1 = False}
+silent :: Config -> Config
+silent config = config {verbose = False}
+
+doSomethingSpecialSilently :: ConfigM ()
+doSomethingSpecialSilently = local silent doSomethingSpecial
