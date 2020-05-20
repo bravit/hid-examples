@@ -105,8 +105,6 @@ executables:
     maybe:
         source-dirs: ch05
         main: maybe.hs
-        dependencies:
-          - safe >=0.3 && <0.4
     reader:
         source-dirs: ch05
         main: reader.hs

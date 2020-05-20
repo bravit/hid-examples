@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f3f7de60965770671666bf0644af96b0c6c85cef3ee65bc7b4e368d0528dce5f
+-- hash: 577840e00c7dd415f55e6af3d8c6d40f1f5937a9227830241ddab6ffa5a0f497
 
 name:           hid-examples
 version:        0.5
@@ -340,7 +340,6 @@ executable maybe
       ch05
   build-depends:
       base >=4.12 && <4.15
-    , safe >=0.3 && <0.4
   default-language: Haskell2010
 
 executable nummod-rank-n
