@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7960128df6248ef5fa868b36cf2a077879e8a2fc19fcb2acd03b2c97f672a8ba
+-- hash: f3f7de60965770671666bf0644af96b0c6c85cef3ee65bc7b4e368d0528dce5f
 
 name:           hid-examples
 version:        0.5
@@ -169,6 +169,8 @@ executable dicegame
   main-is: dicegame.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
@@ -236,6 +238,8 @@ executable filecount
   main-is: filecount.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   build-depends:
       base >=4.12 && <4.15
     , extra >=1.5 && <1.8
@@ -245,6 +249,8 @@ executable gcd
   main-is: gcd.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
@@ -254,6 +260,8 @@ executable genSQL
   main-is: genSQL.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   other-extensions: OverloadedStrings ViewPatterns
   build-depends:
       base >=4.12 && <4.15
@@ -285,6 +293,8 @@ executable ioref
   main-is: ioref.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -326,6 +336,8 @@ executable maybe
   main-is: maybe.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   build-depends:
       base >=4.12 && <4.15
     , safe >=0.3 && <0.4
@@ -390,6 +402,8 @@ executable reader
   main-is: reader.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   other-extensions: NamedFieldPuns
   build-depends:
       base >=4.12 && <4.15
@@ -457,6 +471,8 @@ executable stref
   main-is: stref.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
@@ -549,6 +565,8 @@ executable weapons
   main-is: weapons.hs
   other-modules:
       Paths_hid_examples
+  hs-source-dirs:
+      ch05
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3

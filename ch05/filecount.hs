@@ -7,7 +7,7 @@ import Data.IORef (newIORef, modifyIORef', readIORef)
 fileCount :: FilePath -> IO Int
 fileCount fp = do
    cnt <- newIORef 0
-   whenM (doesDirectoryExist fp) $ go cnt fp 
+   whenM (doesDirectoryExist fp) $ go cnt fp
    readIORef cnt
  where
    go cnt fp = listContents fp >>= traverse_ (processEntry cnt)

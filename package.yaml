@@ -103,16 +103,19 @@ executables:
           - blaze-colonnade >= 1.1 && < 1.3
     # Chapter 5
     maybe:
+        source-dirs: ch05
         main: maybe.hs
         dependencies:
           - safe >=0.3 && <0.4
     reader:
+        source-dirs: ch05
         main: reader.hs
         other-extensions:
           - NamedFieldPuns
         dependencies:
           - mtl >=2.0 && <2.3
     genSQL:
+        source-dirs: ch05
         main: genSQL.hs
         other-extensions:
           - OverloadedStrings
@@ -121,10 +124,12 @@ executables:
           - text >=1.2 && <1.3
           - mtl >=2.0 && <2.3
     gcd:
+        source-dirs: ch05
         main: gcd.hs
         dependencies:
           - mtl >=2.0 && <2.3
     weapons:
+        source-dirs: ch05
         main: weapons.hs
         dependencies:
           - mtl >=2.0 && <2.3
@@ -136,17 +141,21 @@ executables:
           - text-show >=3.0 && <4
           - mtl >=2.0 && <2.3
     dicegame:
+        source-dirs: ch05
         main: dicegame.hs
         dependencies:
           - mtl >=2.0 && <2.3
           - random >=1.0 && <1.2
     ioref:
+        source-dirs: ch05
         main: ioref.hs
     filecount:
+        source-dirs: ch05
         main: filecount.hs
         dependencies:
           - extra >=1.5 && <1.8
     stref:
+        source-dirs: ch05
         main: stref.hs
     # Chapter 6
     du:
