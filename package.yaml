@@ -126,6 +126,11 @@ executables:
         main: gcd.hs
         dependencies:
           - mtl >=2.0 && <2.3
+    sumlist:
+        source-dirs: ch05
+        main: sumlist.hs
+        dependencies:
+          - mtl >=2.0 && <2.3
     weapons:
         source-dirs: ch05
         main: weapons.hs

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 577840e00c7dd415f55e6af3d8c6d40f1f5937a9227830241ddab6ffa5a0f497
+-- hash: 6e638611e3fbb344e7ad55e588e9e326fd5d1b0b6d0cf854de02f13abb78dacf
 
 name:           hid-examples
 version:        0.5
@@ -474,6 +474,17 @@ executable stref
       ch05
   build-depends:
       base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable sumlist
+  main-is: sumlist.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch05
+  build-depends:
+      base >=4.12 && <4.15
+    , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
 executable suntimes

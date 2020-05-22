@@ -36,13 +36,13 @@ allWordsReport vocab =
   fmt $ nameF "All words" $ unlinesF (allWords vocab)
 
 wordsCountReport :: Vocabulary -> Text
-wordsCountReport vocab = fmt $ 
+wordsCountReport vocab = fmt $
      "Total number of words: " +|total|+
      "\nNumber of unique words: " +|unique|+ "\n"
   where
     (total, unique) = wordsCount vocab
 
-wordsCountReport' :: Vocabulary -> Text 
+wordsCountReport' :: Vocabulary -> Text
 wordsCountReport' vocab = T.unlines [part1, part2]
   where
     (total, unique) = wordsCount vocab
