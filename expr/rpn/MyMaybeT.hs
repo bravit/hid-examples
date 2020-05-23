@@ -37,7 +37,7 @@ instance Monad m => Monad (MaybeT m) where
 
 instance Monad m => Monad (MaybeT m) where
   (>>=) :: MaybeT m a -> (a -> MaybeT m b) -> MaybeT m b
-  (MaybeT ma) >>= f = 
+  (MaybeT ma) >>= f =
     MaybeT $
        ma >>=
          \case
@@ -48,6 +48,10 @@ instance MonadTrans MaybeT where
   lift :: Monad m => m a -> MaybeT m a
   lift ma = MaybeT $
                fmap Just ma
+
+instance Monad m => MonadFail (MaybeT m) where
+  fail :: String -> MaybeT m a
+  fail _ = MaybeT (pure Nothing)
 
 instance MonadState s m => MonadState s (MaybeT m)  where
   state :: (s -> (a, s)) -> MaybeT m a
