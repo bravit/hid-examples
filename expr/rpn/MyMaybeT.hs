@@ -11,6 +11,7 @@ module MyMaybeT (MaybeT(..)) where
 import Control.Monad.Trans.Class
 import Control.Applicative
 import Control.Monad.State
+import Control.Monad.Fail
 
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
