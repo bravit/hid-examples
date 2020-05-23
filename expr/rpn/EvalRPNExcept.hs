@@ -5,7 +5,7 @@ import Control.Monad.Except
 import Control.Monad.Reader
 import Data.Foldable (traverse_)
 import Data.Semigroup ((<>))
-import Safe
+import Text.Read (readMaybe)
 
 {-
    Function evalRPN evaluates an expression given
@@ -46,7 +46,7 @@ handleNaN s Nothing = throwError (NotANumber s)
 handleNaN _ (Just n) = pure n
 
 readSafe :: String -> EvalM Integer
-readSafe s = handleNaN s (readMay s)
+readSafe s = handleNaN s (readMaybe s)
 
 evalRPN :: String -> Either EvalError Integer
 evalRPN str = evalState (runExceptT evalRPN') []

@@ -165,6 +165,27 @@ executables:
         source-dirs: ch05
         main: countzeros.hs
     # Chapter 6
+    rpnexpr:
+        source-dirs: expr/rpn
+        main: rpnexpr.hs
+        other-modules:
+          - Utils
+          - MyMaybeT
+          - EvalRPN
+          - EvalRPNTrans
+          - EvalRPNTrans2
+          - EvalRPNExcept
+          - EvalRPNExcept2
+        dependencies:
+          - mtl >= 2.0 && < 2.3
+          - transformers >= 0.5 && < 0.6
+          - text-show >=3.0 && <4
+        other-extensions:
+          - FlexibleInstances
+          - MultiParamTypeClasses
+          - UndecidableInstances
+          - InstanceSigs
+          - LambdaCase
     du:
         source-dirs: du
         main: du.hs
@@ -178,20 +199,6 @@ executables:
           - GeneralizedNewtypeDeriving
           - RecordWildCards
           - FlexibleContexts
-    rpnexpr:
-        source-dirs: expr
-        main: rpnexpr.hs
-        dependencies:
-          - mtl >= 2.0 && < 2.3
-          - transformers >= 0.5 && < 0.6
-          - safe >=0.3 && <0.4
-          - text-show >=3.0 && <4
-        other-extensions:
-          - FlexibleInstances
-          - MultiParamTypeClasses
-          - UndecidableInstances
-          - InstanceSigs
-          - LambdaCase
     # Chapter 7
     suntimes:
         source-dirs: suntimes

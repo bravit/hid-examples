@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 75746b160ff9efc1055c3409d83112485651ffe7e758d713f33cba4c3d934c36
+-- hash: 360176bfdba01839bf1fb628d17069b46f261b2f3b208dc5250a3b2eaceab337
 
 name:           hid-examples
 version:        0.5
@@ -447,22 +447,19 @@ executable reader
 executable rpnexpr
   main-is: rpnexpr.hs
   other-modules:
+      Utils
+      MyMaybeT
       EvalRPN
-      EvalRPN_trans
-      EvalRPN_trans2
+      EvalRPNTrans
+      EvalRPNTrans2
       EvalRPNExcept
       EvalRPNExcept2
-      Expr
-      MyMaybeT
-      ShuntingYard
-      Paths_hid_examples
   hs-source-dirs:
-      expr
+      expr/rpn
   other-extensions: FlexibleInstances MultiParamTypeClasses UndecidableInstances InstanceSigs LambdaCase
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
-    , safe >=0.3 && <0.4
     , text-show >=3.0 && <4
     , transformers >=0.5 && <0.6
   default-language: Haskell2010

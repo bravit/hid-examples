@@ -7,7 +7,7 @@ import Data.List
 import Control.Applicative
 import Data.Foldable (traverse_)
 import Data.Semigroup ((<>))
-import Safe
+import Text.Read (readMaybe)
 
 {-
    Function evalRPN evaluates an expression given
@@ -50,18 +50,18 @@ handleNaN s Nothing = throwError (NotANumber s)
 handleNaN _ (Just n) = pure n
 
 readSafe :: String -> EvalM Integer
-readSafe s = handleNaN s (readMay s)
+readSafe s = handleNaN s (readMaybe s)
 
 readSafe' :: String -> EvalM Integer
-readSafe' s = liftM2 (<|>) (pure $ readMay s) (asks $ lookup s)
+readSafe' s = liftM2 (<|>) (pure $ readMaybe s) (asks $ lookup s)
               >>= handleNaN s
 
 readSafe'' :: String -> EvalM Integer
 readSafe'' s = readSafe s `catchError` handler
   where
     handler (NotANumber s) = asks (lookup s) >>= handleNaN s
-    handler e = throwError e  
-  
+    handler e = throwError e
+
 evalRPN :: String -> EnvVars -> Either EvalError Integer
 evalRPN str env = evalState (runExceptT (runReaderT evalRPN' env)) []
   where
