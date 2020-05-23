@@ -22,11 +22,14 @@ dice = do
   tell [r]
   pure r
 
+dice'' :: DiceGame Dice
+dice'' = ask >>= state . randomR >>= \r -> tell [r] >> pure r
+
 doubleDice :: DiceGame (Dice, Dice)
 doubleDice = (,) <$> dice <*> dice
 
 dices :: Int -> DiceGame [Dice]
-dices n = replicateM n dice 
+dices n = replicateM n dice
 
 diceGame :: DiceGame (Dice, Dice)
 diceGame = dice >> dices 5 >> replicateM 2 (dices 3)

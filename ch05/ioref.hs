@@ -1,21 +1,21 @@
 import Data.IORef
-import Control.Monad
+import Text.Read (readMaybe)
 
 sumNumbers :: IO Int
 sumNumbers = do
-   s <- newIORef 0
-   go s
-   readIORef s
- where
-   go s = do
-     putStr "Enter next integer number (empty line to finish): "
-     n <- getLine
-     when (not $ null n) $ do
-       let num = read n
-       modifyIORef' s (+ num)
-       go s
+    sum <- newIORef 0
+    go sum
+  where
+    go sum = readNumber >>= processNumber sum
+
+    readNumber = do
+      putStr "Put integer number (not a number to finish): "
+      readMaybe <$> getLine
+
+    processNumber sum Nothing = readIORef sum
+    processNumber sum (Just n) = modifyIORef' sum (+ n) >> go sum
 
 main = do
-  s <- sumNumbers
+  sum <- sumNumbers
   putStr "Your sum is: "
-  print s
+  print sum

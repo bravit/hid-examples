@@ -161,6 +161,9 @@ executables:
     stref:
         source-dirs: ch05
         main: stref.hs
+    countzeros:
+        source-dirs: ch05
+        main: countzeros.hs
     # Chapter 6
     du:
         source-dirs: du

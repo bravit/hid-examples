@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1d9ace46d8b39320c0911d294a42cdf21e8e6a4f4eed345eeb9f8fad3958a9d8
+-- hash: 75746b160ff9efc1055c3409d83112485651ffe7e758d713f33cba4c3d934c36
 
 name:           hid-examples
 version:        0.5
@@ -155,6 +155,16 @@ executable api-stage3
   other-modules:
       Paths_hid_examples
   other-extensions: KindSignatures TypeOperators PolyKinds DataKinds TypeFamilies FlexibleInstances InstanceSigs ScopedTypeVariables
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable countzeros
+  main-is: countzeros.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch05
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
