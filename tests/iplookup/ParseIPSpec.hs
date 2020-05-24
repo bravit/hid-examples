@@ -1,7 +1,6 @@
 module ParseIPSpec where
 
 import Data.Maybe
-import Data.Word
 import Test.Tasty.Hspec
 
 import IPTypes
@@ -43,11 +42,11 @@ spec_parseIP =
       parseIP "192.168.1" `shouldBe` Nothing
     it "fails to parse 4 components with suffix" $
       parseIP "192.168.1.1x" `shouldBe` Nothing
-    it "fails to parse empty component" $ 
+    it "fails to parse empty component" $
       parseIP "192.168..1" `shouldBe` Nothing
-    it "fails to parse empty component in the end" $ 
+    it "fails to parse empty component in the end" $
       parseIP "192.168.0." `shouldBe` Nothing
-    it "fails to parse empty component in the beginning" $ 
+    it "fails to parse empty component in the beginning" $
       parseIP ".192.168.0" `shouldBe` Nothing
     it "fails to parse 5 components" $
       parseIP "192.168.1.0.1" `shouldBe` Nothing

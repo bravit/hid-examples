@@ -1,7 +1,6 @@
 module LookupIPSpec where
 
 import Test.Tasty.Hspec
-import Data.Word
 
 import IPTypes
 import LookupIP
@@ -20,6 +19,6 @@ spec_lookupIP =
     it "no IP in empty list" $
       ip1 `shouldNotSatisfy` lookupIP empty_iprdb
     it "IP in sample list" $
-      ip1 `shouldSatisfy` lookupIP sample_iprdb 
+      ip1 `shouldSatisfy` lookupIP sample_iprdb
     it "no IP in sample list" $
-      ip2 `shouldNotSatisfy` lookupIP sample_iprdb 
+      ip2 `shouldNotSatisfy` lookupIP sample_iprdb

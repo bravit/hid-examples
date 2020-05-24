@@ -462,6 +462,8 @@ tests:
           - hedgehog >= 0.5 && < 1.1
           - tasty-golden >= 2.3 && < 2.4
           - filepath >= 1.4.1 && < 1.5
+        ghc-options:
+          - -Wno-type-defaults
     iplookup-doctest:
         main: tests/iplookup-doctest/Doctests.hs
         ghc-options:

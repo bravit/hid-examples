@@ -2,7 +2,6 @@ module Props where
 
 import Hedgehog
 import qualified Hedgehog.Gen as Gen
-import qualified Hedgehog.Range as Range
 
 import Test.Tasty
 import Test.Tasty.Hedgehog
@@ -62,11 +61,12 @@ prop_lookupIP_bordersIncluded = property $ do
 
 prop_lookupIPs_agree :: Property
 prop_lookupIPs_agree = property $ do
-  iprdb@(IPRangeDB iprdbs) <- forAll genIPRangeDB
+  iprdb <- forAll genIPRangeDB
   let fiprdb = FL.fromIPRangeDB iprdb
   ip <- forAll genIP
-  assert (lookupIP iprdb ip == FL.lookupIP fiprdb ip)  
+  assert (lookupIP iprdb ip == FL.lookupIP fiprdb ip)
 
+props :: [TestTree]
 props = [
    testProperty "buildIP implementations agrees with each other" prop_buildIPs
  , testProperty "parseIP works as expected" prop_parseIP

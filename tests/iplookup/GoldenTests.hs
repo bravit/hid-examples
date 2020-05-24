@@ -10,6 +10,7 @@ import LookupIP
 goldenTests :: IO [TestTree]
 goldenTests = sequence [golden_lookupIP]
 
+testsDir :: FilePath
 testsDir = normalise "data/tests/iplookup/"
 
 golden_lookupIP :: IO TestTree

@@ -6,6 +6,7 @@ import LookupIPSpec
 import Props
 import GoldenTests
 
+main :: IO ()
 main = do
   specs <- concat <$> mapM testSpecs
              [ parseIPSpecs

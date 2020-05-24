@@ -23,12 +23,14 @@ expectInterpResult expr expected = do
     Right res -> if res == expected
                    then pure $ Right ()
                    else pure $ Left "eval error"
-    Left err -> pure $ Left "interpreter error"
+    Left _ -> pure $ Left "interpreter error"
 
+failedTest :: String -> IO b
 failedTest msg = do
   putStrLn msg
   exitFailure
 
+main :: IO ()
 main = traverse_ (\e -> testexpr e (myeval e)) exprs
 
 exprs :: [Expr Int]

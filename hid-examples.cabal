@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1f8281a144116be1ea888cd024d8e57fa0bfeb0c3fa44917f70082aed39bb461
+-- hash: b424e347f1fa0d4f9102b0224424b523d94be01eba5605d08962a5c05c62cdc0
 
 name:           hid-examples
 version:        0.5
@@ -746,7 +746,7 @@ test-suite iplookup-test
       Paths_hid_examples
   hs-source-dirs:
       tests/iplookup
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-type-defaults
   build-depends:
       base >=4.12 && <4.15
     , filepath >=1.4.1 && <1.5

@@ -19,18 +19,23 @@ deriving instance NFData IP
 deriving instance NFData IPRange
 deriving instance NFData IPRangeDB
 
+readIPRDBFile :: FilePath -> IO String
 readIPRDBFile fname = getDataFileName (ipBenchDir ++ fname)
                       >>= readFile
   where
     ipBenchDir = "data/benchmarks/iplookup/"
 
+iptexts :: [String]
 iptexts = ["0.0.0.1", "192.168.1.1", "17.0.32.2",
            "255.255.252.41", "255.255.252.42"]
 
+ips :: [(String, IP)]
 ips = map (\s -> (s, fromJust $ parseIP s)) iptexts
 
+iprdb :: IO IPRangeDB
 iprdb = parseValidIPRanges <$> readIPRDBFile "3.iprs"
 
+main :: IO ()
 main = defaultMain [
     bgroup "buildIP" [
       let theip = [17,0,32,2] in
@@ -50,7 +55,7 @@ main = defaultMain [
       , bench "foldl-shl" $ nf (map buildIP_foldl_shl) ipcomps
       ]
     ]
-    
+
   , bench "parseIP" $ nf (map parseIP) iptexts
   , bgroup "parseIP" [
       bench "monadic" $ nf (map parseIPMonadic) iptexts
@@ -73,16 +78,16 @@ main = defaultMain [
             rangeFiles
     ]
 
-  , env iprdb $ \ iprdb ->
+  , env iprdb $ \ iprdb' ->
       bgroup "lookupIP" [
         bgroup "single" $
           map (\ (textip, ip) ->
                  bench textip $
-                   whnf (lookupIP iprdb) ip) ips
-      , bench "several" $ nf (map (lookupIP iprdb)) $ map snd ips
+                   whnf (lookupIP iprdb') ip) ips
+      , bench "several" $ nf (map (lookupIP iprdb')) $ map snd ips
       ]
 
-  , env iprdb $ \ iprdb -> let fiprdb = FL.fromIPRangeDB iprdb in
+  , env iprdb $ \ iprdb' -> let fiprdb = FL.fromIPRangeDB iprdb' in
       bgroup "lookupIP (fast)" [
         bgroup "single" $
           map (\ (textip, ip) ->
