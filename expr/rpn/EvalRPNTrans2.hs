@@ -1,7 +1,9 @@
 module EvalRPNTrans2 (evalRPN) where
 
 import Control.Monad.State
-import Utils
+import Control.Applicative
+import Text.Read(readMaybe)
+
 import MyMaybeT
 
 type Stack = [Integer]
@@ -20,6 +22,12 @@ oneElementOnStack :: EvalM ()
 oneElementOnStack = do
   l <- length <$> get
   guard (l == 1)
+
+readSafe :: (Read a, Alternative m) => String -> m a
+readSafe str =
+  case readMaybe str of
+    Nothing -> empty
+    Just n -> pure n
 
 evalRPN :: String -> Maybe Integer
 evalRPN str = evalState (runMaybeT evalRPN') []

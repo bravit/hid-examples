@@ -1,13 +1,28 @@
-module EvalRPNTrans (evalRPN) where
+module EvalRPNTrans where
 
 import Control.Monad.State
-import Utils
+import Control.Applicative
+import Text.Read (readMaybe)
 
 type Stack = [Integer]
 type EvalM = StateT Stack Maybe
 
 push :: Integer -> EvalM ()
 push x = modify (x:)
+
+pop' :: EvalM Integer
+pop' = do
+  xs <- get
+  when (null xs) $ lift Nothing
+  put (tail xs)
+  pure (head xs)
+
+pop'' :: EvalM Integer
+pop'' = do
+  xs <- get
+  guard (not $ null xs)
+  put (tail xs)
+  pure (head xs)
 
 pop :: EvalM Integer
 pop = do
@@ -19,7 +34,12 @@ oneElementOnStack :: EvalM ()
 oneElementOnStack = do
   l <- length <$> get
   guard (l == 1)
---  when (l /= 1) $ lift Nothing
+
+readSafe :: (Read a, Alternative m) => String -> m a
+readSafe str =
+  case readMaybe str of
+    Nothing -> empty
+    Just n -> pure n
 
 evalRPN :: String -> Maybe Integer
 evalRPN str = evalStateT evalRPN' []

@@ -1,4 +1,4 @@
-module EvalRPN (evalRPN) where
+module EvalRPN where
 
 import Control.Monad.State
 
@@ -8,6 +8,7 @@ import Control.Monad.State
 
    evalRPN "2 3 +" ==> 5 (== "2 + 3")
    evalRPN "2 3 4 + *" ==> 14 (== 2 * (3 + 4))
+   evalRPN "3 2 -" ==> 1 (== "3 - 2")
 -}
 
 type Stack = [Integer]

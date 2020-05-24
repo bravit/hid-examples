@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 360176bfdba01839bf1fb628d17069b46f261b2f3b208dc5250a3b2eaceab337
+-- hash: fd18b3c139f47f3883562e56d29e6925b4db7a9f973ae4825fc6ff90c9fec8ad
 
 name:           hid-examples
 version:        0.5
@@ -247,6 +247,28 @@ executable dynvalues-gadt
       base >=4.12 && <4.15
   default-language: Haskell2010
 
+executable evalrpn1
+  main-is: evalrpn1.hs
+  other-modules:
+      EvalRPN
+  hs-source-dirs:
+      expr/rpn
+  build-depends:
+      base >=4.12 && <4.15
+    , mtl >=2.0 && <2.3
+  default-language: Haskell2010
+
+executable evalrpn2
+  main-is: evalrpn2.hs
+  other-modules:
+      EvalRPNTrans
+  hs-source-dirs:
+      expr/rpn
+  build-depends:
+      base >=4.12 && <4.15
+    , mtl >=2.0 && <2.3
+  default-language: Haskell2010
+
 executable expr-gadt
   main-is: ch11/expr-gadt/Main.hs
   other-modules:
@@ -447,7 +469,6 @@ executable reader
 executable rpnexpr
   main-is: rpnexpr.hs
   other-modules:
-      Utils
       MyMaybeT
       EvalRPN
       EvalRPNTrans

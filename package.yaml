@@ -165,11 +165,22 @@ executables:
         source-dirs: ch05
         main: countzeros.hs
     # Chapter 6
+    evalrpn1:
+        source-dirs: expr/rpn
+        main: evalrpn1.hs
+        other-modules: [EvalRPN]
+        dependencies:
+          - mtl >= 2.0 && < 2.3
+    evalrpn2:
+        source-dirs: expr/rpn
+        main: evalrpn2.hs
+        other-modules: [EvalRPNTrans]
+        dependencies:
+          - mtl >= 2.0 && < 2.3
     rpnexpr:
         source-dirs: expr/rpn
         main: rpnexpr.hs
         other-modules:
-          - Utils
           - MyMaybeT
           - EvalRPN
           - EvalRPNTrans
