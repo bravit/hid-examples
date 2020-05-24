@@ -5,10 +5,9 @@ import qualified EvalRPNTrans2 as E2
 import qualified EvalRPNExcept as EE
 import qualified EvalRPNExcept2 as EE2
 
+import Control.Monad (when)
 
-import Control.Monad (mapM_, when)
-import Data.Maybe
-
+rpns :: [String]
 rpns = ["42",
         "12 13 +",
         "2 3 3 * + 5 *",
@@ -20,10 +19,13 @@ rpns = ["42",
 showEvalRes :: String -> String
 showEvalRes e = e ++ " = " ++ maybe "ERROR" show (E1.evalRPN e)
 
+main :: IO ()
 main = do
   print $ E.evalRPN "2 3 +"
   print $ E1.evalRPN "2 x +"
   print $ E2.evalRPN "x 3 +"
+  print $ EE.evalRPN "x 3 +"
+  putStrLn $ EE2.displayResults $ EE2.evalRPN "x 3 +" [("x", 2)]
   let res1 = map E1.evalRPN rpns
   mapM_ (putStrLn . showEvalRes) rpns
   let    res2 = map E2.evalRPN rpns

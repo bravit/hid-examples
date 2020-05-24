@@ -6,7 +6,6 @@ import Data.Aeson
 import Network.HTTP.Req
 import Control.Exception.Safe
 import Control.Monad.Reader
-import Control.Monad.IO.Class
 import qualified Data.Text as T
 import Data.Time
 import GHC.Generics
@@ -21,11 +20,12 @@ newtype SunTimesWrapper dt = SunTimesWrapper {results :: SunTimes dt}
 instance FromJSON dt => FromJSON (SunTimesWrapper dt)
 
 getSunTimesUTC :: GeoCoords -> When -> MyApp (SunTimes UTCTime)
-getSunTimesUTC GeoCoords {..} w = handle rethrowReqException 
-                                  $ liftIO $ runReq defaultHttpConfig $ do
+getSunTimesUTC GeoCoords {..} w =
+  handle rethrowReqException
+  $ liftIO $ runReq defaultHttpConfig $ do
     r <- req GET ep NoReqBody jsonResponse reqParams
     pure (results $ responseBody r)
-  where      
+  where
     ep = https "api.sunrise-sunset.org" /: "json"
     reqParams =
       mconcat $ [ "lat" =: lat
@@ -46,16 +46,17 @@ getSunTimes gc@GeoCoords {..} d = do
     noTimeHandler (ServiceAPIError _) = throw (UnknownTime gc)
     noTimeHandler e = throw e
 
-data TimeZoneInfo = TimeZoneInfo { gmtOffset :: Int
-                                 , abbreviation :: String
-                                 , dst :: String  
-                                 }  
+data TimeZoneInfo =
+  TimeZoneInfo { gmtOffset :: Int
+               , abbreviation :: String
+               , dst :: String
+               }
   deriving (Show, Generic)
 
 instance FromJSON TimeZoneInfo
 
 lookupTimeZone :: GeoCoords -> UTCTime -> MyApp TimeZone
-lookupTimeZone gc@GeoCoords {..} t = do
+lookupTimeZone GeoCoords {..} t = do
     key <- asks timeZoneDBkey
     let
       ep = http "api.timezonedb.com" /: "v2.1" /: "get-time-zone"
@@ -73,5 +74,6 @@ lookupTimeZone gc@GeoCoords {..} t = do
   where
     secondsToTimeZone s = minutesToTimeZone (s `div` 60)
     timeZoneInfo2TimeZone TimeZoneInfo {..} =
-      (secondsToTimeZone gmtOffset) { timeZoneName = abbreviation
-                                    , timeZoneSummerOnly = dst == "1"}
+      (secondsToTimeZone gmtOffset)
+        { timeZoneName = abbreviation
+        , timeZoneSummerOnly = dst == "1"}

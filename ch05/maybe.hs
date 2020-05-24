@@ -1,4 +1,4 @@
-import Text.Read
+import Text.Read (readMaybe)
 
 type Name = String
 type Phone = String
@@ -29,8 +29,9 @@ locateByName' pnumbers locs name =
     Just number -> lookup number locs
     Nothing -> Nothing
 
+main :: IO ()
 main = do
-  print $ doubleStrNumber1 "21"
-  print $ doubleStrNumber2 "21"
-  print $ plusStrNumbers "10" "xx"
+  print (doubleStrNumber1 "21" :: Maybe Int)
+  print (doubleStrNumber2 "21" :: Maybe Int)
+  print (plusStrNumbers "10" "xx" :: Maybe Int)
 

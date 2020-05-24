@@ -6,7 +6,7 @@ data a + b = Inl a | Inr b
 
 data a * b = a :*: b
   deriving Show
-           
+
 infixl 6 +
 infixl 7 *
 
@@ -27,4 +27,5 @@ type Point a = a + a * a + a * a * a
 val3 :: Point Int
 val3 = Inl (Inr (0 :*: 0))
 
+main :: IO ()
 main = undefined

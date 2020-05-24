@@ -1,5 +1,4 @@
 import Data.List (group, sort)
-import Control.Monad (replicateM)
 import Control.Monad.State
 import System.Random
 
@@ -34,7 +33,9 @@ game n = counts <$> replicateM n (winner <$> gameRound)
   where
     counts xs = map headLength $ group $ sort xs
     headLength xs@(x:_) = (x, length xs)
+    headLength [] = error "unexpected"
 
+main :: IO ()
 main = do
   g <- newStdGen
   let r = evalState (game 10) g

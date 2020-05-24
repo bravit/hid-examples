@@ -3,19 +3,20 @@ import Text.Read (readMaybe)
 
 sumNumbers :: IO Int
 sumNumbers = do
-    sum <- newIORef 0
-    go sum
+    s <- newIORef 0
+    go s
   where
-    go sum = readNumber >>= processNumber sum
+    go acc = readNumber >>= processNumber acc
 
     readNumber = do
       putStr "Put integer number (not a number to finish): "
       readMaybe <$> getLine
 
-    processNumber sum Nothing = readIORef sum
-    processNumber sum (Just n) = modifyIORef' sum (+ n) >> go sum
+    processNumber acc Nothing = readIORef acc
+    processNumber acc (Just n) = modifyIORef' acc (+ n) >> go acc
 
+main :: IO ()
 main = do
-  sum <- sumNumbers
+  s <- sumNumbers
   putStr "Your sum is: "
-  print sum
+  print s

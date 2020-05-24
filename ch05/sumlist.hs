@@ -12,6 +12,8 @@ addItem' n = modify' (+n)
 sumList :: [Integer] -> State Integer ()
 sumList xs = traverse_ addItem xs
 
+answer :: Integer
 answer = execState (sumList [1..100]) 0
 
+main :: IO ()
 main = print answer

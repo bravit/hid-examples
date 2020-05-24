@@ -16,11 +16,14 @@ instance Describe MyType where
 instance Describe Maybe where
   describe = "Maybe type constructor"
 
+answer1, answer2, answer3 :: String
+
 answer1 = describe @Bool
 answer2 = describe @MyType
 answer3 = describe @Maybe
 
-main = do 
+main :: IO ()
+main = do
   putStrLn answer1
   putStrLn answer2
   putStrLn answer3

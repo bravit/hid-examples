@@ -39,10 +39,10 @@ colData = mconcat
 
 htmlReport :: (Functor t, Foldable t) =>
               String -> t QuoteData -> [StatEntry] -> [FilePath] -> ByteString
-htmlReport title quotes statEntries images = renderHtml $ docTypeHtml $ do
+htmlReport docTitle quotes statEntries images = renderHtml $ docTypeHtml $ do
      H.head $ do
-       H.title $ string title
-       H.style style
+       title $ string docTitle
+       style tableStyle
      body $ do
        unless (null images) $ do
          h1 "Charts"
@@ -54,5 +54,5 @@ htmlReport title quotes statEntries images = renderHtml $ docTypeHtml $ do
        h1 "Stock Quotes Data"
        encodeHtmlTable mempty colData quotes
   where
-    style = "table {border-collapse: collapse}" <>
+    tableStyle = "table {border-collapse: collapse}" <>
             "td, th {border: 1px solid black; padding: 5px}"

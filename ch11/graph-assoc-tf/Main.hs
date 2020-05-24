@@ -1,7 +1,6 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-import Data.List
 import Data.Map (Map)
 import qualified Data.Map as Map (fromList)
 
@@ -16,7 +15,7 @@ neighbours :: Graph g => g -> Vertex g -> [Vertex g]
 neighbours g v = map tgt (outEdges g v)
 
 isLoop :: (Graph g, Eq (Vertex g)) => g -> Edge g -> Bool
-isLoop g e = src e == tgt e
+isLoop _ e = src e == tgt e
 
 
 -- Representation #1: list of edges
@@ -24,7 +23,7 @@ newtype EdgesList = EdgesList [Edge EdgesList]
 
 instance Graph EdgesList where
   type Vertex EdgesList = Int
-  data Edge EdgesList = MkEdge1 (Vertex EdgesList) (Vertex EdgesList) 
+  data Edge EdgesList = MkEdge1 (Vertex EdgesList) (Vertex EdgesList)
   src = undefined
   tgt = undefined
   outEdges = undefined
@@ -47,6 +46,7 @@ instance Graph VertexMap where
 g2 :: VertexMap
 g2 = VertexMap (Map.fromList [("A", ["B"]), ("B", ["A"])])
 
+main :: IO ()
 main = do
   print $ neighbours g1 0
   print $ isLoop g1 (MkEdge1 0 1)

@@ -23,7 +23,7 @@ kg2lb (Weight wkg) =
 w3 :: Weight Bool -- Unfortunately, this also works
 w3 = Weight 0
 
--- main = print $ w1 + w2 -- TYPE ERROR
-
+main :: IO ()
 main = print $ kg2lb w1 + w2
+-- main = print $ w1 + w2 -- TYPE ERROR
 

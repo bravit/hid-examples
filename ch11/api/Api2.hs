@@ -48,8 +48,8 @@ type instance Server ((s :: Symbol) :> r) = Server r
 type instance Server (Capture a :> r) = a -> Server r
 
 
-impl :: Server BookInfoAPI
-impl = pure Ok
+impl1 :: Server BookInfoAPI
+impl1 = pure Ok
        :<|> title
        :<|> year
        :<|> rating
@@ -91,6 +91,7 @@ get impl xs =
     Just m -> m
     Nothing -> pure "Wrong request"
 
+check :: Server BookInfoAPI -> IO ()
 check impl = do
   b <- get impl []
   answer <- get impl ["year", "7548"]
@@ -98,4 +99,5 @@ check impl = do
             then "OK"
             else "Wrong answer!")
 
-main = check impl
+main :: IO ()
+main = check impl1

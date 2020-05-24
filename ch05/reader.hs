@@ -1,7 +1,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 
 import Control.Monad.Reader
-import Control.Monad (when)
 
 data Config = Config {
     verbose :: Bool

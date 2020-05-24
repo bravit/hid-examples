@@ -1,8 +1,7 @@
 module Main where
 
 import Data.Foldable
-import Data.Monoid
-import System.Environment
+--import Data.Monoid
 
 import Options.Applicative as Opt
 
@@ -12,7 +11,7 @@ import FileCounter
 
 mkConfig :: Opt.Parser AppConfig
 mkConfig = AppConfig
-           <$> strArgument (metavar "DIRECTORY" <> value "." <> showDefault) 
+           <$> strArgument (metavar "DIRECTORY" <> value "." <> showDefault)
            <*> option auto (metavar "DEPTH" <> short 'd' <> long "depth"
                <> value 0 <> showDefault <> help "Maximum depth of reporting ")
            <*> optional
@@ -20,13 +19,11 @@ mkConfig = AppConfig
                 <> help "Filter files by extension"))
 
 printLog :: Show s => AppLog s -> IO ()
-printLog = traverse_ printEntry 
+printLog = traverse_ printEntry
   where
     printEntry (fp, s) = do
       putStr $ show s ++ "\t"
       putStrLn fp
-
-
 
 work :: AppConfig -> IO ()
 work config = do
@@ -37,8 +34,8 @@ work config = do
   (_, xs') <- runMyApp fileCount config 0
   putStrLn "File counter:"
   printLog xs'
-  
-  
+
+main :: IO ()
 main = execParser opts >>= work
   where
     opts = info (mkConfig <**> helper)

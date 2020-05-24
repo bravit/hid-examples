@@ -5,7 +5,6 @@ import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 import Data.Word
 import Data.List
-import Control.Monad
 
 import IPTypes
 
@@ -17,7 +16,7 @@ genIPComponents = Gen.list (Range.singleton 4) genOctet
   where genOctet = Gen.word8 Range.linearBounded
 
 genIPString :: Gen String
-genIPString = intercalate "." . map show <$> genIPComponents 
+genIPString = intercalate "." . map show <$> genIPComponents
 
 genIPRange :: Gen IPRange
 genIPRange = do

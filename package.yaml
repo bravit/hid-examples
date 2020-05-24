@@ -31,6 +31,15 @@ tested-with: GHC == 8.6.5, GHC == 8.8.3
 
 dependencies: base >=4.12 && <4.15
 
+ghc-options:
+  - -Wall
+  - -Werror
+  - -Wcompat
+  - -Widentities
+  - -Wincomplete-uni-patterns
+  - -Wincomplete-record-updates
+  - -Wno-unused-top-binds
+  - -Wno-orphans
 executables:
     # Preface
     hello:
@@ -403,6 +412,8 @@ internal-libraries:
           - fingertree >= 0.1 && < 0.2
         other-extensions:
           - TypeApplications
+        ghc-options:
+          - -Wno-incomplete-uni-patterns
     ipgen-lib:
         source-dirs: ipgen
         exposed-modules:

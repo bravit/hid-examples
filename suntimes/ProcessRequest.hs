@@ -3,15 +3,14 @@
 module ProcessRequest (processMany, processInteractively) where
 
 import Control.Exception.Safe
+import Data.Text(Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Data.Time
 import Control.Monad
 import Control.Monad.Reader
-import Control.Monad.IO.Class
 
 import Control.Concurrent
-import Data.Semigroup ((<>)) -- required for GHC 8.2
 
 import App
 import Types
@@ -19,8 +18,8 @@ import GeoCoordsReq
 import SunTimes
 import STExcept
 
-parseRequestLine :: T.Text -> Either RequestError (T.Text, When)
-parseRequestLine t = parse (split t)
+parseRequestLine :: Text -> Either RequestError (Text, When)
+parseRequestLine txt = parse (split txt)
   where
     split t = case T.breakOn "@" t of
                 (addr, "") -> ("", addr)
@@ -32,24 +31,25 @@ parseRequestLine t = parse (split t)
         Nothing -> Left (WrongDay d)
         Just d' -> Right (addr, On d')
 
-formatResult :: T.Text -> SunTimes ZonedTime -> TimeLocale -> T.Text
-formatResult req SunTimes {..} loc = mconcat [day, " @ ", req,
-                                              "\n    ", fmt sunrise,
-                                              "\n    ", fmt sunset]
+formatResult :: Text -> SunTimes ZonedTime -> TimeLocale -> Text
+formatResult req SunTimes {..} loc =
+  mconcat [day, " @ ", req,
+           "\n    ", fmt sunrise,
+           "\n    ", fmt sunset]
   where
     day = T.pack $ formatTime loc "%x" sunrise
     fmt t = T.pack $ formatTime loc "%X %Z" t
 
-processRequest :: T.Text -> MyApp T.Text
+processRequest :: Text -> MyApp Text
 processRequest t = processR (parseRequestLine (T.strip t))
   where
     processR (Left e) = throw (FormatError e)
     processR (Right (addr, day)) = do
       coords <- getCoords addr
-      st <- getSunTimes coords day 
+      st <- getSunTimes coords day
       pure $ formatResult addr st defaultTimeLocale
 
-processMany :: [T.Text] -> MyApp ()
+processMany :: [Text] -> MyApp ()
 processMany = mapM_ processRequestWrapper
   where
     processRequestWrapper r =
@@ -64,7 +64,7 @@ processMany = mapM_ processRequestWrapper
 processInteractively :: MyApp ()
 processInteractively = action `catch` handler
   where
-    action = do 
+    action = do
       liftIO $ TIO.putStrLn "Enter your request:"
       req <- liftIO $ TIO.getLine
       res <- processRequest req

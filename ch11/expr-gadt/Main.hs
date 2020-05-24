@@ -23,11 +23,16 @@ myeval (BoolLit b) = b
 myeval (Add e1 e2) = myeval e1 + myeval e2
 myeval (Mult e1 e2) = myeval e1 * myeval e2
 myeval (IsZero e) = myeval e == 0
-myeval (If be e1 e2) = myeval (if myeval be then e1 else e1)
+myeval (If be e1 e2) = myeval (if myeval be then e1 else e2)
 
-expr = If (IsZero (Add (NumLit 5) (NumLit (-5)))) (NumLit 0.5) (NumLit 1)
+expr1 :: Expr Int
+expr1 = Add (NumLit 5) (NumLit (-5))
+
+expr2 :: Expr Double
+expr2 = If (IsZero expr1) (NumLit 0.5) (NumLit 1)
 
 data SomeExpr where
   Some :: Expr a -> SomeExpr
 
-main = print $ myeval $ expr
+main :: IO ()
+main = print $ myeval $ expr2

@@ -14,6 +14,7 @@ countZerosST xs = runST $ do
  where
    inc c = modifySTRef' c (+1)
 
+main :: IO ()
 main = do
   print $ countZeros $ replicate 1000 0
   print $ countZerosST $ replicate 1000 0

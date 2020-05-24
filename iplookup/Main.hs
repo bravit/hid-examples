@@ -3,7 +3,6 @@ module Main where
 import Options.Applicative as Opt
 import Control.Exception.Safe
 import System.Exit
-import Data.Semigroup
 
 import IPTypes
 import ParseIP
@@ -15,7 +14,7 @@ data Params = Params
 
 mkParams :: Opt.Parser Params
 mkParams = Params
-             <$> argument str (metavar "FILE" <> help "IP range database") 
+             <$> argument str (metavar "FILE" <> help "IP range database")
              <*> argument str (metavar "IP" <> help "IP address to check")
 
 run :: Params -> IO ()
@@ -26,6 +25,7 @@ run (Params fp ipstr) = do
     (Left pe, _) -> throw (LoadIPRangesError pe)
     (Right iprdb, Just ip) -> putStrLn $ reportIPs iprdb [ip]
 
+main :: IO ()
 main = (execParser opts >>= run)
        `catches` [Handler parserExit]
   where

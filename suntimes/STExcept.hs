@@ -17,12 +17,11 @@ data SunInfoException = UnknownLocation T.Text
                       | NetworkError SomeException
 
 instance Show SunInfoException where
-  show (UnknownLocation loc) = "Failed while determining coordinates"
-  show (UnknownTime loc) = "Failed while determining sunrise/sunset times"
+  show (UnknownLocation _) = "Failed while determining coordinates"
+  show (UnknownTime _) = "Failed while determining sunrise/sunset times"
   show (FormatError er) = show er
   show (ServiceAPIError _) = "Error while communicating with external services"
   show (NetworkError _) = "Network communication error"
-  
 
 instance Exception SunInfoException
 

@@ -21,13 +21,13 @@ diskUsage = do
     let isDir = isDirectory fs
         shouldLog = isDir && curDepth <= maxDepth
     when isDir $ traverseDirectoryWith diskUsage
-    recordEntry curPath fs 
+    recordEntry curPath fs
     when shouldLog $ logDiffTS st_field
 
 recordEntry :: FilePath -> FileStatus -> DUApp ()
-recordEntry fp fs = do
+recordEntry fpath fs = do
     ext <- asks ext
-    when (needRec fp ext $ isRegularFile fs) (addToTS $ fileSize fs)
+    when (needRec fpath ext $ isRegularFile fs) (addToTS $ fileSize fs)
   where
 --    addToTS :: FileOffset -> DUApp ()
     addToTS ofs = modify (\st -> st {st_field = st_field st + ofs})

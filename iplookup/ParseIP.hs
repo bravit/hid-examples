@@ -69,7 +69,7 @@ parseIPMonadic = guarded (4 `isLengthOf`) . splitOn "."
 
 {-# INLINE parseIPIter #-}
 parseIPIter :: String -> Maybe IP
-parseIPIter cs = go cs 0 0 1 0
+parseIPIter chars = go chars 0 0 1 0
   where
     go :: String -> Int -> Int -> Int -> Int -> Maybe IP
     go (c:cs) ip ipcomp ncomp ndigit
@@ -92,7 +92,7 @@ parseIPIter cs = go cs 0 0 1 0
 
 {-# INLINE parseIPIterStrict #-}
 parseIPIterStrict :: String -> Maybe IP
-parseIPIterStrict cs = go cs 0 0 1 0
+parseIPIterStrict chars = go chars 0 0 1 0
   where
     go :: String -> Int -> Int -> Int -> Int -> Maybe IP
     go (c:cs) !ip !ipcomp !ncomp !ndigit
@@ -123,8 +123,8 @@ parseIP'' cs
   where
     shiftL8 a = shiftL a 8
     [i1, i2, i3, i4] = map ipComponentToInt strIPComponents
-    ipComponentToInt cs =
-      case map digitToInt cs of
+    ipComponentToInt ipc =
+      case map digitToInt ipc of
         [n] -> n
         [n1, n2] -> n1 * 10 + n2
         [n1, n2, n3] -> let n = n1 * 100 + n2 * 10 + n3
@@ -135,8 +135,8 @@ parseIP'' cs
       case span isDigit cs of
         (p1, '.':rest) ->
           case span isDigit rest of
-            (p2, '.':rest) ->
-              case span isDigit rest of
+            (p2, '.':rest') ->
+              case span isDigit rest' of
                 (p3, '.':p4) ->
                   if all isDigit p4 then [p1,p2,p3,p4] else []
                 _ -> []

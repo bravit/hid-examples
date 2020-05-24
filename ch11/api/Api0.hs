@@ -5,7 +5,7 @@
 
 get :: [String] -> IO String
 get [] = pure "OK"
-get [op, bid] =
+get [op, _] =
     case op of
        "title" -> pure "Haskell in Depth"
        "year" -> pure "2020"
@@ -21,5 +21,6 @@ check = do
             then "OK"
             else "Wrong answer!")
 
+main :: IO ()
 main = check
 

@@ -6,8 +6,6 @@ import Data.Text
 import GHC.Generics
 import Data.Time (Day)
 import Data.Aeson
-import Control.Exception.Safe
-
 
 type Address = Text
 

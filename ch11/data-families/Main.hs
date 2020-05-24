@@ -13,16 +13,16 @@ class XListable a where
 
 instance XListable () where
   xempty = XListUnit 0
-  
+
   xcons () (XListUnit n) = XListUnit (n + 1)
-  
+
   xheadMay (XListUnit 0) = Nothing
   xheadMay _ = Just ()
 
 instance XListable Bool where
   xempty = XBits 0 0
-  
-  xcons b (XBits bits n) = XBits (bits * 2 + if b then 1 else 0) (n + 1) 
+
+  xcons b (XBits bits n) = XBits (bits * 2 + if b then 1 else 0) (n + 1)
 
   xheadMay (XBits bits n)
     | n <= 0 = Nothing
@@ -38,6 +38,7 @@ instance XListable Char where
 test :: (Eq a, XListable a) => a -> Bool
 test a = xheadMay (xcons a xempty) == Just a
 
+main :: IO ()
 main = print $ and [test (),
                     test True,
                     test False,

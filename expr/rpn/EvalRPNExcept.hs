@@ -2,9 +2,7 @@ module EvalRPNExcept (evalRPN, EvalError) where
 
 import Control.Monad.State
 import Control.Monad.Except
-import Control.Monad.Reader
 import Data.Foldable (traverse_)
-import Data.Semigroup ((<>))
 import Text.Read (readMaybe)
 
 {-

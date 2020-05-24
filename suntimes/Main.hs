@@ -3,22 +3,19 @@
 import Options.Applicative as Opt
 import Data.Aeson
 import Control.Exception.Safe
+import Control.Monad.IO.Class
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
-import Control.Monad
-import Control.Monad.IO.Class
-import Data.Semigroup ((<>)) -- required for GHC 8.2
 import qualified Data.ByteString as B
 import System.Exit
 import System.IO.Error (isDoesNotExistError, ioeGetFileName)
 
 import App
 import ProcessRequest
-import STExcept
 
 data AppMode = FileInput FilePath | Interactive
 data Params = Params
-                AppMode -- mode 
+                AppMode -- mode
                 FilePath -- config file
 
 mkParams :: Opt.Parser Params
@@ -45,6 +42,7 @@ withConfig (Params appMode config) = do
     run (FileInput fname) = liftIO (TIO.readFile fname) >>= processMany . T.lines
     run Interactive = processInteractively
 
+main :: IO ()
 main = (execParser opts >>= withConfig)
        `catches` [Handler parserExit,
                   Handler printIOError,

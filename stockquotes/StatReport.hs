@@ -11,6 +11,7 @@ import Colonnade
 
 import QuoteData
 
+decimalPlacesFloating :: Int
 decimalPlacesFloating = 2
 
 data StatValue = StatValue {

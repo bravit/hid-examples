@@ -6,39 +6,40 @@
 
 import Data.Function ((&))
 import Control.Monad (foldM)
-import Text.Read (readMaybe)
 
 data DoorState = Opened | Closed
   deriving Show
 
 data SDoorState (s :: DoorState) where
-  SClosed :: SDoorState Closed
-  SOpened :: SDoorState Opened
+  SClosed :: SDoorState 'Closed
+  SOpened :: SDoorState 'Opened
 
 deriving instance Show (SDoorState s)
 
 class SDoorStateI (s :: DoorState) where
   sState :: SDoorState s
 
-instance SDoorStateI Opened where
+instance SDoorStateI 'Opened where
   sState = SOpened
 
-instance SDoorStateI Closed where
+instance SDoorStateI 'Closed where
   sState = SClosed
 
 data Door (s :: DoorState) where
-  MkDoor :: Door Closed
-  Open :: Door Closed -> Door Opened
-  Close :: Door Opened -> Door Closed
+  MkDoor :: Door 'Closed
+  Open :: Door 'Closed -> Door 'Opened
+  Close :: Door 'Opened -> Door 'Closed
   Hold :: Door s -> Door s
 
 deriving instance Show (Door s)
 
+openedDoor :: Door 'Opened
 openedDoor = Open MkDoor
 
 -- badDoor = Close MkDoor
 
-someDoor = MkDoor & Open & Hold & Hold & Close & Hold & Open 
+someDoor :: Door 'Opened
+someDoor = MkDoor & Open & Hold & Hold & Close & Hold & Open
 -- (&) = flip ($) -- imported from Data.Function (base)
 
 data AnyDoor where
@@ -67,10 +68,11 @@ testDoor = parseDoor "Open Hold Hold Close Hold Open Hold Close Open"
 -- Exercise
 
 extractDoor :: AnyDoor ->
-               Either (Door Closed) (Door Opened)
+               Either (Door 'Closed) (Door 'Opened)
 extractDoor = undefined
 
 -- The best tutorial on the singletons library:
 -- https://blog.jle.im/entries/series/+introduction-to-singletons.html
 
+main :: IO ()
 main = print testDoor

@@ -48,8 +48,8 @@ type instance Server (a :<|> b) = Server a :<|> Server b
 type instance Server ((s :: Symbol) :> r) = Server r
 type instance Server (Capture a :> r) = a -> Server r
 
-impl :: Server BookInfoAPI
-impl = pure Ok
+impl1 :: Server BookInfoAPI
+impl1 = pure Ok
        :<|> title
        :<|> year
        :<|> rating
@@ -117,6 +117,7 @@ get p h xs = case route p h xs of
   Nothing -> ioError (userError "404")
   Just m  -> m
 
+check :: Server BookInfoAPI -> IO ()
 check impl = do
   b <- get (Proxy :: Proxy BookInfoAPI) impl []
   answer <- get (Proxy :: Proxy BookInfoAPI) impl ["year", "7548"]
@@ -124,4 +125,5 @@ check impl = do
             then "OK"
             else "Wrong answer!")
 
-main = check impl
+main :: IO ()
+main = check impl1

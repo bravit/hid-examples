@@ -28,4 +28,5 @@ fromString str
 printWDValue :: WrappedDynValue -> IO ()
 printWDValue (Wrap dv) = printValue dv
 
+main :: IO ()
 main = mapM_ (printWDValue . fromString) ["y", "no", "xxx", "c"]

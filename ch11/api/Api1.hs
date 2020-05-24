@@ -16,13 +16,15 @@ data BookInfoAPIImpl = BookInfoAPIImpl {
                          year :: ReqHandler Int,
                          rating :: ReqHandler Rating }
 
-impl = BookInfoAPIImpl {
+impl1 :: BookInfoAPIImpl
+impl1 = BookInfoAPIImpl {
     root = pure Ok,
     title = \_ -> pure "Haskell in Depth",
     year = \_ -> pure 2020,
     rating = \_ -> pure Great
-  }  
+  }
 
+impl2 :: BookInfoAPIImpl
 impl2 = BookInfoAPIImpl {
     root = pure Down,
     title = \_ -> notImplemented,
@@ -54,6 +56,7 @@ get impl xs =
     Just m -> m
     Nothing -> pure "Wrong request"
 
+check :: BookInfoAPIImpl -> IO ()
 check impl = do
   b <- get impl []
   answer <- get impl ["year", "7548"]
@@ -61,4 +64,5 @@ check impl = do
             then "OK"
             else "Wrong answer!")
 
-main = check impl
+main :: IO ()
+main = check impl1

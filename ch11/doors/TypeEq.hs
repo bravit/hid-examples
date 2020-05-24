@@ -8,7 +8,6 @@
 
 import Data.Function ((&))
 import Control.Monad (foldM)
-import Text.Read (readMaybe)
 import Data.Type.Equality ((:~:) (Refl))
 
 
@@ -16,36 +15,36 @@ data DoorState = Opened | Closed
   deriving Show
 
 data Door (s :: DoorState) where
-  MkDoor :: Door Closed
-  Open :: Door Closed -> Door Opened
-  Close :: Door Opened -> Door Closed
+  MkDoor :: Door 'Closed
+  Open :: Door 'Closed -> Door 'Opened
+  Close :: Door 'Opened -> Door 'Closed
   Hold :: Door s -> Door s
 
 deriving instance Show (Door s)
 
-
-
+openedDoor :: Door 'Opened
 openedDoor = Open MkDoor
 
 -- badDoor = Close MkDoor
 
-someDoor = MkDoor & Open & Hold & Hold & Close & Hold & Open 
+someDoor :: Door 'Opened
+someDoor = MkDoor & Open & Hold & Hold & Close & Hold & Open
 -- (&) = flip ($) -- imported from Data.Function (base)
 
 parseDoorAttempt :: String -> Door s
-parseDoorAttempt str = undefined
+parseDoorAttempt _ = undefined
 
 data AnyDoor where
   AnyDoor :: Door s -> AnyDoor
 
 deriving instance Show AnyDoor
 
-applyCmdAttempt :: AnyDoor -> String -> 
+applyCmdAttempt :: AnyDoor -> String ->
                    Maybe AnyDoor
-applyCmdAttempt (AnyDoor d) "Open" = undefined -- Just $ AnyDoor $ Open d
+applyCmdAttempt (AnyDoor _) "Open" = undefined -- Just $ AnyDoor $ Open d
 --applyCmdAttempt (AnyDoor d) "Open" = Just $ AnyDoor $ Open d
 --applyCmdAttempt (AnyDoor d) "Close" = Just $ AnyDoor $ Close d
----applyCmdAttempt _ _ = Nothing
+applyCmdAttempt _ _ = Nothing
 
 doorState :: Door s -> DoorState
 doorState MkDoor = Closed
@@ -61,13 +60,13 @@ applyCmdAttempt2 (AnyDoor d) "Open" =
     _ -> Nothing
 -}
 
-checkClosed :: Door s -> Maybe (s :~: Closed)
+checkClosed :: Door s -> Maybe (s :~: 'Closed)
 checkClosed MkDoor = Just Refl
 checkClosed (Close _) = Just Refl
 checkClosed (Hold d) = checkClosed d
 checkClosed _ = Nothing
 
-checkOpened :: Door s -> Maybe (s :~: Opened)
+checkOpened :: Door s -> Maybe (s :~: 'Opened)
 checkOpened (Open _) = Just Refl
 checkOpened (Hold d) = checkOpened d
 checkOpened _ = Nothing
@@ -97,14 +96,14 @@ anyDoorState :: AnyDoor -> DoorState
 anyDoorState = undefined
 
 extractDoor :: AnyDoor ->
-               Either (Door Closed) (Door Opened)
+               Either (Door 'Closed) (Door 'Opened)
 extractDoor = undefined
 
-extractClosed :: AnyDoor -> Maybe (Door Closed)
+extractClosed :: AnyDoor -> Maybe (Door 'Closed)
 extractClosed = undefined
 
-extractOpened :: AnyDoor -> Maybe (Door Opened)
+extractOpened :: AnyDoor -> Maybe (Door 'Opened)
 extractOpened = undefined
 
-
+main :: IO ()
 main = print testDoor

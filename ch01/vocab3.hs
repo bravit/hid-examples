@@ -19,7 +19,8 @@ extractVocab t = map buildEntry $ group $ sort ws
   where
     ws = map T.toCaseFold $ filter (not . T.null)
          $ map cleanWord $ T.words t
-    buildEntry ws@(w:_) = (w, length ws)
+    buildEntry xs@(x:_) = (x, length xs)
+    buildEntry [] = error "unexpected"
     cleanWord = T.dropAround (not . isLetter)
 
 allWords :: Vocabulary -> [Text]
@@ -52,18 +53,18 @@ wordsCountReport' vocab = T.unlines [part1, part2]
                      (T.pack $ show unique)
 
 frequentWordsReport :: Vocabulary -> Int -> Text
-frequentWordsReport vocab n =
+frequentWordsReport vocab num =
     fmt $ nameF "Frequent words"
         $ blockListF' "" fmtEntry reportData
   where
-    reportData = take n $ wordsByFrequency vocab
+    reportData = take num $ wordsByFrequency vocab
     fmtEntry (t, n) = ""+|t|+": "+|n|+""
 
 processTextFile :: FilePath -> Bool -> Int -> IO ()
-processTextFile fname allWords n = do
+processTextFile fname withAllWords n = do
   text <- TIO.readFile fname
   let vocab = extractVocab text
-  when allWords $ TIO.putStrLn $ allWordsReport vocab
+  when withAllWords $ TIO.putStrLn $ allWordsReport vocab
   TIO.putStrLn $ wordsCountReport vocab
   TIO.putStrLn $ frequentWordsReport vocab n
 

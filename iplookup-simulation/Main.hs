@@ -3,10 +3,11 @@ module Main where
 import IPTypes
 import ParseIP
 import FastLookup
-import System.Random
-import Data.Word
 
+ipdb :: String
 ipdb = "data/ipdb.txt"
+
+nReqs :: Int
 nReqs = 500000
 
 genIPList :: Int -> [IP]
@@ -23,9 +24,10 @@ simulate iprdb ips = (yes, no)
 report :: (Int, Int) -> IO ()
 report info = putStrLn $ "(yes, no) = " ++ show info
 
+main :: IO ()
 main = do
   iprs <- parseIPRanges <$> readFile ipdb
   let ips = genIPList nReqs
   case iprs of
-    Right iprs -> report $ simulate (fromIPRangeDB iprs) ips
+    Right iprs' -> report $ simulate (fromIPRangeDB iprs') ips
     _ -> print "Can't read IP ranges database"

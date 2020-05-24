@@ -1,12 +1,10 @@
-module EvalRPNExcept2 (evalRPN, EvalError) where
+module EvalRPNExcept2 (evalRPN, EvalError, displayResults) where
 
 import Control.Monad.State
 import Control.Monad.Except
 import Control.Monad.Reader
-import Data.List
 import Control.Applicative
 import Data.Foldable (traverse_)
-import Data.Semigroup ((<>))
 import Text.Read (readMaybe)
 
 {-
@@ -57,7 +55,7 @@ readSafe' s = liftM2 (<|>) (pure $ readMaybe s) (asks $ lookup s)
               >>= handleNaN s
 
 readSafe'' :: String -> EvalM Integer
-readSafe'' s = readSafe s `catchError` handler
+readSafe'' str = readSafe str `catchError` handler
   where
     handler (NotANumber s) = asks (lookup s) >>= handleNaN s
     handler e = throwError e

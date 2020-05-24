@@ -4,14 +4,20 @@
   , UndecidableInstances
   , InstanceSigs
   , LambdaCase
+  , CPP
  #-}
+
 
 module MyMaybeT (MaybeT(..)) where
 
 import Control.Monad.Trans.Class
 import Control.Applicative
 import Control.Monad.State
+
+#if !MIN_VERSION_base(4,13,0)
+-- Control.Monad.Fail import is redundant since GHC 8.8.1
 import Control.Monad.Fail
+#endif
 
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 

@@ -1,7 +1,7 @@
 module ShuntingYard (convertToExpr) where
 
 import Data.Char (isDigit, isSpace)
-import Data.List (groupBy, intersperse)
+import Data.List
 import Data.Foldable (traverse_)
 import Control.Monad.State
 
@@ -37,12 +37,12 @@ push :: Token -> State SYState ()
 push t = modify (\(s, es) -> (t : s, es))
 
 whileNotEmptyAnd :: (Token -> Bool) -> State SYState () -> State SYState ()
-whileNotEmptyAnd pred m = go
+whileNotEmptyAnd predicate m = go
   where
     go = do
       b1 <- notEmpty
       when b1 $ do
-        b2 <- pred <$> top
+        b2 <- predicate <$> top
         when b2 (m >> go)
 
 output :: Token -> State SYState ()
@@ -52,14 +52,17 @@ output t = modify (builder t <$>)
     builder "*" (e1 : e2 : es) = Mult e1 e2 : es
     builder n es = Lit (read n) : es -- let it crash on not a number
 
+isOp :: String -> Bool
 isOp "+" = True
 isOp "*" = True
 isOp _ = False
 
+precedence :: String -> Int
 precedence "+" = 1
 precedence "*" = 2
 precedence _ = 0
 
+precGTE :: String -> String -> Bool
 t1 `precGTE` t2 = precedence t1 >= precedence t2
 
 convertToExpr :: String -> Expr Integer
@@ -76,7 +79,7 @@ convertToExpr str = head $ snd $ execState shuntingYard ([], [])
       | otherwise = output t -- number
 
     transfer = pop >>= output
-    transferWhile pred = whileNotEmptyAnd pred transfer
+    transferWhile predicate = whileNotEmptyAnd predicate transfer
     transferRest = transferWhile (const True)
 
     tokenize = groupBy (\a b -> isDigit a && isDigit b)

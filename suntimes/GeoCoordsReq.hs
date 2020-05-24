@@ -5,7 +5,6 @@ import Control.Exception.Safe
 import qualified Data.Text as T
 import Data.Text.Encoding (encodeUtf8)
 import Control.Monad.Reader
-import Control.Monad.IO.Class
 
 import App
 import Types

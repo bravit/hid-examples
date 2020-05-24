@@ -1,4 +1,3 @@
-import Control.Monad (replicateM)
 import Control.Monad.RWS
 import System.Random
 
@@ -35,4 +34,5 @@ diceGame :: DiceGame (Dice, Dice)
 diceGame = dice >> dices 5 >> replicateM 2 (dices 3)
                 >> dices 10 >> doubleDice
 
+main :: IO ()
 main = newStdGen >>= print . evalRWS diceGame (1, 6)

@@ -1,7 +1,6 @@
 module Contexts where
 
 import Control.Monad.Writer
-import Text.Read (readMaybe)
 
 readNumber :: IO Int
 readNumber = do

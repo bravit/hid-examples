@@ -25,8 +25,8 @@ instance TextShow a => TextShow (Expr a) where
         showbParen (outerPrec > thisPrec)
         $ showbPrec thisPrec e1 <> op <> showbPrec thisPrec e2
 
+expr1, expr2 :: Expr Int
 expr1 = Mult (Add (Lit 2) (Mult (Lit 3) (Lit 3))) (Lit 5)
-
 expr2 = Add (Add (Lit 1)
                  (Mult (Add (Lit 1) (Lit 2))
                        (Add (Lit 2)

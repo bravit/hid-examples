@@ -3,7 +3,7 @@
 module Charts (plotChart) where
 
 import Data.Foldable (toList)
-import Graphics.Rendering.Chart.Easy
+import Graphics.Rendering.Chart.Easy hiding (close, label, bars)
 import Graphics.Rendering.Chart.Backend.Diagrams
 
 import QuoteData
@@ -14,7 +14,7 @@ plotChart :: Foldable t =>
              -> FilePath
              -> IO ()
 plotChart title quotes fname = do
-    renderableToFile fileOptions fname (toRenderable chart)
+    _ <- renderableToFile fileOptions fname (toRenderable chart)
     pure ()
   where
     fileOptions = FileOptions (800, 600) SVG loadSansSerifFonts
@@ -25,18 +25,18 @@ plotChart title quotes fname = do
         (day, [volume])) | QuoteData {..} <- toList quotes ]
 
     chart = slayouts_layouts .~
-        [ StackedLayout $ candlesLayout title candles closings,
-          StackedLayout $ volumesLayout volumes
+        [ StackedLayout $ candlesLayout,
+          StackedLayout $ volumesLayout
         ]
       $ def
 
-    candlesLayout title candles closings =
+    candlesLayout =
        layout_title .~ title
      $ layout_plots .~ [ toPlot $ qline "Close" closings green,
                          toPlot $ candle "Candle" candles cyan ]
      $ def
 
-    volumesLayout volumes =
+    volumesLayout =
        layout_plots .~ [ plotBars $ bars "Volume" volumes gray ]
      $ def
 

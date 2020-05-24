@@ -32,7 +32,7 @@ generateReports Params {..} quotes = do
    title = "Historical Quotes" ++ withCompany " for "
 
    saveHtml Nothing _ = pure ()
-   saveHtml (Just fname) html = BL.writeFile fname html
+   saveHtml (Just f) html = BL.writeFile f html
 
 work :: Params -> IO ()
 work params = do

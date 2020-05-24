@@ -19,14 +19,18 @@ instance DescribeType MyType where
   describe _ = "My own type"
 
 
--- We need the PolyKinds extension to define this instance  
+-- We need the PolyKinds extension to define this instance
 instance DescribeType Maybe where
   describe _ = "Maybe type constructor"
 
 -- class JSONSchema a where
---   schema :: Proxy a -> Schema  
+--   schema :: Proxy a -> Schema
 
 someFunc :: proxy a -> String
 someFunc _ = "OK"
 
-main = undefined
+main :: IO ()
+main = do
+  putStrLn $ describe (Proxy :: Proxy Bool)
+  putStrLn $ describe (Proxy :: Proxy MyType)
+  putStrLn $ someFunc (Proxy :: Proxy Int)

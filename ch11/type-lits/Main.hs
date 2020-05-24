@@ -5,7 +5,6 @@
 
 import GHC.TypeLits
 import Data.Proxy
-import Data.List (isPrefixOf)
 
 -- Example: aligned pointers
 
@@ -27,10 +26,10 @@ inc (Pointer p) = Pointer (p + 1)
 
 setPtrValue :: forall align. KnownNat align => Integer -> Maybe (Pointer align)
 setPtrValue p
-  | rem == 0 = Just (Pointer quot)
+  | reminder == 0 = Just (Pointer quotient)
   | otherwise = Nothing
   where
-    (quot, rem) = divMod p (natVal (Proxy :: Proxy align))
+    (quotient, reminder) = divMod p (natVal (Proxy :: Proxy align))
 
 -- Example: suffixed strings
 
@@ -40,5 +39,6 @@ data SuffixedString (suffix :: Symbol) = SS String
 asString :: forall suffix. KnownSymbol suffix => SuffixedString suffix -> String
 asString (SS str) = str ++ "@" ++ symbolVal (Proxy :: Proxy suffix)
 
+main :: IO ()
 main = undefined
 
