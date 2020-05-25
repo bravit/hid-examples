@@ -8,8 +8,8 @@ import System.Posix.Types (FileOffset)
 import System.PosixCompat.Files (FileStatus, getFileStatus,
                                  isDirectory, isRegularFile, fileSize)
 
-import TraverseDir
 import App
+import TraverseDir
 
 type DUApp = MyApp FileOffset
 
@@ -27,7 +27,8 @@ diskUsage = do
 recordEntry :: FilePath -> FileStatus -> DUApp ()
 recordEntry fpath fs = do
     ext <- asks ext
-    when (needRec fpath ext $ isRegularFile fs) (addToTS $ fileSize fs)
+    when (needRec fpath ext $ isRegularFile fs) $
+      addToTS $ fileSize fs
   where
 --    addToTS :: FileOffset -> DUApp ()
     addToTS ofs = modify (\st -> st {st_field = st_field st + ofs})

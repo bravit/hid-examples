@@ -7,8 +7,8 @@ import System.FilePath
 import System.Directory
 import System.PosixCompat.Files
 
-import TraverseDir
 import App
+import TraverseDir
 
 fileCount :: MyApp Int ()
 fileCount = do

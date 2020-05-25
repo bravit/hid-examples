@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b424e347f1fa0d4f9102b0224424b523d94be01eba5605d08962a5c05c62cdc0
+-- hash: 8bf86d839eea83f57d7931bef34290ab2b622923b730a7935d67c2b6a7281693
 
 name:           hid-examples
 version:        0.5
@@ -237,7 +237,9 @@ executable du
   main-is: du.hs
   other-modules:
       App
-      AppRWS
+      AppRTWTST
+      AppRWST
+      AppTypes
       DiskUsage
       FileCounter
       TraverseDir
