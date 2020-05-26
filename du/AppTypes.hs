@@ -1,14 +1,14 @@
 module AppTypes where
 
 data AppConfig = AppConfig {
-      basePath :: FilePath,
+      path :: FilePath,
       maxDepth :: Int,
-      ext :: Maybe FilePath
+      ext :: Maybe FilePath,
+      followSymlinks :: Bool
     }
 
 data AppState s = AppState {
       curDepth :: !Int,
-      curPath :: !FilePath,
       st_field :: s
     }
 

@@ -199,6 +199,7 @@ executables:
         dependencies:
           - mtl >= 2.0 && < 2.3
           - transformers >= 0.5 && < 0.6
+          - text >=1.2 && <1.3
           - text-show >=3.0 && <4
         other-extensions:
           - FlexibleInstances
@@ -208,13 +209,15 @@ executables:
           - LambdaCase
     du:
         source-dirs: du
-        main: du.hs
+        main: Main.hs
         dependencies:
           - mtl >=2.0 && <2.3
           - filepath >= 1.4.1 && < 1.5
           - directory >= 1.3 && < 1.4
           - unix-compat >= 0.5 && < 0.6
           - optparse-applicative >= 0.14 && < 0.16
+          - text >=1.2 && <1.3
+          - text-show >=3.0 && <4
         other-extensions:
           - GeneralizedNewtypeDeriving
           - RecordWildCards

@@ -2,23 +2,22 @@
 
 module FileCounter (fileCount) where
 
-import Control.Monad.RWS
-import System.FilePath
-import System.Directory
-import System.PosixCompat.Files
+import System.FilePath (takeExtension)
+import System.Directory (listDirectory)
+import System.PosixCompat.Files (isDirectory)
 
 import App
 import TraverseDir
 
 fileCount :: MyApp Int ()
 fileCount = do
-    AppState {..} <- get
-    fs <- liftIO $ getFileStatus curPath
-    when (isDirectory fs) $ do
-      AppConfig {..} <- ask
-      when (curDepth <= maxDepth) $ traverseDirectoryWith fileCount
-      files <- liftIO $ listDirectory curPath
-      tell [(curPath, length $ filterFiles ext files)]
+    curDepth <- gets curDepth
+    AppConfig {..} <- ask
+    fs <- currentPathStatus
+    when (isDirectory fs && curDepth <= maxDepth) $ do
+      files <- liftIO $ listDirectory path
+      tell [(path, length $ filterFiles ext files)]
+      traverseDirectoryWith fileCount
   where
     filterFiles Nothing = id
     filterFiles (Just ext) = filter ((ext==).takeExtension)

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8bf86d839eea83f57d7931bef34290ab2b622923b730a7935d67c2b6a7281693
+-- hash: 8fb367ed452ff5d42ebda8697d43dae23fc9a56c6b52e5409e0b8c4b46c75812
 
 name:           hid-examples
 version:        0.5
@@ -234,7 +234,7 @@ executable doors-type-equality
   default-language: Haskell2010
 
 executable du
-  main-is: du.hs
+  main-is: Main.hs
   other-modules:
       App
       AppRTWTST
@@ -254,6 +254,8 @@ executable du
     , filepath >=1.4.1 && <1.5
     , mtl >=2.0 && <2.3
     , optparse-applicative >=0.14 && <0.16
+    , text >=1.2 && <1.3
+    , text-show >=3.0 && <4
     , unix-compat >=0.5 && <0.6
   default-language: Haskell2010
 
@@ -522,6 +524,7 @@ executable rpnexpr
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
+    , text >=1.2 && <1.3
     , text-show >=3.0 && <4
     , transformers >=0.5 && <0.6
   default-language: Haskell2010

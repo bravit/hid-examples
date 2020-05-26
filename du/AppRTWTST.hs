@@ -20,8 +20,8 @@ newtype MyApp s a = MyApp {
                 MonadState (AppState s))
 
 runMyApp :: MyApp s a -> AppConfig -> s -> IO (a, AppLog s)
-runMyApp app config initial =
+runMyApp app config initState =
   evalStateT
          (runWriterT
                (runReaderT (runApp app) config))
-         (AppState 0 (basePath config) initial)
+         (AppState 0 initState)
