@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8fb367ed452ff5d42ebda8697d43dae23fc9a56c6b52e5409e0b8c4b46c75812
+-- hash: c2070674526b660524a416a11ad615fa645ea979380edbe4dcac7f39f6ddd059
 
 name:           hid-examples
 version:        0.5
@@ -246,7 +246,7 @@ executable du
       Paths_hid_examples
   hs-source-dirs:
       du
-  other-extensions: GeneralizedNewtypeDeriving RecordWildCards FlexibleContexts
+  other-extensions: GeneralizedNewtypeDeriving RecordWildCards FlexibleContexts OverloadedStrings
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15

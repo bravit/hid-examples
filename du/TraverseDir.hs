@@ -20,8 +20,8 @@ traverseDirectoryWith app = do
   where
     go newPath = local (withPath newPath) app
     withPath newPath cfg = cfg { path = newPath }
-    incDepth st @ AppState {..} = st {curDepth = curDepth + 1}
-    decDepth st @ AppState {..} = st {curDepth = curDepth - 1}
+    incDepth st @ AppState {..} = st {currentDepth = currentDepth + 1}
+    decDepth st @ AppState {..} = st {currentDepth = currentDepth - 1}
 
 currentPathStatus :: MyApp s FileStatus
 currentPathStatus = do

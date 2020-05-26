@@ -11,12 +11,12 @@ import TraverseDir
 
 fileCount :: MyApp Int ()
 fileCount = do
-    curDepth <- gets curDepth
+    curDepth <- gets currentDepth
     AppConfig {..} <- ask
     fs <- currentPathStatus
-    when (isDirectory fs && curDepth <= maxDepth) $ do
+    when (isDirectory fs && curDepth <= maximumDepth) $ do
       files <- liftIO $ listDirectory path
-      tell [(path, length $ filterFiles ext files)]
+      tell [(path, length $ filterFiles extension files)]
       traverseDirectoryWith fileCount
   where
     filterFiles Nothing = id

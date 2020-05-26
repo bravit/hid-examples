@@ -1,4 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE FlexibleContexts #-}
 
 module DiskUsage (diskUsage) where
@@ -12,30 +11,40 @@ import TraverseDir
 
 type DUApp = MyApp FileOffset
 
+data DUEntryInfo = Dir | File FileOffset | Other
+
+currentEntryInfo :: DUApp DUEntryInfo
+currentEntryInfo = do
+  fs <- currentPathStatus
+  pure $
+    if isDirectory fs then Dir
+    else if isRegularFile fs then (File $ fileSize fs)
+    else Other
+
 diskUsage :: DUApp ()
 diskUsage = do
-    currentPath <- asks path
-    usageOnEntry <- gets st_field
-
-    fs <- currentPathStatus
-    let isDir = isDirectory fs
-    when isDir $ traverseDirectoryWith diskUsage
-
-    recordEntry currentPath (isRegularFile fs) (fileSize fs)
-
-    maxDepth <- asks maxDepth
-    curDepth <- gets curDepth
-    when (isDir && curDepth <= maxDepth) $ do
-      usageOnExit <- gets st_field
-      tell [(currentPath, usageOnExit - usageOnEntry)]
+    curPath <- asks path
+    curDepth <- gets currentDepth
+    maxDepth <- asks maximumDepth
+    info <- currentEntryInfo
+    case info of
+      Dir -> processDirectory curPath (curDepth <= maxDepth)
+      File fsize -> recordFile curPath fsize
+      Other -> pure ()
   where
-    recordEntry fpath isFile fsize = do
-      ext <- asks ext
-      when (needRec fpath ext isFile) $
-        addToTS fsize
+    processDirectory curPath requiresReporting = do
+      usageOnEntry <- gets st_field
+      traverseDirectoryWith diskUsage
+      when requiresReporting $ do
+        usageOnExit <- gets st_field
+        tell [(curPath, usageOnExit - usageOnEntry)]
 
---    addToTS :: FileOffset -> DUApp ()
-    addToTS ofs = modify (\st -> st {st_field = st_field st + ofs})
+    recordFile curPath fsize = do
+      ext <- asks extension
+      when (needRec curPath ext) $
+        addToTotalSize fsize
 
-    needRec _ Nothing _ = True
-    needRec fp (Just ext) isFile = isFile && (ext == takeExtension fp)
+    needRec fp = maybe True (\ext -> ext == takeExtension fp)
+
+--    addToTotalSize :: FileOffset -> DUApp ()
+    addToTotalSize ofs = modify (\st -> st {st_field = st_field st + ofs})

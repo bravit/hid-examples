@@ -222,6 +222,7 @@ executables:
           - GeneralizedNewtypeDeriving
           - RecordWildCards
           - FlexibleContexts
+          - OverloadedStrings
     # Chapter 7
     suntimes:
         source-dirs: suntimes
