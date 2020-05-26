@@ -3,7 +3,7 @@
 import Options.Applicative as Opt
 import Data.Aeson
 import Control.Exception.Safe
-import Control.Monad.IO.Class
+import Control.Monad.Trans
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import qualified Data.ByteString as B
