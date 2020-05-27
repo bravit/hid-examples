@@ -1,23 +1,15 @@
-{-# LANGUAGE RecordWildCards #-}
-
 module FileCounter (fileCount) where
 
-import System.FilePath (takeExtension)
-import System.Directory (listDirectory)
-import System.PosixCompat.Files (isDirectory)
+import System.Directory.Extra (listFiles)
 
 import App
 import TraverseDir
 
 fileCount :: MyApp Int ()
 fileCount = do
-    curDepth <- gets currentDepth
-    AppConfig {..} <- ask
+    AppEnv {..} <- ask
     fs <- currentPathStatus
-    when (isDirectory fs && curDepth <= maximumDepth) $ do
-      files <- liftIO $ listDirectory path
-      tell [(path, length $ filterFiles extension files)]
+    when (isDirectory fs && depth <= maxDepth cfg) $ do
       traverseDirectoryWith fileCount
-  where
-    filterFiles Nothing = id
-    filterFiles (Just ext) = filter ((ext==).takeExtension)
+      files <- liftIO $ listFiles path
+      tell [(path, length $ filter (checkExtension cfg) files)]

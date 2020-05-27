@@ -1,15 +1,30 @@
 module AppTypes where
 
-data AppConfig = AppConfig {
-      path :: FilePath,
-      maximumDepth :: Int,
-      extension :: Maybe FilePath,
-      followSymlinks :: Bool
-    }
+import System.PosixCompat.Files
 
-data AppState s = AppState {
-      currentDepth :: !Int,
-      st_field :: !s
-    }
+data AppConfig = AppConfig {
+    basePath :: FilePath
+  , maxDepth :: Int
+  , extension :: Maybe String
+  , followSymlinks :: Bool
+  }
+
+data AppEnv = AppEnv {
+    cfg :: !AppConfig
+  , path :: !FilePath
+  , depth :: !Int
+  , fileStatus :: FilePath -> IO FileStatus
+  }
 
 type AppLog s = [(FilePath, s)]
+
+initialEnv :: AppConfig -> AppEnv
+initialEnv config @ AppConfig {..} = AppEnv {
+    cfg = config
+  , path = basePath
+  , depth = 0
+  , fileStatus = if followSymlinks
+                 then getFileStatus
+                 else getSymbolicLinkStatus
+  }
+

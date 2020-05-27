@@ -1,50 +1,30 @@
-{-# LANGUAGE FlexibleContexts #-}
-
 module DiskUsage (diskUsage) where
 
-import System.FilePath (takeExtension)
 import System.Posix.Types (FileOffset)
-import System.PosixCompat.Files
 
 import App
 import TraverseDir
 
-type DUApp = MyApp FileOffset
+data DUEntryAction =
+    TraverseDir {dirpath :: FilePath, requireReporting :: Bool}
+  | RecordFileSize {fsize :: FileOffset}
+  | None
 
-data DUEntryInfo = Dir | File FileOffset | Other
-
-currentEntryInfo :: DUApp DUEntryInfo
-currentEntryInfo = do
-  fs <- currentPathStatus
-  pure $
-    if isDirectory fs then Dir
-    else if isRegularFile fs then (File $ fileSize fs)
-    else Other
-
-diskUsage :: DUApp ()
-diskUsage = do
-    curPath <- asks path
-    curDepth <- gets currentDepth
-    maxDepth <- asks maximumDepth
-    info <- currentEntryInfo
-    case info of
-      Dir -> processDirectory curPath (curDepth <= maxDepth)
-      File fsize -> recordFile curPath fsize
-      Other -> pure ()
+diskUsage :: MyApp FileOffset ()
+diskUsage = liftM2 decide ask currentPathStatus >>= processEntry
   where
-    processDirectory curPath requiresReporting = do
-      usageOnEntry <- gets st_field
+    decide AppEnv {..} fs
+      | isDirectory fs =
+            TraverseDir path (depth <= maxDepth cfg)
+      | isRegularFile fs && checkExtension cfg path =
+            RecordFileSize (fileSize fs)
+      | otherwise = None
+
+    processEntry TraverseDir {..} = do
+      usageOnEntry <- get
       traverseDirectoryWith diskUsage
-      when requiresReporting $ do
-        usageOnExit <- gets st_field
-        tell [(curPath, usageOnExit - usageOnEntry)]
-
-    recordFile curPath fsize = do
-      ext <- asks extension
-      when (needRec curPath ext) $
-        addToTotalSize fsize
-
-    needRec fp = maybe True (\ext -> ext == takeExtension fp)
-
---    addToTotalSize :: FileOffset -> DUApp ()
-    addToTotalSize ofs = modify (\st -> st {st_field = st_field st + ofs})
+      when requireReporting $ do
+        usageOnExit <- get
+        tell [(dirpath, usageOnExit - usageOnEntry)]
+    processEntry RecordFileSize {fsize} = modify (+fsize)
+    processEntry None = pure ()
