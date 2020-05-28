@@ -3,9 +3,9 @@ module FileCounter (fileCount) where
 import System.Directory.Extra (listFiles)
 
 import App
-import TraverseDir
+import Utils
 
-fileCount :: MyApp Int ()
+fileCount :: MyApp (FilePath, Int) s ()
 fileCount = do
     AppEnv {..} <- ask
     fs <- currentPathStatus

@@ -222,11 +222,9 @@ executables:
         default-extensions:
           - RecordWildCards
           - NamedFieldPuns
+          - OverloadedStrings
         other-extensions:
           - GeneralizedNewtypeDeriving
-          - RecordWildCards
-          - FlexibleContexts
-          - OverloadedStrings
     # Chapter 7
     suntimes:
         source-dirs: suntimes

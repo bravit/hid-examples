@@ -10,13 +10,11 @@ data AppConfig = AppConfig {
   }
 
 data AppEnv = AppEnv {
-    cfg :: !AppConfig
-  , path :: !FilePath
-  , depth :: !Int
+    cfg :: AppConfig
+  , path :: FilePath
+  , depth :: Int
   , fileStatus :: FilePath -> IO FileStatus
   }
-
-type AppLog s = [(FilePath, s)]
 
 initialEnv :: AppConfig -> AppEnv
 initialEnv config @ AppConfig {..} = AppEnv {
@@ -27,4 +25,3 @@ initialEnv config @ AppConfig {..} = AppEnv {
                  then getFileStatus
                  else getSymbolicLinkStatus
   }
-

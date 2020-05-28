@@ -8,18 +8,18 @@ import Control.Monad.State
 
 import AppTypes
 
-newtype MyApp s a = MyApp {
+newtype MyApp logEntry state a = MyApp {
       runApp :: ReaderT AppEnv
-                  (WriterT (AppLog s)
-                      (StateT s
+                  (WriterT [logEntry]
+                      (StateT state
                               IO)) a
     } deriving (Functor, Applicative, Monad,
                 MonadIO,
                 MonadReader AppEnv,
-                MonadWriter (AppLog s),
-                MonadState s)
+                MonadWriter [logEntry],
+                MonadState state)
 
-runMyApp :: MyApp s a -> AppConfig -> s -> IO (a, AppLog s)
+runMyApp :: MyApp logEntry state a -> AppConfig -> state -> IO (a, [logEntry])
 runMyApp app config st =
   evalStateT
          (runWriterT

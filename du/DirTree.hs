@@ -1,12 +1,12 @@
 module DirTree where
 
 import App
-import TraverseDir
+import Utils
 
-dirTree :: MyApp Int ()
+dirTree :: MyApp (FilePath, Int) s ()
 dirTree = do
     AppEnv {..} <- ask
     fs <- currentPathStatus
     when (isDirectory fs && depth <= maxDepth cfg) $ do
-      tell [(path, depth)]
+      tell [(takeBaseName path, depth)]
       traverseDirectoryWith dirTree

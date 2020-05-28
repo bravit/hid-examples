@@ -1,16 +1,14 @@
 module DiskUsage (diskUsage) where
 
-import System.Posix.Types (FileOffset)
-
 import App
-import TraverseDir
+import Utils
 
 data DUEntryAction =
     TraverseDir {dirpath :: FilePath, requireReporting :: Bool}
   | RecordFileSize {fsize :: FileOffset}
   | None
 
-diskUsage :: MyApp FileOffset ()
+diskUsage :: MyApp (FilePath, FileOffset) FileOffset ()
 diskUsage = liftM2 decide ask currentPathStatus >>= processEntry
   where
     decide AppEnv {..} fs

@@ -1,16 +1,42 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Main where
 
+import Options.Applicative as Opt
 import TextShow
 import Data.Text.IO as TIO
-import Options.Applicative as Opt
-import System.FilePath
 
 import App
 import DiskUsage
 import FileCounter
 import DirTree
+
+buildEntries :: Builder -> (e -> Builder) -> [e] -> Builder
+buildEntries title entryBuilder entries =
+  unlinesB $ title : map entryBuilder entries
+
+tabEntryBuilder :: TextShow s => (FilePath, s) -> Builder
+tabEntryBuilder (fp, s) = showb s <> "\t" <> fromString fp
+
+treeEntryBuilder :: (FilePath, Int) -> Builder
+treeEntryBuilder (fp, n) = fromString indent <> fromString fp
+  where
+    indent = replicate (2*n) ' '
+
+work :: AppConfig -> IO ()
+work config = do
+  (_, dirs) <- runMyApp dirTree config ()
+  (_, counters) <- runMyApp fileCount config ()
+  (_, usages) <- runMyApp diskUsage config (0 :: FileOffset)
+  let report = toText $
+               buildEntries "Directory tree:" treeEntryBuilder dirs
+               <> buildEntries "File counter:" tabEntryBuilder counters
+               <> buildEntries "File space usage:" tabEntryBuilder usages
+  TIO.putStr report
+
+main :: IO ()
+main = execParser opts >>= work
+  where
+    opts = info (mkConfig <**> helper)
+                (fullDesc <> progDesc "Directory usage info")
 
 mkConfig :: Opt.Parser AppConfig
 mkConfig =
@@ -24,32 +50,3 @@ mkConfig =
        help "Filter files by extension"))
   <*> switch
       (short 'L' <> help "Follow symlinks (OFF by default)")
-
-printEntries :: Builder -> ((FilePath, s) -> Builder) -> AppLog s -> IO ()
-printEntries title entryBuilder entries = TIO.putStr $ toText reportB
-  where
-    reportB = unlinesB $ title : map entryBuilder entries
-
-simpleEntryBuilder :: TextShow s => (FilePath, s) -> Builder
-simpleEntryBuilder (fp, s) = showb s <> "\t" <> fromString fp
-
-treeEntryBuilder :: (FilePath, Int) -> Builder
-treeEntryBuilder (fp, n) =
-  fromString (replicate (2*n) ' ') <> fromString (takeBaseName fp)
-
-work :: AppConfig -> IO ()
-work config = do
-  (_, dirs) <- runMyApp dirTree config 0
-  printEntries "Directory tree:" treeEntryBuilder dirs
-
-  (_, counters) <- runMyApp fileCount config 0
-  printEntries "File counter:" simpleEntryBuilder counters
-
-  (_, usages) <- runMyApp diskUsage config 0
-  printEntries "File space usage:" simpleEntryBuilder usages
-
-main :: IO ()
-main = execParser opts >>= work
-  where
-    opts = info (mkConfig <**> helper)
-                (fullDesc <> progDesc "File space usage info")
