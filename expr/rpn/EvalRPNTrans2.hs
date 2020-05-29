@@ -1,8 +1,8 @@
-module EvalRPNTrans2 (evalRPN) where
+module EvalRPNTrans2 where
 
 import Control.Monad.State
 import Control.Applicative
-import Text.Read(readMaybe)
+import Text.Read (readMaybe)
 
 import MyMaybeT
 
@@ -11,6 +11,13 @@ type EvalM = MaybeT (State Stack)
 
 push :: Integer -> EvalM ()
 push x = modify (x:)
+
+pop'' :: EvalM Integer
+pop'' = do
+  xs <- get
+  guard (not $ null xs)
+  put (tail xs)
+  pure (head xs)
 
 pop :: EvalM Integer
 pop = do

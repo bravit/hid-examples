@@ -186,6 +186,13 @@ executables:
         other-modules: [EvalRPNTrans]
         dependencies:
           - mtl >= 2.0 && < 2.3
+    evalrpn3:
+        source-dirs: expr/rpn
+        main: evalrpn3.hs
+        other-modules: [MyMaybeT, EvalRPNTrans2]
+        dependencies:
+          - mtl >= 2.0 && < 2.3
+          - transformers >= 0.5 && < 0.6
     rpnexpr:
         source-dirs: expr/rpn
         main: rpnexpr.hs

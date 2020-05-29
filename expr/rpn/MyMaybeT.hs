@@ -1,12 +1,9 @@
-{-# LANGUAGE
-  FlexibleInstances
-  , MultiParamTypeClasses
-  , UndecidableInstances
-  , InstanceSigs
-  , LambdaCase
-  , CPP
- #-}
-
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE FlexibleInstances  #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE LambdaCase #-}
 
 module MyMaybeT (MaybeT(..)) where
 
@@ -23,6 +20,8 @@ newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
 instance Functor m => Functor (MaybeT m) where
   fmap :: (a -> b) -> MaybeT m a -> MaybeT m b
+  -- fmap f (MaybeT mma) = MaybeT _help
+  -- fmap f (MaybeT mma) = MaybeT (fmap _help mma)
   fmap f (MaybeT mma) = MaybeT (fmap (fmap f) mma)
 
 instance Applicative m => Applicative (MaybeT m) where
@@ -35,8 +34,8 @@ instance Applicative m => Applicative (MaybeT m) where
 {-
 instance Monad m => Monad (MaybeT m) where
   (>>=) :: MaybeT m a -> (a -> MaybeT m b) -> MaybeT m b
-  (MaybeT mx) >>= f = MaybeT $ do
-    v <- mx
+  (MaybeT ma) >>= f = MaybeT $ do
+    v <- ma
     case v of
       Nothing -> pure Nothing
       Just a -> runMaybeT (f a)
@@ -76,3 +75,7 @@ instance Monad m => MonadPlus (MaybeT m) where
     mzero = empty
     mplus = (<|>)
 -}
+
+instance MonadIO m => MonadIO (MaybeT m) where
+  liftIO :: IO a -> MaybeT m a
+  liftIO = lift . liftIO
