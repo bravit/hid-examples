@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 995040811da728a6767a99424d7eafaef7103fe4be6fe92af85496072939085e
+-- hash: 084e4e5b164ac8f56a086071b91b18f72af5a515ab42e8677785ebd74b1ac493
 
 name:           hid-examples
 version:        0.5
@@ -211,6 +211,18 @@ executable dicegame
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
+  default-language: Haskell2010
+
+executable div
+  main-is: div.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch07
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , exceptions >=0.10 && <0.11
   default-language: Haskell2010
 
 executable doors-singletons

@@ -230,6 +230,11 @@ executables:
           - transformers >= 0.5 && < 0.6
           - text >=1.2 && <1.3
           - text-show >=3.0 && <4
+    div:
+      source-dirs: ch07
+      main: div.hs
+      dependencies:
+        - exceptions >= 0.10 && < 0.11
     suntimes:
         source-dirs: suntimes
         main: Main.hs
