@@ -1,60 +1,91 @@
-module EvalRPNExcept (evalRPN, EvalError) where
+{-# LANGUAGE OverloadedStrings #-}
+
+module EvalRPNExcept where
 
 import Control.Monad.State
+import Control.Monad.Reader
 import Control.Monad.Except
+import Data.Char
+import Data.Text (Text)
+import qualified Data.Text as T
+import Data.Text.Read
+import TextShow
 import Data.Foldable (traverse_)
-import Text.Read (readMaybe)
 
-{-
-   Function evalRPN evaluates an expression given
-   in the reversed polish notation (RPN, postfix notation):
+data EvalError = NotEnoughElements
+               | ExtraElements
+               | NotANumber Text
+               | UnknownVar Text
 
-   evalRPN "2 3 +" ==> 5 (== "2 + 3")
-   evalRPN "2 3 4 + *" ==> 14 (== 2 * (3 + 4))
--}
-
-data EvalError = NotEnoughElements | NotANumber String | ExtraElements
-
-instance Show EvalError where
-  show NotEnoughElements = "Not enough elements in the expression"
-  show (NotANumber s) = "Expression component '" <> s <> "' is not a number"
-  show ExtraElements = "There are extra elements in the expression"
+instance TextShow EvalError where
+  showb NotEnoughElements = "Not enough elements in the expression"
+  showb ExtraElements = "There are extra elements in the expression"
+  showb (NotANumber t) = "Expression component '" <>
+                         fromText t <> "' is not a number"
+  showb (UnknownVar t) = "Variable '" <>
+                         fromText t <> "' not found"
 
 type Stack = [Integer]
 
-type EvalM = ExceptT EvalError (State Stack)
+type EnvVars = [(Text, Integer)]
+
+type EvalM = ReaderT EnvVars (ExceptT EvalError (State Stack))
 
 push :: Integer -> EvalM ()
 push x = modify (x:)
 
 pop :: EvalM Integer
-pop = do
-  xs <- get
-  when (null xs) $ throwError NotEnoughElements
-  put (tail xs)
-  pure (head xs)
+pop = get >>= pop'
+  where
+    pop' :: Stack -> EvalM Integer
+    pop' [] = throwError NotEnoughElements
+    pop' (x:xs) = put xs >> pure x
 
 oneElementOnStack :: EvalM ()
 oneElementOnStack = do
   l <- gets length
   when (l /= 1) $ throwError ExtraElements
 
-handleNaN :: String -> Maybe Integer -> EvalM Integer
-handleNaN s Nothing = throwError (NotANumber s)
-handleNaN _ (Just n) = pure n
+readVar :: Text -> EvalM Integer
+readVar name = do
+  var <- asks (lookup name)
+  case var of
+    Just n -> pure n
+    Nothing -> throwError $ UnknownVar name
 
-readSafe :: String -> EvalM Integer
-readSafe s = handleNaN s (readMaybe s)
+readNumber :: Text -> EvalM Integer
+readNumber txt =
+  case decimal txt of
+    Right (n, rest) | T.null rest -> pure n
+    _ -> throwError $ NotANumber txt
 
-evalRPN :: String -> Either EvalError Integer
-evalRPN str = evalState (runExceptT evalRPN') []
+readSafe :: Text -> EvalM Integer
+readSafe t
+  | isId t = readVar t
+  | otherwise = readNumber t
   where
-    evalRPN' = traverse_ step (words str) >> oneElementOnStack >> pop
+    isId txt = maybe False (isLetter . fst) (T.uncons txt)
+
+evalRPNOnce ::Text -> EvalM Integer
+evalRPNOnce str =
+    clearStack >> traverse_ step (T.words str) >> oneElementOnStack >> pop
+  where
+    clearStack = put []
     step "+" = processTops (+)
     step "*" = processTops (*)
-    step t   = readSafe t >>= push
-    processTops op = op <$> pop <*> pop >>= push
+    step "-" = processTops (-)
+    step t = readSafe t >>= push
+    processTops op = flip op <$> pop <*> pop >>= push
 
-displayResults :: Either EvalError Integer -> String
-displayResults (Left e) = "Error: " <> show e
-displayResults (Right n) = show n
+evalRPNMany :: [Text] -> EnvVars -> Text
+evalRPNMany txts env = reportEvalResults $
+    evalState (runExceptT (runReaderT (mapM evalOnce txts) env)) []
+  where
+    evalOnce txt = (fromText txt <>) <$>
+      (buildOk <$> evalRPNOnce txt) `catchError` (pure . buildErr)
+    buildOk res = " = " <> showb res
+    buildErr err = " Error: " <> showb err
+
+reportEvalResults :: Either EvalError [Builder] -> Text
+reportEvalResults (Left e) = "Error: " <> showt e
+reportEvalResults (Right b) = toText $ unlinesB b

@@ -1,33 +1,18 @@
-import qualified EvalRPN as E
-import qualified EvalRPNTrans as E1
-import qualified EvalRPNTrans2 as E2
+{-# LANGUAGE OverloadedStrings #-}
 
-import qualified EvalRPNExcept as EE
-import qualified EvalRPNExcept2 as EE2
+import Data.Text (Text)
+import Data.Text.IO as TIO
 
-import Control.Monad (when)
+import EvalRPNExcept
 
-rpns :: [String]
-rpns = ["42",
-        "12 13 +",
-        "2 3 3 * + 5 *",
-        "1 1 2 + 2 2 1 2 + * + * 1 3 2 * + + +",
-        "13 2 12 2 1 2 13 2 + + + + + + +",
-        "1 2 132 22 1 22 0 2 * * * * * * *",
-        "10 1 2 + 2 2 1 2 * + * * * 1 3 2 + + +"]
-
-showEvalRes :: String -> String
-showEvalRes e = e ++ " = " ++ maybe "ERROR" show (E1.evalRPN e)
+rpns :: [Text]
+rpns = ["answer",
+        "12 13 + 1",
+        "2 +",
+        "x y +",
+        "1x +",
+        "1 22 1 22 0 2 * * * * *",
+        "10 1 2 + 2 2 1 2 * + * * * 1 x 2 + + +"]
 
 main :: IO ()
-main = do
-  print $ E.evalRPN "2 3 +"
-  print $ E1.evalRPN "2 x +"
-  print $ E2.evalRPN "x 3 +"
-  print $ EE.evalRPN "x 3 +"
-  putStrLn $ EE2.displayResults $ EE2.evalRPN "x 3 +" [("x", 2)]
-  let res1 = map E1.evalRPN rpns
-  mapM_ (putStrLn . showEvalRes) rpns
-  let    res2 = map E2.evalRPN rpns
-  when (res1 == res2) $ putStrLn "E2 OK"
-
+main = TIO.putStr $ evalRPNMany rpns [("answer", 42), ("x", 1)]

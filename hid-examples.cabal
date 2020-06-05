@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d95c672591dce5d15332c1a3c1ac7fd3da81b21a2f9fe8b882599dad5f7e697a
+-- hash: 995040811da728a6767a99424d7eafaef7103fe4be6fe92af85496072939085e
 
 name:           hid-examples
 version:        0.5
@@ -303,6 +303,7 @@ executable evalrpn3
       EvalRPNTrans2
   hs-source-dirs:
       expr/rpn
+  other-extensions: FlexibleInstances MultiParamTypeClasses UndecidableInstances InstanceSigs LambdaCase
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -528,15 +529,10 @@ executable reader
 executable rpnexpr
   main-is: rpnexpr.hs
   other-modules:
-      MyMaybeT
-      EvalRPN
-      EvalRPNTrans
-      EvalRPNTrans2
       EvalRPNExcept
-      EvalRPNExcept2
   hs-source-dirs:
       expr/rpn
-  other-extensions: FlexibleInstances MultiParamTypeClasses UndecidableInstances InstanceSigs LambdaCase
+  other-extensions: OverloadedStrings
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15

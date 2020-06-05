@@ -193,21 +193,6 @@ executables:
         dependencies:
           - mtl >= 2.0 && < 2.3
           - transformers >= 0.5 && < 0.6
-    rpnexpr:
-        source-dirs: expr/rpn
-        main: rpnexpr.hs
-        other-modules:
-          - MyMaybeT
-          - EvalRPN
-          - EvalRPNTrans
-          - EvalRPNTrans2
-          - EvalRPNExcept
-          - EvalRPNExcept2
-        dependencies:
-          - mtl >= 2.0 && < 2.3
-          - transformers >= 0.5 && < 0.6
-          - text >=1.2 && <1.3
-          - text-show >=3.0 && <4
         other-extensions:
           - FlexibleInstances
           - MultiParamTypeClasses
@@ -233,6 +218,18 @@ executables:
         other-extensions:
           - GeneralizedNewtypeDeriving
     # Chapter 7
+    rpnexpr:
+        source-dirs: expr/rpn
+        main: rpnexpr.hs
+        other-modules:
+          - EvalRPNExcept
+        other-extensions:
+          - OverloadedStrings
+        dependencies:
+          - mtl >= 2.0 && < 2.3
+          - transformers >= 0.5 && < 0.6
+          - text >=1.2 && <1.3
+          - text-show >=3.0 && <4
     suntimes:
         source-dirs: suntimes
         main: Main.hs
