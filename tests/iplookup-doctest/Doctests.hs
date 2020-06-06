@@ -1,4 +1,4 @@
 import Test.DocTest
 
 main :: IO ()
-main = doctest ["-iiplookup", "iplookup/ParseIP.hs"]
+main = doctest ["-iip/lookup", "ip/lookup/ParseIP.hs"]

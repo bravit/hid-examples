@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4ba64e1b1e034b81590e57fde87455edd2a2a579b1cf07d4726afd0161c70ce1
+-- hash: 5cafbbc5c6d33f9201d84b5a8d1227062e1ced92ce0f61626ed28f875c96a0b7
 
 name:           hid-examples
 version:        0.5
@@ -82,7 +82,7 @@ library ipgen-lib
   exposed-modules:
       GenIP
   hs-source-dirs:
-      ip/ipgen
+      ip/gen
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -97,14 +97,12 @@ library iplookup-lib
       ParseIP
       FastLookup
   hs-source-dirs:
-      ip/iplookup
+      ip/lookup
   other-extensions: TypeApplications
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-incomplete-uni-patterns
   build-depends:
       base >=4.12 && <4.15
     , fingertree >=0.1 && <0.2
-    , safe >=0.3 && <0.4
-    , safe-exceptions >=0.1.5 && <0.2
     , split >=0.2 && <0.3
   default-language: Haskell2010
 
@@ -405,7 +403,7 @@ executable ioref
   default-language: Haskell2010
 
 executable ipgen
-  main-is: ip/ipgen/Main.hs
+  main-is: ip/gen/Main.hs
   other-modules:
       Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
@@ -418,7 +416,7 @@ executable ipgen
   default-language: Haskell2010
 
 executable iplookup
-  main-is: ip/iplookup/Main.hs
+  main-is: ip/lookup/Main.hs
   other-modules:
       Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
