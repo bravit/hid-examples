@@ -2,7 +2,7 @@
 
 module ProcessRequest (processMany, processInteractively) where
 
-import Control.Exception.Safe
+import Control.Monad.Catch
 import Data.Text(Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -43,7 +43,7 @@ formatResult req SunTimes {..} loc =
 processRequest :: Text -> MyApp Text
 processRequest t = processR (parseRequestLine (T.strip t))
   where
-    processR (Left e) = throw (FormatError e)
+    processR (Left e) = throwM (FormatError e)
     processR (Right (addr, day)) = do
       coords <- getCoords addr
       st <- getSunTimes coords day
@@ -57,7 +57,7 @@ processMany = mapM_ processRequestWrapper
              $ (processRequest r >>= liftIO .TIO.putStrLn) `catch` handler r
                `finally` delaySec 3
     delaySec sec = liftIO $ threadDelay (sec * 1000000)
-    handler :: T.Text -> SunInfoException -> MyApp ()
+    handler :: Text -> SunInfoException -> MyApp ()
     handler r e = liftIO $ TIO.putStrLn $ "Error in request '" <> r <> "': "
                          <> T.pack (show e)
 

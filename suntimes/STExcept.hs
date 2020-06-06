@@ -1,20 +1,21 @@
 module STExcept where
 
-import qualified Data.Text as T
-import Control.Exception.Safe
+import Data.Text (Text)
+import Control.Monad.Catch
 import Network.HTTP.Req
 import qualified Network.HTTP.Client as NC
 
 import Types
 
-data RequestError = EmptyRequest | WrongDay T.Text
+data RequestError = EmptyRequest | WrongDay Text
   deriving Show
 
-data SunInfoException = UnknownLocation T.Text
+data SunInfoException = UnknownLocation Text
                       | UnknownTime GeoCoords
                       | FormatError RequestError
                       | ServiceAPIError String
                       | NetworkError SomeException
+                      | ConfigError
 
 instance Show SunInfoException where
   show (UnknownLocation _) = "Failed while determining coordinates"
@@ -22,13 +23,14 @@ instance Show SunInfoException where
   show (FormatError er) = show er
   show (ServiceAPIError _) = "Error while communicating with external services"
   show (NetworkError _) = "Network communication error"
+  show ConfigError = "Error parsing configuration file"
 
 instance Exception SunInfoException
 
 rethrowReqException :: MonadThrow m => HttpException -> m a
-rethrowReqException (JsonHttpException s) = throw (ServiceAPIError s)
+rethrowReqException (JsonHttpException s) = throwM (ServiceAPIError s)
 rethrowReqException (VanillaHttpException (
                         NC.HttpExceptionRequest _
                           (NC.StatusCodeException resp _ ))) =
-  throw (ServiceAPIError $ show $ NC.responseStatus resp)
-rethrowReqException (VanillaHttpException e) = throw (NetworkError $ toException e)
+  throwM (ServiceAPIError $ show $ NC.responseStatus resp)
+rethrowReqException (VanillaHttpException e) = throwM (NetworkError $ toException e)

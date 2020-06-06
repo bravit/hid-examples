@@ -1,7 +1,7 @@
 module GeoCoordsReq (getCoords) where
 
 import Network.HTTP.Req
-import Control.Exception.Safe
+import Control.Monad.Catch
 import qualified Data.Text as T
 import Data.Text.Encoding (encodeUtf8)
 import Control.Monad.Reader
@@ -26,5 +26,5 @@ getCoords addr = handle rethrowReqException $ do
       request = req GET ep NoReqBody jsonResponse reqParams
     res <- liftIO $ responseBody <$> runReq defaultHttpConfig request
     case res of
-      [] -> throw (UnknownLocation addr)
+      [] -> throwM (UnknownLocation addr)
       (coords:_) -> pure coords

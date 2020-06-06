@@ -4,7 +4,7 @@ module SunTimes (getSunTimes) where
 
 import Data.Aeson
 import Network.HTTP.Req
-import Control.Exception.Safe
+import Control.Monad.Catch
 import Control.Monad.Reader
 import qualified Data.Text as T
 import Data.Time
@@ -38,13 +38,13 @@ getSunTimesUTC GeoCoords {..} w =
 getSunTimes :: GeoCoords -> When -> MyApp (SunTimes ZonedTime)
 getSunTimes gc@GeoCoords {..} d = do
     SunTimes {..} <- getSunTimesUTC gc d `catch` noTimeHandler
-    ltz <- lookupTimeZone gc sunrise `catchAny` (const $ pure utc)
+    ltz <- lookupTimeZone gc sunrise `catchAll` const (pure utc)
     return $ SunTimes (utcToZonedTime ltz sunrise)
                       (utcToZonedTime ltz sunset)
   where
     noTimeHandler :: MonadThrow m => SunInfoException -> m a
-    noTimeHandler (ServiceAPIError _) = throw (UnknownTime gc)
-    noTimeHandler e = throw e
+    noTimeHandler (ServiceAPIError _) = throwM (UnknownTime gc)
+    noTimeHandler e = throwM e
 
 data TimeZoneInfo =
   TimeZoneInfo { gmtOffset :: Int

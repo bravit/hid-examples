@@ -2,7 +2,8 @@
 
 import Options.Applicative as Opt
 import Data.Aeson
-import Control.Exception.Safe
+import Control.Monad.Catch
+import Control.Exception (IOException)
 import Control.Monad.Trans
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -10,6 +11,7 @@ import qualified Data.ByteString as B
 import System.Exit
 import System.IO.Error (isDoesNotExistError, ioeGetFileName)
 
+import STExcept
 import App
 import ProcessRequest
 
@@ -37,16 +39,16 @@ withConfig (Params appMode config) = do
     wauth <- eitherDecodeStrict <$> B.readFile config
     case wauth of
       Right wauth' -> runMyApp (run appMode) wauth'
-      Left _ -> throwString $ "Error parsing configuration file"
+      Left _ -> throwM ConfigError
   where
-    run (FileInput fname) = liftIO (TIO.readFile fname) >>= processMany . T.lines
+    run (FileInput fname) = liftIO (TIO.readFile fname)
+                            >>= processMany . T.lines
     run Interactive = processInteractively
 
 main :: IO ()
 main = (execParser opts >>= withConfig)
        `catches` [Handler parserExit,
                   Handler printIOError,
-                  Handler decodeConfigError,
                   Handler printOtherErrors]
   where
     opts =
@@ -61,7 +63,5 @@ main = (execParser opts >>= withConfig)
            let mbfn = ioeGetFileName e
            putStrLn $ "File " ++ maybe "" id mbfn  ++ " not found"
       | otherwise = putStrLn $ "I/O error: " ++ show e
-    decodeConfigError :: StringException -> IO ()
-    decodeConfigError (StringException s _) = putStrLn s
     printOtherErrors :: SomeException -> IO ()
     printOtherErrors = print

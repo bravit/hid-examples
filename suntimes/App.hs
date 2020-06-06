@@ -3,7 +3,7 @@
 module App where
 
 import Control.Monad.Reader
-import Control.Exception.Safe
+import Control.Monad.Catch
 
 import Types
 
