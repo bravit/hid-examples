@@ -2,7 +2,7 @@ module IPTypes where
 
 import Data.Word
 import Data.List (intercalate)
-import Control.Exception.Safe
+import Control.Exception (Exception)
 
 newtype IP = IP {unIP :: Word32}
   deriving (Eq, Ord)

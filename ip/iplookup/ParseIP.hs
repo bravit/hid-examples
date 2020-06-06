@@ -10,7 +10,7 @@ import Data.List.Split (splitOn)
 import Data.Maybe (mapMaybe)
 import Control.Applicative
 import Control.Monad
-import Safe
+import Text.Read
 
 import IPTypes
 
@@ -64,7 +64,7 @@ parseIP = parseIPIterStrict
 {-# INLINE parseIPMonadic #-}
 parseIPMonadic :: String -> Maybe IP
 parseIPMonadic = guarded (4 `isLengthOf`) . splitOn "."
-          >=> mapM (readMay @Integer >=> toIntegralSized)
+          >=> mapM (readMaybe @Integer >=> toIntegralSized)
           >=> pure . buildIP
 
 {-# INLINE parseIPIter #-}

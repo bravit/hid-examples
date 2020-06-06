@@ -1,7 +1,7 @@
 module Main where
 
 import Options.Applicative as Opt
-import Control.Exception.Safe
+import Control.Monad.Catch
 import System.Exit
 
 import IPTypes
@@ -21,8 +21,8 @@ run :: Params -> IO ()
 run (Params fp ipstr) = do
   iprs <- parseIPRanges <$> readFile fp
   case (iprs, parseIP ipstr) of
-    (_, Nothing) -> throw (InvalidIP ipstr)
-    (Left pe, _) -> throw (LoadIPRangesError pe)
+    (_, Nothing) -> throwM (InvalidIP ipstr)
+    (Left pe, _) -> throwM (LoadIPRangesError pe)
     (Right iprdb, Just ip) -> putStrLn $ reportIPs iprdb [ip]
 
 main :: IO ()

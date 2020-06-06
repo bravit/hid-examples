@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c90a64e65c4352e93c930f576c304df54fa017fa6257512be7a03fc96fa5fc38
+-- hash: 4ba64e1b1e034b81590e57fde87455edd2a2a579b1cf07d4726afd0161c70ce1
 
 name:           hid-examples
 version:        0.5
@@ -82,7 +82,7 @@ library ipgen-lib
   exposed-modules:
       GenIP
   hs-source-dirs:
-      ipgen
+      ip/ipgen
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -97,7 +97,7 @@ library iplookup-lib
       ParseIP
       FastLookup
   hs-source-dirs:
-      iplookup
+      ip/iplookup
   other-extensions: TypeApplications
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-incomplete-uni-patterns
   build-depends:
@@ -405,32 +405,32 @@ executable ioref
   default-language: Haskell2010
 
 executable ipgen
-  main-is: ipgen/Main.hs
+  main-is: ip/ipgen/Main.hs
   other-modules:
       Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
+    , exceptions >=0.10 && <0.11
     , hedgehog >=0.5 && <1.1
     , ipgen-lib
     , optparse-applicative >=0.14 && <0.16
-    , safe-exceptions >=0.1.5 && <0.2
   default-language: Haskell2010
 
 executable iplookup
-  main-is: iplookup/Main.hs
+  main-is: ip/iplookup/Main.hs
   other-modules:
       Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
+    , exceptions >=0.10 && <0.11
     , iplookup-lib
     , optparse-applicative >=0.14 && <0.16
-    , safe-exceptions >=0.1.5 && <0.2
   default-language: Haskell2010
 
 executable iplookup-simulation
-  main-is: iplookup-simulation/Main.hs
+  main-is: ip/iplookup-simulation.hs
   other-modules:
       Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans

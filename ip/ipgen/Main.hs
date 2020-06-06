@@ -1,6 +1,6 @@
 import qualified Hedgehog.Gen as Gen
 import Options.Applicative as Opt
-import Control.Exception.Safe
+import Control.Monad.Catch
 import System.Exit
 
 import GenIP
