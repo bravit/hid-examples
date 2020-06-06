@@ -54,3 +54,9 @@ divTestIO a b c = testComputation a b c `catch` handler
       putStrLn $ "We've got an exception: " ++ show e
                  ++ "\nUsing default value 0"
       pure 0
+
+main :: IO ()
+main = do
+  divTestWithRecovery 10 0 2 >>= print
+  divTestWithRecovery2 10 0 2 >>= print
+  divTestIO 10 0 2 >>= print
