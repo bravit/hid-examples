@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6db617a5f04c5a6bbaade8790722d506bbc4cc78bebe155d53158eacba8a877b
+-- hash: 918bc8b0f7345096e9d197b3be366ea0b9d6241a9e919aa63657198e4829bec6
 
 name:           hid-examples
 version:        0.5
@@ -127,20 +127,6 @@ library shunting-yard
     , expr-simple
     , mtl >=2.0 && <2.3
     , text-show >=3.0 && <4
-  default-language: Haskell2010
-
-library temp-lib
-  exposed-modules:
-      TempPhantom
-      TempKinds
-      DescribeProxy
-      DescribeTypeApps
-  hs-source-dirs:
-      ch11/temperature
-  other-extensions: GeneralizedNewtypeDeriving DataKinds PolyKinds KindSignatures FlexibleInstances InstanceSigs AllowAmbiguousTypes TypeApplications
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
   default-language: Haskell2010
 
 executable api-stage0
@@ -639,6 +625,30 @@ executable suntimes
     , text >=1.2 && <1.3
     , time >=1.8 && <1.11
     , transformers >=0.5 && <0.6
+  default-language: Haskell2010
+
+executable temp-proxies
+  main-is: temp-proxies.hs
+  other-modules:
+      TempPhantom
+      UnitNameProxies
+  hs-source-dirs:
+      ch11/temperature
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable temp-type-apps
+  main-is: temp-type-apps.hs
+  other-modules:
+      TempPhantom
+      UnitNameTypeApps
+  hs-source-dirs:
+      ch11/temperature
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
   default-language: Haskell2010
 
 executable type-families

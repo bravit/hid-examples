@@ -284,6 +284,14 @@ executables:
           - iplookup-lib
     # Chapter 11
     # 11.1
+    temp-proxies:
+        source-dirs: ch11/temperature
+        main: temp-proxies.hs
+        other-modules: [TempPhantom, UnitNameProxies]
+    temp-type-apps:
+        source-dirs: ch11/temperature
+        main: temp-type-apps.hs
+        other-modules: [TempPhantom, UnitNameTypeApps]
     type-operators:
         main: ch11/type-operators/Main.hs
         other-extensions:
@@ -422,24 +430,6 @@ internal-libraries:
         dependencies:
           - iplookup-lib
           - hedgehog >= 0.5 && < 1.1
-    # Chapter 11
-    temp-lib:
-      source-dirs: ch11/temperature
-      exposed-modules:
-        - TempPhantom
-        - TempKinds
-        - DescribeProxy
-        - DescribeTypeApps
-      other-modules: []
-      other-extensions:
-        - GeneralizedNewtypeDeriving
-        - DataKinds
-        - PolyKinds
-        - KindSignatures
-        - FlexibleInstances
-        - InstanceSigs
-        - AllowAmbiguousTypes
-        - TypeApplications
 tests:
     # Chapter 2
     radar-test:
