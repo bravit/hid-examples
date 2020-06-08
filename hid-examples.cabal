@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5cafbbc5c6d33f9201d84b5a8d1227062e1ced92ce0f61626ed28f875c96a0b7
+-- hash: 6db617a5f04c5a6bbaade8790722d506bbc4cc78bebe155d53158eacba8a877b
 
 name:           hid-examples
 version:        0.5
@@ -129,6 +129,20 @@ library shunting-yard
     , text-show >=3.0 && <4
   default-language: Haskell2010
 
+library temp-lib
+  exposed-modules:
+      TempPhantom
+      TempKinds
+      DescribeProxy
+      DescribeTypeApps
+  hs-source-dirs:
+      ch11/temperature
+  other-extensions: GeneralizedNewtypeDeriving DataKinds PolyKinds KindSignatures FlexibleInstances InstanceSigs AllowAmbiguousTypes TypeApplications
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
 executable api-stage0
   main-is: ch11/api/Api0.hs
   other-modules:
@@ -173,26 +187,6 @@ executable countzeros
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
-  default-language: Haskell2010
-
-executable describe-proxies
-  main-is: ch11/describe-proxies/Main.hs
-  other-modules:
-      Paths_hid_examples
-  other-extensions: PolyKinds InstanceSigs
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
-  default-language: Haskell2010
-
-executable describe-type-apps
-  main-is: ch11/describe-type-apps/Main.hs
-  other-modules:
-      Paths_hid_examples
-  other-extensions: PolyKinds AllowAmbiguousTypes TypeApplications
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -720,26 +714,6 @@ executable weapons
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
-  default-language: Haskell2010
-
-executable weights-kinds
-  main-is: ch11/weights-kinds/Main.hs
-  other-modules:
-      Paths_hid_examples
-  other-extensions: DataKinds KindSignatures GeneralizedNewtypeDeriving
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
-  default-language: Haskell2010
-
-executable weights-phantom
-  main-is: ch11/weights-phantom/Main.hs
-  other-modules:
-      Paths_hid_examples
-  other-extensions: GeneralizedNewtypeDeriving
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
   default-language: Haskell2010
 
 executable xlist-data-families

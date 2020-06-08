@@ -284,32 +284,11 @@ executables:
           - iplookup-lib
     # Chapter 11
     # 11.1
-    weights-phantom:
-        main: ch11/weights-phantom/Main.hs
-        other-extensions:
-          - GeneralizedNewtypeDeriving
-    describe-proxies:
-        main: ch11/describe-proxies/Main.hs
-        other-extensions:
-          - PolyKinds
-          - InstanceSigs
-    describe-type-apps:
-        main: ch11/describe-type-apps/Main.hs
-        other-extensions:
-          - PolyKinds
-          - AllowAmbiguousTypes
-          - TypeApplications
     type-operators:
         main: ch11/type-operators/Main.hs
         other-extensions:
           - TypeOperators
           - NoStarIsType
-    weights-kinds:
-        main: ch11/weights-kinds/Main.hs
-        other-extensions:
-          - DataKinds
-          - KindSignatures
-          - GeneralizedNewtypeDeriving
     type-lits:
         main: ch11/type-lits/Main.hs
         other-extensions:
@@ -443,7 +422,24 @@ internal-libraries:
         dependencies:
           - iplookup-lib
           - hedgehog >= 0.5 && < 1.1
-
+    # Chapter 11
+    temp-lib:
+      source-dirs: ch11/temperature
+      exposed-modules:
+        - TempPhantom
+        - TempKinds
+        - DescribeProxy
+        - DescribeTypeApps
+      other-modules: []
+      other-extensions:
+        - GeneralizedNewtypeDeriving
+        - DataKinds
+        - PolyKinds
+        - KindSignatures
+        - FlexibleInstances
+        - InstanceSigs
+        - AllowAmbiguousTypes
+        - TypeApplications
 tests:
     # Chapter 2
     radar-test:
