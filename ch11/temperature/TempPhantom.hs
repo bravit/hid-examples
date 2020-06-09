@@ -6,7 +6,7 @@ module TempPhantom where
 
 -- 'unit' is called a phantom type
 newtype Temp unit = Temp Double
-  deriving Num
+  deriving (Num, Fractional)
 
 -- empty declarations
 data F
@@ -16,23 +16,16 @@ paperBurning :: Temp F
 paperBurning = 451
 
 absoluteZero :: Temp C
-absoluteZero = -273
-
-tf :: Temp F
-tf = 86
-
-tc :: Temp C
-tc = 30
+absoluteZero = -273.15
 
 f2c :: Temp F -> Temp C
 f2c (Temp f) = Temp ((f-32)*5/9)
 
-tb :: Temp Bool
-tb = Temp 0
-
-zero :: Temp C
-zero = f2c tf - tc
-
 -- TYPE ERROR: Couldn't match type ‘C’ with ‘F’
---err :: IO ()
---err = print $ tf - tc
+-- err = tf - tc
+
+diff :: Temp C
+diff = f2c paperBurning - absoluteZero
+
+nonsence :: Temp Bool
+nonsence = 0

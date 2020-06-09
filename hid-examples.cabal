@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 918bc8b0f7345096e9d197b3be366ea0b9d6241a9e919aa63657198e4829bec6
+-- hash: 56f7e7c8ce021b79e6c33a9896f9560ca0e37b1e3492073e9a399701d38bd76f
 
 name:           hid-examples
 version:        0.5
@@ -627,6 +627,16 @@ executable suntimes
     , transformers >=0.5 && <0.6
   default-language: Haskell2010
 
+executable temp-kinds
+  main-is: temp-kinds.hs
+  hs-source-dirs:
+      ch11/temperature
+  other-extensions: GeneralizedNewtypeDeriving ScopedTypeVariables PolyKinds AllowAmbiguousTypes TypeApplications
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-unticked-promoted-constructors
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
 executable temp-proxies
   main-is: temp-proxies.hs
   other-modules:
@@ -634,6 +644,7 @@ executable temp-proxies
       UnitNameProxies
   hs-source-dirs:
       ch11/temperature
+  other-extensions: GeneralizedNewtypeDeriving ScopedTypeVariables PolyKinds InstanceSigs
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -646,6 +657,7 @@ executable temp-type-apps
       UnitNameTypeApps
   hs-source-dirs:
       ch11/temperature
+  other-extensions: GeneralizedNewtypeDeriving ScopedTypeVariables PolyKinds AllowAmbiguousTypes TypeApplications
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -662,9 +674,12 @@ executable type-families
   default-language: Haskell2010
 
 executable type-lits
-  main-is: ch11/type-lits/Main.hs
+  main-is: Main.hs
   other-modules:
-      Paths_hid_examples
+      Pointers
+      SuffixedStrings
+  hs-source-dirs:
+      ch11/type-lits
   other-extensions: DataKinds KindSignatures ScopedTypeVariables
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
@@ -672,9 +687,7 @@ executable type-lits
   default-language: Haskell2010
 
 executable type-operators
-  main-is: ch11/type-operators/Main.hs
-  other-modules:
-      Paths_hid_examples
+  main-is: ch11/type-operators.hs
   other-extensions: TypeOperators NoStarIsType
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:

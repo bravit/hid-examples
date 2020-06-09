@@ -16,16 +16,20 @@ first (a :*: _) = a
 second :: a * b -> b
 second (_ :*: b) = b
 
-val1 :: Int + Bool * Bool
+val1 :: Char + Bool * Bool
 val1 = Inl 0
 
-val2 :: Int + Bool * Bool
+val2 :: Char + Bool * Bool
 val2 = Inr (True :*: False)
 
 type Point a = a + a * a + a * a * a
 
-val3 :: Point Int
-val3 = Inl (Inr (0 :*: 0))
+zero2D :: Point Int
+zero2D = Inl (Inr (0 :*: 0))
 
 main :: IO ()
-main = undefined
+main = do
+  print val1
+  print val2
+  print point2D
+

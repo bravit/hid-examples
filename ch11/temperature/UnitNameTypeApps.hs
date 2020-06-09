@@ -7,7 +7,7 @@ module UnitNameTypeApps where
 
 import TempPhantom
 
-class UnitName a where
+class UnitName u where
   unitName :: String
 
 instance UnitName C where
@@ -25,5 +25,5 @@ instance UnitName u => UnitName (Temp u) where
 instance UnitName u => Show (Temp u) where
   show (Temp t) = show t ++ "°" ++ unitName @u
 
-unitName' :: forall u. UnitName u => Temp u -> String
-unitName' _ = unitName @u
+unit :: forall u. UnitName u => Temp u -> String
+unit _ = unitName @u

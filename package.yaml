@@ -288,17 +288,42 @@ executables:
         source-dirs: ch11/temperature
         main: temp-proxies.hs
         other-modules: [TempPhantom, UnitNameProxies]
+        other-extensions:
+          - GeneralizedNewtypeDeriving
+          - ScopedTypeVariables
+          - PolyKinds
+          - InstanceSigs
     temp-type-apps:
         source-dirs: ch11/temperature
         main: temp-type-apps.hs
         other-modules: [TempPhantom, UnitNameTypeApps]
+        other-extensions:
+          - GeneralizedNewtypeDeriving
+          - ScopedTypeVariables
+          - PolyKinds
+          - AllowAmbiguousTypes
+          - TypeApplications
     type-operators:
-        main: ch11/type-operators/Main.hs
+        main: ch11/type-operators.hs
+        other-modules: []
         other-extensions:
           - TypeOperators
           - NoStarIsType
+    temp-kinds:
+        source-dirs: ch11/temperature
+        main: temp-kinds.hs
+        other-modules: []
+        ghc-options: -Wno-unticked-promoted-constructors
+        other-extensions:
+          - GeneralizedNewtypeDeriving
+          - ScopedTypeVariables
+          - PolyKinds
+          - AllowAmbiguousTypes
+          - TypeApplications
     type-lits:
-        main: ch11/type-lits/Main.hs
+        source-dirs: ch11/type-lits
+        main: Main.hs
+        other-modules: [Pointers, SuffixedStrings]
         other-extensions:
           - DataKinds
           - KindSignatures
