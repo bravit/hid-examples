@@ -329,10 +329,15 @@ executables:
           - KindSignatures
           - ScopedTypeVariables
     type-families:
-        main: ch11/type-families/Main.hs
+        source-dirs: ch11/type-families
+        main: Main.hs
         other-extensions:
           - TypeFamilies
           - FlexibleInstances
+        ghc-options:
+          -Wno-type-defaults
+        dependencies:
+          - containers >= 0.5 && < 0.7
     dynvalues-gadt:
         main: ch11/dynvalues-gadt/Main.hs
         other-extensions:
@@ -390,20 +395,6 @@ executables:
         main: Main.hs
         other-extensions:
           - RankNTypes
-    xlist-data-families:
-        source-dirs: ch11/data-families/
-        main: Main.hs
-        other-extensions:
-          - TypeFamilies
-    graph-assoc-tf:
-        source-dirs: ch11/graph-assoc-tf/
-        main: Main.hs
-        dependencies:
-          - containers >= 0.5 && < 0.7
-        other-extensions:
-          - TypeFamilies
-          - FlexibleContexts
-
 internal-libraries:
     # Chapter 2
     radar-lib:

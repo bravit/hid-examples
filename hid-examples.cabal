@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 56f7e7c8ce021b79e6c33a9896f9560ca0e37b1e3492073e9a399701d38bd76f
+-- hash: e5172b930c02120425cda0dc84f12d2ff5586c566ca7ca28c980408c4e0d323c
 
 name:           hid-examples
 version:        0.5
@@ -349,19 +349,6 @@ executable genSQL
     , text >=1.2 && <1.3
   default-language: Haskell2010
 
-executable graph-assoc-tf
-  main-is: Main.hs
-  other-modules:
-      Paths_hid_examples
-  hs-source-dirs:
-      ch11/graph-assoc-tf/
-  other-extensions: TypeFamilies FlexibleContexts
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
-    , containers >=0.5 && <0.7
-  default-language: Haskell2010
-
 executable hello
   main-is: intro/hello.hs
   other-modules:
@@ -664,13 +651,20 @@ executable temp-type-apps
   default-language: Haskell2010
 
 executable type-families
-  main-is: ch11/type-families/Main.hs
+  main-is: Main.hs
   other-modules:
+      Graphs
+      SimplifyWiden
+      Unescape
+      XListable
       Paths_hid_examples
+  hs-source-dirs:
+      ch11/type-families
   other-extensions: TypeFamilies FlexibleInstances
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-type-defaults
   build-depends:
       base >=4.12 && <4.15
+    , containers >=0.5 && <0.7
   default-language: Haskell2010
 
 executable type-lits
@@ -737,18 +731,6 @@ executable weapons
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
     , random >=1.0 && <1.2
-  default-language: Haskell2010
-
-executable xlist-data-families
-  main-is: Main.hs
-  other-modules:
-      Paths_hid_examples
-  hs-source-dirs:
-      ch11/data-families/
-  other-extensions: TypeFamilies
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
   default-language: Haskell2010
 
 test-suite expr-simple-test

@@ -1,5 +1,6 @@
 {-# LANGUAGE TypeFamilies #-}
 
+module XListable where
 
 data family XList a
 data instance XList () = XListUnit Integer
@@ -35,11 +36,6 @@ instance XListable Char where
   xheadMay (XCons c _) = Just c
   xheadMay XNil = Nothing
 
-test :: (Eq a, XListable a) => a -> Bool
-test a = xheadMay (xcons a xempty) == Just a
+testXList :: (Eq a, XListable a) => a -> Bool
+testXList a = xheadMay (xcons a xempty) == Just a
 
-main :: IO ()
-main = print $ and [test (),
-                    test True,
-                    test False,
-                    test 'x']

@@ -1,6 +1,8 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleContexts #-}
 
+module Graphs where
+
 import Data.Map (Map)
 import qualified Data.Map as Map (fromList)
 
@@ -46,7 +48,3 @@ instance Graph VertexMap where
 g2 :: VertexMap
 g2 = VertexMap (Map.fromList [("A", ["B"]), ("B", ["A"])])
 
-main :: IO ()
-main = do
-  print $ neighbours g1 0
-  print $ isLoop g1 (MkEdge1 0 1)
