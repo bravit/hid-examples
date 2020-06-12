@@ -283,7 +283,6 @@ executables:
           - random >=1.0 && <1.2
           - iplookup-lib
     # Chapter 11
-    # 11.1
     temp-proxies:
         source-dirs: ch11/temperature
         main: temp-proxies.hs
@@ -339,16 +338,29 @@ executables:
         dependencies:
           - containers >= 0.5 && < 0.7
     dynvalues-gadt:
-        main: ch11/dynvalues-gadt/Main.hs
+        main: ch11/dynvalues-gadt.hs
         other-extensions:
           - GADTs
-    # 11.2
+    expr-gadt:
+        main: expr/gadts/Main.hs
+        other-extensions:
+          - GADTSyntax
+          - GADTs
+        ghc-options:
+          - -Wno-type-defaults
+          - -Wno-missing-signatures
+    nummod-rank-n:
+        source-dirs: ch11/nummod-rank-n/
+        main: Main.hs
+        other-extensions:
+          - RankNTypes
+    # Chapter 13
     api-stage0:
-        main: ch11/api/Api0.hs
+        main: ch13/api/Api0.hs
     api-stage1:
-        main: ch11/api/Api1.hs
+        main: ch13/api/Api1.hs
     api-stage2:
-        main: ch11/api/Api2.hs
+        main: ch13/api/Api2.hs
         other-extensions:
           - KindSignatures
           - TypeOperators
@@ -356,7 +368,7 @@ executables:
           - DataKinds
           - TypeFamilies
     api-stage3:
-        main: ch11/api/Api3.hs
+        main: ch13/api/Api3.hs
         other-extensions:
           - KindSignatures
           - TypeOperators
@@ -366,14 +378,8 @@ executables:
           - FlexibleInstances
           - InstanceSigs
           - ScopedTypeVariables
-    # 11.3
-    expr-gadt:
-        main: ch11/expr-gadt/Main.hs
-        other-extensions:
-          - GADTSyntax
-          - GADTs
     doors-type-equality:
-        main: ch11/doors/TypeEq.hs
+        main: ch13/doors/TypeEq.hs
         other-extensions:
           - DataKinds
           - GADTs
@@ -382,19 +388,14 @@ executables:
           - TypeOperators
           - StandaloneDeriving
     doors-singletons:
-        main: ch11/doors/Sing.hs
+        main: ch13/doors/Sing.hs
         other-extensions:
           - DataKinds
           - GADTs
           - TypeOperators
           - KindSignatures
           - StandaloneDeriving
-    # 11.4
-    nummod-rank-n:
-        source-dirs: ch11/nummod-rank-n/
-        main: Main.hs
-        other-extensions:
-          - RankNTypes
+
 internal-libraries:
     # Chapter 2
     radar-lib:

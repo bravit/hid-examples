@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e5172b930c02120425cda0dc84f12d2ff5586c566ca7ca28c980408c4e0d323c
+-- hash: ee2c65bcec28383715690208c4e29dafb42f379f65709c90fd9f7288baad2fca
 
 name:           hid-examples
 version:        0.5
@@ -130,7 +130,7 @@ library shunting-yard
   default-language: Haskell2010
 
 executable api-stage0
-  main-is: ch11/api/Api0.hs
+  main-is: ch13/api/Api0.hs
   other-modules:
       Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
@@ -139,7 +139,7 @@ executable api-stage0
   default-language: Haskell2010
 
 executable api-stage1
-  main-is: ch11/api/Api1.hs
+  main-is: ch13/api/Api1.hs
   other-modules:
       Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
@@ -148,7 +148,7 @@ executable api-stage1
   default-language: Haskell2010
 
 executable api-stage2
-  main-is: ch11/api/Api2.hs
+  main-is: ch13/api/Api2.hs
   other-modules:
       Paths_hid_examples
   other-extensions: KindSignatures TypeOperators PolyKinds DataKinds TypeFamilies
@@ -158,7 +158,7 @@ executable api-stage2
   default-language: Haskell2010
 
 executable api-stage3
-  main-is: ch11/api/Api3.hs
+  main-is: ch13/api/Api3.hs
   other-modules:
       Paths_hid_examples
   other-extensions: KindSignatures TypeOperators PolyKinds DataKinds TypeFamilies FlexibleInstances InstanceSigs ScopedTypeVariables
@@ -204,7 +204,7 @@ executable div
   default-language: Haskell2010
 
 executable doors-singletons
-  main-is: ch11/doors/Sing.hs
+  main-is: ch13/doors/Sing.hs
   other-modules:
       Paths_hid_examples
   other-extensions: DataKinds GADTs TypeOperators KindSignatures StandaloneDeriving
@@ -214,7 +214,7 @@ executable doors-singletons
   default-language: Haskell2010
 
 executable doors-type-equality
-  main-is: ch11/doors/TypeEq.hs
+  main-is: ch13/doors/TypeEq.hs
   other-modules:
       Paths_hid_examples
   other-extensions: DataKinds GADTs KindSignatures ExplicitForAll TypeOperators StandaloneDeriving
@@ -253,7 +253,7 @@ executable du
   default-language: Haskell2010
 
 executable dynvalues-gadt
-  main-is: ch11/dynvalues-gadt/Main.hs
+  main-is: ch11/dynvalues-gadt.hs
   other-modules:
       Paths_hid_examples
   other-extensions: GADTs
@@ -302,11 +302,11 @@ executable evalrpn3
   default-language: Haskell2010
 
 executable expr-gadt
-  main-is: ch11/expr-gadt/Main.hs
+  main-is: expr/gadts/Main.hs
   other-modules:
       Paths_hid_examples
   other-extensions: GADTSyntax GADTs
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-type-defaults -Wno-missing-signatures
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010
