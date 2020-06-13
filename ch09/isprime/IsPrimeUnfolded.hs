@@ -1,5 +1,4 @@
-import System.Environment
-import System.TimeIt
+module IsPrimeUnfolded where
 
 isPrime :: Integer -> Bool
 isPrime n = go 2
@@ -9,8 +8,3 @@ isPrime n = go 2
              False -> case n `mod` x /= 0 of
                         True -> go (x+1)
                         False -> False
-
-main :: IO ()
-main = do
-  [n'] <- getArgs
-  timeIt $ print $ isPrime (read n')

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e331d45e8360e9062286a5d238410a817f3312f5781d6176c6a5eaa636e627d7
+-- hash: e2625243bc149bf11ce399ae3c5560fd74dccf3df32ec1144f3503f2bf318239
 
 name:           hid-examples
 version:        0.5
@@ -104,6 +104,17 @@ library iplookup-lib
       base >=4.12 && <4.15
     , fingertree >=0.1 && <0.2
     , split >=0.2 && <0.3
+  default-language: Haskell2010
+
+library isprime-lib
+  exposed-modules:
+      IsPrime
+      IsPrimeUnfolded
+  hs-source-dirs:
+      ch09/isPrime
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
   default-language: Haskell2010
 
 library radar-lib
@@ -406,22 +417,15 @@ executable iplookup-simulation
   default-language: Haskell2010
 
 executable isprime
-  main-is: ch09/isPrime.hs
+  main-is: Main.hs
   other-modules:
-      Paths_hid_examples
+      IsPrime
+  hs-source-dirs:
+      ch09/isPrime
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
-    , timeit >=2.0 && <2.1
-  default-language: Haskell2010
-
-executable isprime-unfolded
-  main-is: ch09/isPrimeUnfolded.hs
-  other-modules:
-      Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
+    , isprime-lib
     , timeit >=2.0 && <2.1
   default-language: Haskell2010
 
@@ -781,10 +785,11 @@ test-suite iplookup-doctest
   main-is: tests/iplookup-doctest/Doctests.hs
   other-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
     , doctest >=0.12 && <0.17
+    , split >=0.2 && <0.3
   default-language: Haskell2010
 
 test-suite iplookup-test
@@ -855,13 +860,12 @@ benchmark iplookup-bench
 
 benchmark primcheck
   type: exitcode-stdio-1.0
-  main-is: Bench.hs
+  main-is: benchmarks/primcheck.hs
   other-modules:
       Paths_hid_examples
-  hs-source-dirs:
-      benchmarks/primcheck
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
     , criterion >=1.4 && <1.6
+    , isprime-lib
   default-language: Haskell2010

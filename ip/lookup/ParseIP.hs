@@ -14,6 +14,8 @@ import Text.Read
 
 import IPTypes
 
+-- >>> :set -package split
+
 buildIP :: [Word8] -> IP
 buildIP = buildIP_foldl
 

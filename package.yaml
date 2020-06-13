@@ -283,12 +283,11 @@ executables:
           - UnboxedTuples
           - UnboxedSums
     isprime:
-      main: ch09/isPrime.hs
+      source-dirs: ch09/isPrime
+      main: Main.hs
+      other-modules: [IsPrime]
       dependencies:
-        - timeit >= 2.0 && < 2.1
-    isprime-unfolded:
-      main: ch09/isPrimeUnfolded.hs
-      dependencies:
+        - isprime-lib
         - timeit >= 2.0 && < 2.1
     # Chapter 10
     iplookup-simulation:
@@ -461,6 +460,14 @@ internal-libraries:
         dependencies:
           - iplookup-lib
           - hedgehog >= 0.5 && < 1.1
+    # Chapter 9
+    isprime-lib:
+      source-dirs: ch09/isPrime
+      exposed-modules:
+        - IsPrime
+        - IsPrimeUnfolded
+      other-modules: []
+
 tests:
     # Chapter 2
     radar-test:
@@ -504,17 +511,16 @@ tests:
           - -Wno-type-defaults
     iplookup-doctest:
         main: tests/iplookup-doctest/Doctests.hs
-        ghc-options:
-          - -threaded
         dependencies:
           - doctest >= 0.12 && < 0.17
+          - split >= 0.2 && < 0.3
 
 benchmarks:
     # Chapter 10
     primcheck:
-        main: Bench.hs
-        source-dirs: benchmarks/primcheck
+        main: benchmarks/primcheck.hs
         dependencies:
+          - isprime-lib
           - criterion >= 1.4 && < 1.6
     iplookup-bench:
         main: Bench.hs
