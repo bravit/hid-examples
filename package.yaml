@@ -276,6 +276,20 @@ executables:
           - exceptions >= 0.10 && < 0.11
           - optparse-applicative >= 0.14 && < 0.16
           - hedgehog >= 0.5 && < 1.1
+    # Chapter 9
+    unboxed:
+        main: ch09/unboxed.hs
+        other-extensions:
+          - UnboxedTuples
+          - UnboxedSums
+    isprime:
+      main: ch09/isPrime.hs
+      dependencies:
+        - timeit >= 2.0 && < 2.1
+    isprime-unfolded:
+      main: ch09/isPrimeUnfolded.hs
+      dependencies:
+        - timeit >= 2.0 && < 2.1
     # Chapter 10
     iplookup-simulation:
         main: ip/iplookup-simulation.hs
