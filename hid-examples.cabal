@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e2625243bc149bf11ce399ae3c5560fd74dccf3df32ec1144f3503f2bf318239
+-- hash: f1b42da398f6643652faf7b1eb18777a1319b74f258fb1892be7cd343d31cd19
 
 name:           hid-examples
 version:        0.5
@@ -111,7 +111,7 @@ library isprime-lib
       IsPrime
       IsPrimeUnfolded
   hs-source-dirs:
-      ch09/isPrime
+      ch09/isprime
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -421,7 +421,7 @@ executable isprime
   other-modules:
       IsPrime
   hs-source-dirs:
-      ch09/isPrime
+      ch09/isprime
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15

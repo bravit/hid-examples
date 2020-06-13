@@ -283,7 +283,7 @@ executables:
           - UnboxedTuples
           - UnboxedSums
     isprime:
-      source-dirs: ch09/isPrime
+      source-dirs: ch09/isprime
       main: Main.hs
       other-modules: [IsPrime]
       dependencies:
@@ -462,7 +462,7 @@ internal-libraries:
           - hedgehog >= 0.5 && < 1.1
     # Chapter 9
     isprime-lib:
-      source-dirs: ch09/isPrime
+      source-dirs: ch09/isprime
       exposed-modules:
         - IsPrime
         - IsPrimeUnfolded
