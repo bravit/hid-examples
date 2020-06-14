@@ -523,9 +523,8 @@ benchmarks:
           - isprime-lib
           - criterion >= 1.4 && < 1.6
     iplookup-bench:
-        main: Bench.hs
-        generated-other-modules: Paths_hid_examples
         source-dirs: benchmarks/iplookup
+        main: Bench.hs
         dependencies:
           - iplookup-lib
           - criterion >= 1.4 && < 1.6

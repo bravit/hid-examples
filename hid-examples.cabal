@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f1b42da398f6643652faf7b1eb18777a1319b74f258fb1892be7cd343d31cd19
+-- hash: 070fceb96e50573142b2524c92ad76f1a2d24ac182cba1a4d7bc841c75512e28
 
 name:           hid-examples
 version:        0.5
@@ -845,8 +845,13 @@ benchmark iplookup-bench
   type: exitcode-stdio-1.0
   main-is: Bench.hs
   other-modules:
-      Paths_hid_examples
-  autogen-modules:
+      BenchBuildIP
+      BenchBuildIPGroups
+      BenchLookupIP
+      BenchParseIP
+      BenchRanges
+      Data
+      NFUtils
       Paths_hid_examples
   hs-source-dirs:
       benchmarks/iplookup
