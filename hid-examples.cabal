@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 070fceb96e50573142b2524c92ad76f1a2d24ac182cba1a4d7bc841c75512e28
+-- hash: dec46d79d7fef7f8bf66f36eba9cc13772fcbafd2cb0c4011e37a26c52f89add
 
 name:           hid-examples
 version:        0.5
@@ -358,6 +358,20 @@ executable genSQL
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
     , text >=1.2 && <1.3
+  default-language: Haskell2010
+
+executable generic-sql
+  main-is: Main.hs
+  other-modules:
+      GenericSQL
+      Paths_hid_examples
+  hs-source-dirs:
+      ch12/genSQL/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , text >=1.2 && <1.3
+    , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable hello
