@@ -374,6 +374,26 @@ executables:
         dependencies:
           - text >=1.2 && <1.3
           - text-show >=3.0 && <4
+    ping-server:
+        source-dirs: ch12/rpc/ping/server/
+        main: server.hs
+        other-modules:
+          - RFDefs
+        dependencies:
+          - rpc-lib
+          - time >=1.8 && <1.11
+          - bytestring >=0.10 && <0.11
+          - mtl >=2.0 && <2.3
+        ghc-options:
+          - -Wno-missing-signatures
+    ping-client:
+        source-dirs: ch12/rpc/ping/client/
+        main: client.hs
+        other-modules:
+          - RFunctions
+        dependencies:
+          - rpc-lib
+          - mtl >=2.0 && <2.3
     # Chapter 13
     api-stage0:
         main: ch13/api/Api0.hs
@@ -474,7 +494,31 @@ internal-libraries:
         - IsPrime
         - IsPrimeUnfolded
       other-modules: []
-
+    # Chapter 12
+    rpc-lib:
+      source-dirs: ch12/rpc/lib
+      exposed-modules:
+        - ClientUtils
+        - ServerUtils
+        - RemoteIO
+        - DeclsGenerator
+        - DDefs
+      other-modules: []
+      dependencies:
+        - bytestring >=0.10 && <0.11
+        - mtl >=2.0 && <2.3
+        - network >= 2.8 && <3.2
+        - cereal >= 0.5 && <0.6
+        - template-haskell >= 2.13 && <2.16
+        - haskell-src-exts >= 1.20 && <1.24
+        - connection >= 0.3 && <0.4
+        - monad-loops >= 0.4 && <0.5
+        - network-simple >= 0.4 && <0.5
+      ghc-options:
+        - -Wno-incomplete-patterns
+        - -Wno-incomplete-uni-patterns
+        - -Wno-name-shadowing
+        - -Wno-unused-matches
 tests:
     # Chapter 2
     radar-test:
