@@ -15,10 +15,10 @@ import Network.Socket
 import RemoteIO
 import DDefs
 
-type RemoteAction st a b = a -> RemoteStIO st b
+type RemoteAction st a b = a -> RSIO st b
 
-run_serialized :: (Serialize a, Serialize b) => RemoteAction st a b -> Parameters -> RemoteStIO st ByteString
-run_serialized action params
+runSerialized :: (Serialize a, Serialize b) => RemoteAction st a b -> Parameters -> RSIO st ByteString
+runSerialized action params
             = either
                 (remoteError . ("Decoding error (stage 2): "++))
                 (liftM encode . action)

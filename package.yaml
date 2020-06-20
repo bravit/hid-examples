@@ -375,25 +375,28 @@ executables:
           - text >=1.2 && <1.3
           - text-show >=3.0 && <4
     ping-server:
-        source-dirs: ch12/rpc/ping/server/
+        source-dirs: ch12/rpc/ping/
         main: server.hs
-        other-modules:
-          - RFDefs
+        other-modules: [ RemoteFunctions, PingTypes ]
         dependencies:
           - rpc-lib
           - time >=1.8 && <1.11
           - bytestring >=0.10 && <0.11
           - mtl >=2.0 && <2.3
+          - cereal >= 0.5 && <0.6
         ghc-options:
           - -Wno-missing-signatures
+          - -Wno-incomplete-patterns
     ping-client:
-        source-dirs: ch12/rpc/ping/client/
+        source-dirs: ch12/rpc/ping/
         main: client.hs
-        other-modules:
-          - RFunctions
+        other-modules: [ PingTypes ]
         dependencies:
           - rpc-lib
           - mtl >=2.0 && <2.3
+          - cereal >= 0.5 && <0.6
+        ghc-options:
+          - -Wno-incomplete-patterns
     # Chapter 13
     api-stage0:
         main: ch13/api/Api0.hs
@@ -500,10 +503,11 @@ internal-libraries:
       exposed-modules:
         - ClientUtils
         - ServerUtils
+        - CommonUtils
         - RemoteIO
         - DeclsGenerator
         - DDefs
-      other-modules: []
+      other-modules: [IfaceExtractor]
       dependencies:
         - bytestring >=0.10 && <0.11
         - mtl >=2.0 && <2.3
@@ -511,6 +515,7 @@ internal-libraries:
         - cereal >= 0.5 && <0.6
         - template-haskell >= 2.13 && <2.16
         - haskell-src-exts >= 1.20 && <1.24
+        - haskell-src-meta >= 0.6 && < 0.9
         - connection >= 0.3 && <0.4
         - monad-loops >= 0.4 && <0.5
         - network-simple >= 0.4 && <0.5

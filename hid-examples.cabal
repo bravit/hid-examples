@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 097c1ec3a1d60689628073152d17ebc2f9f7f13b30a90018f1832fd0781f30d6
+-- hash: f658c387362b056ba97d09cb09f8bacf771a2e6ec5374291e465a3d21b8b7c14
 
 name:           hid-examples
 version:        0.5
@@ -131,9 +131,12 @@ library rpc-lib
   exposed-modules:
       ClientUtils
       ServerUtils
+      CommonUtils
       RemoteIO
       DeclsGenerator
       DDefs
+  other-modules:
+      IfaceExtractor
   hs-source-dirs:
       ch12/rpc/lib
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-incomplete-patterns -Wno-incomplete-uni-patterns -Wno-name-shadowing -Wno-unused-matches
@@ -143,6 +146,7 @@ library rpc-lib
     , cereal >=0.5 && <0.6
     , connection >=0.3 && <0.4
     , haskell-src-exts >=1.20 && <1.24
+    , haskell-src-meta >=0.6 && <0.9
     , monad-loops >=0.4 && <0.5
     , mtl >=2.0 && <2.3
     , network >=2.8 && <3.2
@@ -542,12 +546,13 @@ executable person-text
 executable ping-client
   main-is: client.hs
   other-modules:
-      RFunctions
+      PingTypes
   hs-source-dirs:
-      ch12/rpc/ping/client/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+      ch12/rpc/ping/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-incomplete-patterns
   build-depends:
       base >=4.12 && <4.15
+    , cereal >=0.5 && <0.6
     , mtl >=2.0 && <2.3
     , rpc-lib
   default-language: Haskell2010
@@ -555,13 +560,15 @@ executable ping-client
 executable ping-server
   main-is: server.hs
   other-modules:
-      RFDefs
+      RemoteFunctions
+      PingTypes
   hs-source-dirs:
-      ch12/rpc/ping/server/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures
+      ch12/rpc/ping/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures -Wno-incomplete-patterns
   build-depends:
       base >=4.12 && <4.15
     , bytestring >=0.10 && <0.11
+    , cereal >=0.5 && <0.6
     , mtl >=2.0 && <2.3
     , rpc-lib
     , time >=1.8 && <1.11

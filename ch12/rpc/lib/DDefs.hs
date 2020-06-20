@@ -60,9 +60,7 @@ class RemoteState a where
 instance RemoteState () where
     initState = ()
 
-newtype RemoteStIO st a = RemoteIO {
+newtype RSIO st a = RSIO {
         runRem :: StateT st (ReaderT RemoteConfig (ExceptT String IO)) a
     } deriving (Functor, Applicative, Monad, MonadIO, MonadReader RemoteConfig,
                 MonadError String, MonadState st)
-
-type RemoteIO = RemoteStIO ()

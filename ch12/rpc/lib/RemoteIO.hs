@@ -14,20 +14,20 @@ import Network.Connection
 import Data.Serialize hiding (get,put)
 import qualified Data.ByteString as BS
 
-runRemote :: RemoteState st => PeerAddr -> RemoteStIO st a -> IO (Either String a)
+runRemote :: RemoteState st => PeerAddr -> RSIO st a -> IO (Either String a)
 runRemote peer computation = do
     cfg  <- remoteConnectTo peer
     res <- runRemoteCfg cfg computation
     remoteClose cfg
     return res
 
-runRemoteCfg :: RemoteState st => RemoteConfig -> RemoteStIO st a -> IO (Either String a)
-runRemoteCfg cfg computation = 
-    runExceptT $ 
+runRemoteCfg :: RemoteState st => RemoteConfig -> RSIO st a -> IO (Either String a)
+runRemoteCfg cfg computation =
+    runExceptT $
         runReaderT (evalStateT (runRem computation) initState) cfg
 
 runRemoteCfg_ :: RemoteState st =>
-                       RemoteConfig -> RemoteStIO st a -> IO ()
+                       RemoteConfig -> RSIO st a -> IO ()
 runRemoteCfg_ cfg computation = runRemoteCfg cfg computation >> return ()
 
 
@@ -46,7 +46,7 @@ send msg = do
                 putByteString payload
             where size = (fromIntegral $ BS.length payload) :: Word64
 
-receive :: (Serialize a) => RemoteStIO st a
+receive :: (Serialize a) => RSIO st a
 receive = do
     cfg <- ask
     res <-liftIO $ try $ recvMsgEnv (handle cfg)
@@ -58,17 +58,17 @@ receive = do
             sz_msg <- connectionGet h DDefs.msgSizeField
             either fail (connectionGet h . fromIntegral) (runGet getWord64be sz_msg)
 
-rIsEOF :: RemoteStIO st Bool
+rIsEOF :: RSIO st Bool
 rIsEOF = pure False {-do
     cfg <- ask
     liftIO $ hIsEOF (handle cfg) -}
 
-remoteError :: String -> RemoteStIO st b
+remoteError :: String -> RSIO st b
 remoteError err_msg = do
     rp <- remotePeerInfo
     throwError $ err_msg ++ rp
 
-remotePeerInfo :: RemoteStIO st String
+remotePeerInfo :: RSIO st String
 remotePeerInfo = do
     cfg <- ask
     let peer = remotePeer cfg
