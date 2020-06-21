@@ -1,58 +1,51 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving,FlexibleInstances #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module DDefs where
+
 import Data.ByteString (ByteString)
-import qualified Data.ByteString as BS
 import Data.Serialize
-import Control.Monad
+import GHC.Generics
 import Network.Socket
 import Network.Connection
 import Control.Monad.Reader
-import Control.Monad.Except
 import Control.Monad.State hiding (put, get)
+import Control.Monad.Catch
 
 type Operation = String
-type Parameters = BS.ByteString
-type Message = BS.ByteString
 
 msgSizeField :: Int
 msgSizeField = 8 -- in bytes
 
+
 data RequestContext = ReqCtx {
         oper::Operation
-}
+  }
+  deriving stock Generic
+  deriving anyclass Serialize
 
-data ResponseContext = RespCtx {
-     ok :: Bool,
-     excInfo :: String
-} deriving Show
+type RequestMessage = (RequestContext, ByteString)
 
-instance Serialize RequestContext where
-  put (ReqCtx op) = put op
-  get = liftM ReqCtx get
-
-instance Serialize ResponseContext where
-  put RespCtx {..} = do
-         put ok
-         put excInfo
-  get = liftM2 RespCtx get get
-
-
-type RequestMessage = (RequestContext, Parameters)
-
-type ResponseMessage = (ResponseContext, ByteString)
-
+type ResponseMessage = Either String ByteString
 
 data PeerAddr = PeerAddr {
         hostname :: String,
         port :: PortNumber
     }
 
-data RemoteConfig = RemoteConfig {
-        localPeer :: PeerAddr,
-        remotePeer :: PeerAddr,
-        handle :: Connection
-    }
+data RemoteException =
+    ConnectionClosed
+  | RemoteException String
+
+instance Show RemoteException where
+    show ConnectionClosed = "Connection closed"
+    show (RemoteException msg) = "Remote Exception: " <> msg
+
+instance Exception RemoteException
 
 class RemoteState a where
     initState :: a
@@ -61,6 +54,15 @@ instance RemoteState () where
     initState = ()
 
 newtype RSIO st a = RSIO {
-        runRem :: StateT st (ReaderT RemoteConfig (ExceptT String IO)) a
-    } deriving (Functor, Applicative, Monad, MonadIO, MonadReader RemoteConfig,
-                MonadError String, MonadState st)
+        runRem :: StateT st (ReaderT Connection IO) a
+    } deriving newtype (Functor, Applicative, Monad, MonadIO,
+                        MonadReader Connection,
+                        MonadState st,
+                        MonadThrow, MonadCatch)
+
+type RemoteAction st a b = a -> RSIO st b
+
+type RPCTable st a = [(Operation, RemoteAction st a ByteString)]
+
+data DecodeStages = Stage0 | Stage1 | Stage2
+  deriving Show

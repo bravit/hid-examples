@@ -503,7 +503,6 @@ internal-libraries:
       exposed-modules:
         - ClientUtils
         - ServerUtils
-        - CommonUtils
         - RemoteIO
         - DeclsGenerator
         - DDefs
@@ -517,7 +516,7 @@ internal-libraries:
         - haskell-src-exts >= 1.20 && <1.24
         - haskell-src-meta >= 0.6 && < 0.9
         - connection >= 0.3 && <0.4
-        - monad-loops >= 0.4 && <0.5
+        - exceptions >= 0.10 && < 0.11
         - network-simple >= 0.4 && <0.5
       ghc-options:
         - -Wno-incomplete-patterns

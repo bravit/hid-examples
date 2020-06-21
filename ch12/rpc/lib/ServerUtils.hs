@@ -1,53 +1,47 @@
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module ServerUtils where
+module ServerUtils (serveRPC, genServerDecls, runSerialized) where
+
 import Data.Serialize
 import Data.ByteString (ByteString)
-import qualified Data.ByteString as BS
 import Control.Monad
-import Control.Monad.Loops
-import Control.Exception
+import Control.Monad.Catch
 import Network.Simple.TCP
 import Network.Connection
-import Network.Socket
+import Network.Socket (PortNumber)
 
 import RemoteIO
 import DDefs
+import DeclsGenerator (genServerDecls)
 
-type RemoteAction st a b = a -> RSIO st b
-
-runSerialized :: (Serialize a, Serialize b) => RemoteAction st a b -> Parameters -> RSIO st ByteString
+runSerialized :: (Serialize a, Serialize b) =>
+                 RemoteAction st a b -> ByteString -> RSIO st ByteString
 runSerialized action params
-            = either
-                (remoteError . ("Decoding error (stage 2): "++))
-                (liftM encode . action)
-                (decode params)
+  = unEitherStaged Stage2 (decode params) >>= liftM encode . action
 
-serve' :: (Serialize a, RemoteState st) =>
-          PortNumber -> [(Operation, RemoteAction st a ByteString)] -> IO a
-serve' port funcs = serve (Host "127.0.0.1") (show port) procRequests
-    where
-        procRequests (connhdl, sockAddr) = do
-                logConnection -- clientHost clientPort
-                initCtx <- initConnectionContext
-                conn <- connectFromSocket initCtx connhdl (ConnectionParams "localhost" port Nothing Nothing)
-                catch (runRemoteCfg_
-                           (RemoteConfig
-                               (PeerAddr "localhost" port)
-                               (PeerAddr "localhost" port)
-                               conn)
-                           (untilM_ serveClient rIsEOF)) (\(ioe :: IOError) -> putStrLn $ show ioe)
-                pure ()
+serveRPC :: (Serialize a, RemoteState st) =>
+          HostName -> PortNumber -> RPCTable st a -> IO ()
+serveRPC host port funcs = serve (Host host) (show port) procRequests
+  where
+    connParams = ConnectionParams host port Nothing Nothing
+    procRequests (connSock, sockAddr) = do
+      logConnection "New connection" sockAddr
+      initCtx <- initConnectionContext
+      conn <- connectFromSocket initCtx connSock connParams
+      catch (runRemoteConn conn serveClient >> pure ())
+            (\(e :: RemoteException) ->
+               logConnection (displayException e) sockAddr)
 
-        serveClient = receive >>= call >>= RemoteIO.send
+    serveClient = forever (receiveRSIO >>= call >>= sendRSIO)
 
-        call (ctx, params) =
-          maybe (return $ unsupported ctx)
-                (\f -> liftM (RespCtx True "",) $ f params)
-                (lookup (oper ctx) funcs)
+    call (ctx, params) =
+      maybe (unsupported $ oper ctx)
+            (\func -> func params)
+            (lookup (oper ctx) funcs)
 
-        unsupported ctx = (RespCtx False (oper ctx ++ ": unsupported operation"), BS.empty)
+    unsupported operation =
+      throwRemote $ "Unsupported operation (" <> operation <> ")"
 
-        logConnection {-clientHost clientPort-} =
-            putStrLn $ "New connection from " -- ++ clientHost ++ ":" ++ show clientPort
+    logConnection msg sockAddr =
+      putStrLn $ "LOG: " <> show sockAddr <> " " <> msg

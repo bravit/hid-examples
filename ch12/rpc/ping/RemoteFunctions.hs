@@ -5,7 +5,7 @@ import qualified Control.Monad.State as ST
 import Control.Monad.Trans
 
 import ServerUtils
-import DeclsGenerator
+
 import PingTypes
 
 $genServerDecls

@@ -7,7 +7,7 @@ module PingTypes where
 import GHC.Generics
 import Data.Serialize
 
-import CommonUtils
+import DDefs
 
 instance RemoteState Integer where
     initState = 0

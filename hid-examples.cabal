@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f658c387362b056ba97d09cb09f8bacf771a2e6ec5374291e465a3d21b8b7c14
+-- hash: c893bd1d2dc1d16701d629ba052d43848554c93d30abd7ec8ed9204f9df487e8
 
 name:           hid-examples
 version:        0.5
@@ -131,7 +131,6 @@ library rpc-lib
   exposed-modules:
       ClientUtils
       ServerUtils
-      CommonUtils
       RemoteIO
       DeclsGenerator
       DDefs
@@ -145,9 +144,9 @@ library rpc-lib
     , bytestring >=0.10 && <0.11
     , cereal >=0.5 && <0.6
     , connection >=0.3 && <0.4
+    , exceptions >=0.10 && <0.11
     , haskell-src-exts >=1.20 && <1.24
     , haskell-src-meta >=0.6 && <0.9
-    , monad-loops >=0.4 && <0.5
     , mtl >=2.0 && <2.3
     , network >=2.8 && <3.2
     , network-simple >=0.4 && <0.5

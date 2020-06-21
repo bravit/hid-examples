@@ -1,7 +1,8 @@
 module Main where
 
 import ServerUtils
-import RemoteFunctions
+import RemoteFunctions (registeredFunctions)
 
-main = serve' 1500 registeredFunctions
+main :: IO ()
+main = serveRPC "localhost" 1500 registeredFunctions
 
