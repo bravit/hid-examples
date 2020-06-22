@@ -368,6 +368,14 @@ executables:
         other-extensions:
           - RankNTypes
     # Chapter 12
+    basic-deriv:
+        source-dirs: ch12/deriv/
+        main: basic-deriv.hs
+    strategies:
+        source-dirs: ch12/deriv/
+        main: strategies.hs
+        dependencies:
+          - aeson >= 1.2 && < 1.5
     generic-sql:
         source-dirs: ch12/genSQL/
         main: Main.hs
