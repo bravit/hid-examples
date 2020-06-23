@@ -1,11 +1,10 @@
+{-# LANGUAGE DeriveAnyClass #-}
+
 import Control.Exception (throw, throwIO)
 import Control.Monad.Catch
 
-
 data MyArithException = DivByZero | OtherArithException
- deriving (Show)
-
-instance Exception MyArithException
+ deriving (Show, Exception)
 
 divPure :: Int -> Int -> Int
 divPure _ 0 = throw DivByZero

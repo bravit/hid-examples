@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveAnyClass #-}
+
 module STExcept where
 
 import Data.Text (Text)
@@ -16,6 +18,7 @@ data SunInfoException = UnknownLocation Text
                       | ServiceAPIError String
                       | NetworkError SomeException
                       | ConfigError
+   deriving Exception
 
 instance Show SunInfoException where
   show (UnknownLocation _) = "Failed while determining coordinates"
@@ -24,8 +27,6 @@ instance Show SunInfoException where
   show (ServiceAPIError _) = "Error while communicating with external services"
   show (NetworkError _) = "Network communication error"
   show ConfigError = "Error parsing configuration file"
-
-instance Exception SunInfoException
 
 rethrowReqException :: MonadThrow m => HttpException -> m a
 rethrowReqException (JsonHttpException s) = throwM (ServiceAPIError s)

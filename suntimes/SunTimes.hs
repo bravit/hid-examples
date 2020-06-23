@@ -1,4 +1,6 @@
-{-# LANGUAGE RecordWildCards, DeriveGeneric #-}
+{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveAnyClass #-}
 
 module SunTimes (getSunTimes) where
 
@@ -15,9 +17,7 @@ import STExcept
 import App
 
 newtype SunTimesWrapper dt = SunTimesWrapper {results :: SunTimes dt}
-  deriving (Show, Generic)
-
-instance FromJSON dt => FromJSON (SunTimesWrapper dt)
+  deriving (Show, Generic, FromJSON)
 
 getSunTimesUTC :: GeoCoords -> When -> MyApp (SunTimes UTCTime)
 getSunTimesUTC GeoCoords {..} w =
@@ -51,9 +51,7 @@ data TimeZoneInfo =
                , abbreviation :: String
                , dst :: String
                }
-  deriving (Show, Generic)
-
-instance FromJSON TimeZoneInfo
+  deriving (Show, Generic, FromJSON)
 
 lookupTimeZone :: GeoCoords -> UTCTime -> MyApp TimeZone
 lookupTimeZone GeoCoords {..} t = do

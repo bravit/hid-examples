@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveAnyClass #-}
 
 module Types where
 
@@ -14,19 +15,13 @@ data When = Now | On Day
 
 data GeoCoords = GeoCoords { lat :: Text,
                              lon :: Text }
-  deriving (Show, Generic)
-
-instance FromJSON GeoCoords
+  deriving (Show, Generic, FromJSON)
 
 data SunTimes dt = SunTimes { sunrise :: dt,
                               sunset :: dt }
-  deriving (Show, Generic)
-
-instance FromJSON dt => FromJSON (SunTimes dt)
+  deriving (Show, Generic, FromJSON)
 
 data WebAPIAuth = WebAPIAuth { timeZoneDBkey :: Text,
                                email :: Text,
                                agent :: Text}
-  deriving (Generic, Show)
-
-instance FromJSON WebAPIAuth
+  deriving (Show, Generic, FromJSON)

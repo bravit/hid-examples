@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveAnyClass #-}
+
 module IPTypes where
 
 import Data.Word
@@ -33,10 +35,9 @@ newtype ParseError = ParseError LineNumber
 
 data InvalidArgsException = LoadIPRangesError ParseError
                           | InvalidIP String
+  deriving Exception
 
 instance Show InvalidArgsException where
   show (LoadIPRangesError (ParseError idx)) =
     "Error loading ip range databases (line: " ++ show idx ++ ")"
   show (InvalidIP s) = "Invalid IP address to check: " ++ s
-
-instance Exception InvalidArgsException
