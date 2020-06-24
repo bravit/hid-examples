@@ -376,6 +376,12 @@ executables:
         main: strategies.hs
         dependencies:
           - aeson >= 1.2 && < 1.5
+    coerce:
+        source-dirs: ch12/deriv/
+        main: coerce.hs
+    newtype:
+        source-dirs: ch12/deriv/
+        main: newtype.hs
     generic-sql:
         source-dirs: ch12/genSQL/
         main: Main.hs

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: db277fdd696f5f9936e1e1f3e704228c304987db5c020008336e8b2c193c6ccc
+-- hash: 8ec38339ef6c384fb496a0a5df735fa536a2c25cdc9cc9b4eeb3872c74813d79
 
 name:           hid-examples
 version:        0.5
@@ -206,6 +206,17 @@ executable api-stage3
 
 executable basic-deriv
   main-is: basic-deriv.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch12/deriv/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable coerce
+  main-is: coerce.hs
   other-modules:
       Paths_hid_examples
   hs-source-dirs:
@@ -501,6 +512,17 @@ executable maybe
       Paths_hid_examples
   hs-source-dirs:
       ch05
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable newtype
+  main-is: newtype.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch12/deriv/
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
