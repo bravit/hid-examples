@@ -368,6 +368,7 @@ executables:
         other-extensions:
           - RankNTypes
     # Chapter 12
+    # 12.1
     basic-deriv:
         source-dirs: ch12/deriv/
         main: basic-deriv.hs
@@ -382,6 +383,17 @@ executables:
     newtype:
         source-dirs: ch12/deriv/
         main: newtype.hs
+        dependencies:
+          - mtl >=2.0 && <2.3
+    via:
+        source-dirs: ch12/deriv/
+        main: via.hs
+    # 12.2
+    view-generic:
+        source-dirs: ch12/generics/
+        main: view-generic.hs
+        ghc-options:
+          - -Wno-missing-signatures
     generic-sql:
         source-dirs: ch12/genSQL/
         main: Main.hs

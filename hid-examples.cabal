@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8ec38339ef6c384fb496a0a5df735fa536a2c25cdc9cc9b4eeb3872c74813d79
+-- hash: f9a1d7c1a4e1ea0b98b6e986a68df25de3efd974a1d29390f2de4a899a5bb2c1
 
 name:           hid-examples
 version:        0.5
@@ -526,6 +526,7 @@ executable newtype
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
+    , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
 executable nummod-rank-n
@@ -834,6 +835,28 @@ executable unboxed
       Paths_hid_examples
   other-extensions: UnboxedTuples UnboxedSums
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable via
+  main-is: via.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch12/deriv/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable view-generic
+  main-is: view-generic.hs
+  other-modules:
+      Paths_hid_examples
+  hs-source-dirs:
+      ch12/generics/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures
   build-depends:
       base >=4.12 && <4.15
   default-language: Haskell2010

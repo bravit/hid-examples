@@ -4,7 +4,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DefaultSignatures #-}
 
-module GenericSQL (ToSQL(..)) where
+module GenericSQL where
 
 import GHC.Generics
 import Data.Text (Text)
