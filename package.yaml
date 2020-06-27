@@ -400,6 +400,39 @@ executables:
         dependencies:
           - text >=1.2 && <1.3
           - text-show >=3.0 && <4
+    # 12.3
+    hello-th:
+        source-dirs: ch12/th/hello/
+        main: Main.hs
+        other-modules: [ Hello ]
+        dependencies:
+          - template-haskell >=2.13 && <2.17
+    projectors:
+        source-dirs: ch12/th/projectors/
+        main: Main.hs
+        other-modules: [ Pr ]
+        dependencies:
+          - template-haskell >=2.13 && <2.17
+        ghc-options:
+          - -Wno-missing-signatures
+    predicates:
+        source-dirs: ch12/th/predicates/
+        main: Main.hs
+        other-modules: [ Predicates ]
+        dependencies:
+          - template-haskell >=2.13 && <2.17
+        ghc-options:
+          - -Wno-missing-signatures
+          - -Wno-incomplete-patterns
+    mstr-literals:
+        source-dirs: ch12/th/mstr-lits/
+        main: Main.hs
+        other-modules: [ Str ]
+        dependencies:
+          - template-haskell >=2.13 && <2.17
+        ghc-options:
+          - -Wno-missing-signatures
+          - -Wno-incomplete-patterns
     ping-server:
         source-dirs: ch12/rpc/ping/
         main: server.hs

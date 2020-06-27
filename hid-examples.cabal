@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f9a1d7c1a4e1ea0b98b6e986a68df25de3efd974a1d29390f2de4a899a5bb2c1
+-- hash: 1600b17bdc8e414481a14bc93e166f83a130d4f966cfe908d3722878cba35726
 
 name:           hid-examples
 version:        0.5
@@ -431,6 +431,18 @@ executable hello
       base >=4.12 && <4.15
   default-language: Haskell2010
 
+executable hello-th
+  main-is: Main.hs
+  other-modules:
+      Hello
+  hs-source-dirs:
+      ch12/th/hello/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , template-haskell >=2.13 && <2.17
+  default-language: Haskell2010
+
 executable ioref
   main-is: ioref.hs
   other-modules:
@@ -515,6 +527,18 @@ executable maybe
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable mstr-literals
+  main-is: Main.hs
+  other-modules:
+      Str
+  hs-source-dirs:
+      ch12/th/mstr-lits/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures -Wno-incomplete-patterns
+  build-depends:
+      base >=4.12 && <4.15
+    , template-haskell >=2.13 && <2.17
   default-language: Haskell2010
 
 executable newtype
@@ -607,6 +631,18 @@ executable ping-server
     , time >=1.8 && <1.11
   default-language: Haskell2010
 
+executable predicates
+  main-is: Main.hs
+  other-modules:
+      Predicates
+  hs-source-dirs:
+      ch12/th/predicates/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures -Wno-incomplete-patterns
+  build-depends:
+      base >=4.12 && <4.15
+    , template-haskell >=2.13 && <2.17
+  default-language: Haskell2010
+
 executable prefix-postfix
   main-is: prefix-postfix.hs
   other-modules:
@@ -619,6 +655,18 @@ executable prefix-postfix
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
     , text-show >=3.0 && <4
+  default-language: Haskell2010
+
+executable projectors
+  main-is: Main.hs
+  other-modules:
+      Pr
+  hs-source-dirs:
+      ch12/th/projectors/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures
+  build-depends:
+      base >=4.12 && <4.15
+    , template-haskell >=2.13 && <2.17
   default-language: Haskell2010
 
 executable radar
