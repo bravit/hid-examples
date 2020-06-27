@@ -64,6 +64,12 @@ hello :: ToUnescapingTF (Maybe String, Char, Char, Char,
 hello = toUnescaping (Just "Привет, ",'м','и','р',
                       '!','!','!','!','!','!','!','!','!')
 
+data Name = Name String
+  deriving Show
+
+name :: ToUnescapingTF Name
+name = toUnescaping $ Name "Иван"
+
 pangrams :: [String]
 pangrams = [ "Vogt Nyx: »Büß du ja zwölf Qirsch, Kämpe!«"
            , "Voix ambiguë d’un cœur qui au zéphyr préfère les jattes de kiwi"
