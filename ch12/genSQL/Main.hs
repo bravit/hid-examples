@@ -17,6 +17,13 @@ data Course = Course {courseId :: Int, title :: Text, instructor :: Text}
   deriving stock Generic
   deriving anyclass ToSQL
 
+-- Doesn't compile:
+{-
+data Status = Ok | Err
+  deriving stock Generic
+  deriving anyclass ToSQL
+-}
+
 main :: IO ()
 main = do
   TIO.putStrLn $ insertInto "students" (Student 18265 "John Doe" 2)

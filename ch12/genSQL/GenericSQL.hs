@@ -32,9 +32,9 @@ buildersToList (x:xs) = singleton '(' <> x <> go xs -- "(..
 insertIntoDefault :: (Generic a, ToColumnsValuesLists (Rep a)) =>
                    Text -> a -> Text
 insertIntoDefault table val =
-  toText $ "INSERT INTO " <> fromText table <> " " <>
-            buildersToList columns <>
-            " VALUES " <> buildersToList values
+  toText $ "INSERT INTO " <> fromText table <> " "
+           <> buildersToList columns
+           <> " VALUES " <> buildersToList values
   where
     (columns, values) = toColumnsValues (from val)
 
