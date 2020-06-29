@@ -410,11 +410,9 @@ executables:
     projectors:
         source-dirs: ch12/th/projectors/
         main: Main.hs
-        other-modules: [ Pr ]
+        other-modules: [ Projectors ]
         dependencies:
           - template-haskell >=2.13 && <2.17
-        ghc-options:
-          - -Wno-missing-signatures
     predicates:
         source-dirs: ch12/th/predicates/
         main: Main.hs

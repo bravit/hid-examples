@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1600b17bdc8e414481a14bc93e166f83a130d4f966cfe908d3722878cba35726
+-- hash: e706b7832920c43188d4b21130c78d0625e380347d503450b1e8c1f1a584b582
 
 name:           hid-examples
 version:        0.5
@@ -660,10 +660,10 @@ executable prefix-postfix
 executable projectors
   main-is: Main.hs
   other-modules:
-      Pr
+      Projectors
   hs-source-dirs:
       ch12/th/projectors/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
     , template-haskell >=2.13 && <2.17

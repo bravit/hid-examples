@@ -1,10 +1,11 @@
 {-# LANGUAGE TemplateHaskell #-}
-import Pr
+import Projectors
 
-$(mkProjections [2..10])
+$(mkProjectors [2..10])
 
 main :: IO ()
 main = do
+--  putStrLn $ $(proj 3 4) ("aaa","bbb","ccc")
   putStrLn $ $(proj 3 1) (undefined,"Success!",undefined)
   putStrLn $ $(proj 4 2) (undefined,undefined,"Success!",undefined)
   putStrLn $ $(proj 5 4) (undefined,undefined,undefined,undefined,"Success!")

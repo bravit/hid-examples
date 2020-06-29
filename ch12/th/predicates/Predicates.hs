@@ -5,9 +5,13 @@ module Predicates (mkPredicates) where
 import Language.Haskell.TH
 
 mkPredicates :: Name -> Q [Dec]
-mkPredicates name = do
-    TyConI (DataD _ _ _ _ constructorRecords _) <- reify name
-    fmap concat $ mapM mkPredicate constructorRecords
+mkPredicates name =
+  reify name
+  >>= fmap concat . mapM mkPredicate . extractConstructors
+
+extractConstructors :: Info -> [Con]
+extractConstructors (TyConI (DataD _ _ _ _ cons _)) = cons
+extractConstructors _ = []
 
 mkPredicate :: Con -> Q [Dec]
 mkPredicate (NormalC name types) =
@@ -19,3 +23,4 @@ mkPredicate (NormalC name types) =
   where
     predicate = varP $ mkName $ "is" ++ nameBase name
     pat = conP name $ replicate (length types) wildP
+mkPredicate _ = pure []
