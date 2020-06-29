@@ -145,7 +145,7 @@ executables:
         main: weapons.hs
         dependencies:
           - mtl >=2.0 && <2.3
-          - random >=1.0 && <1.2
+          - random >=1.0 && <1.3
     prefix-postfix:
         source-dirs: expr
         main: prefix-postfix.hs
@@ -158,7 +158,7 @@ executables:
         main: dicegame.hs
         dependencies:
           - mtl >=2.0 && <2.3
-          - random >=1.0 && <1.2
+          - random >=1.0 && <1.3
     ioref:
         source-dirs: ch05
         main: ioref.hs
@@ -293,7 +293,7 @@ executables:
     iplookup-simulation:
         main: ip/iplookup-simulation.hs
         dependencies:
-          - random >=1.0 && <1.2
+          - random >=1.0 && <1.3
           - iplookup-lib
     # Chapter 11
     temp-proxies:
@@ -588,7 +588,7 @@ tests:
         other-modules: []
         dependencies:
           - radar-lib
-          - random >=1.0 && <1.2
+          - random >=1.0 && <1.3
     expr-simple-test:
         source-dirs: tests/expr
         main: Test1.hs

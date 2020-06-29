@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e706b7832920c43188d4b21130c78d0625e380347d503450b1e8c1f1a584b582
+-- hash: 86d6280be6e0699898b1c79c190ebff0798ebb540b6ecf68c9a6c9fd1325107a
 
 name:           hid-examples
 version:        0.5
@@ -247,7 +247,7 @@ executable dicegame
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
-    , random >=1.0 && <1.2
+    , random >=1.0 && <1.3
   default-language: Haskell2010
 
 executable div
@@ -487,7 +487,7 @@ executable iplookup-simulation
   build-depends:
       base >=4.12 && <4.15
     , iplookup-lib
-    , random >=1.0 && <1.2
+    , random >=1.0 && <1.3
   default-language: Haskell2010
 
 executable isprime
@@ -951,7 +951,7 @@ executable weapons
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
-    , random >=1.0 && <1.2
+    , random >=1.0 && <1.3
   default-language: Haskell2010
 
 test-suite expr-simple-test
@@ -1012,7 +1012,7 @@ test-suite radar-test
   build-depends:
       base >=4.12 && <4.15
     , radar-lib
-    , random >=1.0 && <1.2
+    , random >=1.0 && <1.3
   default-language: Haskell2010
 
 test-suite shunting-yard-test
