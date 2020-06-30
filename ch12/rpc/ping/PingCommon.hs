@@ -1,13 +1,14 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE QuasiQuotes #-}
 
-module PingTypes where
+module PingCommon where
 
 import GHC.Generics
 import Data.Serialize
 
-import DDefs
+import RpcCommon
 
 instance RemoteState Integer where
     initState = 0

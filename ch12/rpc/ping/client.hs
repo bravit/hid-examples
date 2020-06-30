@@ -1,12 +1,15 @@
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE QuasiQuotes #-}
+
 import Control.Monad
 import Control.Monad.Trans
 
 import ClientUtils
+import PingCommon
 
-import PingTypes
-
-$(genClientDeclsFrom "ch12/rpc/ping/RemoteFunctions.hs")
+[remote|
+   ping :: RemotePing PingAnswer
+   echo :: String -> RemotePing String
+ |]
 
 example :: Int -> RemotePing ()
 example n = do

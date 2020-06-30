@@ -434,26 +434,21 @@ executables:
     ping-server:
         source-dirs: ch12/rpc/ping/
         main: server.hs
-        other-modules: [ RemoteFunctions, PingTypes ]
+        other-modules: [ PingCommon ]
         dependencies:
           - rpc-lib
           - time >=1.8 && <1.11
           - bytestring >=0.10 && <0.11
           - mtl >=2.0 && <2.3
           - cereal >= 0.5 && <0.6
-        ghc-options:
-          - -Wno-missing-signatures
-          - -Wno-incomplete-patterns
     ping-client:
         source-dirs: ch12/rpc/ping/
         main: client.hs
-        other-modules: [ PingTypes ]
+        other-modules: [ PingCommon ]
         dependencies:
           - rpc-lib
           - mtl >=2.0 && <2.3
           - cereal >= 0.5 && <0.6
-        ghc-options:
-          - -Wno-incomplete-patterns
     # Chapter 13
     api-stage0:
         main: ch13/api/Api0.hs
@@ -560,10 +555,7 @@ internal-libraries:
       exposed-modules:
         - ClientUtils
         - ServerUtils
-        - RemoteIO
-        - DeclsGenerator
-        - DDefs
-      other-modules: [IfaceExtractor]
+        - RpcCommon
       dependencies:
         - bytestring >=0.10 && <0.11
         - mtl >=2.0 && <2.3
@@ -575,11 +567,6 @@ internal-libraries:
         - connection >= 0.3 && <0.4
         - exceptions >= 0.10 && < 0.11
         - network-simple >= 0.4 && <0.5
-      ghc-options:
-        - -Wno-incomplete-patterns
-        - -Wno-incomplete-uni-patterns
-        - -Wno-name-shadowing
-        - -Wno-unused-matches
 tests:
     # Chapter 2
     radar-test:

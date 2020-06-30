@@ -5,7 +5,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveAnyClass #-}
 
-module DDefs where
+module RpcCommon where
 
 import Data.ByteString (ByteString)
 import Data.Serialize
@@ -20,7 +20,6 @@ type Operation = String
 
 msgSizeField :: Int
 msgSizeField = 8 -- in bytes
-
 
 data RequestContext = ReqCtx {
         oper::Operation

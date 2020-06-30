@@ -5,7 +5,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 module RemoteIO where
 
-import DDefs
+import RpcCommon
 import Control.Monad.Reader
 import Control.Monad.State
 import Control.Monad.Catch

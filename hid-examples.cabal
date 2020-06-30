@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 86d6280be6e0699898b1c79c190ebff0798ebb540b6ecf68c9a6c9fd1325107a
+-- hash: 120030e880a89cd6e035bea27c7680beab39f5f9941ac063348f2fc3d164ed27
 
 name:           hid-examples
 version:        0.5
@@ -131,14 +131,15 @@ library rpc-lib
   exposed-modules:
       ClientUtils
       ServerUtils
-      RemoteIO
-      DeclsGenerator
-      DDefs
+      RpcCommon
   other-modules:
-      IfaceExtractor
+      DeclsGenerator
+      RemoteIO
+      RemoteParser
+      Paths_hid_examples
   hs-source-dirs:
       ch12/rpc/lib
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-incomplete-patterns -Wno-incomplete-uni-patterns -Wno-name-shadowing -Wno-unused-matches
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
     , bytestring >=0.10 && <0.11
@@ -603,10 +604,10 @@ executable person-text
 executable ping-client
   main-is: client.hs
   other-modules:
-      PingTypes
+      PingCommon
   hs-source-dirs:
       ch12/rpc/ping/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-incomplete-patterns
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
     , cereal >=0.5 && <0.6
@@ -617,11 +618,10 @@ executable ping-client
 executable ping-server
   main-is: server.hs
   other-modules:
-      RemoteFunctions
-      PingTypes
+      PingCommon
   hs-source-dirs:
       ch12/rpc/ping/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures -Wno-incomplete-patterns
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
     , bytestring >=0.10 && <0.11

@@ -1,7 +1,7 @@
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module ServerUtils (serveRPC, genServerDecls, runSerialized) where
+module ServerUtils (genServer, serveRPC, runSerialized) where
 
 import Data.Serialize
 import Data.ByteString (ByteString)
@@ -12,8 +12,8 @@ import Network.Connection
 import Network.Socket (PortNumber)
 
 import RemoteIO
-import DDefs
-import DeclsGenerator (genServerDecls)
+import RpcCommon
+import DeclsGenerator (genServer)
 
 runSerialized :: (Serialize a, Serialize b) =>
                  RemoteAction st a b -> ByteString -> RSIO st ByteString
@@ -22,9 +22,9 @@ runSerialized action params
 
 serveRPC :: (Serialize a, RemoteState st) =>
           HostName -> PortNumber -> RPCTable st a -> IO ()
-serveRPC host port funcs = serve (Host host) (show port) procRequests
+serveRPC host portNum funcs = serve (Host host) (show portNum) procRequests
   where
-    connParams = ConnectionParams host port Nothing Nothing
+    connParams = ConnectionParams host portNum Nothing Nothing
     procRequests (connSock, sockAddr) = do
       logConnection "New connection" sockAddr
       initCtx <- initConnectionContext

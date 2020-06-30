@@ -1,13 +1,13 @@
 module ClientUtils (
-    module DDefs,
+    module RpcCommon,
     module RemoteIO,
-    genClientDeclsFrom,
+    remote,
     callRemote) where
 
-import DDefs
+import RpcCommon
 import Data.Serialize
 import RemoteIO
-import DeclsGenerator (genClientDeclsFrom)
+import DeclsGenerator (remote)
 
 callRemote :: (Serialize a, Serialize b) => Operation -> a -> RSIO st b
 callRemote operation params = do
