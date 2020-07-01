@@ -10,6 +10,7 @@ import Control.Monad.Reader
 import Control.Monad.State
 import Control.Monad.Catch
 import Network.Connection
+import Network.Socket (PortNumber)
 import System.IO.Error (isEOFError)
 
 
@@ -21,9 +22,9 @@ unEitherStaged stage eValue = either (throwRemote . errMsg) pure eValue
   where
     errMsg msg = "Decoding error (" <> show stage <> "): " <> msg
 
-runRemote :: RemoteState st => PeerAddr -> RSIO st a -> IO a
-runRemote peer computation = do
-    conn <- remoteConnectTo peer
+runRemote :: RemoteState st => String -> PortNumber -> RSIO st a -> IO a
+runRemote host port computation = do
+    conn <- remoteConnectTo host port
     res <- runRemoteConn conn computation
     liftIO $ connectionClose conn
     pure res
@@ -56,9 +57,9 @@ receiveRSIO = ask >>= \conn ->
 throwRemote :: String -> RSIO st b
 throwRemote err_msg = throwM $ RemoteException err_msg
 
-remoteConnectTo :: PeerAddr -> IO Connection
-remoteConnectTo peer = do
+remoteConnectTo :: String -> PortNumber -> IO Connection
+remoteConnectTo host port = do
     connCtx <- initConnectionContext
     connectTo connCtx connParams
   where
-    connParams = ConnectionParams (hostname peer) (port peer) Nothing Nothing
+    connParams = ConnectionParams host port Nothing Nothing

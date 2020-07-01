@@ -21,4 +21,4 @@ example n = do
     prt = liftIO . print
 
 main :: IO ()
-main = runRemote (PeerAddr "localhost" 1500) (example 3) >> pure ()
+main = runRemote "localhost" 1500 (example 3) >> pure ()

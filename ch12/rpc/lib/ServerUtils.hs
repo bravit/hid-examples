@@ -16,12 +16,13 @@ import RpcCommon
 import DeclsGenerator (genServer)
 
 runSerialized :: (Serialize a, Serialize b) =>
-                 RemoteAction st a b -> ByteString -> RSIO st ByteString
+                 RemoteAction st a b ->
+                 RemoteAction st ByteString ByteString
 runSerialized action params
   = unEitherStaged Stage2 (decode params) >>= liftM encode . action
 
-serveRPC :: (Serialize a, RemoteState st) =>
-          HostName -> PortNumber -> RPCTable st a -> IO ()
+serveRPC :: RemoteState st =>
+          HostName -> PortNumber -> RPCTable st -> IO ()
 serveRPC host portNum funcs = serve (Host host) (show portNum) procRequests
   where
     connParams = ConnectionParams host portNum Nothing Nothing
@@ -35,10 +36,10 @@ serveRPC host portNum funcs = serve (Host host) (show portNum) procRequests
 
     serveClient = forever (receiveRSIO >>= call >>= sendRSIO)
 
-    call (ctx, params) =
-      maybe (unsupported $ oper ctx)
+    call (operation, params) =
+      maybe (unsupported operation)
             (\func -> func params)
-            (lookup (oper ctx) funcs)
+            (lookup operation funcs)
 
     unsupported operation =
       throwRemote $ "Unsupported operation (" <> operation <> ")"
