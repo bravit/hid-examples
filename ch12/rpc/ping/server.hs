@@ -1,9 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-
-module Main where
-
 import Control.Monad.State
-
 import ServerUtils
 import PingCommon
 

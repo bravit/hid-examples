@@ -30,7 +30,7 @@ runRemote peer computation = do
 
 runRemoteConn :: RemoteState st => Connection -> RSIO st a -> IO a
 runRemoteConn conn computation =
-        runReaderT (evalStateT (runRem computation) initState) conn
+    runReaderT (evalStateT (runRem computation) initState) conn
 
 sendRSIO :: Serialize a => a -> RSIO st ()
 sendRSIO msg = do

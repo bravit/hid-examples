@@ -7,8 +7,8 @@ import ClientUtils
 import PingCommon
 
 [remote|
-   ping :: RemotePing PingAnswer
-   echo :: String -> RemotePing String
+ping :: RemotePing PingAnswer
+echo :: String -> RemotePing String
  |]
 
 example :: Int -> RemotePing ()
@@ -22,4 +22,3 @@ example n = do
 
 main :: IO ()
 main = runRemote (PeerAddr "localhost" 1500) (example 3) >> pure ()
-
