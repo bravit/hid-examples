@@ -23,26 +23,27 @@ runSerialized action params
 
 serveRPC :: RemoteState st =>
           HostName -> PortNumber -> RPCTable st -> IO ()
-serveRPC host portNum funcs = serve (Host host) (show portNum) procRequests
+serveRPC host portNum rpcTable = serve (Host host) (show portNum) procRequests
   where
     connParams = ConnectionParams host portNum Nothing Nothing
+
     procRequests (connSock, sockAddr) = do
       logConnection "New connection" sockAddr
       initCtx <- initConnectionContext
       conn <- connectFromSocket initCtx connSock connParams
-      catch (runRemoteConn conn serveClient >> pure ())
+      catch (runRemoteConn conn (forever $ serveRequest rpcTable) >> pure ())
             (\(e :: RemoteException) ->
                logConnection (displayException e) sockAddr)
 
-    serveClient = forever (receiveRSIO >>= call >>= sendRSIO)
-
-    call (operation, params) =
-      maybe (unsupported operation)
-            (\func -> func params)
-            (lookup operation funcs)
-
-    unsupported operation =
-      throwRemote $ "Unsupported operation (" <> operation <> ")"
-
     logConnection msg sockAddr =
       putStrLn $ "LOG: " <> show sockAddr <> " " <> msg
+
+serveRequest :: RPCTable st -> RSIO st ()
+serveRequest rpcTable = receiveRSIO >>= call >>= sendRSIO
+  where
+    call (operation, params) =
+      case lookup operation rpcTable of
+        Nothing -> throwRemote
+                   $ "Unsupported operation (" <> operation <> ")"
+        Just func -> func params
+

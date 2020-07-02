@@ -2,20 +2,20 @@
 
 module RemoteParser where
 
-import Language.Haskell.Exts hiding (Type, name)
+import Language.Haskell.Exts hiding (name)
 import Language.Haskell.Meta.Syntax.Translate (toType)
-import Language.Haskell.TH (Type, Q)
+import Language.Haskell.TH as TH
 import Data.Char
 
 data FuncInfo = FuncInfo {
     name :: String
-  , ty :: Type
+  , ty :: TH.Type
   }
 
 parseRemoteInterface :: String -> Q [FuncInfo]
-parseRemoteInterface quote = concat <$> mapM (funcInfo . parseDecl) funcs
+parseRemoteInterface quote = concat <$> mapM (funcInfo . parseDecl) tysigs
   where
-    funcs = filter (not . null) $ map (dropWhile isSpace) $ lines quote
+    tysigs = filter (not . null) $ map (dropWhile isSpace) $ lines quote
 
 funcInfo :: ParseResult (Decl SrcSpanInfo) -> Q [FuncInfo]
 funcInfo (ParseOk (TypeSig _ ids t)) =

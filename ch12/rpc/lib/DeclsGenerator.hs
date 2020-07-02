@@ -1,7 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module DeclsGenerator (remote, genServer) where
+module DeclsGenerator where
 
 import Language.Haskell.TH
 import Language.Haskell.TH.Quote
@@ -30,11 +30,7 @@ genClientStub callee FuncInfo {..} = do
   where
     funName = mkName name
     typeSig = SigD funName ty
-    stubBody = [| $(curryArgs (arity ty)) $ $(dyn callee) name |]
-
-    curryArgs 0 = [| \f -> f () |]
-    curryArgs 1 = [| id |]
-    curryArgs n = [| curry . $(curryArgs (n-1)) |]
+    stubBody = [| $(curryAll (arity ty)) $ $(dyn callee) name |]
 
 genServer :: [Name] -> Q [Dec]
 genServer names =
@@ -50,21 +46,28 @@ genRemoteTable names =
 
 genServerStub :: String -> FuncInfo -> ExpQ
 genServerStub callee FuncInfo {..} =
-    [| (name, $(dyn callee) $ $(prepareArgs (arity ty)) $(dyn name) ) |]
-  where
-    prepareArgs 0 = [| (const :: a -> () -> a) |]
-    prepareArgs 1 = [| id |]
-    prepareArgs n = [| uncurry . $(prepareArgs (n-1)) |]
+    [| (name, $(dyn callee) $ $(uncurryAll (arity ty)) $(dyn name) ) |]
 
 reifyFunc :: Name -> Q FuncInfo
 reifyFunc nm = do
   VarI _ t Nothing <- reify nm
-  pure $ FuncInfo {
-    name = nameBase nm,
-    ty = t
-  }
+  pure $ FuncInfo (nameBase nm) t
 
 arity :: Type -> Int
-arity (ForallT _ _ rest) = arity rest
-arity (AppT (AppT ArrowT _) rest) = arity rest + 1
+arity (AppT (AppT ArrowT _) t) = arity t + 1
+arity (ForallT _ _ t) = arity t
 arity _ = 0
+
+curryAll :: Int -> Q Exp
+curryAll 0 = [| \f -> f () |]
+curryAll 1 = [| id |]
+curryAll n
+  | n > 1 = [| curry . $(curryAll (n-1)) |]
+  | otherwise = fail "curryAll argument can't be negative"
+
+uncurryAll :: Int -> Q Exp
+uncurryAll 0 = [| (const :: a -> () -> a) |]
+uncurryAll 1 = [| id |]
+uncurryAll n
+  | n >1 = [| uncurry . $(uncurryAll (n-1)) |]
+  | otherwise = fail "uncurryAll argument can't be negative"

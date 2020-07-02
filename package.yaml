@@ -437,8 +437,6 @@ executables:
         other-modules: [ PingCommon ]
         dependencies:
           - rpc-lib
-          - time >=1.8 && <1.11
-          - bytestring >=0.10 && <0.11
           - mtl >=2.0 && <2.3
           - cereal >= 0.5 && <0.6
     ping-client:
@@ -559,14 +557,14 @@ internal-libraries:
       dependencies:
         - bytestring >=0.10 && <0.11
         - mtl >=2.0 && <2.3
-        - network >= 2.8 && <3.2
         - cereal >= 0.5 && <0.6
+        - network >= 2.8 && <3.2
+        - connection >= 0.3 && <0.4
+        - network-simple >= 0.4 && <0.5
+        - exceptions >= 0.10 && < 0.11
         - template-haskell >= 2.13 && <2.16
         - haskell-src-exts >= 1.20 && <1.24
         - haskell-src-meta >= 0.6 && < 0.9
-        - connection >= 0.3 && <0.4
-        - exceptions >= 0.10 && < 0.11
-        - network-simple >= 0.4 && <0.5
 tests:
     # Chapter 2
     radar-test:
