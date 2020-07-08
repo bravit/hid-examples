@@ -471,6 +471,23 @@ executables:
           - FlexibleInstances
           - InstanceSigs
           - ScopedTypeVariables
+    unsafe-elevator:
+        source-dirs: ch13/elevator/
+        main: UseUnsafe.hs
+        other-modules: [LowLevel.Ops, Unsafe.Elevator]
+        dependencies:
+          - mtl >=2.0 && <2.3
+    elevator:
+        source-dirs: ch13/elevator/
+        main: UseSafe.hs
+        other-modules: [LowLevel.Ops, Safe.Elevator]
+        dependencies:
+          - fin >= 0.1 && < 0.2
+          - dec >= 0.0.3 && < 0.1
+          - singletons >= 2.5 && < 2.8
+          - mtl >=2.0 && <2.3
+        ghc-options:
+          - -Wno-unticked-promoted-constructors
     doors-type-equality:
         main: ch13/doors/TypeEq.hs
         other-extensions:

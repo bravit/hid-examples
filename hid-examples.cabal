@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f66020a84aa8c04ba66732160f2e3da3a6612d7fa8ffca745da6986dc74647c2
+-- hash: 67c51bfd5a51654b00f791336cb6e5e2411a3c0134f387a08d42ad499901b88f
 
 name:           hid-examples
 version:        0.5
@@ -320,6 +320,22 @@ executable dynvalues-gadt
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable elevator
+  main-is: UseSafe.hs
+  other-modules:
+      LowLevel.Ops
+      Safe.Elevator
+  hs-source-dirs:
+      ch13/elevator/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-unticked-promoted-constructors
+  build-depends:
+      base >=4.12 && <4.15
+    , dec >=0.0.3 && <0.1
+    , fin >=0.1 && <0.2
+    , mtl >=2.0 && <2.3
+    , singletons >=2.5 && <2.8
   default-language: Haskell2010
 
 executable evalrpn1
@@ -883,6 +899,19 @@ executable unboxed
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable unsafe-elevator
+  main-is: UseUnsafe.hs
+  other-modules:
+      LowLevel.Ops
+      Unsafe.Elevator
+  hs-source-dirs:
+      ch13/elevator/
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , mtl >=2.0 && <2.3
   default-language: Haskell2010
 
 executable via
