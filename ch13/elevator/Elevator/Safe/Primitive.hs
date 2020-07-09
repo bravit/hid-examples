@@ -1,17 +1,12 @@
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE EmptyCase #-}
 {-# LANGUAGE TypeApplications #-}
@@ -89,7 +84,8 @@ sameFloor :: forall mx to from door.
 sameFloor MkFloor MkElevatorClosed = eqNat
 sameFloor MkFloor MkElevatorOpened = eqNat
 
-ensureClosed :: forall mx cur door m. MonadIO m => Elevator mx cur door -> m (Elevator mx cur Closed)
+ensureClosed :: forall mx cur door m. MonadIO m =>
+  Elevator mx cur door -> m (Elevator mx cur Closed)
 ensureClosed el@MkElevatorClosed = pure el
 ensureClosed el@MkElevatorOpened = close (MkFloor :: Floor mx cur) el
 
