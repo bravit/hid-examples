@@ -1,7 +1,7 @@
 import Control.Monad
 import System.Environment
 
-import Unsafe.Elevator
+import Elevator.Unsafe
 
 gfElevator :: Elevator
 gfElevator = Elevator (Floor 0) Closed

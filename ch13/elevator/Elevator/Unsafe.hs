@@ -1,6 +1,6 @@
-module Unsafe.Elevator where
+module Elevator.Unsafe where
 
-import qualified LowLevel.Ops as LL
+import qualified Elevator.LowLevel as LL
 
 import Control.Monad.Trans
 

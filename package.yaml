@@ -474,13 +474,17 @@ executables:
     unsafe-elevator:
         source-dirs: ch13/elevator/
         main: UseUnsafe.hs
-        other-modules: [LowLevel.Ops, Unsafe.Elevator]
+        other-modules: [Elevator.LowLevel, Elevator.Unsafe]
         dependencies:
           - mtl >=2.0 && <2.3
     elevator:
         source-dirs: ch13/elevator/
         main: UseSafe.hs
-        other-modules: [LowLevel.Ops, Safe.Elevator]
+        other-modules:
+          - Elevator.LowLevel
+          - Elevator.Safe.Floor
+          - Elevator.Safe.Primitive
+          - Elevator.Safe.UI
         dependencies:
           - fin >= 0.1 && < 0.2
           - dec >= 0.0.3 && < 0.1

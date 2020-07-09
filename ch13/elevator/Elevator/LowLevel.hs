@@ -1,4 +1,4 @@
-module LowLevel.Ops where
+module Elevator.LowLevel where
 
 import Control.Monad.Trans
 

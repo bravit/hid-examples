@@ -18,38 +18,20 @@
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE InstanceSigs #-}
 
-module Safe.Elevator where
+module Elevator.Safe.Primitive where
 
 import Data.Type.Nat
 import Data.Type.Nat.LE
-import Data.Type.Dec
 import Data.Singletons.TH
 import Control.Monad.Trans
 
-import qualified LowLevel.Ops as LL
+import qualified Elevator.LowLevel as LL
+import Elevator.Safe.Floor
 
 $(singletons [d|
  data DoorState = Opened | Closed
   deriving (Eq, Show)
   |])
-
-data Floor (mx :: Nat) (num :: Nat) where
-  MkFloor :: GoodFloor mx num => Floor mx num
-
-instance Show (Floor mx num) where
-  show MkFloor = "Floor " <> show (snatToNat (snat :: SNat num))
-                 <> " of " <> show (snatToNat (snat :: SNat mx))
-
-
-mkFloor :: forall mx num. (SNatI mx, SNatI num) => Maybe (Floor mx num)
-mkFloor =
-  case decideLE :: Dec (LEProof num mx) of
-    Yes prf -> withLEProof prf $ Just MkFloor
-    No _ -> Nothing
-
-
-type GoodFloor mx num = (SNatI mx, SNatI num, LE num mx)
-type BelowTop mx num = (SNatI mx, SNatI num, LE (S num) mx)
 
 data Elevator (mx :: Nat) (cur :: Nat) (door :: DoorState) where
   MkElevatorClosed :: GoodFloor mx cur => Elevator mx cur Closed
@@ -66,6 +48,12 @@ showElev _ = "Elevator {current = "
              <> ", door = "
              <> show (fromSing (sing :: Sing door))
              <> "}"
+
+data SomeElevator (mx :: Nat) where
+  MkSomeElevator :: SingI door => Elevator mx cur door -> SomeElevator mx
+
+instance Show (SomeElevator mx) where
+  show (MkSomeElevator el) = show el
 
 up :: (BelowTop mx cur, MonadIO m) =>
       Elevator mx cur Closed -> m (Elevator mx (S cur) Closed)
@@ -95,3 +83,17 @@ close :: MonadIO m =>
 close _ MkElevatorOpened = do
   LL.close
   pure MkElevatorClosed
+
+sameFloor :: forall mx to from door.
+             Floor mx to -> Elevator mx from door -> Maybe (to :~: from)
+sameFloor MkFloor MkElevatorClosed = eqNat
+sameFloor MkFloor MkElevatorOpened = eqNat
+
+ensureClosed :: forall mx cur door m. MonadIO m => Elevator mx cur door -> m (Elevator mx cur Closed)
+ensureClosed el@MkElevatorClosed = pure el
+ensureClosed el@MkElevatorOpened = close (MkFloor :: Floor mx cur) el
+
+ensureOpenedAt :: MonadIO m =>
+  Floor mx fl -> Elevator mx fl door -> m (Elevator mx fl Opened)
+ensureOpenedAt _ el@MkElevatorOpened = pure el
+ensureOpenedAt fl el@MkElevatorClosed = open fl el
