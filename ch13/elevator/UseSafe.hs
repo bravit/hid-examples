@@ -1,6 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 
-import Elevator.Safe.UI
+import Elevator.Safe
 import Elevator.Safe.Floor
 import Elevator.Safe.Primitive
 
@@ -11,7 +11,7 @@ import System.Environment
 type MX = Nat5
 
 gfElevator :: Elevator MX Nat0 Closed
-gfElevator = MkElevatorClosed
+gfElevator = MkElevatorClosed (MkFloor :: Floor MX Nat0)
 
 example :: IO ()
 example = pure gfElevator >>= prt

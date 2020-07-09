@@ -482,9 +482,9 @@ executables:
         main: UseSafe.hs
         other-modules:
           - Elevator.LowLevel
+          - Elevator.Safe
           - Elevator.Safe.Floor
           - Elevator.Safe.Primitive
-          - Elevator.Safe.UI
         dependencies:
           - fin >= 0.1 && < 0.2
           - dec >= 0.0.3 && < 0.1
