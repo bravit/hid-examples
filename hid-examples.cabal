@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3000b0748c2a581aeaf741ef35a65c7d7ce504351c27b2418da5ff2eeb173a26
+-- hash: 4c9e4419d56e82a91d689f320f101fff1735630f59a349f2e2bf07441b761983
 
 name:           hid-examples
 version:        0.5
@@ -165,6 +165,21 @@ library shunting-yard
     , expr-simple
     , mtl >=2.0 && <2.3
     , text-show >=3.0 && <4
+  default-language: Haskell2010
+
+executable api-servant
+  main-is: ch13/api/ApiServant.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      aeson >=1.2 && <1.5
+    , base >=4.12 && <4.15
+    , blaze-html >=0.9 && <0.10
+    , servant-blaze >=0.7 && <0.10
+    , servant-server >=0.14 && <0.18
+    , text >=1.2 && <1.3
+    , warp >=3.2 && <3.4
   default-language: Haskell2010
 
 executable api-stage0
