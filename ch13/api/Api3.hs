@@ -113,7 +113,7 @@ instance (Read a, HasServer r) => HasServer (Capture a :> r) where
   route _ _       _        = Nothing
 
 get :: HasServer layout => Proxy layout -> Server layout -> [String] -> IO String
-get p h xs = case route p h xs of
+get proxy handler request = case route proxy handler request of
   Nothing -> ioError (userError "404")
   Just m  -> m
 

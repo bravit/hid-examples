@@ -54,7 +54,7 @@ get :: BookInfoAPIImpl -> Request -> IO String
 get impl xs =
   case route impl xs of
     Just m -> m
-    Nothing -> pure "Wrong request"
+    Nothing -> pure "Malformed request"
 
 check :: BookInfoAPIImpl -> IO ()
 check impl = do

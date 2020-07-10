@@ -89,7 +89,7 @@ get :: Server BookInfoAPI -> Request -> IO String
 get impl xs =
   case route impl xs of
     Just m -> m
-    Nothing -> pure "Wrong request"
+    Nothing -> pure "Malformed request"
 
 check :: Server BookInfoAPI -> IO ()
 check impl = do

@@ -6,7 +6,6 @@
 
 import GHC.Generics
 import Data.Aeson
-
 import Servant
 import Servant.HTML.Blaze
 import qualified Text.Blaze.Html5 as H

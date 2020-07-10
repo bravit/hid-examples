@@ -11,7 +11,7 @@ get [op, _] =
        "year" -> pure "2020"
        "rating" -> pure "Great"
        _ -> ioError (userError "Not implemented")
-get _ = ioError (userError "Wrong request")
+get _ = ioError (userError "Malformed request")
 
 check :: IO ()
 check = do
