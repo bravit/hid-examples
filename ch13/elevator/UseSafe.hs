@@ -1,8 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 
 import Elevator.Safe
-import Elevator.Safe.Floor
-import Elevator.Safe.Primitive
 
 import Data.Type.Nat
 import Control.Monad

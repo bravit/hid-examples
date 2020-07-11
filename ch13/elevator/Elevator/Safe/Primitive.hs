@@ -48,12 +48,6 @@ currentFloor :: Elevator mx cur door -> Floor mx cur
 currentFloor (MkElevatorClosed fl) = fl
 currentFloor (MkElevatorOpened fl) = fl
 
-data SomeElevator (mx :: Nat) where
-  MkSomeElevator :: SingI door => Elevator mx cur door -> SomeElevator mx
-
-instance Show (SomeElevator mx) where
-  show (MkSomeElevator el) = show el
-
 up :: (BelowTop mx cur, MonadIO m) =>
       Elevator mx cur Closed -> m (Elevator mx (S cur) Closed)
 up (MkElevatorClosed fl) = do

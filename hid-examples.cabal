@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4c9e4419d56e82a91d689f320f101fff1735630f59a349f2e2bf07441b761983
+-- hash: 35feddb7f2599d00769851613470f5e5a84543b1f47737a519fb2ed1eb0a6019
 
 name:           hid-examples
 version:        0.5
@@ -178,7 +178,6 @@ executable api-servant
     , blaze-html >=0.9 && <0.10
     , servant-blaze >=0.7 && <0.10
     , servant-server >=0.14 && <0.18
-    , text >=1.2 && <1.3
     , warp >=3.2 && <3.4
   default-language: Haskell2010
 
@@ -344,6 +343,7 @@ executable elevator
       Elevator.Safe
       Elevator.Safe.Floor
       Elevator.Safe.Primitive
+      Elevator.Safe.Some
   hs-source-dirs:
       ch13/elevator/
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-unticked-promoted-constructors

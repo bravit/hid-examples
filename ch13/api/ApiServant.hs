@@ -34,11 +34,8 @@ impl = pure Ok
     year _ = pure 2020
     rating _ = pure Great
 
-bookInfoAPI :: Proxy BookInfoAPI
-bookInfoAPI = Proxy
-
 app :: Application
-app = serve bookInfoAPI impl
+app = serve (Proxy :: Proxy BookInfoAPI) impl
 
 main :: IO ()
 main = run 8081 app

@@ -1,13 +1,14 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE GADTs #-}
 
-module Elevator.Safe (call, callSome) where
+module Elevator.Safe (module X, call, callSome) where
 
 import Control.Monad.Trans
 import Data.Type.Equality
 
-import Elevator.Safe.Primitive
-import Elevator.Safe.Floor
+import Elevator.Safe.Floor as X
+import Elevator.Safe.Primitive as X
+import Elevator.Safe.Some as X
 
 moveTo :: MonadIO m =>
           Floor mx to -> Elevator mx from Closed -> m (Elevator mx to Closed)

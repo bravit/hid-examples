@@ -479,8 +479,6 @@ executables:
           - warp >=3.2 && < 3.4
           - aeson >= 1.2 && < 1.5
           - blaze-html >=0.9 && <0.10
-          - text >=1.2 && <1.3
-
     unsafe-elevator:
         source-dirs: ch13/elevator/
         main: UseUnsafe.hs
@@ -495,6 +493,7 @@ executables:
           - Elevator.Safe
           - Elevator.Safe.Floor
           - Elevator.Safe.Primitive
+          - Elevator.Safe.Some
         dependencies:
           - fin >= 0.1 && < 0.2
           - dec >= 0.0.3 && < 0.1
