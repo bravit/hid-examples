@@ -4,15 +4,24 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE InstanceSigs #-}
 
-data DoorState = Opened | Closed
+import Data.Singletons.TH
+
+$(singletons [d|
+ data DoorState = Opened | Closed
   deriving Show
+ |])
 
 data Door (s :: DoorState) where
-  MkDoor :: SDoorStateI s => Door s
+  MkDoor :: SingI s => Door s
 
 instance Show (Door s) where
-  show MkDoor = show (sDoorState :: SDoorState s)
+  show MkDoor = show (fromSing (sing :: SDoorState s)) -- Sing s
 
 open :: Door Closed -> Door Opened
 open _ = MkDoor
@@ -20,28 +29,13 @@ open _ = MkDoor
 close :: Door Opened -> Door Closed
 close _ = MkDoor
 
-data SDoorState (s :: DoorState) where
-  SClosed :: SDoorState Closed
-  SOpened :: SDoorState Opened
-
-deriving instance Show (SDoorState s)
-
-class SDoorStateI (s :: DoorState) where
-  sDoorState :: SDoorState s
-
-instance SDoorStateI Opened where
-  sDoorState = SOpened
-
-instance SDoorStateI Closed where
-  sDoorState = SClosed
-
 data SomeDoor where
   SomeDoor :: Door s -> SomeDoor
 
 deriving instance Show SomeDoor
 
 doorState :: forall s. Door s -> SDoorState s
-doorState MkDoor = sDoorState
+doorState MkDoor = sing
 
 parseDoor :: String -> Maybe SomeDoor
 parseDoor "Opened" = Just $ SomeDoor (MkDoor :: Door Opened)

@@ -485,6 +485,28 @@ executables:
         other-modules: [Elevator.LowLevel, Elevator.Unsafe]
         dependencies:
           - mtl >=2.0 && <2.3
+    door:
+        main: ch13/doors/Sing.hs
+        other-extensions:
+          - DataKinds
+          - GADTs
+          - TypeOperators
+          - KindSignatures
+          - StandaloneDeriving
+        ghc-options:
+          - -Wno-unticked-promoted-constructors
+    door-sing:
+        main: ch13/doors/Sing2.hs
+        other-extensions:
+          - DataKinds
+          - GADTs
+          - TypeOperators
+          - KindSignatures
+          - StandaloneDeriving
+        dependencies:
+          - singletons >= 2.5 && < 2.8
+        ghc-options:
+          - -Wno-unticked-promoted-constructors
     elevator:
         source-dirs: ch13/elevator/
         main: UseSafe.hs
@@ -509,14 +531,6 @@ executables:
           - KindSignatures
           - ExplicitForAll
           - TypeOperators
-          - StandaloneDeriving
-    doors-singletons:
-        main: ch13/doors/Sing.hs
-        other-extensions:
-          - DataKinds
-          - GADTs
-          - TypeOperators
-          - KindSignatures
           - StandaloneDeriving
 
 internal-libraries:
