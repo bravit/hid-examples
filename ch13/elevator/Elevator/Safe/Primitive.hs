@@ -29,53 +29,49 @@ $(singletons [d|
   |])
 
 data Elevator (mx :: Nat) (cur :: Nat) (door :: Door) where
-  MkElevatorClosed :: Floor mx cur -> Elevator mx cur Closed
-  MkElevatorOpened :: Floor mx cur -> Elevator mx cur Opened
+  MkElevator :: SingI door => Floor mx cur -> Elevator mx cur door
 
-instance SingI door => Show (Elevator mx cur door) where
-  show it@(MkElevatorClosed MkFloor) = showElev it
-  show it@(MkElevatorOpened MkFloor) = showElev it
-
-showElev :: forall mx cur door. (GoodFloor mx cur, SingI door) =>
-            Elevator mx cur door -> String
-showElev _ = "Elevator {current = "
-             <> show (MkFloor :: Floor mx cur)
-             <> ", door = "
-             <> show (fromSing (sing :: Sing door))
-             <> "}"
+instance Show (Elevator mx cur door) where
+  show (MkElevator fl@MkFloor) =
+    "Elevator {current = " <> show fl
+    <> ", door = " <> show (fromSing (sing :: Sing door)) <> "}"
 
 currentFloor :: Elevator mx cur door -> Floor mx cur
-currentFloor (MkElevatorClosed fl) = fl
-currentFloor (MkElevatorOpened fl) = fl
+currentFloor (MkElevator fl) = fl
 
 up :: (BelowTop mx cur, MonadIO m) =>
       Elevator mx cur Closed -> m (Elevator mx (S cur) Closed)
-up (MkElevatorClosed fl) = do
+up (MkElevator fl) = do
   LL.up
-  pure (MkElevatorClosed $ next fl)
+  pure (MkElevator $ next fl)
 
 down :: MonadIO m => Elevator mx (S cur) Closed -> m (Elevator mx cur Closed)
-down (MkElevatorClosed fl) = do
+down (MkElevator fl) = do
   LL.down
-  pure $ MkElevatorClosed $ prev fl
+  pure $ MkElevator $ prev fl
 
 open :: MonadIO m =>
         Floor mx cur -> Elevator mx cur Closed -> m (Elevator mx cur Opened)
-open _ (MkElevatorClosed fl) = do
+open _ (MkElevator fl) = do
   LL.open
-  pure (MkElevatorOpened fl)
+  pure (MkElevator fl)
 
 close :: MonadIO m =>
          Floor mx cur -> Elevator mx cur Opened -> m (Elevator mx cur Closed)
-close _ (MkElevatorOpened fl) = do
+close _ (MkElevator fl) = do
   LL.close
-  pure (MkElevatorClosed fl)
+  pure (MkElevator fl)
 
-ensureClosed :: MonadIO m => Elevator mx cur door -> m (Elevator mx cur Closed)
-ensureClosed el@(MkElevatorClosed _) = pure el
-ensureClosed el@(MkElevatorOpened fl) = close fl el
+ensureClosed :: forall mx cur door m. MonadIO m =>
+                Elevator mx cur door -> m (Elevator mx cur Closed)
+ensureClosed el@(MkElevator fl) =
+  case sing :: Sing door of
+    SClosed -> pure el
+    SOpened -> close fl el
 
-ensureOpenedAt :: MonadIO m =>
-  Floor mx fl -> Elevator mx fl door -> m (Elevator mx fl Opened)
-ensureOpenedAt _ el@(MkElevatorOpened _) = pure el
-ensureOpenedAt fl el@(MkElevatorClosed _) = open fl el
+ensureOpenedAt :: forall mx cur door m. MonadIO m =>
+  Floor mx cur -> Elevator mx cur door -> m (Elevator mx cur Opened)
+ensureOpenedAt fl el@(MkElevator _) =
+  case sing :: Sing door of
+    SOpened -> pure el
+    SClosed -> open fl el
