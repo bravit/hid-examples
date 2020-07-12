@@ -20,8 +20,11 @@ $(singletons [d|
 data Door (s :: DoorState) where
   MkDoor :: SingI s => Door s
 
+doorState :: forall s. Door s -> DoorState
+doorState MkDoor = fromSing (sing :: Sing s)
+
 instance Show (Door s) where
-  show MkDoor = show (fromSing (sing :: SDoorState s)) -- Sing s
+  show d = "Door " <> show (doorState d)
 
 open :: Door Closed -> Door Opened
 open _ = MkDoor
@@ -34,26 +37,26 @@ data SomeDoor where
 
 deriving instance Show SomeDoor
 
-doorState :: forall s. Door s -> SDoorState s
-doorState MkDoor = sing
-
 parseDoor :: String -> Maybe SomeDoor
 parseDoor "Opened" = Just $ SomeDoor (MkDoor :: Door Opened)
 parseDoor "Closed" = Just $ SomeDoor (MkDoor :: Door Closed)
 parseDoor _ = Nothing
 
-changeState :: SomeDoor -> SomeDoor
-changeState (SomeDoor d) =
-  case doorState d of
-    SOpened -> SomeDoor (close d)
-    SClosed -> SomeDoor (open d)
+switchState :: SomeDoor -> SomeDoor
+switchState (SomeDoor door) = switch door
+  where
+    switch :: forall s. Door s -> SomeDoor
+    switch d@MkDoor =
+      case sing :: SDoorState s of
+        SOpened -> SomeDoor (close d)
+        SClosed -> SomeDoor (open d)
 
 test :: String -> IO ()
 test d =
   case parseDoor d of
     Just door -> do
         putStrLn $ "Given: " <> show door
-        putStrLn $ "Changed: " <> show (changeState door)
+        putStrLn $ "Switched: " <> show (switchState door)
     Nothing -> putStrLn "Incorrect argument"
 
 main :: IO ()
