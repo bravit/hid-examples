@@ -486,7 +486,7 @@ executables:
         dependencies:
           - mtl >=2.0 && <2.3
     door:
-        main: ch13/doors/Sing.hs
+        main: ch13/doors/SingManual.hs
         other-extensions:
           - DataKinds
           - GADTs
@@ -495,8 +495,8 @@ executables:
           - StandaloneDeriving
         ghc-options:
           - -Wno-unticked-promoted-constructors
-    door-sing:
-        main: ch13/doors/Sing2.hs
+    door-gen:
+        main: ch13/doors/SingGen.hs
         other-extensions:
           - DataKinds
           - GADTs
@@ -523,15 +523,6 @@ executables:
           - mtl >=2.0 && <2.3
         ghc-options:
           - -Wno-unticked-promoted-constructors
-    doors-type-equality:
-        main: ch13/doors/TypeEq.hs
-        other-extensions:
-          - DataKinds
-          - GADTs
-          - KindSignatures
-          - ExplicitForAll
-          - TypeOperators
-          - StandaloneDeriving
 
 internal-libraries:
     # Chapter 2

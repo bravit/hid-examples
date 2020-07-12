@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f40d54b09e2067546e5b81d4ef3ca69591258d8baed6cd8bba27c7cb2f919364
+-- hash: 045ccee4f899a30daaf6d389abf585cf6aa918ac9cffdf3e8a55ce7e6523c031
 
 name:           hid-examples
 version:        0.5
@@ -278,7 +278,7 @@ executable div
   default-language: Haskell2010
 
 executable door
-  main-is: ch13/doors/Sing.hs
+  main-is: ch13/doors/SingManual.hs
   other-modules:
       Paths_hid_examples
   other-extensions: DataKinds GADTs TypeOperators KindSignatures StandaloneDeriving
@@ -287,8 +287,8 @@ executable door
       base >=4.12 && <4.15
   default-language: Haskell2010
 
-executable door-sing
-  main-is: ch13/doors/Sing2.hs
+executable door-gen
+  main-is: ch13/doors/SingGen.hs
   other-modules:
       Paths_hid_examples
   other-extensions: DataKinds GADTs TypeOperators KindSignatures StandaloneDeriving
@@ -296,16 +296,6 @@ executable door-sing
   build-depends:
       base >=4.12 && <4.15
     , singletons >=2.5 && <2.8
-  default-language: Haskell2010
-
-executable doors-type-equality
-  main-is: ch13/doors/TypeEq.hs
-  other-modules:
-      Paths_hid_examples
-  other-extensions: DataKinds GADTs KindSignatures ExplicitForAll TypeOperators StandaloneDeriving
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
-  build-depends:
-      base >=4.12 && <4.15
   default-language: Haskell2010
 
 executable du
