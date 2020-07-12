@@ -21,7 +21,7 @@ data Door (s :: DoorState) where
   MkDoor :: SingI s => Door s
 
 doorState :: forall s. Door s -> DoorState
-doorState MkDoor = fromSing (sing :: Sing s)
+doorState MkDoor = fromSing (sing :: SDoorState s)
 
 instance Show (Door s) where
   show d = "Door " <> show (doorState d)
@@ -42,21 +42,21 @@ parseDoor "Opened" = Just $ SomeDoor (MkDoor :: Door Opened)
 parseDoor "Closed" = Just $ SomeDoor (MkDoor :: Door Closed)
 parseDoor _ = Nothing
 
-switchState :: SomeDoor -> SomeDoor
-switchState (SomeDoor door) = switch door
-  where
-    switch :: forall s. Door s -> SomeDoor
-    switch d@MkDoor =
-      case sing :: SDoorState s of
-        SOpened -> SomeDoor (close d)
-        SClosed -> SomeDoor (open d)
+switchState :: forall s. Door s -> SomeDoor
+switchState door@MkDoor =
+  case sing :: SDoorState s of
+    SOpened -> SomeDoor (close door)
+    SClosed -> SomeDoor (open door)
+
+switchSome :: SomeDoor -> SomeDoor
+switchSome (SomeDoor d) = switchState d
 
 test :: String -> IO ()
 test d =
   case parseDoor d of
     Just door -> do
         putStrLn $ "Given: " <> show door
-        putStrLn $ "Switched: " <> show (switchState door)
+        putStrLn $ "Switched: " <> show (switchSome door)
     Nothing -> putStrLn "Incorrect argument"
 
 main :: IO ()
