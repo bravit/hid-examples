@@ -14,7 +14,7 @@
 {-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE StandaloneDeriving #-}
 
-module Elevator.Safe.Primitive where
+module Elevator.Safe.Operations where
 
 import Data.Type.Nat
 import Data.Singletons.TH
@@ -31,13 +31,16 @@ $(singletons [d|
 data Elevator (mx :: Nat) (cur :: Nat) (door :: Door) where
   MkElevator :: SingI door => Floor mx cur -> Elevator mx cur door
 
-instance Show (Elevator mx cur door) where
-  show (MkElevator fl@MkFloor) =
-    "Elevator {current = " <> show fl
-    <> ", door = " <> show (fromSing (sing :: Sing door)) <> "}"
-
 currentFloor :: Elevator mx cur door -> Floor mx cur
 currentFloor (MkElevator fl) = fl
+
+currentDoor :: forall mx cur door. Elevator mx cur door -> Door
+currentDoor (MkElevator _) = fromSing (sing :: Sing door)
+
+instance Show (Elevator mx cur door) where
+  show el =
+    "Elevator {current = " <> show (currentFloor el)
+    <> ", door = " <> show (currentDoor el) <> "}"
 
 up :: (BelowTop mx cur, MonadIO m) =>
       Elevator mx cur Closed -> m (Elevator mx (S cur) Closed)

@@ -10,7 +10,7 @@ import Data.Type.Nat
 import Data.Proxy
 
 import Elevator.Safe.Floor
-import Elevator.Safe.Primitive
+import Elevator.Safe.Operations
 
 data SomeFloor (mx :: Nat) where
   MkSomeFloor :: Floor mx cur -> SomeFloor mx

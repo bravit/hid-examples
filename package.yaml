@@ -514,7 +514,8 @@ executables:
           - Elevator.LowLevel
           - Elevator.Safe
           - Elevator.Safe.Floor
-          - Elevator.Safe.Primitive
+          - Elevator.Safe.Operations
+          - Elevator.Safe.Moves
           - Elevator.Safe.Some
         dependencies:
           - fin >= 0.1 && < 0.2

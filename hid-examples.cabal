@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 045ccee4f899a30daaf6d389abf585cf6aa918ac9cffdf3e8a55ce7e6523c031
+-- hash: 8b686322d44902bdcc3c8ce5279cf31d1b8fb14e844c27afe94f1f25d3b7f379
 
 name:           hid-examples
 version:        0.5
@@ -343,7 +343,8 @@ executable elevator
       Elevator.LowLevel
       Elevator.Safe
       Elevator.Safe.Floor
-      Elevator.Safe.Primitive
+      Elevator.Safe.Operations
+      Elevator.Safe.Moves
       Elevator.Safe.Some
   hs-source-dirs:
       ch13/elevator/

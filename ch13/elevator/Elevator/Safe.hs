@@ -7,7 +7,8 @@ import Control.Monad.Trans
 import Data.Type.Equality
 
 import Elevator.Safe.Floor as X
-import Elevator.Safe.Primitive as X
+import Elevator.Safe.Operations as X
+import Elevator.Safe.Moves as X
 import Elevator.Safe.Some as X
 
 moveTo :: MonadIO m =>
