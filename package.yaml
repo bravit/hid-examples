@@ -516,7 +516,6 @@ executables:
           - Elevator.Safe.Floor
           - Elevator.Safe.Operations
           - Elevator.Safe.Moves
-          - Elevator.Safe.Some
         dependencies:
           - fin >= 0.1 && < 0.2
           - dec >= 0.0.3 && < 0.1

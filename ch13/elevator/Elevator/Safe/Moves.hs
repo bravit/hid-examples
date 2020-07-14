@@ -38,8 +38,8 @@ decideMove MkFloor MkFloor =
 
     withAboveGround :: LEProof to from -> Neg (to :~: from) ->
                        (forall fl. from ~ S fl => r) -> r
+    withAboveGround (LESucc _) _ r = r
     withAboveGround LEZero neq r =
       case snat :: SNat from of
         SZ -> absurd $ neq Refl
         SS -> r
-    withAboveGround (LESucc _) _ r = r

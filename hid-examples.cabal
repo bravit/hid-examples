@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8b686322d44902bdcc3c8ce5279cf31d1b8fb14e844c27afe94f1f25d3b7f379
+-- hash: c8866662a78ad3a74ffc482638b0d2e8e2e5d70bf4fff32ec7a00666ec50f143
 
 name:           hid-examples
 version:        0.5
@@ -345,7 +345,6 @@ executable elevator
       Elevator.Safe.Floor
       Elevator.Safe.Operations
       Elevator.Safe.Moves
-      Elevator.Safe.Some
   hs-source-dirs:
       ch13/elevator/
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-unticked-promoted-constructors
