@@ -26,12 +26,16 @@ dayInfoOnly :: Parser [(Day, DayInfo)]
 dayInfoOnly = count 2 skipField
               *> dayInfo
 
-notSep c = c /= ',' && notEOL c
+notEOL :: Char -> Bool
 notEOL c = c /= '\n' && c /= '\r'
 
+field :: Parser ByteString
 field = A.takeWhile (\c -> c /= ',') <* char ','
+
 textField :: Parser Text
 textField = T.decodeUtf8 <$> field
+
+skipField :: Parser ()
 skipField = skipWhile (\c -> c /= ',') <* char ','
 
 dayInfo :: Parser [(Day, DayInfo)]

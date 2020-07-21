@@ -4,7 +4,6 @@ module CovidData where
 
 import Data.Time (Day)
 import Data.Text (Text)
-import Data.Map (Map)
 import Control.Lens
 import Data.ByteString (ByteString)
 
