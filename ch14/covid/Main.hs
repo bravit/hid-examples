@@ -15,6 +15,9 @@ import qualified Data.ByteString.Streaming.Char8 as C
 import qualified Data.ByteString.Char8 as BSC
 import qualified Data.Attoparsec.ByteString.Char8 as A
 import qualified Data.Attoparsec.ByteString.Streaming as ABS
+import Data.Text (Text)
+import Data.Map (Map)
+import qualified Data.Map as M
 
 import CovidData
 import CovidCSVParser
@@ -40,6 +43,7 @@ parseCountryData str =
   S.mapped tryMkCountryData str
   & S.catMaybes
   & S.map (days %~ reverse)
+  & S.map (\cd -> cd & current_total_cases .~ currentTotalCases cd)
 
 tryMkCountryData :: Monad m =>
       Stream (Of CountryCodeWithRest) m x ->
@@ -62,7 +66,9 @@ processCountryData :: (Monad m, MonadIO m) =>
 processCountryData str =
   S.store (S.sum . S.map sumNewCases) str
   & S.store (S.sum . S.map pop)
-  & S.print >>= liftIO . print
+  & S.store byContinents
+  & S.print
+  >>= liftIO . print
 
 pop :: CountryData -> Int
 pop cd = cd ^. stat . population
@@ -70,7 +76,29 @@ pop cd = cd ^. stat . population
 sumNewCases :: CountryData -> Int
 sumNewCases cd = sum $ cd ^. days ^.. folded . _2 . cases . new_cases
 
+currentTotalCases :: CountryData -> Int
+currentTotalCases cd = maximum $ cd ^. days ^.. folded . _2 . cases . total_cases
 
+
+data ContinentStat = ContinentStat {
+    _cont_population :: Int,
+    _cont_total_cases :: Int
+  }
+  deriving (Show, Eq)
+
+byContinents :: (Monad m, MonadIO m) =>
+  Stream (Of CountryData) m r -> m (Of (Map Text ContinentStat) r)
+byContinents = S.fold enrich M.empty id
+  where
+    enrich stats cd = M.alter (addToCS $ fromCD cd) (cd ^. continent) stats
+
+    fromCD cd =
+      ContinentStat (cd ^. stat . population)
+                    (cd ^. current_total_cases)
+
+    addToCS cs Nothing = Just cs
+    addToCS (ContinentStat a b) (Just (ContinentStat a' b')) =
+      Just $ ContinentStat (a+a') (b+b')
 
 -- https://ourworldindata.org/coronavirus-source-data
 

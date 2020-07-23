@@ -12,6 +12,7 @@ data CountryData = CountryData {
     _iso_code :: ByteString,
     _continent :: Text,
     _name :: Text,
+    _current_total_cases :: Int,
     _days :: [(Day, DayInfo)],
     _stat :: CountryStat
   }
