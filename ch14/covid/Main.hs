@@ -19,41 +19,68 @@ import qualified Data.Attoparsec.ByteString.Streaming as ABS
 import CovidData
 import CovidCSVParser
 
--- https://ourworldindata.org/coronavirus-source-data
+type CountryCodeWithRest = (BSC.ByteString, BSC.ByteString)
 
-readCovidData :: IO ()
-readCovidData =
-  C.readFile "data/owid-covid-data.csv.gz"
---  C.readFile "data/a.csv.gz"
-  & gunzip
-  & ABS.parsed countryCodeWithRest
+readCovidCSV :: Monad m =>
+   C.ByteString m r
+   -> Stream (Stream (Of CountryCodeWithRest) m) m ()
+readCovidCSV str =
+  ABS.parsed countryCodeWithRest str
   & void
   & S.drop 1
+  & S.filter (isCountry . fst)
   & S.groupBy ((==) `on` fst)
-  & S.mapped toCountryData
+  where
+    isCountry bs = BSC.length bs == 3
+
+parseCountryData :: Monad m =>
+   Stream (Stream (Of CountryCodeWithRest) m) m x
+   -> Stream (Of CountryData) m x
+parseCountryData str =
+  S.mapped tryMkCountryData str
   & S.catMaybes
   & S.map (days %~ reverse)
---  & S.map f
---  & S.sum
-  & S.print
-  & runResourceT -- >>= pure . S.fst'
+
+tryMkCountryData :: Monad m =>
+      Stream (Of CountryCodeWithRest) m x ->
+      m (Of (Maybe CountryData) x)
+tryMkCountryData str = S.next str >>= either noCountryData withCountryData
+  where
+    withCountryData (line1, rest) =
+      case initCD line1 of
+        Nothing -> S.effects rest >>= noCountryData
+        Just cd -> first Just <$> S.fold (flip addDay) cd id rest
+
+    noCountryData = pure . (Nothing S.:>)
+
+    initCD (code, rest) = A.maybeResult $ A.parse (fullCountryData code) rest
+    addDay (_, r) = days %~ (parseDayInfo r ++)
+    parseDayInfo r = fromRight [] $ A.parseOnly dayInfoOnly r
+
+processCountryData :: (Monad m, MonadIO m) =>
+  Stream (Of CountryData) m () -> m ()
+processCountryData str =
+  S.store (S.sum . S.map sumNewCases) str
+  & S.store (S.sum . S.map pop)
+  & S.print >>= liftIO . print
+
+pop :: CountryData -> Int
+pop cd = cd ^. stat . population
 
 sumNewCases :: CountryData -> Int
 sumNewCases cd = sum $ cd ^. days ^.. folded . _2 . cases . new_cases
 
-toCountryData :: (Monad m, MonadResource m) =>
-   Stream (Of (BSC.ByteString, BSC.ByteString)) m x
-   -> m (Of (Maybe CountryData) x)
-toCountryData str = S.next str >>= withCountryData
-  where
-    withCountryData (Left r) = pure $ Nothing S.:> r
-    withCountryData (Right (line1, str')) =
-      S.fold (flip addDay) (initCD line1) id str'
 
-    initCD (code, rest) = A.maybeResult $ A.parse (fullCountryData code) rest
-    addDay (_, r) = _Just . days %~ (parseDayInfo r ++)
-    parseDayInfo r = fromRight [] $ A.parseOnly dayInfoOnly r
+
+-- https://ourworldindata.org/coronavirus-source-data
+
 
 main :: IO ()
-main = do
-  readCovidData >>= print
+main =
+  C.readFile "data/owid-covid-data.csv.gz"
+  & gunzip
+  & readCovidCSV
+  & parseCountryData
+  & processCountryData
+  & runResourceT
+

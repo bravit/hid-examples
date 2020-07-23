@@ -56,6 +56,6 @@ dayInfo = (\a b -> [(a,b)]) <$> dayParser <*> dayInfoParser
       DayDeaths <$> decimal <* skipField
                 <*> A.decimal <* skipField
 
-statInfo :: Parser (Maybe CountryStat)
-statInfo = option Nothing $ Just <$> (CountryStat <$> decimal <* skipField
-              <*> double)
+statInfo :: Parser CountryStat
+statInfo = CountryStat <$> decimal <* skipField
+              <*> (option Nothing $ Just <$> double)
