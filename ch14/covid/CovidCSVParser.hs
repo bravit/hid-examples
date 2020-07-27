@@ -19,6 +19,7 @@ fullCountryData code =
               <*> textField
               <*> textField
               <*> pure 0
+              <*> pure 0
               <*> dayInfo
               <* count 12 skipField
               <*> statInfo

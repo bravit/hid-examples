@@ -16,6 +16,8 @@ import qualified Data.ByteString.Char8 as BSC
 import qualified Data.Attoparsec.ByteString.Char8 as A
 import qualified Data.Attoparsec.ByteString.Streaming as ABS
 import Data.Text (Text)
+import qualified Data.Text.IO as T
+import TextShow
 import Data.Map (Map)
 import qualified Data.Map as M
 
@@ -44,6 +46,13 @@ parseCountryData str =
   & S.catMaybes
   & S.map (days %~ reverse)
   & S.map (\cd -> cd & current_total_cases .~ currentTotalCases cd)
+  & S.map (\cd -> cd & current_total_deaths .~ currentTotalDeaths cd)
+  where
+    currentTotalCases cd =
+      maximum $ cd ^. days ^.. folded . _2 . cases . total_cases
+
+    currentTotalDeaths cd =
+      maximum $ cd ^. days ^.. folded . _2 . deaths . total_deaths
 
 tryMkCountryData :: Monad m =>
       Stream (Of CountryCodeWithRest) m x ->
@@ -61,54 +70,41 @@ tryMkCountryData str = S.next str >>= either noCountryData withCountryData
     addDay (_, r) = days %~ (parseDayInfo r ++)
     parseDayInfo r = fromRight [] $ A.parseOnly dayInfoOnly r
 
-processCountryData :: (Monad m, MonadIO m) =>
-  Stream (Of CountryData) m () -> m ()
-processCountryData str =
-  S.store (S.sum . S.map sumNewCases) str
-  & S.store (S.sum . S.map pop)
-  & S.store byContinents
-  & S.print
-  >>= liftIO . print
-
-pop :: CountryData -> Int
-pop cd = cd ^. stat . population
-
-sumNewCases :: CountryData -> Int
-sumNewCases cd = sum $ cd ^. days ^.. folded . _2 . cases . new_cases
-
-currentTotalCases :: CountryData -> Int
-currentTotalCases cd = maximum $ cd ^. days ^.. folded . _2 . cases . total_cases
-
-
-data ContinentStat = ContinentStat {
-    _cont_population :: Int,
-    _cont_total_cases :: Int
-  }
-  deriving (Show, Eq)
-
 byContinents :: (Monad m, MonadIO m) =>
-  Stream (Of CountryData) m r -> m (Of (Map Text ContinentStat) r)
+  Stream (Of CountryData) m r -> m (Of (Map Text AccumulatedStat) r)
 byContinents = S.fold enrich M.empty id
   where
-    enrich stats cd = M.alter (addToCS $ fromCD cd) (cd ^. continent) stats
+    enrich stats cd = M.alter (fromCD cd <>) (cd ^. continent) stats
 
     fromCD cd =
-      ContinentStat (cd ^. stat . population)
-                    (cd ^. current_total_cases)
+      Just $ AccumulatedStat (cd ^. stat . population)
+                             (cd ^. current_total_cases)
+                             (cd ^. current_total_deaths)
 
-    addToCS cs Nothing = Just cs
-    addToCS (ContinentStat a b) (Just (ContinentStat a' b')) =
-      Just $ ContinentStat (a+a') (b+b')
+printCountryData :: (MonadIO m, TextShow a) => Stream (Of a) m r -> m r
+printCountryData str = do
+  liftIO $ T.putStrLn "Country population cases deaths"
+  S.mapM_ (liftIO . printT) str
+
+printContinentStats :: Map Text AccumulatedStat -> IO ()
+printContinentStats stats = do
+  T.putStrLn "\nContinent/population/cases/deaths"
+  forM_ (M.toAscList stats) $ \(nm, st) -> do
+    T.putStr $ nm <> "/"
+    printT st
+  T.putStrLn $ "\nWorld population/cases/deaths: "
+  printT $ M.foldl' (<>) mempty stats
 
 -- https://ourworldindata.org/coronavirus-source-data
 
-
 main :: IO ()
-main =
-  C.readFile "data/owid-covid-data.csv.gz"
-  & gunzip
-  & readCovidCSV
-  & parseCountryData
-  & processCountryData
-  & runResourceT
+main = do
+  r <- C.readFile "data/owid-covid-data.csv.gz"
+       & gunzip
+       & readCovidCSV
+       & parseCountryData
+       & S.store byContinents
+       & printCountryData
+       & runResourceT
+  printContinentStats $ S.fst' r
 

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f64039cd9457f9febe21dda7046f34c76789bd647a1c1ce00306f257c8c6dae0
+-- hash: f55eba556790b1e8cff84d7f16a4aea7a2dae7d01eda29653b063285b34fd1ee
 
 name:           hid-examples
 version:        0.5
@@ -286,6 +286,7 @@ executable covid
     , streaming-bytestring >=0.1.4 && <0.2
     , streaming-utils >=0.2 && <0.3
     , text >=1.2 && <1.3
+    , text-show >=3.0 && <4
     , time >=1.8 && <1.11
   default-language: Haskell2010
 
