@@ -244,9 +244,9 @@ executables:
           - time >=1.8 && <1.11
           - text >=1.2 && <1.3
           - exceptions >= 0.10 && < 0.11
-          - aeson >= 1.2 && < 1.5
-          - req >= 2.0 && < 3.2
-          - http-client >= 0.4 && < 0.7
+          - aeson >= 1.2 && < 1.6
+          - req >= 2.0 && < 3.5
+          - http-client >= 0.4 && < 0.8
           - optparse-applicative >= 0.14 && < 0.16
           - bytestring >= 0.10 && < 0.11
         default-extensions:
@@ -376,7 +376,7 @@ executables:
         source-dirs: ch12/deriv/
         main: strategies.hs
         dependencies:
-          - aeson >= 1.2 && < 1.5
+          - aeson >= 1.2 && < 1.6
     coerce:
         source-dirs: ch12/deriv/
         main: coerce.hs
@@ -477,7 +477,7 @@ executables:
           - servant-server >=0.14 && <0.18
           - servant-blaze >=0.7 && <0.10
           - warp >=3.2 && < 3.4
-          - aeson >= 1.2 && < 1.5
+          - aeson >= 1.2 && < 1.6
           - blaze-html >=0.9 && <0.10
     unsafe-elevator:
         source-dirs: ch13/elevator/
@@ -615,7 +615,7 @@ internal-libraries:
         - connection >= 0.3 && <0.4
         - network-simple >= 0.4 && <0.5
         - exceptions >= 0.10 && < 0.11
-        - template-haskell >= 2.13 && <2.16
+        - template-haskell >= 2.13 && <2.17
         - haskell-src-exts >= 1.20 && <1.24
         - haskell-src-meta >= 0.6 && < 0.9
 tests:
@@ -662,7 +662,7 @@ tests:
     iplookup-doctest:
         main: tests/iplookup-doctest/Doctests.hs
         dependencies:
-          - doctest >= 0.12 && < 0.17
+          - doctest >= 0.12 && < 0.18
           - split >= 0.2 && < 0.3
 
 benchmarks:
