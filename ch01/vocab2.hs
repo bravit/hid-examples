@@ -1,5 +1,5 @@
 import Data.Char
-import Data.List
+import Data.List (sort, group)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import System.Environment

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import Data.Char
-import Data.List
+import Data.List (group, sort, sortBy)
 import Data.Ord
 import Data.Text (Text)
 import qualified Data.Text as T

@@ -1,6 +1,6 @@
 module LookupIP where
 
-import Data.List
+import Data.List (find)
 
 import IPTypes
 

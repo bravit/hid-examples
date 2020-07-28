@@ -1,4 +1,4 @@
-import Data.List
+import Data.List (intersperse)
 
 import Expr
 import ShuntingYard

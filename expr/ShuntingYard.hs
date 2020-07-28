@@ -1,7 +1,7 @@
 module ShuntingYard (convertToExpr) where
 
 import Data.Char (isDigit, isSpace)
-import Data.List
+import Data.List (groupBy)
 import Data.Foldable (traverse_)
 import Control.Monad.State
 
