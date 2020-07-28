@@ -36,12 +36,12 @@ matrix:
   - env: BUILD=cabal-new GHCVER=8.6.5 CABALVER=2.4 HAPPYVER=1.19.5 ALEXVER=3.1.7
     compiler: ": #GHC 8.6.5"
     addons: {apt: {packages: [cabal-install-2.4,ghc-8.6.5,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
-  - env: BUILD=cabal-new GHCVER=8.8.3 CABALVER=3.0 HAPPYVER=1.19.5 ALEXVER=3.1.7
-    compiler: ": #GHC 8.8.3"
-    addons: {apt: {packages: [cabal-install-3.0,ghc-8.8.3,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
-  - env: BUILD=cabal-new GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
-    compiler: ": #GHC HEAD"
-    addons: {apt: {packages: [cabal-install-head,ghc-head,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
+  - env: BUILD=cabal-new GHCVER=8.8.4 CABALVER=3.0 HAPPYVER=1.19.5 ALEXVER=3.1.7
+    compiler: ": #GHC 8.8.4"
+    addons: {apt: {packages: [cabal-install-3.0,ghc-8.8.4,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
+  - env: BUILD=cabal-new GHCVER=8.10.1  CABALVER=3.2 HAPPYVER=1.19.5 ALEXVER=3.1.7
+    compiler: ": #GHC 8.10.1"
+    addons: {apt: {packages: [cabal-install-3.2,ghc-8.10.1,happy-1.19.5,alex-3.1.7], sources: [hvr-ghc]}}
 
   # The Stack builds. We can pass in arbitrary Stack arguments via the ARGS
   # variable, such as using --stack-yaml to point to a different file.
@@ -54,8 +54,8 @@ matrix:
     compiler: ": #stack default osx"
     os: osx
 
-  allow_failures:
-  - env: BUILD=cabal-new GHCVER=head  CABALVER=head HAPPYVER=1.19.5 ALEXVER=3.1.7
+#  allow_failures:
+#  - env: BUILD=cabal-new GHCVER=8.10.1  CABALVER=3.2 HAPPYVER=1.19.5 ALEXVER=3.1.7
 
 before_install:
 # Using compiler above sets CC to an invalid value, so unset it
