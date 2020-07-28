@@ -36,7 +36,7 @@ getSunTimesUTC GeoCoords {..} w =
     whenToOptions (On day) = ["date" =: formatTime defaultTimeLocale "%Y-%m-%d" day]
 
 getSunTimes :: GeoCoords -> When -> MyApp (SunTimes ZonedTime)
-getSunTimes gc@GeoCoords {..} d = do
+getSunTimes gc d = do
     SunTimes {..} <- getSunTimesUTC gc d `catch` noTimeHandler
     ltz <- lookupTimeZone gc sunrise `catchAll` const (pure utc)
     return $ SunTimes (utcToZonedTime ltz sunrise)
