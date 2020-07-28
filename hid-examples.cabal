@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f55eba556790b1e8cff84d7f16a4aea7a2dae7d01eda29653b063285b34fd1ee
+-- hash: 867192b48ab2d7323a08c8b661c91bc455c4c641ac8550e251647822d589be6c
 
 name:           hid-examples
 version:        0.5
@@ -273,7 +273,7 @@ executable covid
       Paths_hid_examples
   hs-source-dirs:
       ch14/covid
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wunused-top-binds
   build-depends:
       attoparsec >=0.13 && <0.14
     , base >=4.12 && <4.15

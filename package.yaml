@@ -540,7 +540,7 @@ executables:
           - streaming >=0.2.2 && <0.4
           - resourcet >=1.2 && <1.3
           - attoparsec >=0.13 && <0.14
-      ghc-options:
+        ghc-options:
           - -Wunused-top-binds
 internal-libraries:
     # Chapter 2
