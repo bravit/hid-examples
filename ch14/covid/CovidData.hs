@@ -80,3 +80,9 @@ instance Semigroup AccumulatedStat where
 
 instance Monoid AccumulatedStat where
   mempty = AccumulatedStat 0 0 0
+
+fromCountryData :: CountryData -> AccumulatedStat
+fromCountryData cd =
+  AccumulatedStat (cd ^. stat . population)
+                  (cd ^. current_total_cases)
+                  (cd ^. current_total_deaths)
