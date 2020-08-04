@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5cc22abf00da4b569bb2b48dcd13ecc056401555ee278f5ebe193ac0df4c8784
+-- hash: cdd107429ca32efb9f50ce16e42c3ae2994c892cee1dd3561efac5534f288052
 
 name:           hid-examples
 version:        0.5
@@ -241,6 +241,16 @@ executable basic-deriv
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable chars
+  main-is: ch14/chars.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , streaming >=0.2.2 && <0.4
   default-language: Haskell2010
 
 executable coerce

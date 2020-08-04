@@ -40,7 +40,7 @@ main :: IO ()
 main = do
   args <- getArgs
   case args of
-    ["-l"] -> sumAndTabL 5 [1..300000] >>= print
+    ["-l"] -> sumAndTabL 3 [1..10] >>= print
     ["-l1"] -> sumAndTabL1 5 [1..300000] >>= print
     ["-s"] -> sumAndTabS 5 (S.each [1..300000]) >>= print
     _ -> TIO.putStrLn "Unsupported args"
