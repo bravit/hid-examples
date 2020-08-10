@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cdd107429ca32efb9f50ce16e42c3ae2994c892cee1dd3561efac5534f288052
+-- hash: 400bdb55978c4d6ff23e6106937780f4977705c27211f9081792baf064650277
 
 name:           hid-examples
 version:        0.5
@@ -791,6 +791,15 @@ executable rpnexpr
     , transformers >=0.5 && <0.6
   default-language: Haskell2010
 
+executable simple-streaming
+  main-is: ch14/simple-streaming.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+  default-language: Haskell2010
+
 executable stockquotes
   main-is: Main.hs
   other-modules:
@@ -829,6 +838,15 @@ executable strategies
   build-depends:
       aeson >=1.2 && <1.6
     , base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable stream
+  main-is: ch14/stream.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
   default-language: Haskell2010
 
 executable stref

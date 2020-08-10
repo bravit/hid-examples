@@ -524,6 +524,10 @@ executables:
         ghc-options:
           - -Wno-unticked-promoted-constructors
     # Chapter 14
+    stream:
+        main: ch14/stream.hs
+    simple-streaming:
+        main: ch14/simple-streaming.hs
     sumtab:
         main: ch14/sumtab.hs
         dependencies:
