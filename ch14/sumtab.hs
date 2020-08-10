@@ -1,8 +1,7 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-import Streaming (Stream, Of)
-import qualified Streaming as S
+import Streaming as S
 import qualified Streaming.Prelude as S
 import qualified Data.List.Extra as LE
 import System.Environment
@@ -30,7 +29,7 @@ sumAndTabL1 cols ns = foldM prtLineSum 0 $ LE.chunksOf cols ns
       pure $ acc + sum xs
 
 tabulateS :: Int -> Stream (Of Int) IO r -> Stream (Of Text) IO r
-tabulateS cols str = S.mapsM S.mconcat $ S.chunksOf cols $ S.map withTab str
+tabulateS cols str = mapsM S.mconcat $ S.chunksOf cols $ S.map withTab str
 
 sumAndTabS :: Int -> Stream (Of Int) IO r -> IO Int
 sumAndTabS cols =
