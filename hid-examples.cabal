@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 400bdb55978c4d6ff23e6106937780f4977705c27211f9081792baf064650277
+-- hash: 3fefa8d3416a4b9574f02f324972952a7e01044a68a2a7625684d4cf72a62ce1
 
 name:           hid-examples
 version:        0.5
@@ -264,6 +264,19 @@ executable coerce
       base >=4.12 && <4.15
   default-language: Haskell2010
 
+executable copy
+  main-is: ch14/copy.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , filepath >=1.4.1 && <1.5
+    , resourcet >=1.2 && <1.3
+    , streaming >=0.2.2 && <0.4
+    , streaming-bytestring >=0.1 && <0.2
+  default-language: Haskell2010
+
 executable countzeros
   main-is: countzeros.hs
   other-modules:
@@ -283,7 +296,7 @@ executable covid
       Paths_hid_examples
   hs-source-dirs:
       ch14/covid
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wunused-top-binds
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       attoparsec >=0.13 && <0.14
     , base >=4.12 && <4.15

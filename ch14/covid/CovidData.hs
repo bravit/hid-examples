@@ -8,6 +8,8 @@ import Data.Text (Text)
 import TextShow
 import Control.Lens
 import Data.ByteString (ByteString)
+import Data.Map (Map)
+import qualified Data.Map as M
 
 data CountryData = CountryData {
     _iso_code :: ByteString,
@@ -51,8 +53,6 @@ data AccumulatedStat = AccumulatedStat {
   }
   deriving (Show, Eq)
 
-
-
 makeLenses ''CountryData
 makeLenses ''DayInfo
 makeLenses ''DayCases
@@ -60,6 +60,19 @@ makeLenses ''DayDeaths
 makeLenses ''CountryStat
 makeLenses ''AccumulatedStat
 
+addDays :: CountryData -> [(Day, DayInfo)] -> CountryData
+addDays cData ds = cData & days %~ (++ ds)
+                         & fillCurrentTotals
+  where
+    fillCurrentTotals cd =
+      cd & current_total_deaths .~ currentTotalDeaths cd
+         & current_total_cases .~ currentTotalCases cd
+
+    currentTotalDeaths cd =
+      maximum $ cd ^. days ^.. folded . _2 . deaths . total_deaths
+
+    currentTotalCases =
+      maximum1Of (folded . _2 . cases . total_cases) . view days
 
 instance TextShow CountryData where
   showb cd = fromText (cd ^. name)
@@ -86,3 +99,12 @@ fromCountryData cd =
   AccumulatedStat (cd ^. stat . population)
                   (cd ^. current_total_cases)
                   (cd ^. current_total_deaths)
+
+considerCountry :: Map Text AccumulatedStat
+                   -> CountryData
+                   -> Map Text AccumulatedStat
+considerCountry stats cd =
+      M.insertWith (<>) (cd ^. continent) (fromCountryData cd) stats
+--    considerCountry stats cd = stats &
+--      let new = fromCountryData cd
+--      in at (cd ^. continent) %~ Just . maybe new (<> new)

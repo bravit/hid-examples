@@ -539,6 +539,13 @@ executables:
         main: ch14/chars.hs
         dependencies:
           - streaming >=0.2.2 && <0.4
+    copy:
+        main: ch14/copy.hs
+        dependencies:
+          - streaming >=0.2.2 && <0.4
+          - streaming-bytestring >=0.1 && <0.2
+          - resourcet >=1.2 && <1.3
+          - filepath >= 1.4.1 && < 1.5
     covid:
         source-dirs: ch14/covid
         main: Main.hs
@@ -555,8 +562,6 @@ executables:
           - streaming >=0.2.2 && <0.4
           - resourcet >=1.2 && <1.3
           - attoparsec >=0.13 && <0.14
-        ghc-options:
-          - -Wunused-top-binds
 internal-libraries:
     # Chapter 2
     radar-lib:
