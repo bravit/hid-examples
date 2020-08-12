@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cd33e9ccdf0205f52fafa6afc6eda96b71ae4399233bb8aa8f7a8c4db80e23d1
+-- hash: 59c00b7db5964b507797c02abf615cf4f07eb807dde4fc98571eeb030e46fe9f
 
 name:           hid-examples
 version:        0.5
@@ -163,7 +163,7 @@ library rpc-lib
     , haskell-src-meta >=0.6 && <0.9
     , mtl >=2.0 && <2.3
     , network >=2.8 && <3.2
-    , network-simple >=0.4 && <0.5
+    , network-simple >=0.4.5 && <0.5
     , template-haskell >=2.13 && <2.17
   default-language: Haskell2010
 
