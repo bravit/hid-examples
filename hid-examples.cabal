@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3fefa8d3416a4b9574f02f324972952a7e01044a68a2a7625684d4cf72a62ce1
+-- hash: cd33e9ccdf0205f52fafa6afc6eda96b71ae4399233bb8aa8f7a8c4db80e23d1
 
 name:           hid-examples
 version:        0.5
@@ -190,7 +190,7 @@ executable api-servant
     , base >=4.12 && <4.15
     , blaze-html >=0.9 && <0.10
     , servant-blaze >=0.7 && <0.10
-    , servant-server >=0.14 && <0.18
+    , servant-server >=0.14 && <0.19
     , warp >=3.2 && <3.4
   default-language: Haskell2010
 
@@ -921,7 +921,7 @@ executable suntimes
     , http-client >=0.4 && <0.8
     , mtl >=2.0 && <2.3
     , optparse-applicative >=0.14 && <0.16
-    , req >=2.0 && <3.5
+    , req >=2.0 && <3.6
     , text >=1.2 && <1.3
     , time >=1.8 && <1.11
     , transformers >=0.5 && <0.6
