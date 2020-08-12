@@ -546,6 +546,16 @@ executables:
           - streaming-bytestring >=0.1 && <0.2
           - resourcet >=1.2 && <1.3
           - filepath >= 1.4.1 && < 1.5
+    csv-simple:
+        main: ch14/csv-simple.hs
+        dependencies:
+          - text >=1.2 && <1.3
+          - attoparsec >=0.13 && <0.14
+          - bytestring >=0.10 && <0.11
+          - streaming-utils >=0.2 && <0.3
+          - streaming-bytestring >=0.1.4 && <0.2
+          - streaming >=0.2.2 && <0.4
+          - resourcet >=1.2 && <1.3
     covid:
         source-dirs: ch14/covid
         main: Main.hs
@@ -554,7 +564,6 @@ executables:
           - time >=1.8 && <1.11
           - text >=1.2 && <1.3
           - text-show >=3.0 && <4
-          - cassava >=0.5 && <0.6
           - containers >= 0.5 && < 0.7
           - lens >= 4.17 && < 4.20
           - streaming-utils >=0.2 && <0.3
