@@ -2,11 +2,8 @@
 
 module Main where
 
-import Control.Monad
-import Data.Function (on, (&))
-
 import Streaming
-import Streaming.Zip
+import Streaming.Zip (gunzip)
 import qualified Streaming.Prelude as S
 import Control.Monad.Trans.Resource
 import qualified Data.ByteString.Streaming.Char8 as C
@@ -16,6 +13,7 @@ import qualified Data.Text.IO as T
 import TextShow
 import Data.Map (Map)
 import qualified Data.Map as M
+import Data.Function (on, (&))
 
 import CovidData
 import CovidCSVParser
@@ -23,12 +21,13 @@ import CovidCSVParser
 tryMkCountryData :: Monad m =>
       Stream (Of CountryCodeWithRest) m r ->
       m (Of (Maybe CountryData) r)
-tryMkCountryData str = S.next str >>= either noCountryData withCountryData
+tryMkCountryData str =
+    S.next str >>= either noCountryData withCountryData
   where
     withCountryData (line1, otherLines) =
       case parseFullCountryData line1 of
         Nothing -> S.effects otherLines >>= noCountryData
-        Just cd -> first (Just . addDays cd)
+        Just cd -> first (Just . withDaysAndTotals cd)
                    <$> (S.mconcat $ S.map parseDayInfo otherLines)
 
     noCountryData = pure . (Nothing :>)
@@ -41,15 +40,14 @@ printCountryData str = do
 printStats :: Map Text AccumulatedStat -> IO ()
 printStats stats = do
   T.putStrLn "\nContinent/population/cases/deaths"
-  forM_ (M.toAscList stats) $ \(nm, st) -> do
-    T.putStr $ nm <> "/"
-    printT st
-  T.putStrLn $ "\nWorld population/cases/deaths: "
-  printT $ M.foldl' (<>) mempty stats
+  printT stats
+  T.putStrLn $ "World population/cases/deaths: "
+  printT $ worldStats stats
+
+-- Data source: https://ourworldindata.org/coronavirus-source-data
 
 main :: IO ()
 main = do
--- Data source: https://ourworldindata.org/coronavirus-source-data
   r <- C.readFile "data/owid-covid-data.csv.gz"
        & gunzip
        & ABS.parsed countryCodeWithRestOrSkip

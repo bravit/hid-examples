@@ -2,66 +2,67 @@
 
 module CovidCSVParser where
 
+import Data.ByteString (ByteString)
 import Data.Attoparsec.ByteString.Char8 as A
 import Data.Time (Day, fromGregorian)
 import Data.Text (Text)
-import Data.ByteString (ByteString)
-import qualified Data.Text.Encoding as T
-import Data.Either
+import Data.Text.Encoding (decodeUtf8)
+import Data.Either (fromRight)
+import Control.Applicative ((<|>))
 
 import CovidData
 
-data CountryCodeWithRest = CountryCodeWithRest
-  {code :: ByteString,
-   rest :: ByteString}
+data CountryCodeWithRest = CountryCodeWithRest {
+    code :: ByteString
+  , rest :: ByteString
+  }
 
 -- Parser combinators
 
 notEOL :: Char -> Bool
 notEOL c = c /= '\n' && c /= '\r'
 
-fieldSep :: Char
-fieldSep = ','
-
-field :: Parser ByteString
-field = A.takeTill (\c -> c == fieldSep) <* char fieldSep
-
-textField :: Parser Text
-textField = T.decodeUtf8 <$> field
-
-skipField :: Parser ()
-skipField = skipWhile (\c -> c /= ',') <* char ','
-
-skipLine :: Parser ()
-skipLine = skipWhile notEOL <* endOfLine
-
 countryCode :: Parser ByteString
 countryCode = A.take 3 <* char ','
 
 countryCodeWithRest :: Parser CountryCodeWithRest
-countryCodeWithRest = CountryCodeWithRest <$> countryCode <*> A.takeWhile notEOL <* endOfLine
+countryCodeWithRest =
+  CountryCodeWithRest <$> countryCode
+                      <*> A.takeWhile notEOL
+                      <* endOfLine
 
-notCountry :: Parser ()
-notCountry = skipWhile notEOL <* endOfLine
+skipLine :: Parser ()
+skipLine = skipWhile notEOL <* endOfLine
 
 countryCodeWithRestOrSkip :: Parser (Maybe CountryCodeWithRest)
 countryCodeWithRestOrSkip =
-  choice [Just <$> countryCodeWithRest, const Nothing <$> notCountry]
+  Just <$> countryCodeWithRest <|> const Nothing <$> skipLine
+
+field :: Parser ByteString
+field = takeTill (\c -> c == ',') <* char ','
+
+textField :: Parser Text
+textField = decodeUtf8 <$> field
+
+skipField :: Parser ()
+skipField = skipWhile (\c -> c /= ',') <* char ','
+
+intField :: Parser Int
+intField = (decimal <|> pure 0) <* skipField
 
 fullCountryData :: ByteString -> Parser CountryData
 fullCountryData code =
   CountryData <$> pure code
-              <*> textField
-              <*> textField
-              <*> pure 0
-              <*> pure 0
+              <*> textField -- continent
+              <*> textField -- country name
+              <*> pure 0 -- current total cases
+              <*> pure 0 -- current total deaths
               <*> dayInfo
-              <* count 12 skipField
+              <* count 14 skipField
               <*> statInfo
 
 dayInfoOnly :: Parser [(Day, DayInfo)]
-dayInfoOnly = count 2 skipField
-              *> dayInfo
+dayInfoOnly = count 2 skipField *> dayInfo
 
 dayInfo :: Parser [(Day, DayInfo)]
 dayInfo = (\a b -> [(a,b)]) <$> dayParser <*> dayInfoParser
@@ -72,18 +73,12 @@ dayInfo = (\a b -> [(a,b)]) <$> dayParser <*> dayInfoParser
                     <*> decimal <* char ','
 
     dayInfoParser = DayInfo <$> dayCasesParser <*> dayDeathsParser
-
-    dayCasesParser =
-      DayCases <$> decimal <* skipField
-               <*> decimal <* skipField
-
-    dayDeathsParser =
-      DayDeaths <$> decimal <* skipField
-                <*> A.decimal <* skipField
+    dayCasesParser = DayCases <$> intField <*> intField
+    dayDeathsParser = DayDeaths <$> intField <*> intField
 
 statInfo :: Parser CountryStat
-statInfo = CountryStat <$> decimal <* skipField
-              <*> (option Nothing $ Just <$> double)
+statInfo = CountryStat <$> intField -- population
+                       <*> (option Nothing $ Just <$> double) -- density
 
 -- Parsers
 
@@ -92,4 +87,5 @@ parseFullCountryData CountryCodeWithRest {..} =
   either (const Nothing) Just $ parseOnly (fullCountryData code) rest
 
 parseDayInfo :: CountryCodeWithRest -> [(Day, DayInfo)]
-parseDayInfo CountryCodeWithRest {..} = fromRight [] $ parseOnly dayInfoOnly rest
+parseDayInfo CountryCodeWithRest {..} =
+  fromRight [] $ parseOnly dayInfoOnly rest

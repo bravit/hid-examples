@@ -1,5 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module CovidData where
 
@@ -25,33 +26,27 @@ data DayInfo = DayInfo {
     _cases :: DayCases,
     _deaths :: DayDeaths
   }
-  deriving Show
 
 data DayCases = DayCases {
     _total_cases :: Int,
     _new_cases :: Int
   }
-  deriving Show
 
 data DayDeaths = DayDeaths {
     _total_deaths :: Int,
     _new_deaths :: Int
   }
-  deriving Show
 
 data CountryStat = CountryStat {
     _population :: Int,
     _population_density :: Maybe Double
   }
-  deriving Show
-
 
 data AccumulatedStat = AccumulatedStat {
     _acc_population :: Int,
     _acc_total_cases :: Int,
     _acc_total_deaths :: Int
   }
-  deriving (Show, Eq)
 
 makeLenses ''CountryData
 makeLenses ''DayInfo
@@ -60,19 +55,16 @@ makeLenses ''DayDeaths
 makeLenses ''CountryStat
 makeLenses ''AccumulatedStat
 
-addDays :: CountryData -> [(Day, DayInfo)] -> CountryData
-addDays cData ds = cData & days %~ (++ ds)
-                         & fillCurrentTotals
+withDaysAndTotals :: CountryData -> [(Day, DayInfo)] -> CountryData
+withDaysAndTotals countryData ds =
+    withDays & current_total_deaths .~ ctDeaths
+             & current_total_cases .~ ctCases
   where
-    fillCurrentTotals cd =
-      cd & current_total_deaths .~ currentTotalDeaths cd
-         & current_total_cases .~ currentTotalCases cd
+    withDays = countryData & days %~ (++ ds)
+    ctDeaths = maxOfDays (deaths . total_deaths) withDays
+    ctCases = maxOfDays (cases . total_cases) withDays
 
-    currentTotalDeaths cd =
-      maximum $ cd ^. days ^.. folded . _2 . deaths . total_deaths
-
-    currentTotalCases =
-      maximum1Of (folded . _2 . cases . total_cases) . view days
+    maxOfDays what = maximum1Of (days . folded . _2 . what)
 
 instance TextShow CountryData where
   showb cd = fromText (cd ^. name)
@@ -105,6 +97,14 @@ considerCountry :: Map Text AccumulatedStat
                    -> Map Text AccumulatedStat
 considerCountry stats cd =
       M.insertWith (<>) (cd ^. continent) (fromCountryData cd) stats
---    considerCountry stats cd = stats &
+--   stats &
 --      let new = fromCountryData cd
 --      in at (cd ^. continent) %~ Just . maybe new (<> new)
+
+worldStats :: Map Text AccumulatedStat -> AccumulatedStat
+worldStats = M.foldl' (<>) mempty
+
+instance TextShow (Map Text AccumulatedStat) where
+  showb stats = M.foldlWithKey' withEntry "" stats
+    where
+      withEntry b nm st = b <> fromText nm <> "/" <> showb st <> "\n"
