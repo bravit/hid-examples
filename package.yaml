@@ -556,6 +556,10 @@ executables:
           - streaming-bytestring >=0.1.4 && <0.2
           - streaming >=0.2.2 && <0.4
           - resourcet >=1.2 && <1.3
+    lens-ex:
+        main: ch14/lens-ex.hs
+        dependencies:
+          - lens >= 4.17 && < 4.20
     covid:
         source-dirs: ch14/covid
         main: Main.hs

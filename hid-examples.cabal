@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 996590dba8ac85c2d273f42adb8a9aa60091df59b0a0888f8ab8202b3e5c951c
+-- hash: 52da12a05541bba319448bfe947a6e2e48130aacf533c3175346c70cff6c13ec
 
 name:           hid-examples
 version:        0.5
@@ -612,6 +612,16 @@ executable isprime
       base >=4.12 && <4.15
     , isprime-lib
     , timeit >=2.0 && <2.1
+  default-language: Haskell2010
+
+executable lens-ex
+  main-is: ch14/lens-ex.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , lens >=4.17 && <4.20
   default-language: Haskell2010
 
 executable logging
