@@ -50,24 +50,24 @@ instance Show (Elevator mx cur door) where
 up :: (BelowTop mx cur, MonadIO m) =>
       Elevator mx cur Closed -> m (Elevator mx (S cur) Closed)
 up (MkElevator fl) = do
-  LL.up
+  liftIO $ LL.up
   pure (MkElevator $ next fl)
 
 down :: MonadIO m => Elevator mx (S cur) Closed -> m (Elevator mx cur Closed)
 down (MkElevator fl) = do
-  LL.down
+  liftIO $ LL.down
   pure $ MkElevator $ prev fl
 
 open :: MonadIO m =>
         Floor mx cur -> Elevator mx cur Closed -> m (Elevator mx cur Opened)
 open _ (MkElevator fl) = do
-  LL.open
+  liftIO $ LL.open
   pure (MkElevator fl)
 
 close :: MonadIO m =>
          Floor mx cur -> Elevator mx cur Opened -> m (Elevator mx cur Closed)
 close _ (MkElevator fl) = do
-  LL.close
+  liftIO $ LL.close
   pure (MkElevator fl)
 
 ensureClosed :: forall mx cur door m. MonadIO m =>
