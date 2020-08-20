@@ -575,6 +575,13 @@ executables:
           - streaming >=0.2.2 && <0.4
           - resourcet >=1.2 && <1.3
           - attoparsec >=0.13 && <0.14
+    # Chapter 15
+    hdbc-ex:
+        main: ch15/hdbc-ex.hs
+        dependencies:
+          - HDBC >= 2.3 && < 2.5
+          - HDBC-postgresql >= 2.3 && < 2.4
+
 internal-libraries:
     # Chapter 2
     radar-lib:
