@@ -7,3 +7,7 @@ extra-deps:
   - streaming-utils-0.2.0.0
   - json-stream-0.4.2.4
   - HDBC-postgresql-2.3.2.7
+  - hasql-th-0.4.0.7
+  - headed-megaparsec-0.1.0.4
+  - selective-0.4.1
+  - template-haskell-compat-v0208-0.1.2.1

@@ -41,7 +41,7 @@ filmsCategories films conn = do
 availableRatings :: Connection -> IO [String]
 availableRatings conn =
   map (fromSql . head)
-  <$> quickQuery conn "SELECT unnest(enum_range(NULL::mpaa_rating));" []
+  <$> quickQuery conn "SELECT unnest(enum_range(NULL::mpaa_rating))" []
 
 setRatingForFilm :: String -> String -> Connection -> IO Integer
 setRatingForFilm rating film conn = do
@@ -59,7 +59,7 @@ newCategory ncat conn = do
   cnt <- run conn "INSERT INTO category (name) VALUES (?)" [toSql ncat]
   if cnt /= 1
     then error "Inserting category failed"
-    else quickQuery conn "SELECT lastval();" [] >>= fetchSingle "lastval()"
+    else quickQuery conn "SELECT lastval()" [] >>= fetchSingle "category_id"
 
 applyCategory :: Int -> Int -> Connection -> IO Integer
 applyCategory catId filmId conn =

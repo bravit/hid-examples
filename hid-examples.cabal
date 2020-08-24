@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a33d53bc5319405d83b7d6bbdbc647340700bdd7b37f68cd6b73131febea5a38
+-- hash: 8e324cb3d06510cc4b9ac21f8b2fa87f4df689c9cfb22bc8f70dd13f211c1278
 
 name:           hid-examples
 version:        0.5
@@ -533,6 +533,18 @@ executable generic-sql
     , text-show >=3.0 && <4
   default-language: Haskell2010
 
+executable hasql
+  main-is: hasql.hs
+  hs-source-dirs:
+      ch15
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , hasql >=1.3 && <1.5
+    , hasql-th >=0.4 && <0.5
+    , random >=1.0 && <1.3
+  default-language: Haskell2010
+
 executable hdbc
   main-is: ch15/hdbc.hs
   other-modules:
@@ -732,6 +744,20 @@ executable person-text
   build-depends:
       base >=4.12 && <4.15
     , text-show >=3.0 && <4
+  default-language: Haskell2010
+
+executable pg-simple
+  main-is: pg-simple.hs
+  other-modules:
+      FilmRating
+  hs-source-dirs:
+      ch15
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base >=4.12 && <4.15
+    , bytestring >=0.10 && <0.11
+    , postgresql-simple >=0.5 && <0.7
+    , random >=1.0 && <1.3
   default-language: Haskell2010
 
 executable ping-client
