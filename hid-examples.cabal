@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 959c3c10c06e32461f7f889bacb6e586889121013249f13f94f0ec031ed8d9fd
+-- hash: a33d53bc5319405d83b7d6bbdbc647340700bdd7b37f68cd6b73131febea5a38
 
 name:           hid-examples
 version:        0.5
@@ -533,8 +533,8 @@ executable generic-sql
     , text-show >=3.0 && <4
   default-language: Haskell2010
 
-executable hdbc-ex
-  main-is: ch15/hdbc-ex.hs
+executable hdbc
+  main-is: ch15/hdbc.hs
   other-modules:
       Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
@@ -542,6 +542,8 @@ executable hdbc-ex
       HDBC >=2.3 && <2.5
     , HDBC-postgresql >=2.3 && <2.4
     , base >=4.12 && <4.15
+    , convertible >=1.0 && <1.2
+    , random >=1.0 && <1.3
   default-language: Haskell2010
 
 executable hello
