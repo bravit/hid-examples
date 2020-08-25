@@ -11,3 +11,4 @@ extra-deps:
   - headed-megaparsec-0.1.0.4
   - selective-0.4.1
   - template-haskell-compat-v0208-0.1.2.1
+  - hasql-transaction-1.0.0.1

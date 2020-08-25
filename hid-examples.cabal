@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8e324cb3d06510cc4b9ac21f8b2fa87f4df689c9cfb22bc8f70dd13f211c1278
+-- hash: 2673c1c0089dbd1cfb279e6663b121812546f154548344757acd98d734bf3cb9
 
 name:           hid-examples
 version:        0.5
@@ -542,7 +542,12 @@ executable hasql
       base >=4.12 && <4.15
     , hasql >=1.3 && <1.5
     , hasql-th >=0.4 && <0.5
+    , hasql-transaction >=1.0 && <1.1
+    , mtl >=2.0 && <2.3
+    , profunctors >=5.3 && <5.6
     , random >=1.0 && <1.3
+    , text >=1.2 && <1.3
+    , vector >=0.11 && <0.13
   default-language: Haskell2010
 
 executable hdbc
