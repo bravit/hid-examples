@@ -117,7 +117,7 @@ newCatForFilm :: (Text, Text) -> Session Int64
 newCatForFilm (ncat, film) = transaction ReadCommitted Write $ do
   catId <- Transaction.statement ncat newCategoryStmt
   filmId <- Transaction.statement film filmIdByTitleStmt
-  Transaction.statement (catId, filmId) applyCategoryStmt
+  Transaction.statement (filmId, catId) applyCategoryStmt
 
 randomCategory :: Text -> IO Text
 randomCategory prefix = do
@@ -151,6 +151,10 @@ main :: IO ()
 main = do
     Right conn <- Connection.acquire connectionSettings
 
+
+    putStrLn "All films:"
+    Right () <- Session.run printAllFilms conn
+
     putStrLn "Total number of films:"
     Right cnt <- Session.run countFilms conn
     print cnt
@@ -177,8 +181,6 @@ main = do
     Right vcats' <- Session.run (filmsCategories $ V.fromList [film]) conn
     V.mapM_ print vcats'
 
-    putStrLn "All films:"
-    Right () <- Session.run printAllFilms conn
     pure ()
   where
     connectionSettings =

@@ -12,3 +12,4 @@ extra-deps:
   - selective-0.4.1
   - template-haskell-compat-v0208-0.1.2.1
   - hasql-transaction-1.0.0.1
+  - opaleye-0.7.0.0
