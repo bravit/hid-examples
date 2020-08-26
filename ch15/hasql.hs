@@ -48,10 +48,10 @@ ratingToText NC17 = "NC-17"
 fiFromTriple :: (Text, Text, Int64) -> FilmInfo
 fiFromTriple (t, r, l) = FilmInfo t (ratingFromText r) l
 
-countActorsStmt :: Statement () Int64
-countActorsStmt =
+countFilmsStmt :: Statement () Int64
+countFilmsStmt =
   [TH.singletonStatement|
-     SELECT count(*) :: int8 FROM actor
+     SELECT count(*) :: int8 FROM film
   |]
 
 filmsLongerThanStmt :: Statement Int64 (Vector FilmInfo)
@@ -98,8 +98,8 @@ filmIdByTitleStmt =
      SELECT film_id::int8 FROM film WHERE title=$1::text
   |]
 
-countActors :: Session Int64
-countActors = Session.statement () countActorsStmt
+countFilms :: Session Int64
+countFilms = Session.statement () countFilmsStmt
 
 filmsLongerThan :: Int64 -> Session (Vector FilmInfo)
 filmsLongerThan len = Session.statement len filmsLongerThanStmt
@@ -151,8 +151,8 @@ main :: IO ()
 main = do
     Right conn <- Connection.acquire connectionSettings
 
-    putStrLn "Total number of actors:"
-    Right cnt <- Session.run countActors conn
+    putStrLn "Total number of films:"
+    Right cnt <- Session.run countFilms conn
     print cnt
 
     putStrLn "Films of 185 minutes and longer:"

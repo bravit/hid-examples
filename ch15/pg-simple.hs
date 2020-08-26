@@ -15,10 +15,10 @@ fetchSingle :: Applicative f => String -> [Only a] -> f a
 fetchSingle _ [Only val] = pure val
 fetchSingle what _ = error $ "Unexpected result: " ++ what
 
-countActors :: Connection -> IO Int
-countActors conn = do
-  result <- query_ conn "SELECT count(*) FROM actor"
-  fetchSingle "countActors" result
+countFilms :: Connection -> IO Int
+countFilms conn = do
+  result <- query_ conn "SELECT count(*) FROM film"
+  fetchSingle "countFilms" result
 
 data FilmInfo = FilmInfo {title :: String, rating :: Rating, length :: Int}
   deriving (Generic, FromRow, Show)
@@ -79,8 +79,8 @@ main :: IO ()
 main = do
   conn <- connectPostgreSQL "host=localhost dbname=sakila_films"
 
-  putStrLn "Total number of actors:"
-  countActors conn >>= print
+  putStrLn "Total number of films:"
+  countFilms conn >>= print
 
   putStrLn "Films of 185 minutes and longer:"
   filmsLongerThan 185 conn >>= mapM_ print

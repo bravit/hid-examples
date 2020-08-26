@@ -11,10 +11,10 @@ fetchSingle :: (Monad m, Convertible SqlValue a) =>
 fetchSingle _ [[val]] = pure $ fromSql val
 fetchSingle what _ = error $ "Unexpected result: " ++ what
 
-countActors :: Connection -> IO Int
-countActors conn = do
-  result <- quickQuery conn "SELECT count(*) FROM actor" []
-  fetchSingle "countActors" result
+countFilms :: Connection -> IO Int
+countFilms conn = do
+  result <- quickQuery conn "SELECT count(*) FROM film" []
+  fetchSingle "countFilms" result
 
 filmsLongerThan :: Int -> Connection -> IO [(String, Int)]
 filmsLongerThan len conn = map res2pair <$> quickQuery conn select [toSql len]
@@ -85,8 +85,8 @@ randomCategory prefix = do
 main :: IO ()
 main = withPostgreSQL "host=localhost dbname=sakila_films"
        $ \conn -> handleSqlError $ do
-  putStrLn "Total number of actors:"
-  countActors conn >>= print
+  putStrLn "Total number of films:"
+  countFilms conn >>= print
 
   putStrLn "Films of 185 minutes and longer:"
   filmsLongerThan 185 conn >>= mapM_ print
