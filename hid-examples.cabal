@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5d2a52ae06abbe3ef8e8ee4980ca8254df2bb3cd466efdc9e9031e28e46cfaf5
+-- hash: e6ee2ac093dda2bf052c73797388e19b9ed17fc3ede254b25997fca28f1ac56d
 
 name:           hid-examples
 version:        0.5
@@ -535,6 +535,8 @@ executable generic-sql
 
 executable hasql
   main-is: hasql.hs
+  other-modules:
+      FilmInfo
   hs-source-dirs:
       ch15
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
@@ -547,6 +549,7 @@ executable hasql
     , profunctors >=5.3 && <5.6
     , random >=1.0 && <1.3
     , text >=1.2 && <1.3
+    , text-show >=3.0 && <4
     , vector >=0.11 && <0.13
   default-language: Haskell2010
 
@@ -561,6 +564,7 @@ executable hdbc
     , base >=4.12 && <4.15
     , convertible >=1.0 && <1.2
     , random >=1.0 && <1.3
+    , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable hello
@@ -718,9 +722,15 @@ executable nummod-rank-n
   default-language: Haskell2010
 
 executable opaleye-ex
-  main-is: opaleye-ex.hs
+  main-is: Main.hs
+  other-modules:
+      DBActions
+      FilmInfo
+      Queries
+      Tables
+      Paths_hid_examples
   hs-source-dirs:
-      ch15
+      ch15/opaleye
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -729,8 +739,8 @@ executable opaleye-ex
     , postgresql-simple >=0.5 && <0.7
     , product-profunctors >=0.9 && <0.12
     , profunctors >=5.3 && <5.6
-    , random >=1.0 && <1.3
     , text >=1.2 && <1.3
+    , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable person-derived
@@ -779,6 +789,7 @@ executable pg-simple
     , bytestring >=0.10 && <0.11
     , postgresql-simple >=0.5 && <0.7
     , random >=1.0 && <1.3
+    , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable ping-client

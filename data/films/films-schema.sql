@@ -7,7 +7,7 @@ CREATE SEQUENCE category_category_id_seq
 
 CREATE TABLE category (
     category_id integer DEFAULT nextval('category_category_id_seq'::regclass) NOT NULL,
-    name text NOT NULL
+    name text UNIQUE NOT NULL
 );
 
 CREATE SEQUENCE film_film_id_seq
@@ -29,9 +29,9 @@ CREATE TABLE film (
     film_id integer DEFAULT nextval('film_film_id_seq'::regclass) NOT NULL,
     title text NOT NULL,
     description text,
-    release_year smallint,
-    length smallint,
-    rating mpaa_rating DEFAULT 'G'::mpaa_rating
+    release_year smallint NOT NULL,
+    length smallint NOT NULL,
+    rating mpaa_rating
 );
 
 CREATE TABLE film_category (

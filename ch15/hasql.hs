@@ -23,30 +23,20 @@ import Data.Profunctor
 import System.Random
 import Control.Monad (when)
 import Control.Monad.Trans (liftIO)
+import Data.Maybe
 
-data Rating = G | PG | PG13 | R | NC17
-  deriving Show
+import FilmInfo
 
-data FilmInfo = FilmInfo {title :: Text, rating :: Maybe Rating, length :: Int64}
-  deriving Show
-
-ratingFromText :: Text -> Maybe Rating
-ratingFromText "G" = Just G
-ratingFromText "PG" = Just PG
-ratingFromText "PG-13" = Just PG13
-ratingFromText "R" = Just R
-ratingFromText "NC-17" = Just NC17
-ratingFromText _ = Nothing
-
-ratingToText :: Rating -> Text
-ratingToText G = "G"
-ratingToText PG = "PG"
-ratingToText PG13 = "PG-13"
-ratingToText R = "R"
-ratingToText NC17 = "NC-17"
-
-fiFromTriple :: (Text, Text, Int64) -> FilmInfo
-fiFromTriple (t, r, l) = FilmInfo t (ratingFromText r) l
+fiFromTuple :: (Int64, Text, Text, Int32, Int32, Text)
+                -> FilmInfo
+fiFromTuple (i, t, d, y, l, r) = FilmInfo {
+    filmId = i
+  , title = t
+  , description = d
+  , releaseYear = y
+  , filmLength = l
+  , rating = fromJust $ toMaybeRating r
+  }
 
 countFilmsStmt :: Statement () Int64
 countFilmsStmt =
@@ -54,12 +44,14 @@ countFilmsStmt =
      SELECT count(*) :: int8 FROM film
   |]
 
-filmsLongerThanStmt :: Statement Int64 (Vector FilmInfo)
-filmsLongerThanStmt = rmap (fmap fiFromTriple)
+filmsLongerThanStmt :: Statement Int32 (Vector FilmInfo)
+filmsLongerThanStmt = rmap (fmap fiFromTuple)
   [TH.vectorStatement|
-     SELECT title :: text, rating :: text, length :: int8
+     SELECT film_id :: int8, title :: text,
+            description :: text, release_year :: int4,
+            length :: int4, rating :: text
      FROM film
-     WHERE length >= $1::int8
+     WHERE length >= $1::int4
   |]
 
 filmCategoriesStmt :: Statement Text (Vector Text)
@@ -72,7 +64,7 @@ filmCategoriesStmt =
   |]
 
 setRatingForFilmStmt :: Statement (Rating, Text) Int64
-setRatingForFilmStmt = lmap (first' ratingToText)
+setRatingForFilmStmt = lmap (first' fromRating)
   [TH.rowsAffectedStatement|
     UPDATE film SET rating = $1 :: text :: mpaa_rating
     WHERE title = $2 :: text
@@ -101,7 +93,7 @@ filmIdByTitleStmt =
 countFilms :: Session Int64
 countFilms = Session.statement () countFilmsStmt
 
-filmsLongerThan :: Int64 -> Session (Vector FilmInfo)
+filmsLongerThan :: Int32 -> Session (Vector FilmInfo)
 filmsLongerThan len = Session.statement len filmsLongerThanStmt
 
 filmsCategories :: Vector Text -> Session (Vector (Text, Vector Text))
@@ -116,8 +108,8 @@ setRatingForFilm params =
 newCatForFilm :: (Text, Text) -> Session Int64
 newCatForFilm (ncat, film) = transaction ReadCommitted Write $ do
   catId <- Transaction.statement ncat newCategoryStmt
-  filmId <- Transaction.statement film filmIdByTitleStmt
-  Transaction.statement (filmId, catId) applyCategoryStmt
+  filmId' <- Transaction.statement film filmIdByTitleStmt
+  Transaction.statement (filmId', catId) applyCategoryStmt
 
 randomCategory :: Text -> IO Text
 randomCategory prefix = do
@@ -134,8 +126,8 @@ printAllFilms = do
     declareCursor = "DECLARE films_cursor CURSOR FOR "
                     <> "SELECT title, rating, length FROM film;"
     decoder = Dec.rowVector $
-      FilmInfo <$> (Dec.column . Dec.nonNullable) Dec.text
-               <*> (fmap (>>= ratingFromText) . Dec.column .
+      (,,) <$> (Dec.column . Dec.nonNullable) Dec.text
+               <*> (fmap (>>= toMaybeRating) . Dec.column .
                       Dec.nullable) Dec.text
                <*> (Dec.column . Dec.nonNullable) Dec.int8
     fetch = Session.statement () $
@@ -161,7 +153,7 @@ main = do
 
     putStrLn "Films of 185 minutes and longer:"
     Right v <- Session.run (filmsLongerThan 185) conn
-    V.mapM_ print v
+    V.mapM_ printFilmShort v
 
     putStrLn "Films categories:"
     let titles = ["KISSING DOLLS", "ALABAMA DEVIL"]

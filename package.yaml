@@ -583,6 +583,7 @@ executables:
           - HDBC-postgresql >= 2.3 && < 2.4
           - random >= 1.0 && < 1.3
           - convertible >= 1.0 && < 1.2
+          - text-show >=3.0 && <4
     pg-simple:
         source-dirs: ch15
         main: pg-simple.hs
@@ -591,10 +592,11 @@ executables:
           - postgresql-simple >= 0.5 && < 0.7
           - random >= 1.0 && < 1.3
           - bytestring >=0.10 && <0.11
+          - text-show >=3.0 && <4
     hasql:
         source-dirs: ch15
         main: hasql.hs
-        other-modules: []
+        other-modules: [FilmInfo]
         dependencies:
           - hasql >= 1.3 && < 1.5
           - hasql-th >= 0.4 && < 0.5
@@ -604,10 +606,10 @@ executables:
           - profunctors >= 5.3 && < 5.6
           - random >= 1.0 && < 1.3
           - mtl >=2.0 && <2.3
+          - text-show >=3.0 && <4
     opaleye-ex:
-        source-dirs: ch15
-        main: opaleye-ex.hs
-        other-modules: []
+        source-dirs: ch15/opaleye
+        main: Main.hs
         dependencies:
           - opaleye >=0.7 && <0.8
           - postgresql-simple >= 0.5 && < 0.7
@@ -615,7 +617,8 @@ executables:
           - product-profunctors >= 0.9 && < 0.12
           - profunctors >= 5.3 && < 5.6
           - bytestring >=0.10 && <0.11
-          - random >= 1.0 && < 1.3
+          - text-show >=3.0 && <4
+
 internal-libraries:
     # Chapter 2
     radar-lib:
