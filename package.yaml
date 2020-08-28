@@ -607,7 +607,7 @@ executables:
           - random >= 1.0 && < 1.3
           - mtl >=2.0 && <2.3
           - text-show >=3.0 && <4
-    opaleye-ex:
+    opaleye:
         source-dirs: ch15/opaleye
         main: Main.hs
         dependencies:

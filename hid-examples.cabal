@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e6ee2ac093dda2bf052c73797388e19b9ed17fc3ede254b25997fca28f1ac56d
+-- hash: 9d6417383b447208e70285c819fa37326cfbee1e9528aa50f2b066d2e4ccdc07
 
 name:           hid-examples
 version:        0.5
@@ -721,7 +721,7 @@ executable nummod-rank-n
       base >=4.12 && <4.15
   default-language: Haskell2010
 
-executable opaleye-ex
+executable opaleye
   main-is: Main.hs
   other-modules:
       DBActions
