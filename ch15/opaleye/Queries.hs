@@ -20,8 +20,16 @@ filmCategorySelect = selectTable filmCategoryTable
 countFilms :: Select (Field SqlInt8)
 countFilms = aggregate countStar filmSelect
 
-filmsLongerThan :: FilmLength -> Select FilmInfoField
-filmsLongerThan len = do
+
+findFilm :: Text -> Select FilmInfoField
+findFilm filmTitle = do
+  film <- filmSelect
+  viaLateral restrict (title film .== toFields filmTitle)
+  pure film
+
+
+filmsLonger :: FilmLength -> Select FilmInfoField
+filmsLonger len = do
     film <- filmSelect
     viaLateral restrict (filmLength film `longerThan` len)
     pure film
@@ -40,14 +48,17 @@ filmCategories filmTitle = do
     .&& (ccatId .=== fccatId)
   pure catName
 
-setRatingForFilm :: Rating -> Text -> Update Int64
-setRatingForFilm fRating filmTitle =
+setRating :: Rating -> Text -> Update Int64
+setRating fRating filmTitle =
   Update {
       uTable = filmTable
     , uUpdateWith = updateEasy (\film -> film {rating = toFields fRating})
     , uWhere      = \film -> title film .== toFields filmTitle
     , uReturning  = rCount
   }
+
+filmIdByTitle :: Text -> Select FilmIdField
+filmIdByTitle filmTitle = filmId <$> findFilm filmTitle
 
 catIdByName :: Text -> Select CatIdField
 catIdByName catName = do
@@ -62,6 +73,14 @@ newCategory catName = Insert {
    , iReturning  = rReturning (\(id', _) -> id')
    , iOnConflict = Nothing
    }
+
+
+findAssigned :: CatId -> FilmId -> Select CatIdField
+findAssigned catId' filmId' = do
+  (fid, cid) <- filmCategorySelect
+  viaLateral restrict $ (fid .=== toFields filmId')
+                    .&& (cid .=== toFields catId')
+  pure cid
 
 assignCategory :: CatId -> FilmId -> Insert Int64
 assignCategory catId' filmId' = Insert {
@@ -78,20 +97,3 @@ unassignCategory catId' filmId' = Delete {
                               .&& (cid .=== toFields catId')
    , dReturning  = rCount
    }
-
-filmByTitle :: Text -> Select FilmInfoField
-filmByTitle filmTitle = do
-  film <- filmSelect
-  viaLateral restrict (title film .== toFields filmTitle)
-  pure film
-
-
-filmIdByTitle :: Text -> Select FilmIdField
-filmIdByTitle filmTitle = filmId <$> filmByTitle filmTitle
-
-findAssigned :: CatId -> FilmId -> Select CatIdField
-findAssigned catId' filmId' = do
-  (fid, cid) <- filmCategorySelect
-  viaLateral restrict $ (fid .=== toFields filmId')
-                    .&& (cid .=== toFields catId')
-  pure cid

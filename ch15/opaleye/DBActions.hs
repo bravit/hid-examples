@@ -9,48 +9,51 @@ import Data.Text (Text)
 import Data.Int
 
 import FilmInfo
-import Queries
+import qualified Queries as Q
 
 allFilms :: Connection -> IO [FilmInfo]
-allFilms conn = runSelect conn filmSelect
+allFilms conn = runSelect conn Q.filmSelect
 
 totalFilmsNumber :: Connection -> IO Int64
 totalFilmsNumber conn = do
-  [cnt] <- runSelect conn countFilms
+  [cnt] <- runSelect conn Q.countFilms
   pure cnt
 
 findFilm :: Connection -> Text -> IO FilmInfo
 findFilm conn ttl = do
-  [film] <- runSelect conn $ filmByTitle ttl
+  [film] <- runSelect conn $ Q.findFilm ttl
   pure film
 
 filmsLonger :: Connection -> FilmLength -> IO [FilmInfo]
-filmsLonger conn len = runSelect conn $ filmsLongerThan len
+filmsLonger conn len = runSelect conn $ Q.filmsLonger len
 
 filmsCategories :: Connection -> [Text] -> IO [FilmCategories]
 filmsCategories conn = mapM runSingle
   where
     runSingle ttl = do
       film <- findFilm conn ttl
-      cats <- runSelect conn $ filmCategories ttl
+      cats <- runSelect conn $ Q.filmCategories ttl
       pure $ FilmCategories film cats
+
+setRating :: Connection -> Rating -> Text -> IO Int64
+setRating conn r filmTitle = runUpdate_ conn (Q.setRating r filmTitle)
 
 findOrAddCategory :: Connection -> Text -> IO [CatId]
 findOrAddCategory conn catName = do
-  cats <- runSelect conn (catIdByName catName)
+  cats <- runSelect conn (Q.catIdByName catName)
   case cats of
-    [] -> runInsert_ conn (newCategory catName)
+    [] -> runInsert_ conn (Q.newCategory catName)
     (cid:_) -> pure [cid]
 
 isAssigned :: Connection -> CatId -> FilmId -> IO Bool
 isAssigned conn cid fid = do
-  cats <- runSelect conn (findAssigned cid fid) :: IO [CatId]
+  cats <- runSelect conn (Q.findAssigned cid fid) :: IO [CatId]
   pure (length cats > 0)
 
-runAssignCategory :: Connection -> Text -> Text -> IO Int64
-runAssignCategory conn catName filmTitle = do
+assignCategory :: Connection -> Text -> Text -> IO Int64
+assignCategory conn catName filmTitle = do
     [cid] <- findOrAddCategory conn catName
-    filmIds <- runSelect conn (filmIdByTitle filmTitle)
+    filmIds <- runSelect conn (Q.filmIdByTitle filmTitle)
     case filmIds of
       [] -> pure 0
       (fid:_) -> go cid fid
@@ -59,15 +62,12 @@ runAssignCategory conn catName filmTitle = do
       b <- isAssigned conn cid fid
       case b of
         True -> pure 0
-        False -> runInsert_ conn (assignCategory cid fid)
+        False -> runInsert_ conn (Q.assignCategory cid fid)
 
-runUnassignCategory :: Connection -> Text -> Text -> IO Int64
-runUnassignCategory conn catName filmTitle = do
-  catIds <- runSelect conn (catIdByName catName)
-  filmIds <- runSelect conn (filmIdByTitle filmTitle)
+unassignCategory :: Connection -> Text -> Text -> IO Int64
+unassignCategory conn catName filmTitle = do
+  catIds <- runSelect conn (Q.catIdByName catName)
+  filmIds <- runSelect conn (Q.filmIdByTitle filmTitle)
   case (catIds, filmIds) of
-    ([cid], [fid]) -> runDelete_ conn (unassignCategory cid fid)
+    ([cid], [fid]) -> runDelete_ conn (Q.unassignCategory cid fid)
     _ -> pure 0
-
-setRating :: Connection -> Rating -> Text -> IO Int64
-setRating conn r filmTitle = runUpdate_ conn (setRatingForFilm r filmTitle)
