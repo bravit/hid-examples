@@ -7,6 +7,7 @@ import Database.PostgreSQL.Simple (Connection)
 
 import Data.Text (Text)
 import Data.Int
+import Data.Maybe (catMaybes)
 
 import FilmInfo
 import qualified Queries as Q
@@ -19,21 +20,26 @@ totalFilmsNumber conn = do
   [cnt] <- runSelect conn Q.countFilms
   pure cnt
 
-findFilm :: Connection -> Text -> IO FilmInfo
+findFilm :: Connection -> Text -> IO (Maybe FilmInfo)
 findFilm conn ttl = do
-  [film] <- runSelect conn $ Q.findFilm ttl
-  pure film
+  res <- runSelect conn $ Q.findFilm ttl
+  case res of
+    [film] -> pure $ Just film
+    _ -> pure $ Nothing
 
 filmsLonger :: Connection -> FilmLength -> IO [FilmInfo]
 filmsLonger conn len = runSelect conn $ Q.filmsLonger len
 
 filmsCategories :: Connection -> [Text] -> IO [FilmCategories]
-filmsCategories conn = mapM runSingle
+filmsCategories conn films = catMaybes <$> mapM runSingle films
   where
     runSingle ttl = do
-      film <- findFilm conn ttl
-      cats <- runSelect conn $ Q.filmCategories ttl
-      pure $ FilmCategories film cats
+      mfilm <- findFilm conn ttl
+      case mfilm of
+        Nothing -> pure Nothing
+        Just film -> do
+          cats <- runSelect conn $ Q.filmCategories ttl
+          pure $ Just $ FilmCategories film cats
 
 setRating :: Connection -> Rating -> Text -> IO Int64
 setRating conn r filmTitle = runUpdate_ conn (Q.setRating r filmTitle)
