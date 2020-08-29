@@ -577,12 +577,14 @@ executables:
           - attoparsec >=0.13 && <0.14
     # Chapter 15
     hdbc:
-        main: ch15/hdbc.hs
+        source-dirs: ch15
+        main: hdbc.hs
+        other-modules: [FilmInfo]
         dependencies:
           - HDBC >= 2.3 && < 2.5
           - HDBC-postgresql >= 2.3 && < 2.4
-          - random >= 1.0 && < 1.3
           - convertible >= 1.0 && < 1.2
+          - text >=1.2 && <1.3
           - text-show >=3.0 && <4
     pg-simple:
         source-dirs: ch15
