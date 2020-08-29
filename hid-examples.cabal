@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 70024a260700f8fb89b73c2a09eecb658db8ac1baf71cb828c88537b1262f09f
+-- hash: 48caf1ededbb1d62b77fdfbf6cfd0840ecebfb883200f63693bbf0a159572d9c
 
 name:           hid-examples
 version:        0.5
@@ -781,7 +781,7 @@ executable person-text
 executable pg-simple
   main-is: pg-simple.hs
   other-modules:
-      FilmRating
+      FilmInfo
   hs-source-dirs:
       ch15
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
@@ -789,7 +789,7 @@ executable pg-simple
       base >=4.12 && <4.15
     , bytestring >=0.10 && <0.11
     , postgresql-simple >=0.5 && <0.7
-    , random >=1.0 && <1.3
+    , text >=1.2 && <1.3
     , text-show >=3.0 && <4
   default-language: Haskell2010
 

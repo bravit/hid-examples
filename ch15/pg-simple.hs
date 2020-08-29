@@ -1,101 +1,200 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 {-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DeriveGeneric  #-}
+{-# LANGUAGE StandaloneDeriving  #-}
 
 import Database.PostgreSQL.Simple
+import Database.PostgreSQL.Simple.FromField
+import Database.PostgreSQL.Simple.ToField
 
 import GHC.Generics (Generic)
 import Data.Int (Int64)
-import FilmRating (Rating)
-import qualified FilmRating as Rating
+import Data.Maybe (catMaybes)
+import qualified Data.ByteString.Char8 as B
+import Data.Text (Text)
+import Data.Text.IO
 
-import System.Random
+import Prelude hiding (putStr, putStrLn)
 
-fetchSingle :: Applicative f => String -> [Only a] -> f a
-fetchSingle _ [Only val] = pure val
-fetchSingle what _ = error $ "Unexpected result: " ++ what
+import TextShow
+import FilmInfo
 
-countFilms :: Connection -> IO Int
-countFilms conn = do
-  result <- query_ conn "SELECT count(*) FROM film"
-  fetchSingle "countFilms" result
+deriving instance Generic FilmId
+deriving newtype instance FromField FilmId
+deriving newtype instance ToField FilmId
 
-data FilmInfo = FilmInfo {title :: String, rating :: Rating, length :: Int}
-  deriving (Generic, FromRow, Show)
+deriving instance Generic FilmLength
+deriving newtype instance FromField FilmLength
 
-filmsLongerThan :: Int -> Connection -> IO [FilmInfo]
-filmsLongerThan len conn = query conn select (Only len)
+deriving instance Generic CatId
+deriving newtype instance FromField CatId
+deriving newtype instance ToField CatId
+
+instance FromField Rating where
+  fromField f Nothing = returnError UnexpectedNull f ""
+  fromField f (Just bs) =
+    case toMaybeRating bs of
+      Nothing -> returnError ConversionFailed f (B.unpack bs)
+      Just r -> pure r
+
+deriving instance Generic FilmInfo
+deriving instance FromRow FilmInfo
+
+allFilms :: Connection -> IO [FilmInfo]
+allFilms conn = query_ conn select
   where
-    select = "SELECT title, rating, length FROM film WHERE length >= ?"
+    select = "SELECT film_id, title, description, length, rating FROM film"
 
-filmsCategories :: [String] -> Connection -> IO [(String, [String])]
-filmsCategories films conn = mapM runSingle films
+totalFilmsNumber :: Connection -> IO Int64
+totalFilmsNumber conn = do
+  [Only cnt] <- query_ conn "SELECT count(*) FROM film"
+  pure cnt
+
+findFilm :: Connection -> Text -> IO (Maybe FilmInfo)
+findFilm conn filmTitle = do
+  res <- query conn select (Only filmTitle)
+  case res of
+    [film] -> pure $ Just film
+    _ -> pure $ Nothing
   where
-    select = "SELECT category.name FROM film"
+    select = "SELECT film_id, title, description, length, rating"
+             <> " FROM film"
+             <> " WHERE title=?"
+
+filmsLonger :: Connection -> FilmLength -> IO [FilmInfo]
+filmsLonger conn (FilmLength len) = query conn select (Only len)
+  where
+    select = "SELECT film_id, title, description, length, rating"
+             <> " FROM film"
+             <> " WHERE length >= ?"
+
+filmsCategories :: Connection -> [Text] -> IO [FilmCategories]
+filmsCategories conn films = catMaybes <$> mapM runSingle films
+  where
+    select = "SELECT category.name"
+             <> " FROM film"
              <> " JOIN film_category USING (film_id)"
              <> " JOIN category USING (category_id)"
              <> " WHERE title = ?"
-    runSingle film = do
-      cats <- query conn select (Only film)
-      pure (film, map head cats)
+    runSingle filmTitle = do
+      mfilm <- findFilm conn filmTitle
+      case mfilm of
+        Nothing -> pure Nothing
+        Just film -> do
+          cats <- query conn select (Only filmTitle)
+          pure $ Just $ FilmCategories film (map head cats)
 
-setRatingForFilm :: Rating -> String -> Connection -> IO Int64
-setRatingForFilm fRating film conn =
-  execute conn "UPDATE film SET rating = ? WHERE title = ?" (fRating, film)
+setRating :: Connection -> Rating -> Text -> IO Int64
+setRating conn fRating filmTitle =
+  execute conn "UPDATE film SET rating = ? WHERE title = ?"
+          (fromRating fRating :: Text, filmTitle)
 
-newCategory :: String -> Connection -> IO Int64
-newCategory ncat conn =
-    query conn insert (Only ncat) >>= fetchSingle "category_id"
+newCategory :: Connection -> Text -> IO CatId
+newCategory conn catName = do
+    [Only r] <- query conn insert (Only catName)
+    pure r
   where
     insert = "INSERT INTO category (name) VALUES (?) RETURNING category_id"
 
-applyCategory :: Int64 -> Int64 -> Connection -> IO Int64
-applyCategory catId filmId conn =
-  execute conn "INSERT INTO film_category (film_id, category_id) VALUES (?, ?)"
-          (filmId, catId)
+catIdByName :: Connection -> Text -> IO (Maybe CatId)
+catIdByName conn catName = do
+  res <- query conn "SELECT category_id FROM category WHERE name=?" (Only catName)
+  case res of
+    [] -> pure Nothing
+    ([cid]:_) -> pure $ Just cid
+    _ -> error "should not happen"
 
-filmIdByTitle :: String -> Connection -> IO Int64
-filmIdByTitle filmTitle conn =
-  query conn "SELECT film_id FROM film WHERE title=?" (Only filmTitle)
-  >>= fetchSingle "film_id"
+findOrAddCategory :: Connection -> Text -> IO CatId
+findOrAddCategory conn catName = do
+  cats <- catIdByName conn catName
+  case cats of
+    Nothing -> newCategory conn catName
+    Just cid -> pure cid
 
-newCatForFilm :: String -> String -> Connection -> IO Int64
-newCatForFilm ncat film conn = do
-  catId <- newCategory ncat conn
-  filmId <- filmIdByTitle film conn
-  applyCategory catId filmId conn
+filmIdByTitle :: Connection -> Text -> IO (Maybe FilmId)
+filmIdByTitle conn filmTitle = do
+  res <- query conn "SELECT film_id FROM film WHERE title=?" (Only filmTitle)
+  case res of
+    [] -> pure Nothing
+    ([fid]:_) -> pure $ Just fid
+    _ -> error "should not happen"
 
-randomCategory :: String -> IO String
-randomCategory prefix = do
-  n <- randomRIO (10000, 99999::Int)
-  pure $ prefix ++ show n
+isAssigned :: Connection -> CatId -> FilmId -> IO Bool
+isAssigned conn cid fid = do
+  [Only res] <- query conn ("SELECT count(category_id) FROM film_category"
+                            <> " WHERE category_id = ? AND film_id= ?")
+                     (cid, fid)
+  pure $ res > (0 :: Int64)
 
-printAllFilms :: Connection -> IO ()
-printAllFilms conn = forEach_ conn select (print :: FilmInfo -> IO ())
-  where
-    select = "SELECT title, rating, length FROM film"
+assignCategory' :: Connection -> CatId -> FilmId -> IO Int64
+assignCategory' conn cid fid =
+  execute conn "INSERT INTO film_category (category_id, film_id) VALUES (?, ?)"
+          (cid, fid)
+
+assignCategory :: Connection -> Text -> Text -> IO Int64
+assignCategory conn catName filmTitle = do
+  cid <- findOrAddCategory conn catName
+  mFilmId <- filmIdByTitle conn filmTitle
+  case mFilmId of
+    Nothing -> pure 0
+    Just fid -> go cid fid
+ where
+   go cid fid = do
+     b <- isAssigned conn cid fid
+     case b of
+       True -> pure 0
+       False -> assignCategory' conn cid fid
+
+unassignCategory :: Connection -> Text -> Text -> IO Int64
+unassignCategory conn catName filmTitle =
+  execute conn
+     ("DELETE FROM film_category"
+      <> " USING film, category"
+      <> " WHERE category.name = ? AND film.title = ?"
+      <> "       AND film_category.film_id=film.film_id"
+      <> "       AND film_category.category_id=category.category_id")
+     (catName, filmTitle)
+
+demo :: Connection -> IO ()
+demo conn = do
+  allFilms conn >>= mapM_ printFilm . take 5
+
+  putStr "\nTotal number of films: "
+  totalFilmsNumber conn >>= printT
+
+  let film = "MODERN DORADO"
+  putStrLn "\nFilm information:"
+  findFilm conn film >>= printT
+
+  let len = FilmLength 185
+  putStrLn $ "\nFilms of " <> showt len <> " and longer:"
+  filmsLonger conn len >>= mapM_ printT
+
+  let films = ["KISSING DOLLS", "ALABAMA DEVIL", film]
+  putStrLn "\nFilms categories:"
+  filmsCategories conn films >>= mapM_ printT
+
+  let newRating = NC17
+  putStr $ "\nSetting rating " <> fromRating newRating
+              <>  " for a film (" <> film <> "): "
+  setRating conn newRating film >>= printT
+  findFilm conn film >>= printT
+
+  let newCat = "Art"
+  putStr "\nAssign category to a film: "
+  assignCategory conn newCat film >>= print
+  filmsCategories conn [film] >>= mapM_ printT
+
+  putStr "\nUnassign category from a film: "
+  unassignCategory conn newCat film >>= print
+  filmsCategories conn [film] >>= mapM_ printT
 
 main :: IO ()
 main = do
-  conn <- connectPostgreSQL "host=localhost dbname=sakila_films"
-
-  putStrLn "Total number of films:"
-  countFilms conn >>= print
-
-  putStrLn "Films of 185 minutes and longer:"
-  filmsLongerThan 185 conn >>= mapM_ print
-
-  putStrLn "Films categories:"
-  filmsCategories ["KISSING DOLLS", "ALABAMA DEVIL"] conn >>= mapM_ print
-
-  putStrLn "Setting rating for a film:"
-  setRatingForFilm Rating.G "KISSING DOLLS" conn >>= print
-
-  putStrLn "Apply random category to a film:"
-  let film = "MODERN DORADO"
-  newcat <- randomCategory "cat_"
-  withTransaction conn (newCatForFilm newcat film conn) >>= print
-  filmsCategories [film] conn >>= mapM_ print
-
-  putStrLn "All films:"
-  printAllFilms conn
+  conn <- connectPostgreSQL connString
+  demo conn
+ where
+   connString = "host=localhost dbname=sakila_films"
