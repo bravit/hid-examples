@@ -18,7 +18,7 @@ import Data.Text (Text)
 import Control.Monad (when)
 import Control.Monad.Trans (liftIO)
 
-import FilmInfo
+import FilmInfo.Data
 import qualified Statements as Stmt
 
 allFilms :: Connection -> IO [FilmInfo]

@@ -1,13 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-import Database.PostgreSQL.Simple (Connection)
-import qualified Database.PostgreSQL.Simple as PGS
+import Database.PostgreSQL.Simple (Connection, connectPostgreSQL)
 
 import Prelude hiding (putStr, putStrLn)
 import Data.Text.IO
 import TextShow
 
-import FilmInfo
+import FilmInfo.Data
 import DBActions
 
 demo :: Connection -> IO ()
@@ -46,7 +45,7 @@ demo conn = do
 
 main :: IO ()
 main = do
-  conn <- PGS.connectPostgreSQL connString
+  conn <- connectPostgreSQL connString
   demo conn
  where
    connString = "host=localhost dbname=sakila_films"

@@ -12,7 +12,7 @@ import Data.Maybe (isJust)
 import Data.Vector (Vector)
 import Data.Text (Text)
 
-import FilmInfo
+import FilmInfo.Data
 
 fiFromTuple :: (Int64, Text, Text, Int32, Text)
                 -> FilmInfo

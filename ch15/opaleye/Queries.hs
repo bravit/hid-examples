@@ -5,7 +5,7 @@ import Opaleye
 import Data.Text (Text)
 import Data.Int
 
-import FilmInfo
+import FilmInfo.Data
 import Tables
 
 filmSelect :: Select FilmInfoField

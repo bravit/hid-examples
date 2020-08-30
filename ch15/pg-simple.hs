@@ -1,10 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DeriveGeneric  #-}
 {-# LANGUAGE StandaloneDeriving  #-}
+{-# LANGUAGE FlexibleInstances  #-}
 
 import Database.PostgreSQL.Simple
 import Database.PostgreSQL.Simple.FromField
@@ -13,14 +13,14 @@ import Database.PostgreSQL.Simple.ToField
 import GHC.Generics (Generic)
 import Data.Int (Int64)
 import Data.Maybe (catMaybes)
-import qualified Data.ByteString.Char8 as B
 import Data.Text (Text)
 import Data.Text.IO
 
 import Prelude hiding (putStr, putStrLn)
 
 import TextShow
-import FilmInfo
+import FilmInfo.Data
+import FilmInfo.FromField()
 
 deriving instance Generic FilmId
 deriving newtype instance FromField FilmId
@@ -32,13 +32,6 @@ deriving newtype instance FromField FilmLength
 deriving instance Generic CatId
 deriving newtype instance FromField CatId
 deriving newtype instance ToField CatId
-
-instance FromField Rating where
-  fromField f Nothing = returnError UnexpectedNull f ""
-  fromField f (Just bs) =
-    case toMaybeRating bs of
-      Nothing -> returnError ConversionFailed f (B.unpack bs)
-      Just r -> pure r
 
 deriving instance Generic FilmInfo
 deriving instance FromRow FilmInfo
@@ -71,21 +64,26 @@ filmsLonger conn (FilmLength len) = query conn select (Only len)
              <> " FROM film"
              <> " WHERE length >= ?"
 
-filmsCategories :: Connection -> [Text] -> IO [FilmCategories]
-filmsCategories conn films = catMaybes <$> mapM runSingle films
+filmCategories :: Connection -> Text -> IO [Text]
+filmCategories conn filmTitle =
+    map fromOnly <$> query conn select (Only filmTitle)
   where
     select = "SELECT category.name"
              <> " FROM film"
              <> " JOIN film_category USING (film_id)"
              <> " JOIN category USING (category_id)"
              <> " WHERE title = ?"
+
+filmsCategories :: Connection -> [Text] -> IO [FilmCategories]
+filmsCategories conn films = catMaybes <$> mapM runSingle films
+  where
     runSingle filmTitle = do
       mfilm <- findFilm conn filmTitle
       case mfilm of
         Nothing -> pure Nothing
         Just film -> do
-          cats <- query conn select (Only filmTitle)
-          pure $ Just $ FilmCategories film (map head cats)
+          cats <- filmCategories conn filmTitle
+          pure $ Just $ FilmCategories film cats
 
 setRating :: Connection -> Rating -> Text -> IO Int64
 setRating conn fRating filmTitle =

@@ -1,6 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE LambdaCase #-}
 
 import Database.HDBC
 import Database.HDBC.PostgreSQL
@@ -13,13 +12,13 @@ import Data.Text (Text)
 import Data.Text.IO
 import TextShow
 
-import FilmInfo
+import FilmInfo.Data
 
 fiFromList :: [SqlValue] -> FilmInfo
 fiFromList [fid, ttl, desc, l, r] = FilmInfo {
     filmId = FilmId $ fromSql fid
   , title = fromSql ttl
-  , description = Just $ fromSql desc
+  , description = fromSql desc
   , filmLength = FilmLength $ fromSql l
   , rating = toMaybeRating $ (fromSql r :: Text)
   }
@@ -57,25 +56,27 @@ filmsLonger :: Connection -> FilmLength -> IO [FilmInfo]
 filmsLonger conn (FilmLength len) =
     map fiFromList <$> quickQuery conn select [toSql len]
   where
-    select = "SELECT film_id, title, description, length, rating FROM film WHERE length >= ?"
+    select = "SELECT film_id, title, description, length, rating"
+             <> " FROM film WHERE length >= ?"
 
 filmsCategories :: Connection -> [Text] -> IO [FilmCategories]
 filmsCategories conn films = do
-    stmt <- prepare conn select
+    stmt <- prepare conn selectCats
     catMaybes <$> mapM (runSingle stmt) films
   where
-    select = "SELECT category.name FROM film"
-             <> " JOIN film_category USING (film_id)"
-             <> " JOIN category USING (category_id)"
-             <> " WHERE title = ?"
+    selectCats = "SELECT category.name FROM film"
+                 <> " JOIN film_category USING (film_id)"
+                 <> " JOIN category USING (category_id)"
+                 <> " WHERE title = ?"
     runSingle stmt filmTitle = do
       mfilm <- findFilm conn filmTitle
       case mfilm of
         Nothing -> pure Nothing
-        Just film -> do
-          _ <- execute stmt [toSql filmTitle]
-          cats <- fetchAllRows' stmt
-          pure $ Just $ FilmCategories film $ map (fromSql . head) cats
+        Just film -> withCategories film stmt
+    withCategories film stmt = do
+      _ <- execute stmt [toSql $ title film]
+      cats <- fetchAllRows' stmt
+      pure $ Just $ FilmCategories film $ map (fromSql . head) cats
 
 setRating :: Connection -> Rating -> Text -> IO Integer
 setRating conn fRating filmTitle = do
@@ -93,11 +94,9 @@ newCategory conn catName = fmap CatId $ do
 
 catIdByName :: Connection -> Text -> IO (Maybe CatId)
 catIdByName conn catName =
-  quickQuery conn "SELECT  category_id FROM category WHERE name = ?"
+  quickQuery conn "SELECT category_id FROM category WHERE name = ?"
              [toSql catName]
-  >>= fetchMaybe (\case
-                     [x] -> CatId $ fromSql x
-                     _ -> error "not a value")
+  >>= fetchMaybe (CatId . fromSql . head)
 
 findOrAddCategory :: Connection -> Text -> IO CatId
 findOrAddCategory conn catName = do
@@ -109,22 +108,20 @@ findOrAddCategory conn catName = do
 filmIdByTitle :: Connection -> Text -> IO (Maybe FilmId)
 filmIdByTitle conn filmTitle =
   quickQuery conn "SELECT film_id FROM film WHERE title=?" [toSql filmTitle]
-  >>= fetchMaybe (\case
-                     [x] -> FilmId $ fromSql x
-                     _ -> error "not a value")
+  >>= fetchMaybe (FilmId . fromSql . head)
 
 isAssigned :: Connection -> CatId -> FilmId -> IO Bool
 isAssigned conn (CatId cid) (FilmId fid) = do
   res <- quickQuery conn ("SELECT count(category_id) FROM film_category"
                             <> " WHERE category_id = ? AND film_id= ?")
-                     [toSql cid, toSql fid]
+                    [toSql cid, toSql fid]
   cnt <- fetchSingle "isAssigned" res
   pure $ cnt > (0 :: Int64)
 
 assignCategory' :: Connection -> CatId -> FilmId -> IO Integer
 assignCategory' conn (CatId cid) (FilmId fid) =
   run conn "INSERT INTO film_category (category_id, film_id) VALUES (?, ?)"
-          [toSql cid, toSql fid]
+      [toSql cid, toSql fid]
 
 assignCategory :: Connection -> Text -> Text -> IO Integer
 assignCategory conn catName filmTitle = do

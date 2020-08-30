@@ -10,22 +10,14 @@ import Data.Profunctor.Product (p2)
 import Data.Profunctor.Product.Default
 import Data.Profunctor.Product.TH (makeAdaptorAndInstance)
 
-import Database.PostgreSQL.Simple.FromField as PGS hiding (Field)
 import Opaleye
 
 import Data.Text (Text)
-import qualified Data.ByteString.Char8 as B
 
-import FilmInfo
+import FilmInfo.Data
+import FilmInfo.FromField()
 
 data PGRating
-
-instance PGS.FromField Rating where
-  fromField f Nothing = returnError UnexpectedNull f ""
-  fromField f (Just bs) =
-    case toMaybeRating bs of
-      Nothing -> returnError ConversionFailed f (B.unpack bs)
-      Just r -> pure r
 
 instance DefaultFromField PGRating Rating where
   defaultFromField = fieldQueryRunnerColumn
@@ -33,7 +25,6 @@ instance DefaultFromField PGRating Rating where
 instance pgf ~ FieldNullable PGRating => Default ToFields Rating pgf where
   def = dimap fromRating (unsafeCast "mpaa_rating")
               (def :: ToFields Text (Field PGText))
-
 
 makeAdaptorAndInstance "pFilmId" ''FilmId'
 makeAdaptorAndInstance "pFilmLength" ''FilmLength'

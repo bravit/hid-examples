@@ -3,7 +3,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module FilmInfo where
+module FilmInfo.Data where
 
 import Data.String
 import Data.Int
@@ -11,9 +11,17 @@ import Data.Text (Text)
 import Data.Text.IO as T
 import TextShow
 
-newtype FilmId = FilmId Int64
-newtype CatId = CatId Int64
-newtype FilmLength = FilmLength Int32
+data FilmInfo' i t d l r = FilmInfo {
+    filmId :: i
+  , title :: t
+  , description :: d
+  , filmLength :: l
+  , rating :: r
+  }
+
+newtype FilmId' a = FilmId a
+newtype CatId' a = CatId a
+newtype FilmLength' a = FilmLength a
 
 data Rating = G | PG | PG13 | R | NC17
   deriving Show
@@ -33,13 +41,10 @@ toMaybeRating "R" = Just R
 toMaybeRating "NC-17" = Just NC17
 toMaybeRating _ = Nothing
 
-data FilmInfo = FilmInfo {
-    filmId :: FilmId
-  , title :: Text
-  , description :: Maybe Text
-  , filmLength :: FilmLength
-  , rating :: Maybe Rating
-  }
+type FilmId = FilmId' Int64
+type FilmLength = FilmLength' Int32
+type FilmInfo = FilmInfo' FilmId Text (Maybe Text) FilmLength (Maybe Rating)
+type CatId = CatId' Int64
 
 data FilmCategories = FilmCategories FilmInfo [Text]
 

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 93a10004db45594cf48862bc12c3516d76f8191f0262d73f6ab03e0ebf8db8ec
+-- hash: d85218c6cc3184cc48fc1549518640c9a55dad8b2b05b3c0cacc2504309c05cd
 
 name:           hid-examples
 version:        0.5
@@ -536,12 +536,12 @@ executable generic-sql
 executable hasql
   main-is: Main.hs
   other-modules:
-      DBActions
-      FilmInfo
+      FilmInfo.Data
       Statements
-      Paths_hid_examples
+      DBActions
   hs-source-dirs:
       ch15/hasql
+      ch15
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -557,7 +557,7 @@ executable hasql
 executable hdbc
   main-is: hdbc.hs
   other-modules:
-      FilmInfo
+      FilmInfo.Data
   hs-source-dirs:
       ch15
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
@@ -727,13 +727,14 @@ executable nummod-rank-n
 executable opaleye
   main-is: Main.hs
   other-modules:
-      DBActions
-      FilmInfo
-      Queries
+      FilmInfo.Data
+      FilmInfo.FromField
       Tables
-      Paths_hid_examples
+      Queries
+      DBActions
   hs-source-dirs:
       ch15/opaleye
+      ch15
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
@@ -783,7 +784,8 @@ executable person-text
 executable pg-simple
   main-is: pg-simple.hs
   other-modules:
-      FilmInfo
+      FilmInfo.Data
+      FilmInfo.FromField
   hs-source-dirs:
       ch15
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans

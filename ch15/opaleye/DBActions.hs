@@ -9,7 +9,7 @@ import Data.Text (Text)
 import Data.Int
 import Data.Maybe (catMaybes)
 
-import FilmInfo
+import FilmInfo.Data
 import qualified Queries as Q
 
 allFilms :: Connection -> IO [FilmInfo]

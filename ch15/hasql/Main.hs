@@ -7,7 +7,7 @@ import Prelude hiding (putStr, putStrLn)
 import Data.Text.IO
 import TextShow
 
-import FilmInfo
+import FilmInfo.Data
 import DBActions
 
 demo :: Connection -> IO ()
