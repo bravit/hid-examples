@@ -12,7 +12,7 @@ import Database.PostgreSQL.Simple.ToField
 
 import GHC.Generics (Generic)
 import Data.Int (Int64)
-import Data.Maybe (catMaybes)
+import Data.Maybe (catMaybes, listToMaybe)
 import Data.Text (Text)
 import Data.Text.IO
 
@@ -48,10 +48,7 @@ totalFilmsNumber conn = do
 
 findFilm :: Connection -> Text -> IO (Maybe FilmInfo)
 findFilm conn filmTitle = do
-  res <- query conn select (Only filmTitle)
-  case res of
-    [film] -> pure $ Just film
-    _ -> pure $ Nothing
+    query conn select (Only filmTitle) >>= pure . listToMaybe
   where
     select = "SELECT film_id, title, description, length, rating"
              <> " FROM film"
@@ -81,9 +78,8 @@ filmsCategories conn films = catMaybes <$> mapM runSingle films
       mfilm <- findFilm conn filmTitle
       case mfilm of
         Nothing -> pure Nothing
-        Just film -> do
-          cats <- filmCategories conn filmTitle
-          pure $ Just $ FilmCategories film cats
+        Just film -> filmCategories conn filmTitle
+                     >>= pure . Just . FilmCategories film
 
 setRating :: Connection -> Rating -> Text -> IO Int64
 setRating conn fRating filmTitle =
@@ -98,12 +94,10 @@ newCategory conn catName = do
     insert = "INSERT INTO category (name) VALUES (?) RETURNING category_id"
 
 catIdByName :: Connection -> Text -> IO (Maybe CatId)
-catIdByName conn catName = do
-  res <- query conn "SELECT category_id FROM category WHERE name=?" (Only catName)
-  case res of
-    [] -> pure Nothing
-    ([cid]:_) -> pure $ Just cid
-    _ -> error "should not happen"
+catIdByName conn catName =
+    query conn select (Only catName) >>= pure . listToMaybe . map fromOnly
+  where
+    select = "SELECT category_id FROM category WHERE name=?"
 
 findOrAddCategory :: Connection -> Text -> IO CatId
 findOrAddCategory conn catName = do
@@ -113,24 +107,27 @@ findOrAddCategory conn catName = do
     Just cid -> pure cid
 
 filmIdByTitle :: Connection -> Text -> IO (Maybe FilmId)
-filmIdByTitle conn filmTitle = do
-  res <- query conn "SELECT film_id FROM film WHERE title=?" (Only filmTitle)
-  case res of
-    [] -> pure Nothing
-    ([fid]:_) -> pure $ Just fid
-    _ -> error "should not happen"
+filmIdByTitle conn filmTitle =
+    query conn select (Only filmTitle) >>= pure . listToMaybe . map fromOnly
+  where
+    select =  "SELECT film_id FROM film WHERE title=?"
 
 isAssigned :: Connection -> CatId -> FilmId -> IO Bool
 isAssigned conn cid fid = do
-  [Only res] <- query conn ("SELECT count(category_id) FROM film_category"
-                            <> " WHERE category_id = ? AND film_id= ?")
-                     (cid, fid)
-  pure $ res > (0 :: Int64)
+    [Only res] <- query conn select (cid, fid)
+    pure $ res > (0 :: Int64)
+  where
+    select = "SELECT count(category_id) FROM film_category"
+             <> " WHERE category_id = ? AND film_id= ?"
 
-assignCategory' :: Connection -> CatId -> FilmId -> IO Int64
-assignCategory' conn cid fid =
-  execute conn "INSERT INTO film_category (category_id, film_id) VALUES (?, ?)"
-          (cid, fid)
+assignUnlessAssigned :: Connection -> CatId -> FilmId -> IO Int64
+assignUnlessAssigned conn cid fid = do
+    b <- isAssigned conn cid fid
+    case b of
+      True -> pure 0
+      False -> execute conn insert (cid, fid)
+  where
+   insert = "INSERT INTO film_category (category_id, film_id) VALUES (?, ?)"
 
 assignCategory :: Connection -> Text -> Text -> IO Int64
 assignCategory conn catName filmTitle = do
@@ -138,23 +135,17 @@ assignCategory conn catName filmTitle = do
   mFilmId <- filmIdByTitle conn filmTitle
   case mFilmId of
     Nothing -> pure 0
-    Just fid -> go cid fid
- where
-   go cid fid = do
-     b <- isAssigned conn cid fid
-     case b of
-       True -> pure 0
-       False -> assignCategory' conn cid fid
+    Just fid -> assignUnlessAssigned conn cid fid
 
 unassignCategory :: Connection -> Text -> Text -> IO Int64
 unassignCategory conn catName filmTitle =
-  execute conn
-     ("DELETE FROM film_category"
+    execute conn delete (catName, filmTitle)
+  where
+    delete = "DELETE FROM film_category"
       <> " USING film, category"
       <> " WHERE category.name = ? AND film.title = ?"
       <> "       AND film_category.film_id=film.film_id"
-      <> "       AND film_category.category_id=category.category_id")
-     (catName, filmTitle)
+      <> "       AND film_category.category_id=category.category_id"
 
 demo :: Connection -> IO ()
 demo conn = do
@@ -194,5 +185,6 @@ main :: IO ()
 main = do
   conn <- connectPostgreSQL connString
   demo conn
+  close conn
  where
    connString = "host=localhost dbname=sakila_films"
