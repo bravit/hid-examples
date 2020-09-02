@@ -6,6 +6,7 @@ import qualified Hasql.Connection as Connection
 import Prelude hiding (putStr, putStrLn)
 import Data.Text.IO
 import TextShow
+import qualified Data.Vector as V
 
 import FilmInfo.Data
 import DBActions
@@ -13,7 +14,7 @@ import DBActions
 demo :: Connection -> IO ()
 demo conn = do
 --  printAllFilms conn
-  allFilms conn >>= mapM_ printFilm . take 5
+  allFilms conn >>= mapM_ printFilm . V.take 5
 
   putStr "\nTotal number of films: "
   totalFilmsNumber conn >>= printT

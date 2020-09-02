@@ -5,8 +5,8 @@ module Statements where
 import Hasql.Statement (Statement)
 import qualified Hasql.TH as TH
 
-import Data.Profunctor
-import Data.Bifunctor (bimap)
+import Data.Profunctor (rmap, lmap, dimap)
+import Data.Bifunctor (bimap, first)
 import Data.Int
 import Data.Maybe (isJust)
 import Data.Vector (Vector)
@@ -14,8 +14,7 @@ import Data.Text (Text)
 
 import FilmInfo.Data
 
-fiFromTuple :: (Int32, Text, Text, Int32, Text)
-                -> FilmInfo
+fiFromTuple :: (Int32, Text, Text, Int32, Text) -> FilmInfo
 fiFromTuple (i, t, d, l, r) = FilmInfo {
     filmId = FilmId i
   , title = t
@@ -29,6 +28,9 @@ fromFilmId (FilmId a) = a
 
 fromCatId :: CatId -> Int32
 fromCatId (CatId a) = a
+
+fromFilmLength :: FilmLength -> Int32
+fromFilmLength (FilmLength len) = len
 
 allFilms :: Statement () (Vector FilmInfo)
 allFilms = rmap (fmap fiFromTuple)
@@ -55,8 +57,8 @@ findFilm = rmap (fmap fiFromTuple)
      WHERE title = $1::text
   |]
 
-filmsLonger :: Statement Int32 (Vector FilmInfo)
-filmsLonger = rmap (fmap fiFromTuple)
+filmsLonger :: Statement FilmLength (Vector FilmInfo)
+filmsLonger = dimap fromFilmLength (fmap fiFromTuple)
   [TH.vectorStatement|
      SELECT film_id :: int4, title :: text,
             description :: text,
@@ -75,7 +77,7 @@ filmCategories =
   |]
 
 setRating :: Statement (Rating, Text) Int64
-setRating = lmap (first' fromRating)
+setRating = lmap (first fromRating)
   [TH.rowsAffectedStatement|
     UPDATE film SET rating = $1 :: text :: mpaa_rating
     WHERE title = $2 :: text
@@ -101,7 +103,7 @@ newCategory = rmap CatId
   |]
 
 isAssigned :: Statement (CatId, FilmId) Bool
-isAssigned = lmap (bimap fromCatId fromFilmId) $ rmap isJust
+isAssigned = dimap (bimap fromCatId fromFilmId) isJust
   [TH.maybeStatement|
      SELECT category_id::int4 FROM film_category
      WHERE category_id=$1::int4 AND film_id=$2::int4

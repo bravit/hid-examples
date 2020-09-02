@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cd194fb10278fa9e9286c8829b4c0286c39c4a973ff6e7d8785821899c4f9316
+-- hash: fab524ca74d3544e89878fbdeed3804bf13fcc003270eacc295a97e706a3002b
 
 name:           hid-examples
 version:        0.5
@@ -538,6 +538,7 @@ executable hasql
   other-modules:
       FilmInfo.Data
       Statements
+      Sessions
       DBActions
   hs-source-dirs:
       ch15/hasql
