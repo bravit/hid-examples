@@ -29,12 +29,11 @@ CREATE TABLE film (
     film_id integer DEFAULT nextval('film_film_id_seq'::regclass) NOT NULL,
     title text NOT NULL,
     description text,
-    release_year smallint NOT NULL,
     length smallint NOT NULL,
     rating mpaa_rating
 );
 
 CREATE TABLE film_category (
-    film_id smallint NOT NULL,
-    category_id smallint NOT NULL
+    film_id integer NOT NULL,
+    category_id integer NOT NULL
 );

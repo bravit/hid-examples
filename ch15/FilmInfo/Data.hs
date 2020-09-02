@@ -11,17 +11,14 @@ import Data.Text (Text)
 import Data.Text.IO as T
 import TextShow
 
-data FilmInfo' i t d l r = FilmInfo {
-    filmId :: i
-  , title :: t
-  , description :: d
-  , filmLength :: l
-  , rating :: r
-  }
-
 newtype FilmId' a = FilmId a
+type FilmId = FilmId' Int32
+
 newtype CatId' a = CatId a
+type CatId = CatId' Int32
+
 newtype FilmLength' a = FilmLength a
+type FilmLength = FilmLength' Int32
 
 data Rating = G | PG | PG13 | R | NC17
   deriving Show
@@ -41,10 +38,14 @@ toMaybeRating "R" = Just R
 toMaybeRating "NC-17" = Just NC17
 toMaybeRating _ = Nothing
 
-type FilmId = FilmId' Int64
-type FilmLength = FilmLength' Int32
+data FilmInfo' i t d l r = FilmInfo {
+    filmId :: i
+  , title :: t
+  , description :: d
+  , filmLength :: l
+  , rating :: r
+  }
 type FilmInfo = FilmInfo' FilmId Text (Maybe Text) FilmLength (Maybe Rating)
-type CatId = CatId' Int64
 
 data FilmCategories = FilmCategories FilmInfo [Text]
 

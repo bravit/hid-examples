@@ -1,9 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 
 import Database.HDBC
 import Database.HDBC.PostgreSQL
-import Data.Convertible.Base (Convertible)
+import Data.Convertible.Base
 
 import Prelude hiding (putStr, putStrLn)
 import Data.Int (Int64)
@@ -14,13 +16,25 @@ import TextShow
 
 import FilmInfo.Data
 
+instance Convertible FilmId SqlValue where
+  safeConvert (FilmId i) = safeConvert i
+
+instance Convertible FilmLength SqlValue where
+  safeConvert (FilmLength l) = safeConvert l
+
+instance Convertible Rating SqlValue where
+  safeConvert r = safeConvert (fromRating r :: Text)
+
+instance Convertible CatId SqlValue where
+  safeConvert (CatId i) = safeConvert i
+
 fiFromList :: [SqlValue] -> FilmInfo
 fiFromList [fid, ttl, desc, l, r] = FilmInfo {
     filmId = FilmId $ fromSql fid
   , title = fromSql ttl
   , description = fromSql desc
   , filmLength = FilmLength $ fromSql l
-  , rating = toMaybeRating $ (fromSql r :: Text)
+  , rating = (fromSql r :: Maybe Text) >>= toMaybeRating
   }
 fiFromList _ = error "unexpected result (fiFromList)"
 
@@ -34,26 +48,26 @@ fetchSingle :: (Monad m, Convertible SqlValue a) =>
 fetchSingle _ [[val]] = pure $ fromSql val
 fetchSingle what _ = error $ "Unexpected result: " ++ what
 
+fetchMaybe :: Monad m => ([SqlValue] -> a) -> [[SqlValue]] -> m (Maybe a)
+fetchMaybe fromRow (row:_) = pure $ Just $ fromRow row
+fetchMaybe  _ _ = pure Nothing
+
 totalFilmsNumber :: Connection -> IO Int64
 totalFilmsNumber conn = do
   res <- quickQuery conn "SELECT count(*) FROM film" []
   fetchSingle "totalFilmsNumber" res
 
-fetchMaybe :: Monad m => ([SqlValue] -> a) -> [[SqlValue]] -> m (Maybe a)
-fetchMaybe fromRow (row:_) = pure $ Just $ fromRow row
-fetchMaybe  _ _ = pure Nothing
-
 findFilm :: Connection -> Text -> IO (Maybe FilmInfo)
 findFilm conn filmTitle = do
-  res <- quickQuery conn select [toSql filmTitle]
-  fetchMaybe fiFromList res
+    res <- quickQuery conn select [toSql filmTitle]
+    fetchMaybe fiFromList res
   where
     select = "SELECT film_id, title, description, length, rating"
              <> " FROM film"
              <> " WHERE title=?"
 
 filmsLonger :: Connection -> FilmLength -> IO [FilmInfo]
-filmsLonger conn (FilmLength len) =
+filmsLonger conn len =
     map fiFromList <$> quickQuery conn select [toSql len]
   where
     select = "SELECT film_id, title, description, length, rating"
@@ -81,7 +95,7 @@ filmsCategories conn films = do
 setRating :: Connection -> Rating -> Text -> IO Integer
 setRating conn fRating filmTitle = do
   res <- run conn "UPDATE film SET rating = ? WHERE title = ?"
-          [toSql (fromRating fRating :: Text), toSql filmTitle]
+          [toSql fRating, toSql filmTitle]
   commit conn
   pure res
 
@@ -111,17 +125,21 @@ filmIdByTitle conn filmTitle =
   >>= fetchMaybe (FilmId . fromSql . head)
 
 isAssigned :: Connection -> CatId -> FilmId -> IO Bool
-isAssigned conn (CatId cid) (FilmId fid) = do
+isAssigned conn cid fid = do
   res <- quickQuery conn ("SELECT count(category_id) FROM film_category"
                             <> " WHERE category_id = ? AND film_id= ?")
                     [toSql cid, toSql fid]
   cnt <- fetchSingle "isAssigned" res
   pure $ cnt > (0 :: Int64)
 
-assignCategory' :: Connection -> CatId -> FilmId -> IO Integer
-assignCategory' conn (CatId cid) (FilmId fid) =
-  run conn "INSERT INTO film_category (category_id, film_id) VALUES (?, ?)"
-      [toSql cid, toSql fid]
+assignUnlessAssigned :: Connection -> CatId -> FilmId -> IO Integer
+assignUnlessAssigned conn cid fid = do
+  b <- isAssigned conn cid fid
+  case b of
+    True -> pure 0
+    False -> run conn insert [toSql cid, toSql fid]
+ where
+   insert = "INSERT INTO film_category (category_id, film_id) VALUES (?, ?)"
 
 assignCategory :: Connection -> Text -> Text -> IO Integer
 assignCategory conn catName filmTitle = do
@@ -129,27 +147,20 @@ assignCategory conn catName filmTitle = do
   mFilmId <- filmIdByTitle conn filmTitle
   case mFilmId of
     Nothing -> pure 0
-    Just fid -> go cid fid
- where
-   go cid fid = do
-     b <- isAssigned conn cid fid
-     case b of
-       True -> pure 0
-       False -> assignCategory' conn cid fid
+    Just fid -> assignUnlessAssigned conn cid fid
 
 unassignCategory :: Connection -> Text -> Text -> IO Integer
 unassignCategory conn catName filmTitle =
-  run conn
-     ("DELETE FROM film_category"
+    run conn delete [toSql catName, toSql filmTitle]
+  where
+    delete = "DELETE FROM film_category"
       <> " USING film, category"
       <> " WHERE category.name = ? AND film.title = ?"
       <> "       AND film_category.film_id=film.film_id"
-      <> "       AND film_category.category_id=category.category_id")
-     [toSql catName, toSql filmTitle]
+      <> "       AND film_category.category_id=category.category_id"
 
 demo :: Connection -> IO ()
 demo conn = do
-
   allFilms conn >>= mapM_ printFilm . take 5
 
   putStr "\nTotal number of films: "
@@ -183,7 +194,6 @@ demo conn = do
   filmsCategories conn [film] >>= mapM_ printT
 
 main :: IO ()
-main = withPostgreSQL connString
-       $ \conn -> handleSqlError $ demo conn
+main = withPostgreSQL connString (handleSqlError . demo)
  where
    connString = "host=localhost dbname=sakila_films"

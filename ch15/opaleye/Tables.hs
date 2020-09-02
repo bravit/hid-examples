@@ -30,8 +30,8 @@ makeAdaptorAndInstance "pFilmId" ''FilmId'
 makeAdaptorAndInstance "pFilmLength" ''FilmLength'
 makeAdaptorAndInstance "pFilmInfo" ''FilmInfo'
 
-type FilmIdField = FilmId' (Field SqlInt8)
-type OptionalFilmIdField = FilmId' (Maybe (Field SqlInt8))
+type FilmIdField = FilmId' (Field SqlInt4)
+type OptionalFilmIdField = FilmId' (Maybe (Field SqlInt4))
 
 type FilmLengthField = FilmLength' (Field SqlInt4)
 
@@ -56,8 +56,8 @@ filmTable =
 
 makeAdaptorAndInstance "pCatId" ''CatId'
 
-type CatIdField = CatId' (Field SqlInt8)
-type OptionalCatIdField = CatId' (Maybe (Field SqlInt8))
+type CatIdField = CatId' (Field SqlInt4)
+type OptionalCatIdField = CatId' (Maybe (Field SqlInt4))
 
 categoryTable :: Table (OptionalCatIdField, Field SqlText)
                        (CatIdField, Field SqlText)
