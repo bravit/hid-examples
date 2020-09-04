@@ -4,10 +4,7 @@
 module Sessions where
 
 import Hasql.Session (Session)
-import Hasql.Statement (Statement(..))
 import qualified Hasql.Session as Session
-import qualified Hasql.Decoders as Dec
-import qualified Hasql.Encoders as Enc
 
 import Data.Int
 import Data.Maybe (catMaybes)
@@ -72,25 +69,19 @@ unassignCategory :: Text -> Text -> Session Int64
 unassignCategory catName filmTitle =
   Session.statement (catName, filmTitle) Stmt.unassignCategory
 
-printAllFilms :: Session ()
-printAllFilms = do
+processAllFilms :: (FilmInfo -> IO ()) -> Session ()
+processAllFilms process = do
     Session.sql "BEGIN"
     Session.sql declareCursor
     fetchRowsLoop
     Session.sql "END"
   where
-    declareCursor = "DECLARE films_cursor CURSOR FOR "
-                    <> "SELECT title, rating, length FROM film;"
-    decoder = Dec.rowVector $
-      (,,) <$> (Dec.column . Dec.nonNullable) Dec.text
-               <*> (fmap (>>= toMaybeRating) . Dec.column .
-                      Dec.nullable) Dec.text
-               <*> (Dec.column . Dec.nonNullable) Dec.int8
-    fetch = Session.statement () $
-              Statement "FETCH FORWARD 10 FROM films_cursor"
-                Enc.noParams decoder True
+    declareCursor =
+      "DECLARE films_cursor CURSOR FOR "
+      <> "SELECT film_id, title, description, "
+      <> "       length, rating FROM film"
     fetchRowsLoop = do
-      rows <- fetch
+      rows <- Session.statement () Stmt.fetchFilmsChunk
       when (not $ V.null rows) $ do
-        liftIO (V.mapM_ print rows)
+        liftIO (V.mapM_ process rows)
         fetchRowsLoop

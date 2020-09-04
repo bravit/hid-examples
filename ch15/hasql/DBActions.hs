@@ -46,4 +46,4 @@ unassignCategory conn catName filmTitle =
   handleErrors $ Session.run (Ses.unassignCategory catName filmTitle) conn
 
 printAllFilms :: Connection -> IO ()
-printAllFilms conn = handleErrors $ Session.run Ses.printAllFilms conn
+printAllFilms conn = handleErrors $ Session.run (Ses.processAllFilms printFilm) conn

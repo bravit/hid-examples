@@ -13,7 +13,7 @@ import DBActions
 
 demo :: Connection -> IO ()
 demo conn = do
---  printAllFilms conn
+  printAllFilms conn
   allFilms conn >>= mapM_ printFilm . V.take 5
 
   putStr "\nTotal number of films: "
