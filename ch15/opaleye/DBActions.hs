@@ -7,7 +7,7 @@ import Database.PostgreSQL.Simple (Connection)
 
 import Data.Text (Text)
 import Data.Int
-import Data.Maybe (catMaybes)
+import Data.Maybe (catMaybes, listToMaybe)
 
 import FilmInfo.Data
 import qualified Queries as Q
@@ -21,25 +21,20 @@ totalFilmsNumber conn = do
   pure cnt
 
 findFilm :: Connection -> Text -> IO (Maybe FilmInfo)
-findFilm conn ttl = do
-  res <- runSelect conn $ Q.findFilm ttl
-  case res of
-    [film] -> pure $ Just film
-    _ -> pure $ Nothing
+findFilm conn = fmap listToMaybe . runSelect conn . Q.findFilm
 
 filmsLonger :: Connection -> FilmLength -> IO [FilmInfo]
-filmsLonger conn len = runSelect conn $ Q.filmsLonger len
+filmsLonger conn = runSelect conn . Q.filmsLonger
 
 filmsCategories :: Connection -> [Text] -> IO [FilmCategories]
 filmsCategories conn films = catMaybes <$> mapM runSingle films
   where
-    runSingle ttl = do
-      mfilm <- findFilm conn ttl
+    runSingle filmTitle = do
+      mfilm <- findFilm conn filmTitle
       case mfilm of
         Nothing -> pure Nothing
-        Just film -> do
-          cats <- runSelect conn $ Q.filmCategories ttl
-          pure $ Just $ FilmCategories film cats
+        Just film -> runSelect conn (Q.filmCategories filmTitle)
+                     >>= pure . Just . FilmCategories film
 
 setRating :: Connection -> Rating -> Text -> IO Int64
 setRating conn r filmTitle = runUpdate_ conn (Q.setRating r filmTitle)
@@ -56,19 +51,20 @@ isAssigned conn cid fid = do
   cats <- runSelect conn (Q.findAssigned cid fid) :: IO [CatId]
   pure (length cats > 0)
 
+assignUnlessAssigned :: Connection -> CatId -> FilmId -> IO Int64
+assignUnlessAssigned conn cid fid = do
+  b <- isAssigned conn cid fid
+  case b of
+    True -> pure 0
+    False -> runInsert_ conn (Q.assignCategory cid fid)
+
 assignCategory :: Connection -> Text -> Text -> IO Int64
 assignCategory conn catName filmTitle = do
     [cid] <- findOrAddCategory conn catName
     filmIds <- runSelect conn (Q.filmIdByTitle filmTitle)
     case filmIds of
       [] -> pure 0
-      (fid:_) -> go cid fid
-  where
-    go cid fid = do
-      b <- isAssigned conn cid fid
-      case b of
-        True -> pure 0
-        False -> runInsert_ conn (Q.assignCategory cid fid)
+      (fid:_) -> assignUnlessAssigned conn cid fid
 
 unassignCategory :: Connection -> Text -> Text -> IO Int64
 unassignCategory conn catName filmTitle = do

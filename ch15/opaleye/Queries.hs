@@ -74,7 +74,6 @@ newCategory catName = Insert {
    , iOnConflict = Nothing
    }
 
-
 findAssigned :: CatId -> FilmId -> Select CatIdField
 findAssigned catId' filmId' = do
   (fid, cid) <- filmCategorySelect

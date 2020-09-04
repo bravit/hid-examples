@@ -47,7 +47,7 @@ totalFilmsNumber conn = do
   pure cnt
 
 findFilm :: Connection -> Text -> IO (Maybe FilmInfo)
-findFilm conn filmTitle = do
+findFilm conn filmTitle =
     query conn select (Only filmTitle) >>= pure . listToMaybe
   where
     select = "SELECT film_id, title, description, length, rating"

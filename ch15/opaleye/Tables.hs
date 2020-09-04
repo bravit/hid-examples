@@ -2,13 +2,14 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Tables where
 
-import Data.Profunctor
+import Data.Profunctor (dimap)
 import Data.Profunctor.Product (p2)
 import Data.Profunctor.Product.Default
-import Data.Profunctor.Product.TH (makeAdaptorAndInstance)
+import Data.Profunctor.Product.TH (makeAdaptorAndInstanceInferrable)
 
 import Opaleye
 
@@ -20,15 +21,17 @@ import FilmInfo.FromField()
 data PGRating
 
 instance DefaultFromField PGRating Rating where
-  defaultFromField = fieldQueryRunnerColumn
+  defaultFromField = fromPGSFromField
 
-instance pgf ~ FieldNullable PGRating => Default ToFields Rating pgf where
-  def = dimap fromRating (unsafeCast "mpaa_rating")
+instance pgf ~ FieldNullable PGRating =>
+         Default ToFields Rating pgf where
+  def = dimap fromRating
+              (unsafeCast "mpaa_rating")
               (def :: ToFields Text (Field PGText))
 
-makeAdaptorAndInstance "pFilmId" ''FilmId'
-makeAdaptorAndInstance "pFilmLength" ''FilmLength'
-makeAdaptorAndInstance "pFilmInfo" ''FilmInfo'
+makeAdaptorAndInstanceInferrable "pFilmId" ''FilmId'
+makeAdaptorAndInstanceInferrable "pFilmLength" ''FilmLength'
+makeAdaptorAndInstanceInferrable "pFilmInfo" ''FilmInfo'
 
 type FilmIdField = FilmId' (Field SqlInt4)
 type OptionalFilmIdField = FilmId' (Maybe (Field SqlInt4))
@@ -36,12 +39,20 @@ type OptionalFilmIdField = FilmId' (Maybe (Field SqlInt4))
 type FilmLengthField = FilmLength' (Field SqlInt4)
 
 type FilmInfoFieldWrite =
-  FilmInfo' OptionalFilmIdField (Field SqlText) (FieldNullable SqlText)
-            FilmLengthField (FieldNullable PGRating)
+  FilmInfo'
+    OptionalFilmIdField
+    (Field SqlText)
+    (FieldNullable SqlText)
+    FilmLengthField
+    (FieldNullable PGRating)
 
 type FilmInfoField =
-  FilmInfo' FilmIdField (Field SqlText) (FieldNullable SqlText)
-            FilmLengthField (FieldNullable PGRating)
+  FilmInfo'
+    FilmIdField
+    (Field SqlText)
+    (FieldNullable SqlText)
+    FilmLengthField
+    (FieldNullable PGRating)
 
 filmTable :: Table FilmInfoFieldWrite FilmInfoField
 filmTable =
@@ -54,7 +65,7 @@ filmTable =
             , rating = tableField "rating"
             })
 
-makeAdaptorAndInstance "pCatId" ''CatId'
+makeAdaptorAndInstanceInferrable "pCatId" ''CatId'
 
 type CatIdField = CatId' (Field SqlInt4)
 type OptionalCatIdField = CatId' (Maybe (Field SqlInt4))
