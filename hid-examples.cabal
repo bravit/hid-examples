@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: fab524ca74d3544e89878fbdeed3804bf13fcc003270eacc295a97e706a3002b
+-- hash: d0307427495b97a976ee50d083317ae510567874e71ca958302ba769be078dfd
 
 name:           hid-examples
 version:        0.5
@@ -742,7 +742,7 @@ executable opaleye
     , bytestring >=0.10 && <0.11
     , opaleye >=0.7 && <0.8
     , postgresql-simple >=0.5 && <0.7
-    , product-profunctors >=0.9 && <0.12
+    , product-profunctors >=0.11 && <0.12
     , profunctors >=5.3 && <5.6
     , text >=1.2 && <1.3
     , text-show >=3.0 && <4

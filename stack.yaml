@@ -13,3 +13,4 @@ extra-deps:
   - template-haskell-compat-v0208-0.1.2.1
   - hasql-transaction-1.0.0.1
   - opaleye-0.7.0.0
+  - product-profunctors-0.11.0.0
