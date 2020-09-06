@@ -23,8 +23,7 @@ data PGRating
 instance DefaultFromField PGRating Rating where
   defaultFromField = fromPGSFromField
 
-instance pgf ~ FieldNullable PGRating =>
-         Default ToFields Rating pgf where
+instance pgf ~ FieldNullable PGRating => Default ToFields Rating pgf where
   def = dimap fromRating
               (unsafeCast "mpaa_rating")
               (def :: ToFields Text (Field PGText))
@@ -34,17 +33,9 @@ makeAdaptorAndInstanceInferrable "pFilmLength" ''FilmLength'
 makeAdaptorAndInstanceInferrable "pFilmInfo" ''FilmInfo'
 
 type FilmIdField = FilmId' (Field SqlInt4)
-type OptionalFilmIdField = FilmId' (Maybe (Field SqlInt4))
+type FilmIdFieldWrite = FilmId' (Maybe (Field SqlInt4))
 
 type FilmLengthField = FilmLength' (Field SqlInt4)
-
-type FilmInfoFieldWrite =
-  FilmInfo'
-    OptionalFilmIdField
-    (Field SqlText)
-    (FieldNullable SqlText)
-    FilmLengthField
-    (FieldNullable PGRating)
 
 type FilmInfoField =
   FilmInfo'
@@ -53,6 +44,15 @@ type FilmInfoField =
     (FieldNullable SqlText)
     FilmLengthField
     (FieldNullable PGRating)
+
+type FilmInfoFieldWrite =
+  FilmInfo'
+    FilmIdFieldWrite
+    (Field SqlText)
+    (FieldNullable SqlText)
+    FilmLengthField
+    (FieldNullable PGRating)
+
 
 filmTable :: Table FilmInfoFieldWrite FilmInfoField
 filmTable =
@@ -68,9 +68,9 @@ filmTable =
 makeAdaptorAndInstanceInferrable "pCatId" ''CatId'
 
 type CatIdField = CatId' (Field SqlInt4)
-type OptionalCatIdField = CatId' (Maybe (Field SqlInt4))
+type CatIdFieldWrite = CatId' (Maybe (Field SqlInt4))
 
-categoryTable :: Table (OptionalCatIdField, Field SqlText)
+categoryTable :: Table (CatIdFieldWrite, Field SqlText)
                        (CatIdField, Field SqlText)
 categoryTable =
   table "category"

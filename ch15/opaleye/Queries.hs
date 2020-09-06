@@ -20,22 +20,18 @@ filmCategorySelect = selectTable filmCategoryTable
 countFilms :: Select (Field SqlInt8)
 countFilms = aggregate countStar filmSelect
 
-
 findFilm :: Text -> Select FilmInfoField
 findFilm filmTitle = do
   film <- filmSelect
   viaLateral restrict (title film .== toFields filmTitle)
   pure film
 
-
 filmsLonger :: FilmLength -> Select FilmInfoField
-filmsLonger len = do
+filmsLonger (FilmLength len) = do
     film <- filmSelect
-    viaLateral restrict (filmLength film `longerThan` len)
+    let FilmLength lenf = filmLength film
+    viaLateral restrict (lenf .>= toFields len)
     pure film
-  where
-    longerThan :: FilmLengthField -> FilmLength -> Field SqlBool
-    longerThan (FilmLength lenf) (FilmLength l) = lenf .>= toFields l
 
 filmCategories :: Text -> Select (Field SqlText)
 filmCategories filmTitle = do
