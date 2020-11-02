@@ -24,7 +24,7 @@ printStream (Element e str) = do
   putStrLn $ "Element: " <> show e
   printStream str
 printStream (Action mstr) = do
-  putStrLn "Run action:"
+  putStr "Run action: "
   str <- mstr
   printStream str
 
