@@ -7,7 +7,7 @@ import Control.Applicative
 
 
 import qualified Streaming.Prelude as S
-import qualified Streaming.ByteString as BS
+import qualified Data.ByteString.Streaming as BS
 import Control.Monad.Trans.Resource
 import Data.Attoparsec.ByteString.Streaming
 import Data.Function ((&))

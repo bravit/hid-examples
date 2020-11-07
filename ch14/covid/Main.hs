@@ -6,7 +6,7 @@ import Streaming
 import Streaming.Zip (gunzip)
 import qualified Streaming.Prelude as S
 import Control.Monad.Trans.Resource
-import qualified Streaming.ByteString.Char8 as C
+import qualified Data.ByteString.Streaming.Char8 as C
 import qualified Data.Attoparsec.ByteString.Streaming as ABS
 import Data.Text (Text)
 import qualified Data.Text.IO as T
