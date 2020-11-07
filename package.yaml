@@ -546,6 +546,7 @@ executables:
           - streaming-bytestring >=0.1 && <0.2
           - resourcet >=1.2 && <1.3
           - filepath >= 1.4.1 && < 1.5
+        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
     csv-simple:
         main: ch14/csv-simple.hs
         dependencies:
@@ -556,6 +557,7 @@ executables:
           - streaming-bytestring >=0.1.4 && <0.2
           - streaming >=0.2.2 && <0.4
           - resourcet >=1.2 && <1.3
+        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
     lens-ex:
         main: ch14/lens-ex.hs
         dependencies:
@@ -575,6 +577,7 @@ executables:
           - streaming >=0.2.2 && <0.4
           - resourcet >=1.2 && <1.3
           - attoparsec >=0.13 && <0.14
+        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
     # Chapter 15
     hdbc:
         source-dirs: ch15
@@ -628,6 +631,40 @@ executables:
           - product-profunctors >= 0.11 && < 0.12
           - profunctors >= 5.3 && < 5.6
           - bytestring >= 0.10 && < 0.11
+    # Chapter 16
+    conc-hello:
+      main: ch16/conc-hello.hs
+      ghc-options: -threaded
+    dots:
+      main: ch16/dots.hs
+      ghc-options: -threaded
+    interleaving:
+      main: ch16/interleaving.hs
+      ghc-options: -threaded
+    async-exc:
+      main: ch16/async-exc.hs
+      ghc-options: -threaded
+    dots-async:
+      main: ch16/dots-async.hs
+      ghc-options: -threaded
+      dependencies:
+        - async >= 2.0 && < 2.3
+    dots-async-cancel:
+      main: ch16/dots-async-cancel.hs
+      ghc-options: -threaded
+      dependencies:
+        - async >= 2.0 && < 2.3
+        - random >=1.0 && <1.3
+    dots-async-interrupted:
+      main: ch16/dots-async-interrupted.hs
+      ghc-options: -threaded
+      dependencies:
+        - async >= 2.0 && < 2.3
+    tree-async:
+      main: ch16/tree-async.hs
+      ghc-options: -threaded
+      dependencies:
+        - async >= 2.0 && < 2.3
 internal-libraries:
     # Chapter 2
     radar-lib:
