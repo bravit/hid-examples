@@ -1,6 +1,6 @@
 import Streaming
 import System.Environment
-import Data.ByteString.Streaming as BS
+import Streaming.ByteString as BS
 import Control.Monad.Trans.Resource
 import Data.Function ((&))
 import System.FilePath
