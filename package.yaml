@@ -447,6 +447,236 @@ executables:
           - rpc-lib
           - mtl >=2.0 && <2.3
           - cereal >= 0.5 && <0.6
+    # Chapter 13
+    api-stage0:
+        main: ch13/api/Api0.hs
+    api-stage1:
+        main: ch13/api/Api1.hs
+    api-stage2:
+        main: ch13/api/Api2.hs
+        other-extensions:
+          - KindSignatures
+          - TypeOperators
+          - PolyKinds
+          - DataKinds
+          - TypeFamilies
+    api-stage3:
+        main: ch13/api/Api3.hs
+        other-extensions:
+          - KindSignatures
+          - TypeOperators
+          - PolyKinds
+          - DataKinds
+          - TypeFamilies
+          - FlexibleInstances
+          - InstanceSigs
+          - ScopedTypeVariables
+    api-servant:
+        main: ch13/api/ApiServant.hs
+        dependencies:
+          - servant-server >=0.14 && <0.19
+          - servant-blaze >=0.7 && <0.10
+          - warp >=3.2 && < 3.4
+          - aeson >= 1.2 && < 1.6
+          - blaze-html >=0.9 && <0.10
+    unsafe-elevator:
+        source-dirs: ch13/elevator/
+        main: UseUnsafe.hs
+        other-modules: [Elevator.LowLevel, Elevator.Unsafe]
+        dependencies:
+          - mtl >=2.0 && <2.3
+    door:
+        main: ch13/doors/SingManual.hs
+        other-extensions:
+          - DataKinds
+          - GADTs
+          - TypeOperators
+          - KindSignatures
+          - StandaloneDeriving
+        ghc-options:
+          - -Wno-unticked-promoted-constructors
+    door-gen:
+        main: ch13/doors/SingGen.hs
+        other-extensions:
+          - DataKinds
+          - GADTs
+          - TypeOperators
+          - KindSignatures
+          - StandaloneDeriving
+        dependencies:
+          - singletons >= 2.5 && < 2.8
+        ghc-options:
+          - -Wno-unticked-promoted-constructors
+    elevator:
+        source-dirs: ch13/elevator/
+        main: UseSafe.hs
+        other-modules:
+          - Elevator.LowLevel
+          - Elevator.Safe
+          - Elevator.Safe.Floor
+          - Elevator.Safe.Operations
+          - Elevator.Safe.Moves
+        dependencies:
+          - fin >= 0.1 && < 0.2
+          - dec >= 0.0.3 && < 0.1
+          - singletons >= 2.5 && < 2.8
+          - mtl >=2.0 && <2.3
+        ghc-options:
+          - -Wno-unticked-promoted-constructors
+    # Chapter 14
+    stream:
+        main: ch14/stream.hs
+    simple-streaming:
+        main: ch14/simple-streaming.hs
+    sumtab:
+        main: ch14/sumtab.hs
+        dependencies:
+          - streaming >=0.2.2 && <0.4
+          - extra >=1.5 && <1.8
+          - text >=1.2 && <1.3
+          - text-show >=3.0 && <4
+    chars:
+        main: ch14/chars.hs
+        dependencies:
+          - streaming >=0.2.2 && <0.4
+    copy:
+        main: ch14/copy.hs
+        dependencies:
+          - streaming >=0.2.2 && <0.4
+          - streaming-bytestring >=0.1 && <0.3
+          - resourcet >=1.2 && <1.3
+          - filepath >= 1.4.1 && < 1.5
+        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
+    csv-simple:
+        main: ch14/csv-simple.hs
+        dependencies:
+          - text >=1.2 && <1.3
+          - attoparsec >=0.13 && <0.14
+          - bytestring >=0.10 && <0.12
+          - streaming-utils >=0.2 && <0.3
+          - streaming-bytestring >=0.1.4 && <0.3
+          - streaming >=0.2.2 && <0.4
+          - resourcet >=1.2 && <1.3
+        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
+    lens-ex:
+        main: ch14/lens-ex.hs
+        dependencies:
+          - lens >= 4.17 && < 4.20
+    covid:
+        source-dirs: ch14/covid
+        main: Main.hs
+        dependencies:
+          - bytestring >=0.10 && <0.12
+          - time >=1.8 && <1.12
+          - text >=1.2 && <1.3
+          - text-show >=3.0 && <4
+          - containers >= 0.5 && < 0.7
+          - lens >= 4.17 && < 4.20
+          - streaming-utils >=0.2 && <0.3
+          - streaming-bytestring >=0.1.4 && <0.3
+          - streaming >=0.2.2 && <0.4
+          - resourcet >=1.2 && <1.3
+          - attoparsec >=0.13 && <0.14
+        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
+    # Chapter 15
+    hdbc:
+        source-dirs: ch15
+        main: hdbc.hs
+        other-modules: [FilmInfo.Data]
+        dependencies:
+          - HDBC >= 2.3 && < 2.5
+          - HDBC-postgresql >= 2.3 && < 2.5
+          - convertible >= 1.0 && < 1.2
+          - text >= 1.2 && < 1.3
+          - text-show >= 3.0 && < 4
+    pg-simple:
+        source-dirs: ch15
+        main: pg-simple.hs
+        other-modules: [FilmInfo.Data, FilmInfo.FromField]
+        dependencies:
+          - postgresql-simple >= 0.5 && < 0.7
+          - bytestring >= 0.10 && < 0.12
+          - text >= 1.2 && < 1.3
+          - text-show >= 3.0 && < 4
+    hasql:
+        source-dirs: [ch15/hasql, ch15]
+        main: Main.hs
+        other-modules:
+          - FilmInfo.Data
+          - Statements
+          - Sessions
+          - DBActions
+        dependencies:
+          - hasql >= 1.3 && < 1.5
+          - hasql-th >= 0.4 && < 0.5
+          - vector >= 0.11 && < 0.13
+          - text >= 1.2 && < 1.3
+          - text-show >= 3.0 && < 4
+          - profunctors >= 5.3 && < 5.7
+          - mtl >= 2.0 && < 2.3
+    opaleye:
+        source-dirs: [ch15/opaleye, ch15]
+        main: Main.hs
+        other-modules:
+          - FilmInfo.Data
+          - FilmInfo.FromField
+          - Tables
+          - Queries
+          - DBActions
+        dependencies:
+          - opaleye >= 0.7 && < 0.8
+          - postgresql-simple >= 0.5 && < 0.7
+          - text >= 1.2 && < 1.3
+          - text-show >= 3.0 && < 4
+          - product-profunctors >= 0.11 && < 0.12
+          - profunctors >= 5.3 && < 5.7
+          - bytestring >= 0.10 && < 0.12
+    # Chapter 16
+    conc-hello:
+      main: ch16/conc-hello.hs
+      ghc-options: -threaded
+    dots:
+      main: ch16/dots.hs
+      ghc-options: -threaded
+    interleaving:
+      main: ch16/interleaving.hs
+      ghc-options: -threaded
+    async-exc:
+      main: ch16/async-exc.hs
+      ghc-options: -threaded
+    dots-async:
+      main: ch16/dots-async.hs
+      ghc-options: -threaded
+      dependencies:
+        - async >= 2.0 && < 2.3
+    dots-async-cancel:
+      main: ch16/dots-async-cancel.hs
+      ghc-options: -threaded
+      dependencies:
+        - async >= 2.0 && < 2.3
+        - random >=1.0 && <1.3
+    dots-async-interrupted:
+      main: ch16/dots-async-interrupted.hs
+      ghc-options: -threaded
+      dependencies:
+        - async >= 2.0 && < 2.3
+    tree-async:
+      main: ch16/tree-async.hs
+      ghc-options: -threaded
+      dependencies:
+        - async >= 2.0 && < 2.3
+    wait-completion:
+      main: ch16/wait-completion.hs
+      ghc-options: -threaded
+      dependencies:
+        - random >=1.0 && <1.3
+    mvar-deadlocks:
+      main: ch16/mvar-deadlocks.hs
+      dependencies:
+        - async >= 2.0 && < 2.3
+      ghc-options:
+        -threaded
+        -Wno-unused-do-bind
 internal-libraries:
     # Chapter 2
     radar-lib:
