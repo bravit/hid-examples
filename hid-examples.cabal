@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f7a811a726beac00fda01a9c9ca50173445261fc38f5f9bb2c5bac0a02aade45
+-- hash: 1da39912143e68c9614a3711ce25eff8bb881fa86a536c19aa51649e8aecd4a5
 
 name:           hid-examples
 version:        0.5
@@ -60,6 +60,7 @@ source-repository head
 library
   exposed-modules:
       Empty
+      Main
   other-modules:
       Paths_hid_examples
   hs-source-dirs:
@@ -592,41 +593,53 @@ executable generic-sql
   default-language: Haskell2010
 
 executable hasql
-  main-is: Main.hs
   other-modules:
-      FilmInfo.Data
-      Statements
-      Sessions
-      DBActions
-  hs-source-dirs:
-      ch15/hasql
-      ch15
+      Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
-    , hasql >=1.3 && <1.5
-    , hasql-th >=0.4 && <0.5
-    , mtl >=2.0 && <2.3
-    , profunctors >=5.3 && <5.7
-    , text >=1.2 && <1.3
-    , text-show >=3.0 && <4
-    , vector >=0.11 && <0.13
+  if os(windows)
+    main-is: empty/Main.hs
+  else
+    main-is: Main.hs
+    other-modules:
+        FilmInfo.Data
+        Statements
+        Sessions
+        DBActions
+    hs-source-dirs:
+        ch15/hasql
+        ch15
+    build-depends:
+        hasql >=1.3 && <1.5
+      , hasql-th >=0.4 && <0.5
+      , mtl >=2.0 && <2.3
+      , profunctors >=5.3 && <5.7
+      , text >=1.2 && <1.3
+      , text-show >=3.0 && <4
+      , vector >=0.11 && <0.13
   default-language: Haskell2010
 
 executable hdbc
-  main-is: hdbc.hs
   other-modules:
-      FilmInfo.Data
-  hs-source-dirs:
-      ch15
+      Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
-      HDBC >=2.3 && <2.5
-    , HDBC-postgresql >=2.3 && <2.5
-    , base >=4.12 && <4.15
-    , convertible >=1.0 && <1.2
-    , text >=1.2 && <1.3
-    , text-show >=3.0 && <4
+      base >=4.12 && <4.15
+  if os(windows)
+    main-is: empty/Main.hs
+  else
+    main-is: hdbc.hs
+    other-modules:
+        FilmInfo.Data
+    hs-source-dirs:
+        ch15
+    build-depends:
+        HDBC >=2.3 && <2.5
+      , HDBC-postgresql >=2.3 && <2.5
+      , convertible >=1.0 && <1.2
+      , text >=1.2 && <1.3
+      , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable hello
@@ -803,26 +816,32 @@ executable nummod-rank-n
   default-language: Haskell2010
 
 executable opaleye
-  main-is: Main.hs
   other-modules:
-      FilmInfo.Data
-      FilmInfo.FromField
-      Tables
-      Queries
-      DBActions
-  hs-source-dirs:
-      ch15/opaleye
-      ch15
+      Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
-    , bytestring >=0.10 && <0.12
-    , opaleye >=0.7 && <0.8
-    , postgresql-simple >=0.5 && <0.7
-    , product-profunctors >=0.11 && <0.12
-    , profunctors >=5.3 && <5.7
-    , text >=1.2 && <1.3
-    , text-show >=3.0 && <4
+  if os(windows)
+    main-is: empty/Main.hs
+  else
+    main-is: Main.hs
+    other-modules:
+        FilmInfo.Data
+        FilmInfo.FromField
+        Tables
+        Queries
+        DBActions
+    hs-source-dirs:
+        ch15/opaleye
+        ch15
+    build-depends:
+        bytestring >=0.10 && <0.12
+      , opaleye >=0.7 && <0.8
+      , postgresql-simple >=0.5 && <0.7
+      , product-profunctors >=0.11 && <0.12
+      , profunctors >=5.3 && <5.7
+      , text >=1.2 && <1.3
+      , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable person-derived
@@ -860,19 +879,25 @@ executable person-text
   default-language: Haskell2010
 
 executable pg-simple
-  main-is: pg-simple.hs
   other-modules:
-      FilmInfo.Data
-      FilmInfo.FromField
-  hs-source-dirs:
-      ch15
+      Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
-    , bytestring >=0.10 && <0.12
-    , postgresql-simple >=0.5 && <0.7
-    , text >=1.2 && <1.3
-    , text-show >=3.0 && <4
+  if os(windows)
+    main-is: empty/Main.hs
+  else
+    main-is: pg-simple.hs
+    other-modules:
+        FilmInfo.Data
+        FilmInfo.FromField
+    hs-source-dirs:
+        ch15
+    build-depends:
+        bytestring >=0.10 && <0.12
+      , postgresql-simple >=0.5 && <0.7
+      , text >=1.2 && <1.3
+      , text-show >=3.0 && <4
   default-language: Haskell2010
 
 executable ping-client
