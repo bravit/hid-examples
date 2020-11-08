@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ff15b00362385a5e44ec5e1c3ebb3f374b73695cd896f8fa887d085e0b2e398c
+-- hash: 60ab48167b1ae4bdfbd6b39116505da2ff690d7ae260418fb688e95eafcaf636
 
 name:           hid-examples
 version:        0.5
@@ -767,6 +767,16 @@ executable mstr-literals
     , template-haskell >=2.13 && <2.17
   default-language: Haskell2010
 
+executable mvar-deadlocks
+  main-is: ch16/mvar-deadlocks.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded -Wno-unused-do-bind
+  build-depends:
+      async >=2.0 && <2.3
+    , base >=4.12 && <4.15
+  default-language: Haskell2010
+
 executable newtype
   main-is: newtype.hs
   other-modules:
@@ -1255,6 +1265,16 @@ executable vocab3
       base >=4.12 && <4.15
     , fmt >=0.5 && <0.7
     , text >=1.2 && <1.3
+  default-language: Haskell2010
+
+executable wait-completion
+  main-is: ch16/wait-completion.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  build-depends:
+      base >=4.12 && <4.15
+    , random >=1.0 && <1.3
   default-language: Haskell2010
 
 executable weapons
