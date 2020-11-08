@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1da39912143e68c9614a3711ce25eff8bb881fa86a536c19aa51649e8aecd4a5
+-- hash: f02af924806e5aeff84398e9131399e9df5b7187f6a3131d7d8e5a06bc25ce9d
 
 name:           hid-examples
 version:        0.5
@@ -60,9 +60,6 @@ source-repository head
 library
   exposed-modules:
       Empty
-      Main
-  other-modules:
-      Paths_hid_examples
   hs-source-dirs:
       empty
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
