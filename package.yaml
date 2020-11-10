@@ -690,6 +690,12 @@ executables:
       ghc-options: -threaded
       dependencies:
         - random >=1.0 && <1.3
+    sum-numbers:
+      main: ch16/sum-numbers.hs
+      dependencies:
+        - async >= 2.0 && < 2.3
+      ghc-options:
+        -threaded
     mvar-deadlocks:
       main: ch16/mvar-deadlocks.hs
       dependencies:
@@ -697,6 +703,36 @@ executables:
       ghc-options:
         -threaded
         -Wno-unused-do-bind
+    ordered-threads:
+      main: ch16/ordered-threads.hs
+      dependencies:
+        - async >= 2.0 && < 2.3
+        - stm >= 2.4 && < 2.6
+      ghc-options:
+        -threaded
+    dots-stm:
+      main: ch16/dots-stm.hs
+      dependencies:
+        - async >= 2.0 && < 2.3
+        - stm >= 2.4 && < 2.6
+      ghc-options:
+        -threaded
+    sum-numbers-many-workers:
+      main: ch16/sum-numbers-many-workers.hs
+      dependencies:
+        - async >= 2.0 && < 2.3
+        - stm >= 2.4 && < 2.6
+        - stm-chans >= 3.0 && < 3.1
+      ghc-options:
+        -threaded
+    pub-sub:
+      main: ch16/pub-sub.hs
+      dependencies:
+        - async >= 2.0 && < 2.3
+        - stm >= 2.4 && < 2.6
+        - stm-chans >= 3.0 && < 3.1
+      ghc-options:
+        -threaded
 internal-libraries:
     # Chapter 2
     radar-lib:

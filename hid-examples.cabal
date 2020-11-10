@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f02af924806e5aeff84398e9131399e9df5b7187f6a3131d7d8e5a06bc25ce9d
+-- hash: 1cfa122287bd07c2cce9ca11897897e139f8803efe86930bc4ffc7d23165cceb
 
 name:           hid-examples
 version:        0.5
@@ -430,6 +430,17 @@ executable dots-async-interrupted
     , base >=4.12 && <4.15
   default-language: Haskell2010
 
+executable dots-stm
+  main-is: ch16/dots-stm.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  build-depends:
+      async >=2.0 && <2.3
+    , base >=4.12 && <4.15
+    , stm >=2.4 && <2.6
+  default-language: Haskell2010
+
 executable du
   main-is: Main.hs
   other-modules:
@@ -841,6 +852,17 @@ executable opaleye
       , text-show >=3.0 && <4
   default-language: Haskell2010
 
+executable ordered-threads
+  main-is: ch16/ordered-threads.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  build-depends:
+      async >=2.0 && <2.3
+    , base >=4.12 && <4.15
+    , stm >=2.4 && <2.6
+  default-language: Haskell2010
+
 executable person-derived
   main-is: derived-show.hs
   other-modules:
@@ -963,6 +985,18 @@ executable projectors
     , template-haskell >=2.13 && <2.17
   default-language: Haskell2010
 
+executable pub-sub
+  main-is: ch16/pub-sub.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  build-depends:
+      async >=2.0 && <2.3
+    , base >=4.12 && <4.15
+    , stm >=2.4 && <2.6
+    , stm-chans >=3.0 && <3.1
+  default-language: Haskell2010
+
 executable radar
   main-is: Main.hs
   other-modules:
@@ -1072,6 +1106,28 @@ executable stref
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable sum-numbers
+  main-is: ch16/sum-numbers.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  build-depends:
+      async >=2.0 && <2.3
+    , base >=4.12 && <4.15
+  default-language: Haskell2010
+
+executable sum-numbers-many-workers
+  main-is: ch16/sum-numbers-many-workers.hs
+  other-modules:
+      Paths_hid_examples
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  build-depends:
+      async >=2.0 && <2.3
+    , base >=4.12 && <4.15
+    , stm >=2.4 && <2.6
+    , stm-chans >=3.0 && <3.1
   default-language: Haskell2010
 
 executable sumlist
