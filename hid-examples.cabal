@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1cfa122287bd07c2cce9ca11897897e139f8803efe86930bc4ffc7d23165cceb
+-- hash: bc649d97cf38df9cfd3c30e50a60c578849568e8065ecce96ffda35837fbec6b
 
 name:           hid-examples
 version:        0.5
@@ -284,13 +284,13 @@ executable copy
   main-is: ch14/copy.hs
   other-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-deprecations
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
     , filepath >=1.4.1 && <1.5
     , resourcet >=1.2 && <1.3
     , streaming >=0.2.2 && <0.4
-    , streaming-bytestring >=0.1 && <0.3
+    , streaming-bytestring >=0.1.7 && <0.3
   default-language: Haskell2010
 
 executable countzeros
@@ -312,7 +312,7 @@ executable covid
       Paths_hid_examples
   hs-source-dirs:
       ch14/covid
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-deprecations
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       attoparsec >=0.13 && <0.14
     , base >=4.12 && <4.15
@@ -321,7 +321,7 @@ executable covid
     , lens >=4.17 && <4.20
     , resourcet >=1.2 && <1.3
     , streaming >=0.2.2 && <0.4
-    , streaming-bytestring >=0.1.4 && <0.3
+    , streaming-bytestring >=0.1.7 && <0.3
     , streaming-utils >=0.2 && <0.3
     , text >=1.2 && <1.3
     , text-show >=3.0 && <4
@@ -332,14 +332,14 @@ executable csv-simple
   main-is: ch14/csv-simple.hs
   other-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-deprecations
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       attoparsec >=0.13 && <0.14
     , base >=4.12 && <4.15
     , bytestring >=0.10 && <0.12
     , resourcet >=1.2 && <1.3
     , streaming >=0.2.2 && <0.4
-    , streaming-bytestring >=0.1.4 && <0.3
+    , streaming-bytestring >=0.1.7 && <0.3
     , streaming-utils >=0.2 && <0.3
     , text >=1.2 && <1.3
   default-language: Haskell2010

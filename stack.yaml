@@ -14,3 +14,4 @@ extra-deps:
   - hasql-transaction-1.0.0.1
   - opaleye-0.7.0.0
   - product-profunctors-0.11.0.0
+  - streaming-bytestring-0.1.7

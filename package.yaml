@@ -543,10 +543,9 @@ executables:
         main: ch14/copy.hs
         dependencies:
           - streaming >=0.2.2 && <0.4
-          - streaming-bytestring >=0.1 && <0.3
+          - streaming-bytestring >=0.1.7 && <0.3
           - resourcet >=1.2 && <1.3
           - filepath >= 1.4.1 && < 1.5
-        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
     csv-simple:
         main: ch14/csv-simple.hs
         dependencies:
@@ -554,10 +553,9 @@ executables:
           - attoparsec >=0.13 && <0.14
           - bytestring >=0.10 && <0.12
           - streaming-utils >=0.2 && <0.3
-          - streaming-bytestring >=0.1.4 && <0.3
+          - streaming-bytestring >=0.1.7 && <0.3
           - streaming >=0.2.2 && <0.4
           - resourcet >=1.2 && <1.3
-        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
     lens-ex:
         main: ch14/lens-ex.hs
         dependencies:
@@ -573,11 +571,10 @@ executables:
           - containers >= 0.5 && < 0.7
           - lens >= 4.17 && < 4.20
           - streaming-utils >=0.2 && <0.3
-          - streaming-bytestring >=0.1.4 && <0.3
+          - streaming-bytestring >=0.1.7 && <0.3
           - streaming >=0.2.2 && <0.4
           - resourcet >=1.2 && <1.3
           - attoparsec >=0.13 && <0.14
-        ghc-options: -Wno-deprecations # avoid streaming-bytestring deprecation warning
     # Chapter 15
     hdbc:
         when:
