@@ -1,3 +1,12 @@
+{-# LANGUAGE CPP #-}
+
+#if __GLASGOW_HASKELL__ == 810
+
+main :: IO ()
+main = putStrLn "not implemented"
+
+#else
+
 import System.Exit (exitFailure)
 import Data.Foldable (traverse_)
 
@@ -47,3 +56,5 @@ exprs = [
                      (Mult (Lit 2) (Add (Lit 2) (Mult (Lit 1) (Lit 2))))))
       (Add (Lit 1) (Add (Lit 3) (Lit 2)))
   ]
+
+#endif
