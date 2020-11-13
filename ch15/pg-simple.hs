@@ -15,6 +15,7 @@ import Data.Int (Int64)
 import Data.Maybe (catMaybes, listToMaybe)
 import Data.Text (Text)
 import Data.Text.IO
+import Control.Exception (bracket)
 
 import Prelude hiding (putStr, putStrLn)
 
@@ -182,9 +183,12 @@ demo conn = do
   filmsCategories conn [film] >>= mapM_ printT
 
 main :: IO ()
-main = do
-  conn <- connectPostgreSQL connString
-  demo conn
-  close conn
+main = bracket (connectPostgreSQL connString) close demo
+{-
+  do
+    conn <- connectPostgreSQL connString
+    demo conn
+    close conn
+-}
  where
    connString = "host=localhost dbname=sakila_films"
