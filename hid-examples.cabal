@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bc649d97cf38df9cfd3c30e50a60c578849568e8065ecce96ffda35837fbec6b
+-- hash: 1f1754ea4a3e8f932d23fb0441d97dd1dc3216f0d4c235fb053bfeacafc5f804
 
 name:           hid-examples
 version:        0.5
@@ -652,8 +652,6 @@ executable hdbc
 
 executable hello
   main-is: intro/hello.hs
-  other-modules:
-      Paths_hid_examples
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15

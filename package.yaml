@@ -44,6 +44,7 @@ executables:
     # Preface
     hello:
         main: intro/hello.hs
+        other-modules: []
     # Chapter 1
     vocab1:
         source-dirs: ch01
