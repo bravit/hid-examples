@@ -19,7 +19,7 @@ data QuoteData = QuoteData {
   deriving (Generic, FromNamedRecord)
 
 instance FromField Day where
-  parseField = parseTimeM False defaultTimeLocale "%Y-%m-%d" . unpack
+  parseField = parseTimeM True defaultTimeLocale "%Y-%m-%d" . unpack
 
 data QField = Open | Close | High | Low | Volume
   deriving (Eq, Ord, Show, Enum, Bounded)
