@@ -48,7 +48,8 @@ printStats stats = do
 
 main :: IO ()
 main = do
-  r <- C.readFile "data/owid-covid-data.csv.gz"
+  r <- runResourceT $
+         C.readFile "data/owid-covid-data.csv.gz"
        & gunzip
        & ABS.parsed countryCodeWithRestOrSkip
        & void
@@ -58,5 +59,4 @@ main = do
        & S.catMaybes
        & S.store (S.fold considerCountry M.empty id)
        & printCountryData
-       & runResourceT
   printStats $ S.fst' r

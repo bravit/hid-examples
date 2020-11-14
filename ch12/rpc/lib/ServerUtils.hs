@@ -19,7 +19,7 @@ runSerialized :: (Serialize a, Serialize b) =>
                  RemoteAction st a b ->
                  RemoteAction st ByteString ByteString
 runSerialized action params
-  = unEitherStaged Stage2 (decode params) >>= liftM encode . action
+  = unEitherStaged Stage2 (decode params) >>= fmap encode . action
 
 serveRPC :: RemoteState st =>
           HostName -> PortNumber -> RPCTable st -> IO ()

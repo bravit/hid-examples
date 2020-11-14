@@ -16,12 +16,11 @@ copyFile' fIn fOut = do
 
 
 copyFile :: FilePath -> FilePath -> IO Int
-copyFile fIn fOut = do
+copyFile fIn fOut = runResourceT $ do
   (len :> ()) <- BS.readFile fIn
                & BS.copy
                & BS.length
                & BS.writeFile fOut
-               & runResourceT
   pure len
 
 main :: IO ()

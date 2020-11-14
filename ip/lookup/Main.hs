@@ -21,8 +21,8 @@ run :: Params -> IO ()
 run (Params fp ipstr) = do
   iprs <- parseIPRanges <$> readFile fp
   case (iprs, parseIP ipstr) of
-    (_, Nothing) -> throwM (InvalidIP ipstr)
-    (Left pe, _) -> throwM (LoadIPRangesError pe)
+    (_, Nothing) -> throwM $ InvalidIP ipstr
+    (Left pe, _) -> throwM $ LoadIPRangesError pe
     (Right iprdb, Just ip) -> putStrLn $ reportIPs iprdb [ip]
 
 main :: IO ()

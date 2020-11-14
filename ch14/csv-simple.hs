@@ -34,8 +34,8 @@ file =
 
 main :: IO ()
 -- main = B.readFile "data/quotes.csv" >>= print . parseOnly file
-main = BS.readFile "data/quotes.csv"
-       & parsed file
-       & void
-       & S.print
-       & runResourceT
+main = runResourceT $
+           BS.readFile "data/quotes.csv"
+         & parsed file
+         & void
+         & S.print
