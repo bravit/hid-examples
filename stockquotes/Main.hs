@@ -1,4 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Main where
 
@@ -6,6 +7,7 @@ import Control.Monad (when, unless)
 import qualified Data.ByteString.Lazy as BL (readFile, writeFile)
 import Data.Csv (decodeByName)
 import Data.Foldable (toList)
+import Data.Text (unpack)
 
 import QuoteData
 import Charts
@@ -24,12 +26,9 @@ generateReports Params {..} quotes = do
    textRpt = textReport statInfo'
    htmlRpt = htmlReport title quotes statInfo' [chartFname | chart]
 
-   withCompany prefix = if company /= ""
-                        then prefix ++ company
-                        else ""
-
-   chartFname = "chart" ++ withCompany "_" ++ ".svg"
-   title = "Historical Quotes" ++ withCompany " for "
+   withCompany prefix = maybe mempty (prefix <>) company
+   chartFname = unpack $ "chart" <> withCompany "_" <> ".svg"
+   title = unpack $ "Historical Quotes" <> withCompany " for "
 
    saveHtml Nothing _ = pure ()
    saveHtml (Just f) html = BL.writeFile f html

@@ -1,10 +1,11 @@
 module Params (Params (..), cmdLineParser) where
 
 import Options.Applicative
+import Data.Text (Text, strip)
 
 data Params = Params {
                 fname :: FilePath
-              , company :: String
+              , company :: Maybe Text
               , chart :: Bool
               , htmlFile :: Maybe FilePath
               , silent :: Bool
@@ -15,9 +16,9 @@ mkParams =
   Params <$>
              strArgument
                (metavar "FILE" <> help "CSV file name")
-         <*> strOption
+         <*> optional (strip <$> strOption
                (long "name" <> short 'n' <>
-                help "company name " <> value "")
+                help "company name "))
          <*> switch
                (long "chart" <> short 'c' <>
                 help "generate chart")
