@@ -1,4 +1,4 @@
-This is the sample code to accompany the book *Haskell in Depth* (Vitaly Bragilevsky, Manning Publications 2020). 
+This is the sample code to accompany the book *Haskell in Depth* (Vitaly Bragilevsky, Manning Publications 2021).
 
 To get the source code on your system, you may want to clone this repository:
 ```
@@ -31,16 +31,20 @@ Up to date
 Hello, world
 $ cabal -v0 run hello
 Hello, world
-$ cabal run stockquotes -- data/quotes.csv -p -v
+$ cabal run stockquotes -- data/quotes.csv -c
 ...
+$ file chart.svg
+chart.svg: SVG Scalable Vector Graphics image
 ```
 
-To explore a component in GHCi:
+To explore a component in REPL:
 ```
 $ cabal repl hello
 ...
 $ cabal repl stockquotes
-ghci> :load Statistics
+ghci> :m StatReport
+ghci> :type mean
+mean :: (Fractional a, Foldable t) => t a -> a
 ```
 
 To test the whole package:
@@ -50,7 +54,7 @@ $ cabal test
 
 To run one test-suite:
 ```
-$ cabal test locator-test
+$ cabal test radar-test
 ```
 
 
@@ -69,7 +73,11 @@ stack exec <executable> [ -- <arguments>]
 For example:
 
 ```
-stack exec stockquotes -- data/quotes.csv -p -v
+stack exec stockquotes -- data/quotes.csv -c
+...
+$ file chart.svg
+chart.svg: SVG Scalable Vector Graphics image
+
 ```
 
 To test:
@@ -78,9 +86,11 @@ To test:
 stack test
 ```
 
-
-Unfortunately, exploring code in GHCi doesn't work due to [bug in stack](https://github.com/commercialhaskell/stack/issues/4564):
+To explore a component in REPL:
 
 ```
-stack ghci <module file>
+$ stack repl :stockquotes
+ghci> :m StatReport
+ghci> :t mean
+mean :: (Fractional a, Foldable t) => t a -> a
 ```
