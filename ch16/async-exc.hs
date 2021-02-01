@@ -58,5 +58,5 @@ main = do
   putStrLn "\nAsynchronous exception during `use`/safe"
   experiment (oneSec + oneSec `div` 2) workWithResourceSafe
 
-  putStrLn "\nAsynchronous exception during `use`:/safe"
+  putStrLn "\nAsynchronous exception during `release`/safe"
   experiment (3 * oneSec + oneSec `div` 2) workWithResourceSafe
