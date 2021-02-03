@@ -3,6 +3,8 @@ resolver: lts-14.27
 packages:
 - .
 
+allow-newer: true
+
 extra-deps:
   - streaming-utils-0.2.0.0
   - json-stream-0.4.2.4
@@ -15,3 +17,5 @@ extra-deps:
   - opaleye-0.7.0.0
   - product-profunctors-0.11.0.0
   - streaming-bytestring-0.1.7
+  - random-1.2.0
+  - splitmix-0.1.0.3
