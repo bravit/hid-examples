@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1f1754ea4a3e8f932d23fb0441d97dd1dc3216f0d4c235fb053bfeacafc5f804
+-- hash: 047acbc0d12441fada1592be32f85fa8c4d187467c6fadb73edcf6921a7234df
 
 name:           hid-examples
 version:        0.5
@@ -354,7 +354,7 @@ executable dicegame
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
-    , random >=1.0 && <1.3
+    , random >=1.2 && <1.3
   default-language: Haskell2010
 
 executable div
@@ -417,7 +417,7 @@ executable dots-async-cancel
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <4.15
-    , random >=1.0 && <1.3
+    , random >=1.2 && <1.3
   default-language: Haskell2010
 
 executable dots-async-interrupted
@@ -722,7 +722,6 @@ executable iplookup-simulation
   build-depends:
       base >=4.12 && <4.15
     , iplookup-lib
-    , random >=1.0 && <1.3
   default-language: Haskell2010
 
 executable isprime
@@ -1350,7 +1349,7 @@ executable wait-completion
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
   build-depends:
       base >=4.12 && <4.15
-    , random >=1.0 && <1.3
+    , random >=1.2 && <1.3
   default-language: Haskell2010
 
 executable weapons
@@ -1363,7 +1362,7 @@ executable weapons
   build-depends:
       base >=4.12 && <4.15
     , mtl >=2.0 && <2.3
-    , random >=1.0 && <1.3
+    , random >=1.2 && <1.3
   default-language: Haskell2010
 
 test-suite expr-simple-test
@@ -1424,7 +1423,7 @@ test-suite radar-test
   build-depends:
       base >=4.12 && <4.15
     , radar-lib
-    , random >=1.0 && <1.3
+    , random >=1.2 && <1.3
   default-language: Haskell2010
 
 test-suite shunting-yard-test

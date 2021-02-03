@@ -6,7 +6,7 @@ oneSec = 1000000
 
 randomDelay :: IO ()
 randomDelay = do
-  secs <- randomRIO (1, 5)
+  secs <- getStdRandom (uniformR (1, 5))
   putStrLn $ "Waiting for " ++ show secs ++ "sec"
   threadDelay $ secs * oneSec
 

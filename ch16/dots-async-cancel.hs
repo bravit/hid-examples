@@ -25,7 +25,7 @@ main = do
   withAsync (printDots oneSec) $ \_ ->
     withAsync doSomethingUseful $ \useful -> do
       threadDelay $ 2 * oneSec
-      interrupt <- randomIO
+      interrupt <- getStdRandom uniform
       case interrupt of
         True -> cancel useful
         False -> wait useful >> pure ()

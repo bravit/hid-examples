@@ -2,3 +2,4 @@ write-ghc-environment-files: always
 tests: True
 allow-newer: base
 allow-newer: Cabal
+allow-newer: random

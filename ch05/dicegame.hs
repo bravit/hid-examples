@@ -9,7 +9,7 @@ dice' :: DiceGame Dice
 dice' = do
   bs <- ask
   g <- get
-  let (r, g') = randomR bs g
+  let (r, g') = uniformR bs g
   put g'
   tell [r]
   pure r
@@ -17,12 +17,12 @@ dice' = do
 dice :: DiceGame Dice
 dice = do
   bs <- ask
-  r <- state (randomR bs)
+  r <- state (uniformR bs)
   tell [r]
   pure r
 
 dice'' :: DiceGame Dice
-dice'' = ask >>= state . randomR >>= \r -> tell [r] >> pure r
+dice'' = ask >>= state . uniformR >>= \r -> tell [r] >> pure r
 
 doubleDice :: DiceGame (Dice, Dice)
 doubleDice = (,) <$> dice <*> dice

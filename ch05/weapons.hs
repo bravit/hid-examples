@@ -1,6 +1,7 @@
 import Data.List (group, sort)
 import Control.Monad.State
 import System.Random
+import System.Random.Stateful (uniformRM, uniformM)
 
 data Weapon = Rock | Paper | Scissors
   deriving (Show, Bounded, Enum, Eq)
@@ -16,14 +17,16 @@ winner (w1, w2)
   | w1 == w2 = Draw
   | otherwise = Second
 
-instance Random Weapon where
-    randomR (a,b) g =
-      case randomR (fromEnum a, fromEnum b) g of
-        (r, g') -> (toEnum r, g')
-    random g = randomR (minBound, maxBound) g
+instance UniformRange Weapon where
+  uniformRM (lo, hi) rng = do
+    res <- uniformRM (fromEnum lo :: Int, fromEnum hi) rng
+    pure $ toEnum res
+
+instance Uniform Weapon where
+  uniformM rng = uniformRM (minBound, maxBound) rng
 
 randomWeapon :: State StdGen Weapon
-randomWeapon = state random
+randomWeapon = state uniform
 
 gameRound :: State StdGen (Weapon, Weapon)
 gameRound = (,) <$> randomWeapon <*> randomWeapon

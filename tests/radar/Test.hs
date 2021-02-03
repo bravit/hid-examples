@@ -5,29 +5,39 @@ import System.Exit (exitFailure)
 import Data.List (sort, nub)
 import Control.Monad (replicateM, when)
 import System.Random
+import System.Random.Stateful (uniformRM, uniformM)
 
 import Radar
 
-instance Random Turn where
-  randomR (lo, hi) g = (toEnum i, g')
-    where (i, g') = randomR (fromEnum lo, fromEnum hi) g
-  random = randomR (minBound, maxBound)
+instance UniformRange Turn where
+  uniformRM (lo, hi) rng = do
+    res <- uniformRM (fromEnum lo :: Int, fromEnum hi) rng
+    pure $ toEnum res
 
-instance Random Direction where
-  randomR (lo, hi) g = (toEnum i, g')
-    where (i, g') = randomR (fromEnum lo, fromEnum hi) g
-  random = randomR (minBound, maxBound)
+instance Uniform Turn where
+  uniformM rng = uniformRM (minBound, maxBound) rng
 
-randomsIO :: Random a => Int -> IO [a]
-randomsIO n = replicateM n randomIO
+instance UniformRange Direction where
+  uniformRM (lo, hi) rng = do
+    res <- uniformRM (fromEnum lo :: Int, fromEnum hi) rng
+    pure $ toEnum res
+
+instance Uniform Direction where
+  uniformM rng = uniformRM (minBound, maxBound) rng
+
+uniformIO :: Uniform a => IO a
+uniformIO = getStdRandom uniform
+
+uniformsIO :: Uniform a => Int -> IO [a]
+uniformsIO n = replicateM n uniformIO
 
 randomTurns :: Int -> IO [Turn]
-randomTurns = randomsIO
+randomTurns = uniformsIO
 
 randomDirections :: Int -> IO [Direction]
-randomDirections = randomsIO
+randomDirections = uniformsIO
 
-writeRandomFile :: (Random a, Show a) =>
+writeRandomFile :: (Uniform a, Show a) =>
                    Int -> (Int -> IO [a]) -> FilePath -> IO ()
 writeRandomFile n gen fname = do
   xs <- gen n
