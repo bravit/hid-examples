@@ -31,7 +31,7 @@ serveRPC host portNum rpcTable = serve (Host host) (show portNum) procRequests
       logConnection "New connection" sockAddr
       initCtx <- initConnectionContext
       conn <- connectFromSocket initCtx connSock connParams
-      catch (runRemoteConn conn (forever $ serveRequest rpcTable) >> pure ())
+      catch (runRemoteConn conn $ forever $ serveRequest rpcTable)
             (\(e :: RemoteException) ->
                logConnection (displayException e) sockAddr)
 
