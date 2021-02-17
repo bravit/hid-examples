@@ -6,20 +6,20 @@ import Text.Read (readMaybe)
 maxThread :: Int
 maxThread = 5
 
-waitUnless :: Int -> TVar Int -> STM ()
-waitUnless n tv = do
+waitUnless :: TVar Int -> Int -> STM ()
+waitUnless tv n = do
   n' <- readTVar tv
   check $ n == n'
 
-hello :: Int -> TVar Int -> IO ()
-hello n tv = forever $ do
-  atomically $ waitUnless n tv
+hello :: TVar Int -> Int -> IO ()
+hello tv n = forever $ do
+  atomically $ waitUnless tv n
   putStrLn $ "Hello from thread " ++ show n
   atomically $ writeTVar tv 0
 
 userLoop :: TVar Int -> IO ()
 userLoop tv = do
-  atomically $ waitUnless 0 tv
+  atomically $ waitUnless tv 0
   putStrLn $ "Enter thread number (1.." ++ show maxThread ++ "):"
   n' <- readMaybe <$> getLine
   case n' of
@@ -31,5 +31,5 @@ userLoop tv = do
 main :: IO ()
 main = do
   tv <- atomically $ newTVar 0
-  forM_ [1..maxThread] $ \n -> async $ hello n tv
+  forM_ [1..maxThread] $ async . hello tv
   userLoop tv
