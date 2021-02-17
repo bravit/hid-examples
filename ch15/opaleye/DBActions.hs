@@ -33,8 +33,8 @@ filmsCategories conn films = catMaybes <$> mapM runSingle films
       mfilm <- findFilm conn filmTitle
       case mfilm of
         Nothing -> pure Nothing
-        Just film -> runSelect conn (Q.filmCategories filmTitle)
-                     >>= pure . Just . FilmCategories film
+        Just film -> Just . FilmCategories film <$>
+                     runSelect conn (Q.filmCategories filmTitle)
 
 setRating :: Connection -> Rating -> Text -> IO Int64
 setRating conn r filmTitle = runUpdate_ conn (Q.setRating r filmTitle)

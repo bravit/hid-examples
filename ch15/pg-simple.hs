@@ -49,7 +49,7 @@ totalFilmsNumber conn = do
 
 findFilm :: Connection -> Text -> IO (Maybe FilmInfo)
 findFilm conn filmTitle =
-    query conn select (Only filmTitle) >>= pure . listToMaybe
+    listToMaybe <$> query conn select (Only filmTitle)
   where
     select = "SELECT film_id, title, description, length, rating"
              <> " FROM film"
@@ -79,8 +79,8 @@ filmsCategories conn films = catMaybes <$> mapM runSingle films
       mfilm <- findFilm conn filmTitle
       case mfilm of
         Nothing -> pure Nothing
-        Just film -> filmCategories conn filmTitle
-                     >>= pure . Just . FilmCategories film
+        Just film -> Just . FilmCategories film <$>
+                     filmCategories conn filmTitle
 
 setRating :: Connection -> Rating -> Text -> IO Int64
 setRating conn fRating filmTitle =
@@ -96,7 +96,7 @@ newCategory conn catName = do
 
 catIdByName :: Connection -> Text -> IO (Maybe CatId)
 catIdByName conn catName =
-    query conn select (Only catName) >>= pure . listToMaybe . map fromOnly
+    listToMaybe . map fromOnly <$> query conn select (Only catName)
   where
     select = "SELECT category_id FROM category WHERE name=?"
 
@@ -109,7 +109,7 @@ findOrAddCategory conn catName = do
 
 filmIdByTitle :: Connection -> Text -> IO (Maybe FilmId)
 filmIdByTitle conn filmTitle =
-    query conn select (Only filmTitle) >>= pure . listToMaybe . map fromOnly
+    listToMaybe . map fromOnly <$> query conn select (Only filmTitle)
   where
     select =  "SELECT film_id FROM film WHERE title=?"
 
