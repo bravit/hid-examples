@@ -3,3 +3,4 @@ tests: True
 allow-newer: base
 allow-newer: Cabal
 allow-newer: random
+-- flags: with-pg

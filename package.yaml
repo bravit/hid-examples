@@ -31,6 +31,11 @@ tested-with: GHC == 8.6.5, GHC == 8.8.3
 
 dependencies: base >=4.12 && <4.15
 
+flags:
+  with-pg:
+      manual: True
+      default: False
+
 ghc-options:
   - -Wall
   - -Werror
@@ -40,6 +45,7 @@ ghc-options:
   - -Wincomplete-record-updates
   - -Wno-unused-top-binds
   - -Wno-orphans
+
 executables:
     # Preface
     hello:
@@ -578,10 +584,8 @@ executables:
     # Chapter 15
     hdbc:
         when:
-          - condition: os(windows)
+          - condition: flag(with-pg)
             then:
-              main: empty/Main.hs
-            else:
               source-dirs: ch15
               main: hdbc.hs
               other-modules: [FilmInfo.Data]
@@ -591,12 +595,12 @@ executables:
                 - convertible >= 1.0 && < 1.2
                 - text >= 1.2 && < 1.3
                 - text-show >= 3.0 && < 4
+            else:
+              main: empty/Main.hs
     pg-simple:
         when:
-          - condition: os(windows)
+          - condition: flag(with-pg)
             then:
-              main: empty/Main.hs
-            else:
               source-dirs: ch15
               main: pg-simple.hs
               other-modules: [FilmInfo.Data, FilmInfo.FromField]
@@ -605,12 +609,12 @@ executables:
                 - bytestring >= 0.10 && < 0.12
                 - text >= 1.2 && < 1.3
                 - text-show >= 3.0 && < 4
+            else:
+              main: empty/Main.hs
     hasql:
         when:
-          - condition: os(windows)
+          - condition: flag(with-pg)
             then:
-              main: empty/Main.hs
-            else:
               source-dirs: [ch15/hasql, ch15]
               main: Main.hs
               other-modules:
@@ -626,12 +630,12 @@ executables:
                 - text-show >= 3.0 && < 4
                 - profunctors >= 5.3 && < 5.7
                 - mtl >= 2.0 && < 2.3
+            else:
+              main: empty/Main.hs
     opaleye:
         when:
-          - condition: os(windows)
+          - condition: flag(with-pg)
             then:
-              main: empty/Main.hs
-            else:
               source-dirs: [ch15/opaleye, ch15]
               main: Main.hs
               other-modules:
@@ -648,6 +652,8 @@ executables:
                 - product-profunctors >= 0.11 && < 0.12
                 - profunctors >= 5.3 && < 5.7
                 - bytestring >= 0.10 && < 0.12
+            else:
+              main: empty/Main.hs
     # Chapter 16
     conc-hello:
       main: ch16/conc-hello.hs

@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 047acbc0d12441fada1592be32f85fa8c4d187467c6fadb73edcf6921a7234df
+-- hash: 29fda8f827e82c269ef07378736e11de19e0d501668b28d6a83261d4595904a4
 
 name:           hid-examples
 version:        0.5
@@ -56,6 +56,10 @@ data-files:
 source-repository head
   type: git
   location: https://github.com/bravit/hid-examples
+
+flag with-pg
+  manual: True
+  default: False
 
 library
   exposed-modules:
@@ -606,9 +610,7 @@ executable hasql
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
-  if os(windows)
-    main-is: empty/Main.hs
-  else
+  if flag(with-pg)
     main-is: Main.hs
     other-modules:
         FilmInfo.Data
@@ -626,6 +628,8 @@ executable hasql
       , text >=1.2 && <1.3
       , text-show >=3.0 && <4
       , vector >=0.11 && <0.13
+  else
+    main-is: empty/Main.hs
   default-language: Haskell2010
 
 executable hdbc
@@ -634,9 +638,7 @@ executable hdbc
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
-  if os(windows)
-    main-is: empty/Main.hs
-  else
+  if flag(with-pg)
     main-is: hdbc.hs
     other-modules:
         FilmInfo.Data
@@ -648,6 +650,8 @@ executable hdbc
       , convertible >=1.0 && <1.2
       , text >=1.2 && <1.3
       , text-show >=3.0 && <4
+  else
+    main-is: empty/Main.hs
   default-language: Haskell2010
 
 executable hello
@@ -826,9 +830,7 @@ executable opaleye
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
-  if os(windows)
-    main-is: empty/Main.hs
-  else
+  if flag(with-pg)
     main-is: Main.hs
     other-modules:
         FilmInfo.Data
@@ -847,6 +849,8 @@ executable opaleye
       , profunctors >=5.3 && <5.7
       , text >=1.2 && <1.3
       , text-show >=3.0 && <4
+  else
+    main-is: empty/Main.hs
   default-language: Haskell2010
 
 executable ordered-threads
@@ -900,9 +904,7 @@ executable pg-simple
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <4.15
-  if os(windows)
-    main-is: empty/Main.hs
-  else
+  if flag(with-pg)
     main-is: pg-simple.hs
     other-modules:
         FilmInfo.Data
@@ -914,6 +916,8 @@ executable pg-simple
       , postgresql-simple >=0.5 && <0.7
       , text >=1.2 && <1.3
       , text-show >=3.0 && <4
+  else
+    main-is: empty/Main.hs
   default-language: Haskell2010
 
 executable ping-client
