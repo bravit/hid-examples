@@ -16,7 +16,7 @@ empty :: Stream f m ()
 empty = Return ()
 
 effect :: Monad m => m r -> Stream f m r
-effect eff = Effect (eff >>= pure . Return)
+effect eff = Effect $ Return <$> eff
 
 data Of a b = a :> b
   deriving Show
@@ -161,6 +161,7 @@ chunksOf n = loop
     cutChunk :: Stream f m r -> Stream f m (Stream (Stream f m) m r)
     cutChunk str = fmap loop (splitsAt (n-1) str)
 
+    loop :: Stream f m r -> Stream (Stream f m) m r
     loop (Return r) = Return r
     loop (Effect m) = Effect (fmap loop m)
     loop (Step fs) = Step (Step (fmap cutChunk fs))
