@@ -50,16 +50,20 @@ printStream (Step (e :> str)) = do
   printStream str
 
 instance (Functor f, Monad m) => Functor (Stream f m) where
+  fmap :: forall a b. (a -> b) -> Stream f m a -> Stream f m b
   fmap fun stream = loop stream
     where
+      loop :: Stream f m a -> Stream f m b
       loop (Return r) = Return (fun r)
       loop (Effect m) = Effect (fmap loop m)
       loop (Step f) = Step (fmap loop f)
 
 instance (Functor f, Monad m) => Monad (Stream f m) where
-  (>>=) :: Stream f m r -> (r -> Stream f m r1) -> Stream f m r1
+  (>>=) :: forall r r1.
+           Stream f m r -> (r -> Stream f m r1) -> Stream f m r1
   stream >>= fun = loop stream
     where
+      loop :: Stream f m r -> Stream f m r1
       loop (Return r) = fun r
       loop (Effect m) = Effect (fmap loop m)
       loop (Step f) = Step (fmap loop f)
