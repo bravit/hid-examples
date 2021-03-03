@@ -18,16 +18,16 @@ mkParams =
                (metavar "FILE" <> help "CSV file name")
          <*> optional (strip <$> strOption
                (long "name" <> short 'n' <>
-                help "company name "))
+                help "Company name "))
          <*> switch
                (long "chart" <> short 'c' <>
-                help "generate chart")
+                help "Generate chart")
          <*> optional (strOption $
                long "html" <> metavar "FILE" <>
-               help "generate HTML report")
+               help "Generate HTML report")
          <*> switch
                (long "silent" <> short 's' <>
-                help "don't print statistics")
+                help "Don't print statistics")
 
 cmdLineParser :: IO Params
 cmdLineParser = execParser opts
