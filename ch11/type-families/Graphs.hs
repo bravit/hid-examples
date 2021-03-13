@@ -13,8 +13,8 @@ class Graph g where
   outEdges :: g -> Vertex g -> [Edge g]
   -- other methods
 
-neighbours :: Graph g => g -> Vertex g -> [Vertex g]
-neighbours g v = map tgt (outEdges g v)
+neighbors :: Graph g => g -> Vertex g -> [Vertex g]
+neighbors g v = map tgt (outEdges g v)
 
 isLoop :: (Graph g, Eq (Vertex g)) => g -> Edge g -> Bool
 isLoop _ e = src e == tgt e
