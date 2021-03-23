@@ -46,7 +46,7 @@ guarded f a = if f a then pure a else empty
 isLengthOf :: Int -> [a] -> Bool
 isLengthOf n xs = length xs == n
 
--- | Parses IP address given as a 'String'
+-- | Parses the IP address given as a 'String'
 --
 -- >>> parseIP "0.0.0.0"
 -- Just 0.0.0.0
