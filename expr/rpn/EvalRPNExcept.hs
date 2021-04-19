@@ -43,8 +43,8 @@ pop = get >>= pop'
 
 oneElementOnStack :: EvalM ()
 oneElementOnStack = do
-  l <- gets length
-  when (l /= 1) $ throwError ExtraElements
+  len <- gets length
+  when (len /= 1) $ throwError ExtraElements
 
 readVar :: Text -> EvalM Integer
 readVar name = do

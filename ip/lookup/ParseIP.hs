@@ -111,7 +111,7 @@ parseIPIterStrict chars = go chars 0 0 1 0
     goodComp _ _ = False
 
     addComp !ip !ipcomp = shiftL ip 8 + ipcomp
-    addDigit !ipcomp c = ipcomp * 10 + digitToInt c
+    addDigit !ipcomp !c = ipcomp * 10 + digitToInt c
 
 
 parseIP'' :: String -> Maybe IP
