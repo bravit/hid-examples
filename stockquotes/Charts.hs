@@ -25,8 +25,8 @@ plotChart title quotes fname = do
         (day, [volume])) | QuoteData {..} <- toList quotes ]
 
     chart = slayouts_layouts .~
-        [ StackedLayout $ candlesLayout,
-          StackedLayout $ volumesLayout
+        [ StackedLayout candlesLayout,
+          StackedLayout volumesLayout
         ]
       $ def
 
