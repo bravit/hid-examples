@@ -1,4 +1,4 @@
-resolver: lts-17.4
+resolver: lts-18.21
 
 packages:
 - .
@@ -10,31 +10,24 @@ flags:
 #    with-pg: True
 
 extra-deps:
-  - streaming-utils-0.2.0.0
-  - json-stream-0.4.2.4
-  - HDBC-postgresql-2.3.2.7
-  - hasql-th-0.4.0.8
-  - headed-megaparsec-0.2
-  - selective-0.4.1
-  - template-haskell-compat-v0208-0.1.5
-  - hasql-transaction-1.0.0.1
-  - opaleye-0.7.0.0
-  - product-profunctors-0.11.0.0
-  - streaming-bytestring-0.1.7
-  - random-1.2.0
-  - splitmix-0.1.0.3
+  - Chart-diagrams-1.9.3
+  - HDBC-postgresql-2.4.0.0
+  - SVGFonts-1.7.0.1
+  - active-0.2.0.15
   - blaze-colonnade-1.2.2.1
   - colonnade-1.2.0.2
-  - Chart-diagrams-1.9.3
-  - SVGFonts-1.7.0.1
-  - diagrams-core-1.4.2
-  - diagrams-lib-1.4.3
+  - diagrams-core-1.5.0
+  - diagrams-lib-1.4.5.1
   - diagrams-postscript-1.5
-  - diagrams-svg-1.4.3
-  - svg-builder-0.1.1
-  - active-0.2.0.14
-  - dual-tree-0.2.2.1
-  - monoid-extras-0.5.1
+  - diagrams-svg-1.4.3.1
+  - dual-tree-0.2.3.0
+  - fast-builder-0.1.3.0
+  - hasql-th-0.4.0.10
+  - headed-megaparsec-0.2.0.2
+  - json-stream-0.4.2.4
+  - monoid-extras-0.6.1
+  - postgresql-syntax-0.4
   - statestack-0.3
-  - fast-builder-0.1.2.1
-  - postgresql-syntax-0.3.0.3
+  - streaming-utils-0.2.1.0
+  - svg-builder-0.1.1
+  - template-haskell-compat-v0208-0.1.5
