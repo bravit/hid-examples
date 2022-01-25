@@ -2,32 +2,34 @@ final: prev: with final; {
 
 
   haskellPackages = prev.haskellPackages.override (old: {
-    overrides = lib.composeManyExtensions [
+    overrides = lib.composeManyExtensions (with haskell.lib; [
                   (old.overrides or (_: _: {}))
                   (self: super: {
-                    formatting = self.formatting_7_1_2;
+                    # formatting = self.formatting_7_1_2;
+                    colonnade = doJailbreak (markUnbroken super.colonnade);
+                    streaming-utils = doJailbreak (markUnbroken super.streaming-utils);
                   })
-                  (haskell.lib.packageSourceOverrides { hid = ./.; })
-                ];
+                  (packageSourceOverrides { hid-examples = ./.; })
+                ]);
   });
 
-  hid = haskell.lib.justStaticExecutables haskellPackages.hid;
+  hid-examples = haskell.lib.justStaticExecutables haskellPackages.hid-examples;
 
-  ghcWithHid = haskellPackages.ghcWithPackages (p: [ p.hid ]);
+  ghcWithhid-examples = haskellPackages.ghcWithPackages (p: [ p.hid-examples ]);
 
-  ghcWithHidAndPackages = select :
-    haskellPackages.ghcWithPackages (p: ([ p.hid ] ++ select p));
+  ghcWithhid-examplesAndPackages = select :
+    haskellPackages.ghcWithPackages (p: ([ p.hid-examples ] ++ select p));
 
 
   jupyterlab = mkJupyterlab {
-    haskellKernelName = "Hid";
+    haskellKernelName = "hid-examples";
     haskellPackages = p: with p;
       [ # add haskell pacakges if necessary
-        hid
+        hid-examples
         hvega
         ihaskell-hvega
       ];
-    pythonKernelName = "Hid";
+    pythonKernelName = "hid-examples";
     pythonPackages = p: with p;
       [ # add python pacakges if necessary
         scipy
