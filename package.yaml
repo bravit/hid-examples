@@ -523,7 +523,7 @@ executables:
           - Elevator.Safe.Operations
           - Elevator.Safe.Moves
         dependencies:
-          - fin >= 0.1 && < 0.2
+          - fin >= 0.1 && < 0.3
           - dec >= 0.0.3 && < 0.1
           - singletons >= 2.5 && < 2.8
           - mtl >=2.0 && <2.3
