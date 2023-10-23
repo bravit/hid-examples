@@ -27,7 +27,7 @@ data-files:
     - data/tests/iplookup/*.*
     - data/benchmarks/iplookup/*.*
 
-tested-with: GHC == 8.6.5, GHC == 8.8.3, GHC == 9.4.7, GHC == 9.6.3
+tested-with: GHC == 9.4.7, GHC == 9.6.3
 
 dependencies: base >=4.12 && <5
 

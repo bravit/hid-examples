@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ghc: ['8.10', '8.8', '8.6']
+        ghc: ['9.6', '9.4', '9.2']
     name: Haskell GHC ${{ matrix.ghc }}
     steps:
       - uses: actions/checkout@v2
