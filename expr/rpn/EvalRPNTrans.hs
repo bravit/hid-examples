@@ -1,5 +1,6 @@
 module EvalRPNTrans where
 
+import Control.Monad
 import Control.Monad.State
 import Control.Applicative
 import Text.Read (readMaybe)

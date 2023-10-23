@@ -1,7 +1,7 @@
 module ParseIPSpec where
 
 import Data.Maybe
-import Test.Tasty.Hspec
+import Test.Hspec
 
 import IPTypes
 import ParseIP

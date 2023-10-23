@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+
 module Projectors where
 
 import Language.Haskell.TH
@@ -52,10 +53,13 @@ mkProjType n k = sigD nm funTy
   where
     nm = mkProjName n k
 
+    plainTV' :: Name -> TyVarBndr Specificity
+    plainTV' name = PlainTV name specifiedSpec
+
     funTy = do
       resTy <- newName "res"
       tys <- mapM (getTy resTy) [0..n-1]
-      forallT (map plainTV tys)
+      forallT (map plainTV' tys)
               (pure [])
               [t| $(mkTuple tys) -> $(varT resTy) |]
 

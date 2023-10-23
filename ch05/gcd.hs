@@ -1,3 +1,4 @@
+import Data.Monoid
 import Control.Monad.Writer
 
 gcd' :: Integral a => a -> a -> a

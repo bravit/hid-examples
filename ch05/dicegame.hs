@@ -1,3 +1,4 @@
+import Control.Monad
 import Control.Monad.RWS
 import System.Random
 

@@ -37,13 +37,13 @@ filmsCategories conn films = catMaybes <$> mapM runSingle films
                      runSelect conn (Q.filmCategories filmTitle)
 
 setRating :: Connection -> Rating -> Text -> IO Int64
-setRating conn r filmTitle = runUpdate_ conn (Q.setRating r filmTitle)
+setRating conn r filmTitle = runUpdate conn (Q.setRating r filmTitle)
 
 findOrAddCategory :: Connection -> Text -> IO [CatId]
 findOrAddCategory conn catName = do
   cats <- runSelect conn (Q.catIdByName catName)
   case cats of
-    [] -> runInsert_ conn (Q.newCategory catName)
+    [] -> runInsert conn (Q.newCategory catName)
     (cid:_) -> pure [cid]
 
 isAssigned :: Connection -> CatId -> FilmId -> IO Bool
@@ -56,7 +56,7 @@ assignUnlessAssigned conn cid fid = do
   b <- isAssigned conn cid fid
   case b of
     True -> pure 0
-    False -> runInsert_ conn (Q.assignCategory cid fid)
+    False -> runInsert conn (Q.assignCategory cid fid)
 
 assignCategory :: Connection -> Text -> Text -> IO Int64
 assignCategory conn catName filmTitle = do
@@ -71,5 +71,5 @@ unassignCategory conn catName filmTitle = do
   catIds <- runSelect conn (Q.catIdByName catName)
   filmIds <- runSelect conn (Q.filmIdByTitle filmTitle)
   case (catIds, filmIds) of
-    ([cid], [fid]) -> runDelete_ conn (Q.unassignCategory cid fid)
+    ([cid], [fid]) -> runDelete conn (Q.unassignCategory cid fid)
     _ -> pure 0

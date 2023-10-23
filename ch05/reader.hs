@@ -1,5 +1,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 
+import Control.Monad
 import Control.Monad.Reader
 
 data Config = Config {

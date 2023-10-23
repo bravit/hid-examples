@@ -17,7 +17,7 @@ data AppEnv = AppEnv {
   }
 
 initialEnv :: AppConfig -> AppEnv
-initialEnv config @ AppConfig {..} = AppEnv {
+initialEnv config@AppConfig {..} = AppEnv {
     cfg = config
   , path = basePath
   , depth = 0

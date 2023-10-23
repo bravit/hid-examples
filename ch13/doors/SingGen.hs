@@ -15,7 +15,7 @@
 #endif
 
 
-import Data.Singletons.TH
+import Data.Singletons.Base.TH
 
 $(singletons [d|
  data DoorState = Opened | Closed

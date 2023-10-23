@@ -27,9 +27,9 @@ data-files:
     - data/tests/iplookup/*.*
     - data/benchmarks/iplookup/*.*
 
-tested-with: GHC == 8.6.5, GHC == 8.8.3
+tested-with: GHC == 8.6.5, GHC == 8.8.3, GHC == 9.4.7, GHC == 9.6.3
 
-dependencies: base >=4.12 && <4.15
+dependencies: base >=4.12 && <5
 
 flags:
   with-pg:
@@ -56,12 +56,12 @@ executables:
         source-dirs: ch01
         main: vocab1.hs
         other-modules: []
-        dependencies: text >=1.2 && <1.3
+        dependencies: text >=1.2 && <2.2
     vocab2:
         source-dirs: ch01
         main: vocab2.hs
         other-modules: []
-        dependencies: text >=1.2 && <1.3
+        dependencies: text >=1.2 && <2.2
     vocab3:
         source-dirs: ch01
         main: vocab3.hs
@@ -69,7 +69,7 @@ executables:
         other-extensions:
           - OverloadedStrings
         dependencies:
-          - text >=1.2 && <1.3
+          - text >=1.2 && <2.2
           - fmt >=0.5 && <0.7
     # Chapter 2
     # 2.1
@@ -106,11 +106,11 @@ executables:
           - DeriveGeneric
           - DeriveAnyClass
         dependencies:
-          - bytestring >=0.10 && <0.12
+          - bytestring >=0.10 && <0.13
           - blaze-html >=0.9 && <0.10
-          - optparse-applicative >=0.14 && <0.17
-          - time >=1.8 && <1.12
-          - text >=1.2 && <1.3
+          - optparse-applicative >=0.14 && <0.19
+          - time >=1.8 && <1.13
+          - text >=1.2 && <2.2
           - fmt >=0.5 && <0.7
           - Chart >=1.8 && <1.10
           - Chart-diagrams >=1.8 && <1.10
@@ -127,7 +127,7 @@ executables:
         other-extensions:
           - NamedFieldPuns
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
     genSQL:
         source-dirs: ch05
         main: genSQL.hs
@@ -135,23 +135,23 @@ executables:
           - OverloadedStrings
           - ViewPatterns
         dependencies:
-          - text >=1.2 && <1.3
-          - mtl >=2.0 && <2.3
+          - text >=1.2 && <2.2
+          - mtl >=2.0 && <2.4
     gcd:
         source-dirs: ch05
         main: gcd.hs
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
     sumlist:
         source-dirs: ch05
         main: sumlist.hs
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
     weapons:
         source-dirs: ch05
         main: weapons.hs
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
           - random >=1.2 && <1.3
     prefix-postfix:
         source-dirs: expr
@@ -159,12 +159,12 @@ executables:
         other-modules: [Expr, ShuntingYard]
         dependencies:
         - text-show >=3.0 && <4
-        - mtl >=2.0 && <2.3
+        - mtl >=2.0 && <2.4
     dicegame:
         source-dirs: ch05
         main: dicegame.hs
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
           - random >=1.2 && <1.3
     ioref:
         source-dirs: ch05
@@ -186,20 +186,20 @@ executables:
         main: evalrpn1.hs
         other-modules: [EvalRPN]
         dependencies:
-          - mtl >= 2.0 && < 2.3
+          - mtl >= 2.0 && < 2.4
     evalrpn2:
         source-dirs: expr/rpn
         main: evalrpn2.hs
         other-modules: [EvalRPNTrans]
         dependencies:
-          - mtl >= 2.0 && < 2.3
+          - mtl >= 2.0 && < 2.4
     evalrpn3:
         source-dirs: expr/rpn
         main: evalrpn3.hs
         other-modules: [MyMaybeT, EvalRPNTrans2]
         dependencies:
-          - mtl >= 2.0 && < 2.3
-          - transformers >= 0.5 && < 0.6
+          - mtl >= 2.0 && < 2.4
+          - transformers >=0.5 && <0.7
         other-extensions:
           - FlexibleInstances
           - MultiParamTypeClasses
@@ -210,12 +210,12 @@ executables:
         source-dirs: du
         main: Main.hs
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
           - filepath >= 1.4.1 && < 1.5
           - directory >= 1.3 && < 1.4
-          - unix-compat >= 0.5 && < 0.6
-          - optparse-applicative >= 0.14 && < 0.17
-          - text >=1.2 && <1.3
+          - unix-compat >= 0.5 && < 0.8
+          - optparse-applicative >= 0.14 && < 0.19
+          - text >=1.2 && <2.2
           - text-show >=3.0 && <4
           - extra >=1.5 && <1.8
         default-extensions:
@@ -233,9 +233,9 @@ executables:
         other-extensions:
           - OverloadedStrings
         dependencies:
-          - mtl >= 2.0 && < 2.3
-          - transformers >= 0.5 && < 0.6
-          - text >=1.2 && <1.3
+          - mtl >= 2.0 && < 2.4
+          - transformers >=0.5 && <0.7
+          - text >=1.2 && <2.2
           - text-show >=3.0 && <4
     div:
       source-dirs: ch07
@@ -246,16 +246,16 @@ executables:
         source-dirs: suntimes
         main: Main.hs
         dependencies:
-          - mtl >= 2.0 && < 2.3
-          - transformers >= 0.5 && < 0.6
-          - time >=1.8 && <1.12
-          - text >=1.2 && <1.3
+          - mtl >= 2.0 && < 2.4
+          - transformers >=0.5 && <0.7
+          - time >=1.8 && <1.13
+          - text >=1.2 && <2.2
           - exceptions >= 0.10 && < 0.11
-          - aeson >= 1.2 && < 1.6
-          - req >= 2.0 && < 3.10
+          - aeson >= 1.2 && < 2.3
+          - req >= 2.0 && < 3.14
           - http-client >= 0.4 && < 0.8
-          - optparse-applicative >= 0.14 && < 0.17
-          - bytestring >= 0.10 && < 0.12
+          - optparse-applicative >= 0.14 && < 0.19
+          - bytestring >= 0.10 && < 0.13
         default-extensions:
           - OverloadedStrings
         other-extensions:
@@ -266,23 +266,23 @@ executables:
       main: logging.hs
       dependencies:
         - monad-logger >= 0.3 && < 0.4
-        - mtl >= 2.0 && < 2.3
-        - transformers >= 0.5 && < 0.6
-        - text >=1.2 && <1.3
+        - mtl >= 2.0 && < 2.4
+        - transformers >=0.5 && <0.7
+        - text >=1.2 && <2.2
     # Chapter 8
     iplookup:
         main: ip/lookup/Main.hs
         dependencies:
           - exceptions >= 0.10 && < 0.11
-          - optparse-applicative >= 0.14 && < 0.17
+          - optparse-applicative >= 0.14 && < 0.19
           - iplookup-lib
     ipgen:
         main: ip/gen/Main.hs
         dependencies:
           - ipgen-lib
           - exceptions >= 0.10 && < 0.11
-          - optparse-applicative >= 0.14 && < 0.17
-          - hedgehog >= 0.5 && < 1.1
+          - optparse-applicative >= 0.14 && < 0.19
+          - hedgehog >= 0.5 && < 1.5
     # Chapter 9
     unboxed:
         main: ch09/unboxed.hs
@@ -355,7 +355,7 @@ executables:
         ghc-options:
           -Wno-type-defaults
         dependencies:
-          - containers >= 0.5 && < 0.7
+          - containers >= 0.5 && < 0.8
     dynvalues-gadt:
         main: ch11/dynvalues-gadt.hs
         other-extensions:
@@ -382,7 +382,7 @@ executables:
         source-dirs: ch12/deriv/
         main: strategies.hs
         dependencies:
-          - aeson >= 1.2 && < 1.6
+          - aeson >= 1.2 && < 2.3
     coerce:
         source-dirs: ch12/deriv/
         main: coerce.hs
@@ -390,7 +390,7 @@ executables:
         source-dirs: ch12/deriv/
         main: newtype.hs
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
     via:
         source-dirs: ch12/deriv/
         main: via.hs
@@ -404,7 +404,7 @@ executables:
         source-dirs: ch12/genSQL/
         main: Main.hs
         dependencies:
-          - text >=1.2 && <1.3
+          - text >=1.2 && <2.2
           - text-show >=3.0 && <4
     # 12.3
     hello-th:
@@ -412,19 +412,19 @@ executables:
         main: Main.hs
         other-modules: [ Hello ]
         dependencies:
-          - template-haskell >=2.13 && <2.17
+          - template-haskell >=2.13 && <2.22
     projectors:
         source-dirs: ch12/th/projectors/
         main: Main.hs
         other-modules: [ Projectors ]
         dependencies:
-          - template-haskell >=2.13 && <2.17
+          - template-haskell >=2.13 && <2.22
     predicates:
         source-dirs: ch12/th/predicates/
         main: Main.hs
         other-modules: [ Predicates ]
         dependencies:
-          - template-haskell >=2.13 && <2.17
+          - template-haskell >=2.13 && <2.22
         ghc-options:
           - -Wno-missing-signatures
           - -Wno-incomplete-patterns
@@ -433,7 +433,7 @@ executables:
         main: Main.hs
         other-modules: [ Str ]
         dependencies:
-          - template-haskell >=2.13 && <2.17
+          - template-haskell >=2.13 && <2.22
         ghc-options:
           - -Wno-missing-signatures
           - -Wno-incomplete-patterns
@@ -443,7 +443,7 @@ executables:
         other-modules: [ PingCommon ]
         dependencies:
           - rpc-lib
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
           - cereal >= 0.5 && <0.6
     ping-client:
         source-dirs: ch12/rpc/ping/
@@ -451,7 +451,7 @@ executables:
         other-modules: [ PingCommon ]
         dependencies:
           - rpc-lib
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
           - cereal >= 0.5 && <0.6
     # Chapter 13
     api-stage0:
@@ -480,17 +480,17 @@ executables:
     api-servant:
         main: ch13/api/ApiServant.hs
         dependencies:
-          - servant-server >=0.14 && <0.19
+          - servant-server >=0.14 && <0.21
           - servant-blaze >=0.7 && <0.10
           - warp >=3.2 && < 3.4
-          - aeson >= 1.2 && < 1.6
+          - aeson >= 1.2 && < 2.3
           - blaze-html >=0.9 && <0.10
     unsafe-elevator:
         source-dirs: ch13/elevator/
         main: UseUnsafe.hs
         other-modules: [Elevator.LowLevel, Elevator.Unsafe]
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
     door:
         main: ch13/doors/SingManual.hs
         other-extensions:
@@ -510,7 +510,8 @@ executables:
           - KindSignatures
           - StandaloneDeriving
         dependencies:
-          - singletons >= 2.5 && < 2.8
+          - singletons >= 3.0 && < 3.1
+          - singletons-base >= 3.0 && < 3.4
         ghc-options:
           - -Wno-unticked-promoted-constructors
     elevator:
@@ -523,10 +524,11 @@ executables:
           - Elevator.Safe.Operations
           - Elevator.Safe.Moves
         dependencies:
-          - fin >= 0.1 && < 0.3
+          - fin >= 0.1 && < 0.4
           - dec >= 0.0.3 && < 0.1
-          - singletons >= 2.5 && < 2.8
-          - mtl >=2.0 && <2.3
+          - singletons >= 3.0 && < 3.1
+          - singletons-base >= 3.0 && < 3.4
+          - mtl >=2.0 && <2.4
         ghc-options:
           - -Wno-unticked-promoted-constructors
     # Chapter 14
@@ -539,7 +541,7 @@ executables:
         dependencies:
           - streaming >=0.2.2 && <0.4
           - extra >=1.5 && <1.8
-          - text >=1.2 && <1.3
+          - text >=1.2 && <2.2
           - text-show >=3.0 && <4
     chars:
         main: ch14/chars.hs
@@ -549,38 +551,38 @@ executables:
         main: ch14/copy.hs
         dependencies:
           - streaming >=0.2.2 && <0.4
-          - streaming-bytestring >=0.1.7 && <0.3
-          - resourcet >=1.2 && <1.3
+          - streaming-bytestring >=0.1.7 && <0.4
+          - resourcet >=1.2 && <1.4
           - filepath >= 1.4.1 && < 1.5
     csv-simple:
         main: ch14/csv-simple.hs
         dependencies:
-          - text >=1.2 && <1.3
-          - attoparsec >=0.13 && <0.14
-          - bytestring >=0.10 && <0.12
+          - text >=1.2 && <2.2
+          - attoparsec >=0.13 && <0.15
+          - bytestring >=0.10 && <0.13
           - streaming-utils >=0.2 && <0.3
-          - streaming-bytestring >=0.1.7 && <0.3
+          - streaming-bytestring >=0.1.7 && <0.4
           - streaming >=0.2.2 && <0.4
-          - resourcet >=1.2 && <1.3
+          - resourcet >=1.2 && <1.4
     lens-ex:
         main: ch14/lens-ex.hs
         dependencies:
-          - lens >= 4.17 && < 4.20
+          - lens >= 4.17 && < 5.3
     covid:
         source-dirs: ch14/covid
         main: Main.hs
         dependencies:
-          - bytestring >=0.10 && <0.12
-          - time >=1.8 && <1.12
-          - text >=1.2 && <1.3
+          - bytestring >=0.10 && <0.13
+          - time >=1.8 && <1.13
+          - text >=1.2 && <2.2
           - text-show >=3.0 && <4
-          - containers >= 0.5 && < 0.7
-          - lens >= 4.17 && < 4.20
+          - containers >= 0.5 && < 0.8
+          - lens >= 4.17 && < 5.3
           - streaming-utils >=0.2 && <0.3
-          - streaming-bytestring >=0.1.7 && <0.3
+          - streaming-bytestring >=0.1.7 && <0.4
           - streaming >=0.2.2 && <0.4
-          - resourcet >=1.2 && <1.3
-          - attoparsec >=0.13 && <0.14
+          - resourcet >=1.2 && <1.4
+          - attoparsec >=0.13 && <0.15
     # Chapter 15
     hdbc:
         when:
@@ -591,9 +593,9 @@ executables:
               other-modules: [FilmInfo.Data]
               dependencies:
                 - HDBC >= 2.3 && < 2.5
-                - HDBC-postgresql >= 2.3 && < 2.5
+                - HDBC-postgresql >= 2.4 && < 2.6
                 - convertible >= 1.0 && < 1.2
-                - text >= 1.2 && < 1.3
+                - text >= 1.2 && < 2.2
                 - text-show >= 3.0 && < 4
             else:
               main: empty/Main.hs
@@ -606,8 +608,8 @@ executables:
               other-modules: [FilmInfo.Data, FilmInfo.FromField]
               dependencies:
                 - postgresql-simple >= 0.5 && < 0.7
-                - bytestring >= 0.10 && < 0.12
-                - text >= 1.2 && < 1.3
+                - bytestring >= 0.10 && < 0.13
+                - text >= 1.2 && < 2.2
                 - text-show >= 3.0 && < 4
             else:
               main: empty/Main.hs
@@ -623,13 +625,13 @@ executables:
                 - Sessions
                 - DBActions
               dependencies:
-                - hasql >= 1.3 && < 1.5
+                - hasql >= 1.3 && < 1.7
                 - hasql-th >= 0.4 && < 0.5
-                - vector >= 0.11 && < 0.13
-                - text >= 1.2 && < 1.3
+                - vector >= 0.11 && < 0.14
+                - text >= 1.2 && < 2.2
                 - text-show >= 3.0 && < 4
                 - profunctors >= 5.3 && < 5.7
-                - mtl >= 2.0 && < 2.3
+                - mtl >= 2.0 && < 2.4
             else:
               main: empty/Main.hs
     opaleye:
@@ -645,13 +647,13 @@ executables:
                 - Queries
                 - DBActions
               dependencies:
-                - opaleye >= 0.7 && < 0.8
+                - opaleye >= 0.8 && < 0.11
                 - postgresql-simple >= 0.5 && < 0.7
-                - text >= 1.2 && < 1.3
+                - text >= 1.2 && < 2.2
                 - text-show >= 3.0 && < 4
                 - product-profunctors >= 0.11 && < 0.12
                 - profunctors >= 5.3 && < 5.7
-                - bytestring >= 0.10 && < 0.12
+                - bytestring >= 0.10 && < 0.13
             else:
               main: empty/Main.hs
     # Chapter 16
@@ -753,7 +755,7 @@ internal-libraries:
         exposed-modules: Contexts
         other-modules: []
         dependencies:
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
     # Chapter 5
     shunting-yard:
         source-dirs: expr
@@ -761,7 +763,7 @@ internal-libraries:
         other-modules: []
         dependencies:
           - expr-simple
-          - mtl >=2.0 && <2.3
+          - mtl >=2.0 && <2.4
           - text-show >=3.0 && <4
     # Chapter 8
     iplookup-lib:
@@ -786,7 +788,7 @@ internal-libraries:
         other-modules: []
         dependencies:
           - iplookup-lib
-          - hedgehog >= 0.5 && < 1.1
+          - hedgehog >= 0.5 && < 1.5
     # Chapter 9
     isprime-lib:
       source-dirs: ch09/isprime
@@ -802,14 +804,14 @@ internal-libraries:
         - ServerUtils
         - RpcCommon
       dependencies:
-        - bytestring >=0.10 && <0.12
-        - mtl >=2.0 && <2.3
+        - bytestring >=0.10 && <0.13
+        - mtl >=2.0 && <2.4
         - cereal >= 0.5 && <0.6
         - network >= 2.8 && <3.2
-        - connection >= 0.3 && <0.4
+        - crypton-connection >= 0.3 && <0.4
         - network-simple >=0.4.5 && <0.5
         - exceptions >= 0.10 && < 0.11
-        - template-haskell >= 2.13 && <2.17
+        - template-haskell >= 2.13 && <2.22
         - haskell-src-exts >= 1.20 && <1.24
         - haskell-src-meta >= 0.6 && < 0.9
 tests:
@@ -837,7 +839,7 @@ tests:
         dependencies:
           - shunting-yard
           - text-show >=3.0 && <4
-          - text >=1.2 && <1.3
+          - text >=1.2 && <2.2
     # Chapter 8
     iplookup-test:
         main: Test.hs
@@ -845,10 +847,11 @@ tests:
         dependencies:
           - iplookup-lib
           - ipgen-lib
-          - tasty >= 0.11 && < 1.5
-          - tasty-hspec >= 1.1 && < 1.2
-          - tasty-hedgehog >= 0.1 && < 1.1
-          - hedgehog >= 0.5 && < 1.1
+          - tasty >= 0.11 && < 1.6
+          - tasty-hspec >= 1.1 && < 1.3
+          - hspec >= 2.10 && < 2.12
+          - tasty-hedgehog >= 0.1 && < 1.5
+          - hedgehog >= 0.5 && < 1.5
           - tasty-golden >= 2.3 && < 2.4
           - filepath >= 1.4.1 && < 1.5
         ghc-options:
@@ -856,7 +859,7 @@ tests:
     iplookup-doctest:
       main: tests/iplookup-doctest/Doctests.hs
       dependencies:
-        - doctest >= 0.12 && < 0.19
+        - doctest >= 0.12 && < 0.23
         - split >= 0.2 && < 0.3
 
 benchmarks:
@@ -865,14 +868,14 @@ benchmarks:
         main: benchmarks/primcheck.hs
         dependencies:
           - isprime-lib
-          - criterion >= 1.4 && < 1.6
+          - criterion >= 1.4 && < 1.7
     iplookup-bench:
         source-dirs: benchmarks/iplookup
         main: Bench.hs
         dependencies:
           - iplookup-lib
-          - criterion >= 1.4 && < 1.6
-          - deepseq >= 1.3 && <1.5
+          - criterion >= 1.4 && < 1.7
+          - deepseq >= 1.3 && <1.6
 
 library:
     source-dirs: empty

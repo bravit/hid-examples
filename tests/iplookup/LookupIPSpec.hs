@@ -1,6 +1,6 @@
 module LookupIPSpec where
 
-import Test.Tasty.Hspec
+import Test.Hspec
 
 import IPTypes
 import LookupIP

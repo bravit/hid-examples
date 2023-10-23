@@ -1,4 +1,5 @@
 import Data.List (group, sort)
+import Control.Monad
 import Control.Monad.State
 import System.Random
 import System.Random.Stateful (uniformRM, uniformM)

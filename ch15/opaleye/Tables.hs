@@ -3,6 +3,7 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE TypeOperators #-}
 
 module Tables where
 
@@ -25,8 +26,8 @@ instance DefaultFromField PGRating Rating where
 
 instance pgf ~ FieldNullable PGRating => Default ToFields Rating pgf where
   def = dimap fromRating
-              (unsafeCast "mpaa_rating")
-              (def :: ToFields Text (Field PGText))
+              (unsafeCoerceColumn . unsafeCast "mpaa_rating")
+              (def :: ToFields Text (Field SqlText))
 
 makeAdaptorAndInstanceInferrable "pFilmId" ''FilmId'
 makeAdaptorAndInstanceInferrable "pFilmLength" ''FilmLength'
