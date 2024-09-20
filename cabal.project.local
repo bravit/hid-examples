@@ -3,4 +3,6 @@ tests: True
 allow-newer: base
 allow-newer: Cabal
 allow-newer: random
+allow-newer: aeson
+allow-newer: bytestring
 -- flags: +with-pg
