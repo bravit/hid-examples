@@ -45,6 +45,7 @@ ghc-options:
   - -Wincomplete-record-updates
   - -Wno-unused-top-binds
   - -Wno-orphans
+  - -Wno-error=unrecognised-warning-flags
 
 executables:
     # Preface

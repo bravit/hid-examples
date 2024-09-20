@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 44b7d0895edf9c9753f7b782bbadab17db47d5d92166e223011db18c56254a4c
+-- hash: 97d7a69d126c9c175d3b3049a1fc9311dd7e67a175c4e255477211084c6f2d6c
 
 name:           hid-examples
 version:        0.5
@@ -67,7 +67,7 @@ library
       Empty
   hs-source-dirs:
       empty
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -77,7 +77,7 @@ library contexts
       Contexts
   hs-source-dirs:
       ch02
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -88,7 +88,7 @@ library expr-simple
       Expr
   hs-source-dirs:
       expr
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , text-show >=3.0 && <4
@@ -99,7 +99,7 @@ library ipgen-lib
       GenIP
   hs-source-dirs:
       ip/gen
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , hedgehog >=0.5 && <1.6
@@ -116,7 +116,7 @@ library iplookup-lib
       ip/lookup
   other-extensions:
       TypeApplications
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-incomplete-uni-patterns
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-incomplete-uni-patterns
   build-depends:
       base >=4.12 && <5
     , fingertree ==0.1.*
@@ -129,7 +129,7 @@ library isprime-lib
       IsPrimeUnfolded
   hs-source-dirs:
       ch09/isprime
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -139,7 +139,7 @@ library radar-lib
       Radar
   hs-source-dirs:
       ch02/radar
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -158,7 +158,7 @@ library rpc-lib
       Paths_hid_examples
   hs-source-dirs:
       ch12/rpc/lib
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , bytestring >=0.10 && <0.13
@@ -178,7 +178,7 @@ library shunting-yard
       ShuntingYard, Expr
   hs-source-dirs:
       expr
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , expr-simple
@@ -192,7 +192,7 @@ executable api-servant
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       aeson >=1.2 && <2.3
     , base >=4.12 && <5
@@ -208,7 +208,7 @@ executable api-stage0
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -219,7 +219,7 @@ executable api-stage1
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -236,7 +236,7 @@ executable api-stage2
       PolyKinds
       DataKinds
       TypeFamilies
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -256,7 +256,7 @@ executable api-stage3
       FlexibleInstances
       InstanceSigs
       ScopedTypeVariables
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -267,7 +267,7 @@ executable async-exc
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -280,7 +280,7 @@ executable basic-deriv
       Paths_hid_examples
   hs-source-dirs:
       ch12/deriv/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -291,7 +291,7 @@ executable chars
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , streaming >=0.2.2 && <0.4
@@ -305,7 +305,7 @@ executable coerce
       Paths_hid_examples
   hs-source-dirs:
       ch12/deriv/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -316,7 +316,7 @@ executable conc-hello
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -327,7 +327,7 @@ executable copy
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , filepath >=1.4.1 && <1.6
@@ -344,7 +344,7 @@ executable countzeros
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -359,7 +359,7 @@ executable covid
       Paths_hid_examples
   hs-source-dirs:
       ch14/covid
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       attoparsec >=0.13 && <0.15
     , base >=4.12 && <5
@@ -381,7 +381,7 @@ executable csv-simple
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       attoparsec >=0.13 && <0.15
     , base >=4.12 && <5
@@ -401,7 +401,7 @@ executable dicegame
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -416,7 +416,7 @@ executable div
       Paths_hid_examples
   hs-source-dirs:
       ch07
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , exceptions ==0.10.*
@@ -434,7 +434,7 @@ executable door
       TypeOperators
       KindSignatures
       StandaloneDeriving
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-unticked-promoted-constructors
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-unticked-promoted-constructors
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -451,7 +451,7 @@ executable door-gen
       TypeOperators
       KindSignatures
       StandaloneDeriving
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-unticked-promoted-constructors
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-unticked-promoted-constructors
   build-depends:
       base >=4.12 && <5
     , singletons ==3.0.*
@@ -464,7 +464,7 @@ executable dots
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -475,7 +475,7 @@ executable dots-async
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -487,7 +487,7 @@ executable dots-async-cancel
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -500,7 +500,7 @@ executable dots-async-interrupted
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -512,7 +512,7 @@ executable dots-stm
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -541,7 +541,7 @@ executable du
       OverloadedStrings
   other-extensions:
       GeneralizedNewtypeDeriving
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , directory ==1.3.*
@@ -562,7 +562,7 @@ executable dynvalues-gadt
       Paths_hid_examples
   other-extensions:
       GADTs
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -577,7 +577,7 @@ executable elevator
       Elevator.Safe.Moves
   hs-source-dirs:
       ch13/elevator/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-unticked-promoted-constructors
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-unticked-promoted-constructors
   build-depends:
       base >=4.12 && <5
     , dec >=0.0.3 && <0.1
@@ -593,7 +593,7 @@ executable evalrpn1
       EvalRPN
   hs-source-dirs:
       expr/rpn
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -605,7 +605,7 @@ executable evalrpn2
       EvalRPNTrans
   hs-source-dirs:
       expr/rpn
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -624,7 +624,7 @@ executable evalrpn3
       UndecidableInstances
       InstanceSigs
       LambdaCase
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -640,7 +640,7 @@ executable expr-gadt
   other-extensions:
       GADTSyntax
       GADTs
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-type-defaults -Wno-missing-signatures
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-type-defaults -Wno-missing-signatures
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -653,7 +653,7 @@ executable filecount
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , extra >=1.5 && <1.8
@@ -667,7 +667,7 @@ executable gcd
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -684,7 +684,7 @@ executable genSQL
   other-extensions:
       OverloadedStrings
       ViewPatterns
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -700,7 +700,7 @@ executable generic-sql
       Paths_hid_examples
   hs-source-dirs:
       ch12/genSQL/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , text >=1.2 && <2.2
@@ -712,7 +712,7 @@ executable hasql
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -742,7 +742,7 @@ executable hdbc
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -763,7 +763,7 @@ executable hdbc
 
 executable hello
   main-is: intro/hello.hs
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -774,7 +774,7 @@ executable hello-th
       Hello
   hs-source-dirs:
       ch12/th/hello/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , template-haskell >=2.13 && <2.23
@@ -786,7 +786,7 @@ executable interleaving
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -799,7 +799,7 @@ executable ioref
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -810,7 +810,7 @@ executable ipgen
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , exceptions ==0.10.*
@@ -825,7 +825,7 @@ executable iplookup
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , exceptions ==0.10.*
@@ -839,7 +839,7 @@ executable iplookup-simulation
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , iplookup-lib
@@ -851,7 +851,7 @@ executable isprime
       IsPrime
   hs-source-dirs:
       ch09/isprime
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , isprime-lib
@@ -864,7 +864,7 @@ executable lens-ex
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , lens >=4.17 && <5.4
@@ -878,7 +878,7 @@ executable logging
       Paths_hid_examples
   hs-source-dirs:
       ch07
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , monad-logger ==0.3.*
@@ -895,7 +895,7 @@ executable maybe
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -906,7 +906,7 @@ executable mstr-literals
       Str
   hs-source-dirs:
       ch12/th/mstr-lits/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures -Wno-incomplete-patterns
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-missing-signatures -Wno-incomplete-patterns
   build-depends:
       base >=4.12 && <5
     , template-haskell >=2.13 && <2.23
@@ -918,7 +918,7 @@ executable mvar-deadlocks
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded -Wno-unused-do-bind
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded -Wno-unused-do-bind
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -932,7 +932,7 @@ executable newtype
       Paths_hid_examples
   hs-source-dirs:
       ch12/deriv/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -949,7 +949,7 @@ executable nummod-rank-n
       ch11/nummod-rank-n/
   other-extensions:
       RankNTypes
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -959,7 +959,7 @@ executable opaleye
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -991,7 +991,7 @@ executable ordered-threads
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -1004,7 +1004,7 @@ executable person-derived
       Person
   hs-source-dirs:
       ch02/person
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1015,7 +1015,7 @@ executable person-implemented
       Person
   hs-source-dirs:
       ch02/person
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1026,7 +1026,7 @@ executable person-text
       Person
   hs-source-dirs:
       ch02/person
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , text-show >=3.0 && <4
@@ -1037,7 +1037,7 @@ executable pg-simple
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1062,7 +1062,7 @@ executable ping-client
       PingCommon
   hs-source-dirs:
       ch12/rpc/ping/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , cereal ==0.5.*
@@ -1076,7 +1076,7 @@ executable ping-server
       PingCommon
   hs-source-dirs:
       ch12/rpc/ping/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , cereal ==0.5.*
@@ -1090,7 +1090,7 @@ executable predicates
       Predicates
   hs-source-dirs:
       ch12/th/predicates/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures -Wno-incomplete-patterns
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-missing-signatures -Wno-incomplete-patterns
   build-depends:
       base >=4.12 && <5
     , template-haskell >=2.13 && <2.23
@@ -1103,7 +1103,7 @@ executable prefix-postfix
       ShuntingYard
   hs-source-dirs:
       expr
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -1116,7 +1116,7 @@ executable projectors
       Projectors
   hs-source-dirs:
       ch12/th/projectors/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , template-haskell >=2.13 && <2.23
@@ -1128,7 +1128,7 @@ executable pub-sub
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -1144,7 +1144,7 @@ executable radar
       ch02/radar
   other-extensions:
       DeriveAnyClass
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , fmt >=0.5 && <0.7
@@ -1160,7 +1160,7 @@ executable reader
       ch05
   other-extensions:
       NamedFieldPuns
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -1174,7 +1174,7 @@ executable rpnexpr
       expr/rpn
   other-extensions:
       OverloadedStrings
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -1189,7 +1189,7 @@ executable simple-streaming
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1212,7 +1212,7 @@ executable stockquotes
       OverloadedStrings
       DeriveGeneric
       DeriveAnyClass
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       Chart >=1.8 && <1.10
     , Chart-diagrams >=1.8 && <1.10
@@ -1236,7 +1236,7 @@ executable strategies
       Paths_hid_examples
   hs-source-dirs:
       ch12/deriv/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       aeson >=1.2 && <2.3
     , base >=4.12 && <5
@@ -1248,7 +1248,7 @@ executable stream
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1261,7 +1261,7 @@ executable stref
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1272,7 +1272,7 @@ executable sum-numbers
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -1284,7 +1284,7 @@ executable sum-numbers-many-workers
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -1300,7 +1300,7 @@ executable sumlist
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -1312,7 +1312,7 @@ executable sumtab
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , extra >=1.5 && <1.8
@@ -1340,7 +1340,7 @@ executable suntimes
   other-extensions:
       RecordWildCards
       DeriveGeneric
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       aeson >=1.2 && <2.3
     , base >=4.12 && <5
@@ -1365,7 +1365,7 @@ executable temp-kinds
       PolyKinds
       AllowAmbiguousTypes
       TypeApplications
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-unticked-promoted-constructors
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-unticked-promoted-constructors
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1382,7 +1382,7 @@ executable temp-proxies
       ScopedTypeVariables
       PolyKinds
       InstanceSigs
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1400,7 +1400,7 @@ executable temp-type-apps
       PolyKinds
       AllowAmbiguousTypes
       TypeApplications
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1411,7 +1411,7 @@ executable tree-async
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
@@ -1432,7 +1432,7 @@ executable type-families
   other-extensions:
       TypeFamilies
       FlexibleInstances
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-type-defaults
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-type-defaults
   build-depends:
       base >=4.12 && <5
     , containers >=0.5 && <0.8
@@ -1449,7 +1449,7 @@ executable type-lits
       DataKinds
       KindSignatures
       ScopedTypeVariables
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1459,7 +1459,7 @@ executable type-operators
   other-extensions:
       TypeOperators
       NoStarIsType
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1473,7 +1473,7 @@ executable unboxed
   other-extensions:
       UnboxedTuples
       UnboxedSums
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1485,7 +1485,7 @@ executable unsafe-elevator
       Elevator.Unsafe
   hs-source-dirs:
       ch13/elevator/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -1499,7 +1499,7 @@ executable via
       Paths_hid_examples
   hs-source-dirs:
       ch12/deriv/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1512,7 +1512,7 @@ executable view-generic
       Paths_hid_examples
   hs-source-dirs:
       ch12/generics/
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-missing-signatures
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -1521,7 +1521,7 @@ executable vocab1
   main-is: vocab1.hs
   hs-source-dirs:
       ch01
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , text >=1.2 && <2.2
@@ -1531,7 +1531,7 @@ executable vocab2
   main-is: vocab2.hs
   hs-source-dirs:
       ch01
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , text >=1.2 && <2.2
@@ -1543,7 +1543,7 @@ executable vocab3
       ch01
   other-extensions:
       OverloadedStrings
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , fmt >=0.5 && <0.7
@@ -1556,7 +1556,7 @@ executable wait-completion
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -threaded
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       base >=4.12 && <5
     , random ==1.2.*
@@ -1570,7 +1570,7 @@ executable weapons
       Paths_hid_examples
   hs-source-dirs:
       ch05
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -1582,7 +1582,7 @@ test-suite expr-simple-test
   main-is: Test1.hs
   hs-source-dirs:
       tests/expr
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , expr-simple
@@ -1597,7 +1597,7 @@ test-suite iplookup-doctest
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , doctest >=0.12 && <0.23
@@ -1617,7 +1617,7 @@ test-suite iplookup-test
       Paths_hid_examples
   hs-source-dirs:
       tests/iplookup
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-type-defaults
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-type-defaults
   build-depends:
       base >=4.12 && <5
     , filepath >=1.4.1 && <1.6
@@ -1636,7 +1636,7 @@ test-suite radar-test
   main-is: Test.hs
   hs-source-dirs:
       tests/radar
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , radar-lib
@@ -1648,7 +1648,7 @@ test-suite shunting-yard-test
   main-is: Test2.hs
   hs-source-dirs:
       tests/expr
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , shunting-yard
@@ -1672,7 +1672,7 @@ benchmark iplookup-bench
       Paths_hid_examples
   hs-source-dirs:
       benchmarks/iplookup
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , criterion >=1.4 && <1.7
@@ -1687,7 +1687,7 @@ benchmark primcheck
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
     , criterion >=1.4 && <1.7
