@@ -27,7 +27,7 @@ data-files:
     - data/tests/iplookup/*.*
     - data/benchmarks/iplookup/*.*
 
-tested-with: GHC == 9.4.7, GHC == 9.6.3
+tested-with: GHC == 9.4.7, GHC == 9.6.4
 
 dependencies: base >=4.12 && <5
 
@@ -57,6 +57,8 @@ executables:
         main: vocab1.hs
         other-modules: []
         dependencies: text >=1.2 && <2.2
+        ghc-options:
+          - -Wno-error=x-partial
     vocab2:
         source-dirs: ch01
         main: vocab2.hs
@@ -81,6 +83,8 @@ executables:
           - DeriveAnyClass
         dependencies:
           - fmt >=0.5 && <0.7
+        ghc-options:
+          - -Wno-error=x-partial
     # 2.2
     person-derived:
         source-dirs: ch02/person
@@ -109,7 +113,7 @@ executables:
           - bytestring >=0.10 && <0.13
           - blaze-html >=0.9 && <0.10
           - optparse-applicative >=0.14 && <0.19
-          - time >=1.8 && <1.13
+          - time >=1.8 && <1.15
           - text >=1.2 && <2.2
           - fmt >=0.5 && <0.7
           - Chart >=1.8 && <1.10
@@ -160,6 +164,8 @@ executables:
         dependencies:
         - text-show >=3.0 && <4
         - mtl >=2.0 && <2.4
+        ghc-options:
+          - -Wno-error=x-partial
     dicegame:
         source-dirs: ch05
         main: dicegame.hs
@@ -187,12 +193,16 @@ executables:
         other-modules: [EvalRPN]
         dependencies:
           - mtl >= 2.0 && < 2.4
+        ghc-options:
+          - -Wno-error=x-partial
     evalrpn2:
         source-dirs: expr/rpn
         main: evalrpn2.hs
         other-modules: [EvalRPNTrans]
         dependencies:
           - mtl >= 2.0 && < 2.4
+        ghc-options:
+          - -Wno-error=x-partial
     evalrpn3:
         source-dirs: expr/rpn
         main: evalrpn3.hs
@@ -206,12 +216,14 @@ executables:
           - UndecidableInstances
           - InstanceSigs
           - LambdaCase
+        ghc-options:
+          - -Wno-error=x-partial
     du:
         source-dirs: du
         main: Main.hs
         dependencies:
           - mtl >=2.0 && <2.4
-          - filepath >= 1.4.1 && < 1.5
+          - filepath >= 1.4.1 && < 1.6
           - directory >= 1.3 && < 1.4
           - unix-compat >= 0.5 && < 0.8
           - optparse-applicative >= 0.14 && < 0.19
@@ -248,7 +260,7 @@ executables:
         dependencies:
           - mtl >= 2.0 && < 2.4
           - transformers >=0.5 && <0.7
-          - time >=1.8 && <1.13
+          - time >=1.8 && <1.15
           - text >=1.2 && <2.2
           - exceptions >= 0.10 && < 0.11
           - aeson >= 1.2 && < 2.3
@@ -282,7 +294,7 @@ executables:
           - ipgen-lib
           - exceptions >= 0.10 && < 0.11
           - optparse-applicative >= 0.14 && < 0.19
-          - hedgehog >= 0.5 && < 1.5
+          - hedgehog >= 0.5 && < 1.6
     # Chapter 9
     unboxed:
         main: ch09/unboxed.hs
@@ -296,6 +308,8 @@ executables:
       dependencies:
         - isprime-lib
         - timeit >= 2.0 && < 2.1
+      ghc-options:
+        - -Wno-error=x-partial
     # Chapter 10
     iplookup-simulation:
         main: ip/iplookup-simulation.hs
@@ -360,6 +374,9 @@ executables:
         main: ch11/dynvalues-gadt.hs
         other-extensions:
           - GADTs
+        ghc-options:
+          - -Wno-error=x-partial
+
     expr-gadt:
         main: expr/gadts/Main.hs
         other-extensions:
@@ -412,19 +429,19 @@ executables:
         main: Main.hs
         other-modules: [ Hello ]
         dependencies:
-          - template-haskell >=2.13 && <2.22
+          - template-haskell >=2.13 && <2.23
     projectors:
         source-dirs: ch12/th/projectors/
         main: Main.hs
         other-modules: [ Projectors ]
         dependencies:
-          - template-haskell >=2.13 && <2.22
+          - template-haskell >=2.13 && <2.23
     predicates:
         source-dirs: ch12/th/predicates/
         main: Main.hs
         other-modules: [ Predicates ]
         dependencies:
-          - template-haskell >=2.13 && <2.22
+          - template-haskell >=2.13 && <2.23
         ghc-options:
           - -Wno-missing-signatures
           - -Wno-incomplete-patterns
@@ -433,7 +450,7 @@ executables:
         main: Main.hs
         other-modules: [ Str ]
         dependencies:
-          - template-haskell >=2.13 && <2.22
+          - template-haskell >=2.13 && <2.23
         ghc-options:
           - -Wno-missing-signatures
           - -Wno-incomplete-patterns
@@ -482,7 +499,7 @@ executables:
         dependencies:
           - servant-server >=0.14 && <0.21
           - servant-blaze >=0.7 && <0.10
-          - warp >=3.2 && < 3.4
+          - warp >=3.2 && < 3.5
           - aeson >= 1.2 && < 2.3
           - blaze-html >=0.9 && <0.10
     unsafe-elevator:
@@ -511,7 +528,7 @@ executables:
           - StandaloneDeriving
         dependencies:
           - singletons >= 3.0 && < 3.1
-          - singletons-base >= 3.0 && < 3.4
+          - singletons-base >= 3.0 && < 3.5
         ghc-options:
           - -Wno-unticked-promoted-constructors
     elevator:
@@ -527,7 +544,7 @@ executables:
           - fin >= 0.1 && < 0.4
           - dec >= 0.0.3 && < 0.1
           - singletons >= 3.0 && < 3.1
-          - singletons-base >= 3.0 && < 3.4
+          - singletons-base >= 3.0 && < 3.5
           - mtl >=2.0 && <2.4
         ghc-options:
           - -Wno-unticked-promoted-constructors
@@ -553,7 +570,7 @@ executables:
           - streaming >=0.2.2 && <0.4
           - streaming-bytestring >=0.1.7 && <0.4
           - resourcet >=1.2 && <1.4
-          - filepath >= 1.4.1 && < 1.5
+          - filepath >= 1.4.1 && < 1.6
     csv-simple:
         main: ch14/csv-simple.hs
         dependencies:
@@ -567,17 +584,17 @@ executables:
     lens-ex:
         main: ch14/lens-ex.hs
         dependencies:
-          - lens >= 4.17 && < 5.3
+          - lens >= 4.17 && < 5.4
     covid:
         source-dirs: ch14/covid
         main: Main.hs
         dependencies:
           - bytestring >=0.10 && <0.13
-          - time >=1.8 && <1.13
+          - time >=1.8 && <1.15
           - text >=1.2 && <2.2
           - text-show >=3.0 && <4
           - containers >= 0.5 && < 0.8
-          - lens >= 4.17 && < 5.3
+          - lens >= 4.17 && < 5.4
           - streaming-utils >=0.2 && <0.3
           - streaming-bytestring >=0.1.7 && <0.4
           - streaming >=0.2.2 && <0.4
@@ -744,6 +761,8 @@ internal-libraries:
         source-dirs: ch02/radar
         exposed-modules: Radar
         other-modules: []
+        ghc-options:
+          - -Wno-error=x-partial
     expr-simple:
         source-dirs: expr
         exposed-modules: Expr
@@ -765,6 +784,8 @@ internal-libraries:
           - expr-simple
           - mtl >=2.0 && <2.4
           - text-show >=3.0 && <4
+        ghc-options:
+          - -Wno-error=x-partial
     # Chapter 8
     iplookup-lib:
         source-dirs: ip/lookup
@@ -788,7 +809,7 @@ internal-libraries:
         other-modules: []
         dependencies:
           - iplookup-lib
-          - hedgehog >= 0.5 && < 1.5
+          - hedgehog >= 0.5 && < 1.6
     # Chapter 9
     isprime-lib:
       source-dirs: ch09/isprime
@@ -807,11 +828,11 @@ internal-libraries:
         - bytestring >=0.10 && <0.13
         - mtl >=2.0 && <2.4
         - cereal >= 0.5 && <0.6
-        - network >= 2.8 && <3.2
-        - crypton-connection >= 0.3 && <0.4
+        - network >= 2.8 && <3.3
+        - crypton-connection >= 0.3 && <0.5
         - network-simple >=0.4.5 && <0.5
         - exceptions >= 0.10 && < 0.11
-        - template-haskell >= 2.13 && <2.22
+        - template-haskell >= 2.13 && <2.23
         - haskell-src-exts >= 1.20 && <1.24
         - haskell-src-meta >= 0.6 && < 0.9
 tests:
@@ -851,9 +872,9 @@ tests:
           - tasty-hspec >= 1.1 && < 1.3
           - hspec >= 2.10 && < 2.12
           - tasty-hedgehog >= 0.1 && < 1.5
-          - hedgehog >= 0.5 && < 1.5
+          - hedgehog >= 0.5 && < 1.6
           - tasty-golden >= 2.3 && < 2.4
-          - filepath >= 1.4.1 && < 1.5
+          - filepath >= 1.4.1 && < 1.6
         ghc-options:
           - -Wno-type-defaults
     iplookup-doctest:

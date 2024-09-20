@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9050cc5d7568fbd5de24ce3d7ac4f4cc191ce2b4e2e758ceb7e0290efcafae26
+-- hash: 44b7d0895edf9c9753f7b782bbadab17db47d5d92166e223011db18c56254a4c
 
 name:           hid-examples
 version:        0.5
@@ -102,7 +102,7 @@ library ipgen-lib
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <5
-    , hedgehog >=0.5 && <1.5
+    , hedgehog >=0.5 && <1.6
     , iplookup-lib
   default-language: Haskell2010
 
@@ -139,7 +139,7 @@ library radar-lib
       Radar
   hs-source-dirs:
       ch02/radar
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -163,14 +163,14 @@ library rpc-lib
       base >=4.12 && <5
     , bytestring >=0.10 && <0.13
     , cereal ==0.5.*
-    , crypton-connection ==0.3.*
+    , crypton-connection >=0.3 && <0.5
     , exceptions ==0.10.*
     , haskell-src-exts >=1.20 && <1.24
     , haskell-src-meta >=0.6 && <0.9
     , mtl >=2.0 && <2.4
-    , network >=2.8 && <3.2
+    , network >=2.8 && <3.3
     , network-simple >=0.4.5 && <0.5
-    , template-haskell >=2.13 && <2.22
+    , template-haskell >=2.13 && <2.23
   default-language: Haskell2010
 
 library shunting-yard
@@ -178,7 +178,7 @@ library shunting-yard
       ShuntingYard, Expr
   hs-source-dirs:
       expr
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , expr-simple
@@ -199,7 +199,7 @@ executable api-servant
     , blaze-html ==0.9.*
     , servant-blaze >=0.7 && <0.10
     , servant-server >=0.14 && <0.21
-    , warp >=3.2 && <3.4
+    , warp >=3.2 && <3.5
   default-language: Haskell2010
 
 executable api-stage0
@@ -330,7 +330,7 @@ executable copy
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <5
-    , filepath >=1.4.1 && <1.5
+    , filepath >=1.4.1 && <1.6
     , resourcet >=1.2 && <1.4
     , streaming >=0.2.2 && <0.4
     , streaming-bytestring >=0.1.7 && <0.4
@@ -365,14 +365,14 @@ executable covid
     , base >=4.12 && <5
     , bytestring >=0.10 && <0.13
     , containers >=0.5 && <0.8
-    , lens >=4.17 && <5.3
+    , lens >=4.17 && <5.4
     , resourcet >=1.2 && <1.4
     , streaming >=0.2.2 && <0.4
     , streaming-bytestring >=0.1.7 && <0.4
     , streaming-utils ==0.2.*
     , text >=1.2 && <2.2
     , text-show >=3.0 && <4
-    , time >=1.8 && <1.13
+    , time >=1.8 && <1.15
   default-language: Haskell2010
 
 executable csv-simple
@@ -455,7 +455,7 @@ executable door-gen
   build-depends:
       base >=4.12 && <5
     , singletons ==3.0.*
-    , singletons-base >=3.0 && <3.4
+    , singletons-base >=3.0 && <3.5
   default-language: Haskell2010
 
 executable dots
@@ -546,7 +546,7 @@ executable du
       base >=4.12 && <5
     , directory ==1.3.*
     , extra >=1.5 && <1.8
-    , filepath >=1.4.1 && <1.5
+    , filepath >=1.4.1 && <1.6
     , mtl >=2.0 && <2.4
     , optparse-applicative >=0.14 && <0.19
     , text >=1.2 && <2.2
@@ -562,7 +562,7 @@ executable dynvalues-gadt
       Paths_hid_examples
   other-extensions:
       GADTs
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
   default-language: Haskell2010
@@ -584,7 +584,7 @@ executable elevator
     , fin >=0.1 && <0.4
     , mtl >=2.0 && <2.4
     , singletons ==3.0.*
-    , singletons-base >=3.0 && <3.4
+    , singletons-base >=3.0 && <3.5
   default-language: Haskell2010
 
 executable evalrpn1
@@ -593,7 +593,7 @@ executable evalrpn1
       EvalRPN
   hs-source-dirs:
       expr/rpn
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -605,7 +605,7 @@ executable evalrpn2
       EvalRPNTrans
   hs-source-dirs:
       expr/rpn
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -624,7 +624,7 @@ executable evalrpn3
       UndecidableInstances
       InstanceSigs
       LambdaCase
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -777,7 +777,7 @@ executable hello-th
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <5
-    , template-haskell >=2.13 && <2.22
+    , template-haskell >=2.13 && <2.23
   default-language: Haskell2010
 
 executable interleaving
@@ -814,7 +814,7 @@ executable ipgen
   build-depends:
       base >=4.12 && <5
     , exceptions ==0.10.*
-    , hedgehog >=0.5 && <1.5
+    , hedgehog >=0.5 && <1.6
     , ipgen-lib
     , optparse-applicative >=0.14 && <0.19
   default-language: Haskell2010
@@ -851,7 +851,7 @@ executable isprime
       IsPrime
   hs-source-dirs:
       ch09/isprime
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , isprime-lib
@@ -867,7 +867,7 @@ executable lens-ex
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <5
-    , lens >=4.17 && <5.3
+    , lens >=4.17 && <5.4
   default-language: Haskell2010
 
 executable logging
@@ -909,7 +909,7 @@ executable mstr-literals
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures -Wno-incomplete-patterns
   build-depends:
       base >=4.12 && <5
-    , template-haskell >=2.13 && <2.22
+    , template-haskell >=2.13 && <2.23
   default-language: Haskell2010
 
 executable mvar-deadlocks
@@ -1093,7 +1093,7 @@ executable predicates
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-missing-signatures -Wno-incomplete-patterns
   build-depends:
       base >=4.12 && <5
-    , template-haskell >=2.13 && <2.22
+    , template-haskell >=2.13 && <2.23
   default-language: Haskell2010
 
 executable prefix-postfix
@@ -1103,7 +1103,7 @@ executable prefix-postfix
       ShuntingYard
   hs-source-dirs:
       expr
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
@@ -1119,7 +1119,7 @@ executable projectors
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       base >=4.12 && <5
-    , template-haskell >=2.13 && <2.22
+    , template-haskell >=2.13 && <2.23
   default-language: Haskell2010
 
 executable pub-sub
@@ -1144,7 +1144,7 @@ executable radar
       ch02/radar
   other-extensions:
       DeriveAnyClass
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , fmt >=0.5 && <0.7
@@ -1225,7 +1225,7 @@ executable stockquotes
     , fmt >=0.5 && <0.7
     , optparse-applicative >=0.14 && <0.19
     , text >=1.2 && <2.2
-    , time >=1.8 && <1.13
+    , time >=1.8 && <1.15
   default-language: Haskell2010
 
 executable strategies
@@ -1351,7 +1351,7 @@ executable suntimes
     , optparse-applicative >=0.14 && <0.19
     , req >=2.0 && <3.14
     , text >=1.2 && <2.2
-    , time >=1.8 && <1.13
+    , time >=1.8 && <1.15
     , transformers >=0.5 && <0.7
   default-language: Haskell2010
 
@@ -1521,7 +1521,7 @@ executable vocab1
   main-is: vocab1.hs
   hs-source-dirs:
       ch01
-  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=x-partial
   build-depends:
       base >=4.12 && <5
     , text >=1.2 && <2.2
@@ -1620,8 +1620,8 @@ test-suite iplookup-test
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-type-defaults
   build-depends:
       base >=4.12 && <5
-    , filepath >=1.4.1 && <1.5
-    , hedgehog >=0.5 && <1.5
+    , filepath >=1.4.1 && <1.6
+    , hedgehog >=0.5 && <1.6
     , hspec >=2.10 && <2.12
     , ipgen-lib
     , iplookup-lib
