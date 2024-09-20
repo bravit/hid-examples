@@ -17,8 +17,6 @@ extra-source-files:
     - LICENSE
     - README.md
     - stack.yaml
-    - .travis.yml
-    - appveyor.yml
     - package.yaml
 
 data-files:
@@ -27,7 +25,7 @@ data-files:
     - data/tests/iplookup/*.*
     - data/benchmarks/iplookup/*.*
 
-tested-with: GHC == 9.4.7, GHC == 9.6.4
+tested-with: GHC == 9.4.7, GHC == 9.6.4, GHC == 9.8.2
 
 dependencies: base >=4.12 && <5
 

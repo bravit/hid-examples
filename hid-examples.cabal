@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 97d7a69d126c9c175d3b3049a1fc9311dd7e67a175c4e255477211084c6f2d6c
+-- hash: 3a83185a1a255aa08e871ef0a8fcabde2c05975f2556603454bce153bad1d11f
 
 name:           hid-examples
 version:        0.5
@@ -18,15 +18,13 @@ maintainer:     Vitaly Bragilevsky <vit.bragilevsky@gmail.com>
 license:        BSD3
 license-file:   LICENSE
 tested-with:
-    GHC == 9.4.7, GHC == 9.6.4
+    GHC == 9.4.7, GHC == 9.6.4, GHC == 9.8.2
 build-type:     Simple
 extra-source-files:
     ChangeLog.md
     LICENSE
     README.md
     stack.yaml
-    .travis.yml
-    appveyor.yml
     package.yaml
 data-files:
     data/dirs.txt
