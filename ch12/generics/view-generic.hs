@@ -13,7 +13,7 @@ data Request = Request String Int
 okVal = from Ok
 
 errVal :: D1
-       ('MetaData "Status" "Main" "main" 'False)
+       ('MetaData "Status" "Main" "hid-examples-0.5-inplace-view-generic" 'False)
        (C1 ('MetaCons "Ok" 'PrefixI 'False) U1
         :+: C1 ('MetaCons "Err" 'PrefixI 'False) U1)
        x
