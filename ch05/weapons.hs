@@ -1,8 +1,11 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE UndecidableInstances #-}
 import Data.List (group, sort)
 import Control.Monad
 import Control.Monad.State
 import System.Random
-import System.Random.Stateful (uniformRM, uniformM)
+import System.Random.Stateful
 
 data Weapon = Rock | Paper | Scissors
   deriving (Show, Bounded, Enum, Eq)
@@ -19,11 +22,10 @@ winner (w1, w2)
   | otherwise = Second
 
 instance UniformRange Weapon where
-  uniformRM (lo, hi) rng = do
-    res <- uniformRM (fromEnum lo :: Int, fromEnum hi) rng
-    pure $ toEnum res
+  uniformRM (lo, hi) g = toEnum <$> uniformRM (fromEnum lo, fromEnum hi) g
+  isInRange (lo, hi) x = fromEnum x >= fromEnum lo && fromEnum x <= fromEnum hi
 
-instance Uniform Weapon where
+instance UniformRange Weapon => Uniform Weapon where
   uniformM rng = uniformRM (minBound, maxBound) rng
 
 randomWeapon :: State StdGen Weapon

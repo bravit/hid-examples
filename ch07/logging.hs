@@ -10,7 +10,7 @@ popAndLog :: LoggingT (StateT [Int] IO) ()
 popAndLog = do
   _:xs <- lift get
   lift (put xs)
-  $logDebug ("***" <> (pack $ show xs) <> "***")
+  $logDebug ("***" <> (pack $ Prelude.show xs) <> "***")
 
 logStateEx :: LoggingT (StateT [Int] IO) Int
 logStateEx =  do

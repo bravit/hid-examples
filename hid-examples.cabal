@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3a83185a1a255aa08e871ef0a8fcabde2c05975f2556603454bce153bad1d11f
+-- hash: df9bdff20c7b93fa747ba6e542d129c1a39765b56d9e6b7e3081327b44667265
 
 name:           hid-examples
 version:        0.5
@@ -168,7 +168,7 @@ library rpc-lib
     , mtl >=2.0 && <2.4
     , network >=2.8 && <3.3
     , network-simple >=0.4.5 && <0.5
-    , template-haskell >=2.13 && <2.23
+    , template-haskell >=2.13 && <2.24
   default-language: Haskell2010
 
 library shunting-yard
@@ -362,7 +362,7 @@ executable covid
       attoparsec >=0.13 && <0.15
     , base >=4.12 && <5
     , bytestring >=0.10 && <0.13
-    , containers >=0.5 && <0.8
+    , containers >=0.5 && <0.9
     , lens >=4.17 && <5.4
     , resourcet >=1.2 && <1.4
     , streaming >=0.2.2 && <0.4
@@ -403,7 +403,7 @@ executable dicegame
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
-    , random ==1.2.*
+    , random >=1.2 && <1.4
   default-language: Haskell2010
 
 executable div
@@ -453,7 +453,7 @@ executable door-gen
   build-depends:
       base >=4.12 && <5
     , singletons ==3.0.*
-    , singletons-base >=3.0 && <3.5
+    , singletons-base >=3.0 && <3.6
   default-language: Haskell2010
 
 executable dots
@@ -489,7 +489,7 @@ executable dots-async-cancel
   build-depends:
       async >=2.0 && <2.3
     , base >=4.12 && <5
-    , random ==1.2.*
+    , random >=1.2 && <1.4
   default-language: Haskell2010
 
 executable dots-async-interrupted
@@ -543,7 +543,7 @@ executable du
   build-depends:
       base >=4.12 && <5
     , directory ==1.3.*
-    , extra >=1.5 && <1.8
+    , extra >=1.5 && <1.9
     , filepath >=1.4.1 && <1.6
     , mtl >=2.0 && <2.4
     , optparse-applicative >=0.14 && <0.19
@@ -582,7 +582,7 @@ executable elevator
     , fin >=0.1 && <0.4
     , mtl >=2.0 && <2.4
     , singletons ==3.0.*
-    , singletons-base >=3.0 && <3.5
+    , singletons-base >=3.0 && <3.6
   default-language: Haskell2010
 
 executable evalrpn1
@@ -654,7 +654,7 @@ executable filecount
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
-    , extra >=1.5 && <1.8
+    , extra >=1.5 && <1.9
   default-language: Haskell2010
 
 executable gcd
@@ -775,7 +775,7 @@ executable hello-th
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
-    , template-haskell >=2.13 && <2.23
+    , template-haskell >=2.13 && <2.24
   default-language: Haskell2010
 
 executable interleaving
@@ -907,7 +907,7 @@ executable mstr-literals
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-missing-signatures -Wno-incomplete-patterns
   build-depends:
       base >=4.12 && <5
-    , template-haskell >=2.13 && <2.23
+    , template-haskell >=2.13 && <2.24
   default-language: Haskell2010
 
 executable mvar-deadlocks
@@ -1091,7 +1091,7 @@ executable predicates
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-missing-signatures -Wno-incomplete-patterns
   build-depends:
       base >=4.12 && <5
-    , template-haskell >=2.13 && <2.23
+    , template-haskell >=2.13 && <2.24
   default-language: Haskell2010
 
 executable prefix-postfix
@@ -1117,7 +1117,7 @@ executable projectors
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
-    , template-haskell >=2.13 && <2.23
+    , template-haskell >=2.13 && <2.24
   default-language: Haskell2010
 
 executable pub-sub
@@ -1313,7 +1313,7 @@ executable sumtab
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
-    , extra >=1.5 && <1.8
+    , extra >=1.5 && <1.9
     , streaming >=0.2.2 && <0.4
     , text >=1.2 && <2.2
     , text-show >=3.0 && <4
@@ -1433,7 +1433,7 @@ executable type-families
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -Wno-type-defaults
   build-depends:
       base >=4.12 && <5
-    , containers >=0.5 && <0.8
+    , containers >=0.5 && <0.9
   default-language: Haskell2010
 
 executable type-lits
@@ -1557,7 +1557,7 @@ executable wait-completion
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags -threaded
   build-depends:
       base >=4.12 && <5
-    , random ==1.2.*
+    , random >=1.2 && <1.4
   default-language: Haskell2010
 
 executable weapons
@@ -1572,7 +1572,7 @@ executable weapons
   build-depends:
       base >=4.12 && <5
     , mtl >=2.0 && <2.4
-    , random ==1.2.*
+    , random >=1.2 && <1.4
   default-language: Haskell2010
 
 test-suite expr-simple-test
@@ -1598,7 +1598,7 @@ test-suite iplookup-doctest
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans -Wno-error=unrecognised-warning-flags
   build-depends:
       base >=4.12 && <5
-    , doctest >=0.12 && <0.23
+    , doctest >=0.12 && <0.25
     , split ==0.2.*
   default-language: Haskell2010
 
@@ -1638,7 +1638,7 @@ test-suite radar-test
   build-depends:
       base >=4.12 && <5
     , radar-lib
-    , random ==1.2.*
+    , random >=1.2 && <1.4
   default-language: Haskell2010
 
 test-suite shunting-yard-test

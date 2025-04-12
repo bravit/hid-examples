@@ -155,7 +155,7 @@ executables:
         main: weapons.hs
         dependencies:
           - mtl >=2.0 && <2.4
-          - random >=1.2 && <1.3
+          - random >=1.2 && <1.4
     prefix-postfix:
         source-dirs: expr
         main: prefix-postfix.hs
@@ -170,7 +170,7 @@ executables:
         main: dicegame.hs
         dependencies:
           - mtl >=2.0 && <2.4
-          - random >=1.2 && <1.3
+          - random >=1.2 && <1.4
     ioref:
         source-dirs: ch05
         main: ioref.hs
@@ -178,7 +178,7 @@ executables:
         source-dirs: ch05
         main: filecount.hs
         dependencies:
-          - extra >=1.5 && <1.8
+          - extra >=1.5 && <1.9
     stref:
         source-dirs: ch05
         main: stref.hs
@@ -228,7 +228,7 @@ executables:
           - optparse-applicative >= 0.14 && < 0.19
           - text >=1.2 && <2.2
           - text-show >=3.0 && <4
-          - extra >=1.5 && <1.8
+          - extra >=1.5 && <1.9
         default-extensions:
           - RecordWildCards
           - NamedFieldPuns
@@ -368,7 +368,7 @@ executables:
         ghc-options:
           -Wno-type-defaults
         dependencies:
-          - containers >= 0.5 && < 0.8
+          - containers >= 0.5 && < 0.9
     dynvalues-gadt:
         main: ch11/dynvalues-gadt.hs
         other-extensions:
@@ -428,19 +428,19 @@ executables:
         main: Main.hs
         other-modules: [ Hello ]
         dependencies:
-          - template-haskell >=2.13 && <2.23
+          - template-haskell >=2.13 && <2.24
     projectors:
         source-dirs: ch12/th/projectors/
         main: Main.hs
         other-modules: [ Projectors ]
         dependencies:
-          - template-haskell >=2.13 && <2.23
+          - template-haskell >=2.13 && <2.24
     predicates:
         source-dirs: ch12/th/predicates/
         main: Main.hs
         other-modules: [ Predicates ]
         dependencies:
-          - template-haskell >=2.13 && <2.23
+          - template-haskell >=2.13 && <2.24
         ghc-options:
           - -Wno-missing-signatures
           - -Wno-incomplete-patterns
@@ -449,7 +449,7 @@ executables:
         main: Main.hs
         other-modules: [ Str ]
         dependencies:
-          - template-haskell >=2.13 && <2.23
+          - template-haskell >=2.13 && <2.24
         ghc-options:
           - -Wno-missing-signatures
           - -Wno-incomplete-patterns
@@ -527,7 +527,7 @@ executables:
           - StandaloneDeriving
         dependencies:
           - singletons >= 3.0 && < 3.1
-          - singletons-base >= 3.0 && < 3.5
+          - singletons-base >= 3.0 && < 3.6
         ghc-options:
           - -Wno-unticked-promoted-constructors
     elevator:
@@ -543,7 +543,7 @@ executables:
           - fin >= 0.1 && < 0.4
           - dec >= 0.0.3 && < 0.1
           - singletons >= 3.0 && < 3.1
-          - singletons-base >= 3.0 && < 3.5
+          - singletons-base >= 3.0 && < 3.6
           - mtl >=2.0 && <2.4
         ghc-options:
           - -Wno-unticked-promoted-constructors
@@ -556,7 +556,7 @@ executables:
         main: ch14/sumtab.hs
         dependencies:
           - streaming >=0.2.2 && <0.4
-          - extra >=1.5 && <1.8
+          - extra >=1.5 && <1.9
           - text >=1.2 && <2.2
           - text-show >=3.0 && <4
     chars:
@@ -592,7 +592,7 @@ executables:
           - time >=1.8 && <1.15
           - text >=1.2 && <2.2
           - text-show >=3.0 && <4
-          - containers >= 0.5 && < 0.8
+          - containers >= 0.5 && < 0.9
           - lens >= 4.17 && < 5.4
           - streaming-utils >=0.2 && <0.3
           - streaming-bytestring >=0.1.7 && <0.4
@@ -695,7 +695,7 @@ executables:
       ghc-options: -threaded
       dependencies:
         - async >= 2.0 && < 2.3
-        - random >=1.2 && <1.3
+        - random >=1.2 && <1.4
     dots-async-interrupted:
       main: ch16/dots-async-interrupted.hs
       ghc-options: -threaded
@@ -710,7 +710,7 @@ executables:
       main: ch16/wait-completion.hs
       ghc-options: -threaded
       dependencies:
-        - random >=1.2 && <1.3
+        - random >=1.2 && <1.4
     sum-numbers:
       main: ch16/sum-numbers.hs
       dependencies:
@@ -831,7 +831,7 @@ internal-libraries:
         - crypton-connection >= 0.3 && <0.5
         - network-simple >=0.4.5 && <0.5
         - exceptions >= 0.10 && < 0.11
-        - template-haskell >= 2.13 && <2.23
+        - template-haskell >= 2.13 && <2.24
         - haskell-src-exts >= 1.20 && <1.24
         - haskell-src-meta >= 0.6 && < 0.9
 tests:
@@ -842,7 +842,7 @@ tests:
         other-modules: []
         dependencies:
           - radar-lib
-          - random >=1.2 && <1.3
+          - random >=1.2 && <1.4
     expr-simple-test:
         source-dirs: tests/expr
         main: Test1.hs
@@ -879,7 +879,7 @@ tests:
     iplookup-doctest:
       main: tests/iplookup-doctest/Doctests.hs
       dependencies:
-        - doctest >= 0.12 && < 0.23
+        - doctest >= 0.12 && < 0.25
         - split >= 0.2 && < 0.3
 
 benchmarks:
